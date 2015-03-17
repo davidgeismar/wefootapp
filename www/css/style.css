@@ -1,0 +1,99 @@
+
+/* Empty. Add your own CSS if you like */
+
+a{
+	text-decoration: none;
+}
+
+.login-seco, .register_inscr{
+	margin-top:20%;
+	text-align:center;
+}
+
+.id-mdp-seco{
+	padding:15px;
+}
+.item{
+	border-radius:5px;
+	margin-bottom:10px;
+}
+
+.register_logo_container{
+	width:80%;
+	margin-left:10%;
+	margin-right:10%;
+	border-top: 1px solid #28385c;
+	padding-top:15px;
+}
+
+.homepage_logo{
+	width: 50%;
+	margin-top:20px;
+	margin-right: 25%;
+	margin-left: 25%;
+	margin-bottom: 30px;
+}
+.homepage_logo_container{
+	border-bottom: 1px solid #28385c;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+.homepage_title{
+	text-align: center;
+	margin-top: 20px;
+}
+.homepage_title h1{
+	font-weight: 100;
+	color: #28385c;
+
+}
+
+p{
+	color:grey;
+}
+
+.test{
+	width:100%;
+}
+
+.logo{
+	width:150px;
+	display: block;
+	margin-left: auto; 
+	margin-right: auto; 
+}
+
+.login-mdpo{
+	text-align:right;
+}
+
+.register_title h1{
+	width:100%;
+	margin-top:5%;
+	font-size:24px;
+	font-weight: 100;
+	color: #28385c;
+	text-align:center;
+}
+.homepage_button{
+	width: 90%;
+	height: 60px;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 10px;
+	color:#fff;
+	font-weight: bold;
+	border-radius: 5px;
+	font-size: 17px;
+}
+.homepage_connect{
+	background-color: #007dea;
+}
+.homepage_fb{
+	background-color: #3b5998;
+}
+.homepage_register{
+	margin-top: 50px;
+	border: 1px solid #007dea;
+	color: #007dea;
+}
