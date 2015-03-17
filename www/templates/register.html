@@ -1,32 +1,35 @@
 <ion-view view-title="Register">
-  <ion-content class="padding">
-      <div class="register_title">
-      <a href="#/"><h1 class="ion-chevron-left"> INSCRIPTION </h1></a>
-    </div>
-    <div class="register_logo_container">
-    <img class="logo" src="../img/logo.svg">
-    </div>
-    <div class="list list-inset id-mdp-seco">
+<ion-content class="padding">
+<div class="register_title">
+  <a href="#/"><h1 class="ion-chevron-left"> INSCRIPTION </h1></a>
+</div>
+<div class="register_logo_container">
+  <img class="logo" src="../img/logo.svg">
+</div>
+<form action="localhost:1337/user/create" class="list list-inset id-mdp-seco">
   <label class="item item-input">
-    <input type="text" placeholder="Adresse e-mail">
+    <input type="text" name="email" ng-model="user.email" placeholder="Adresse e-mail">
   </label>
   <label class="item item-input">
-    <input type="password" placeholder="Mot de passe">
+    <input type="password" name="password" ng-model="user.password" placeholder="Mot de passe">
   </label>
-    <label class="item item-input">
-    <input type="text" placeholder="Nom">
+  <label class="item item-input">
+    <input type="password" name="password_confirmation" ng-model="user.password_confirmation" placeholder="Retapez le mot de passe">
   </label>
-    <label class="item item-input">
-    <input type="text" placeholder="Prénom">
+  <label class="item item-input">
+    <input type="text" name="last_name" ng-model="user.last_name" placeholder="Nom">
   </label>
-    <label class="item item-input">
-    <input type="text" placeholder="Ville">
+  <label class="item item-input">
+    <input type="text" name="first_name" ng-model="user.first_name" placeholder="Prénom">
+  </label>
+  <label class="item item-input">
+    <input type="text" name="city" ng-model="user.city" placeholder="Ville">
   </label>
 </div>
-    <div class="register_inscr">
-      <button class="homepage_button button button-positive">
-  S'inscrire
-</button>
-    </div>
-  </ion-content>
+<div ng-click="launchReq()" class="register_inscr">
+  <button  class="homepage_button button button-positive">
+    S'inscrire
+  </button>
+</form>
+</ion-content>
 </ion-view>

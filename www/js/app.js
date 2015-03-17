@@ -18,21 +18,52 @@ var app = angular.module('starter', ['ionic'])
   });
 })
 
+//Controllers
+
+app.controller('LoginCtrl', function($scope, $http){
+  $scope.user = {};
+  $scope.launchReq = function(){
+    $http.post('http://localhost:1337/session/login',$scope.user).success(function(){
+      console.log('success');
+    }).error(function(){
+      console.log('error');
+    });
+  }
+})
+
+app.controller('RegisterCtrl', function($scope, $http){
+  $scope.user = {};
+
+  $scope.launchReq = function(){
+    $http.post('http://localhost:1337/user/create',$scope.user).success(function(){
+      console.log('success');
+    }).error(function(){
+      console.log('error');
+    });
+  }
+})
+
+
+//Routes
+
 app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/')
 
   $stateProvider.state('home', {
     url: '/',
-    templateUrl: 'templates/home.html'
+    templateUrl: 'templates/home.html',
   })
 
   $stateProvider.state('register', {
     url: '/register',
-    templateUrl: 'templates/register.html'
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl' 
   })
 
   $stateProvider.state('login', {
     url: '/login',
-    templateUrl: 'templates/login.html'
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'   
   })
+
 })
