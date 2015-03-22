@@ -6,7 +6,7 @@
 <div class="register_logo_container">
   <img class="logo" src="../img/logo.svg">
 </div>
-<form action="localhost:1337/user/create" class="list list-inset id-mdp-seco">
+<form action="localhost:1337/user/create" class="list list-inset">
   <label class="item item-input">
     <input type="text" name="email" ng-model="user.email" placeholder="Adresse e-mail">
   </label>
@@ -25,11 +25,12 @@
   <label class="item item-input">
     <input type="text" name="city" ng-model="user.city" placeholder="Ville">
   </label>
-</div>
+
 <div ng-click="launchReq()" class="register_inscr">
   <button  class="homepage_button button button-positive">
     S'inscrire
   </button>
+  </div>
 </form>
 </ion-content>
 </ion-view>

@@ -66,4 +66,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'LoginCtrl'   
   })
 
+    $stateProvider.state('new_field', {
+    url: '/new_field',
+    templateUrl: 'templates/new_field.html',
+    controller: 'LoginCtrl'   
+  })
+
+
+
 })
