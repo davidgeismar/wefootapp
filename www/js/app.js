@@ -43,7 +43,7 @@ app.controller('RegisterCtrl', function($scope, $http){
   }
 })
 
-app.controller('FieldCtrl', function($scope, $http){
+app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
 $scope.field = {};
 $scope.field.origin = "private";
   var options = {
@@ -53,18 +53,18 @@ $scope.field.origin = "private";
    quality: 80
   };
 
-//   $scope.getPic = function(){
+  $scope.getPic = function(){
 
-//     $cordovaImagePicker.getPictures(options)
-//     .then(function (results) {
-//       for (var i = 0; i < results.length; i++) {
-//         console.log('Image URI: ' + results[i]);
-//       }
-//     }, function(error) {
-//       console.log('error');
-//     });
+    $cordovaImagePicker.getPictures(options)
+    .then(function (results) {
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+      }
+    }, function(error) {
+      console.log('error');
+    });
 
-// }
+}
 
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(){
