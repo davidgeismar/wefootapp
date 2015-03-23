@@ -1,0 +1,33 @@
+<ion-view view-title="Add a field">
+<ion-content class="padding">
+<!-- <div class="register_title">
+  <a href="#/"><h1 class="ion-chevron-left"> INSCRIPTION </h1></a>
+</div> -->
+  <div class="bar bar-header bar-positive">
+ <a href="#/register"> <button class="ion-chevron-left chevron_style button"></button></a>
+    <h1 class="title">Nouveau terrain</h1>
+    <img class="logo_wf" src="../img/logo_WF.svg">
+  </div>
+  
+
+<div class="main_app">
+<form action="localhost:1337/user/create" class="list field_form">
+  <label class="field_input item item-input field_input">
+    <input type="text" name="email" ng-model="field.name" placeholder="Nom du terrain">
+  </label>
+  <label class="field_input item item-input">
+    <input type="text" name="password" ng-model="field.address" placeholder="Rue">
+  </label>
+  <label class="field_input item item-input">
+    <input type="text" name="password_confirmation" ng-model="field.city" placeholder="Ville et code postal">
+  </label>
+<div ng-click="launchReq()">
+  <button  class="homepage_button button">
+    Valider
+  </button>
+  </div>
+</form>
+</div>
+
+</ion-content>
+</ion-view>

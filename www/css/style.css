@@ -10,6 +10,17 @@ a{
 	text-align:center;
 }
 
+.chevron_style{
+	margin-top: 2px;
+  background-color: inherit;
+  border: none;
+  color: white;
+  width: 20px;
+  height: 20px;
+  z-index: 1000000;
+
+}
+
 .id-mdp-seco{
 	padding:15px;
 }
@@ -18,7 +29,34 @@ a{
 	margin-bottom:10px;
 }
 
+.select_pic_field{
+	padding-top:5%;
+	font-size:14px;
+	text-align:center;
+}
+
+.field_form{
+	background-color:#F1F2F6;
+	width:100%;
+	margin-top:5%;
+		padding-top:5%;
+	padding-bottom:5%;
+}
+.main_app{
+	padding-top:5%;
+	padding-bottom:5%;
+}
+
+.cam_size{
+	font-size: 90px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+
 .register_logo_container{
+	position:relative;
 	width:80%;
 	margin-left:10%;
 	margin-right:10%;
@@ -51,11 +89,22 @@ a{
 p{
 	color:grey;
 }
+.field_input{
+	width:90%;
+	margin-left:5%;
+	margin-right:5%;
+}
 
 .test{
 	width:100%;
 }
 
+.logo_wf{
+	position: absolute;
+  right: 10px;
+  top:10px;
+  width: 45px;
+}
 .logo{
 	width:150px;
 	display: block;
@@ -85,6 +134,7 @@ p{
 	font-weight: bold;
 	border-radius: 5px;
 	font-size: 17px;
+	background-color:#273A59;
 }
 .homepage_connect{
 	background-color: #007dea;
