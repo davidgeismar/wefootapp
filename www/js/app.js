@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('starter', ['ionic'])
 
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,11 +21,12 @@ var app = angular.module('starter', ['ionic'])
 
 //Controllers
 
-app.controller('LoginCtrl', function($scope, $http){
+app.controller('LoginCtrl', function($scope, $http, $rootScope, $location){
   $scope.user = {};
   $scope.launchReq = function(){
-    $http.post('http://localhost:1337/session/login',$scope.user).success(function(){
+    $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
       console.log('success');
+      $location.path('/profil/'+data.id);
     }).error(function(){
       console.log('error');
     });
@@ -42,6 +44,17 @@ app.controller('RegisterCtrl', function($scope, $http){
     });
   }
 })
+
+app.controller('ProfilCtrl', function($scope, $stateParams, $http){
+  $http.get('http://localhost:1337/user/'+$stateParams.userId).success(function(data){
+    $scope.user = data;
+  }).error(function(){
+    console.log('error');
+  });
+})
+
+
+
 
 
 //Routes
@@ -64,6 +77,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/login',
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl'   
+  })
+
+  $stateProvider.state('profil', {
+    url: '/profil/:userId',
+    templateUrl: 'templates/profil.html',
+    controller: 'ProfilCtrl'   
   })
 
 })
