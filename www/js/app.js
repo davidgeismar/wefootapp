@@ -6,6 +6,24 @@
 var app = angular.module('starter', ['ionic', 'ngCordova'])
 
 
+//Creating local Storage Function
+.factory('$localStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -21,35 +39,39 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
 
 //Controllers
 
-app.controller('LoginCtrl', function($scope, $http, $rootScope, $location){
-  $scope.user = {};
+app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
+  $scope.err = "";
+  $scope.user={};
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
-      console.log('success');
+      console.log('success login');
+      $localStorage.token = data.token;
       $location.path('/profil/'+data.id);
     }).error(function(){
-      console.log('error');
+       $scope.err = "Identifiant ou mot de passe incorrect.";
     });
   }
 })
 
-app.controller('RegisterCtrl', function($scope, $http){
-  $scope.user = {};
-
+app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage){
+  $scope.err = "";
+  $scope.user={};  
   $scope.launchReq = function(){
-    $http.post('http://localhost:1337/user/create',$scope.user).success(function(){
-      console.log('success');
+    $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
+       console.log(data.token);
+       console.log('success');
+       $location.path('/profil/'+data.id);
     }).error(function(){
-      console.log('error');
+      $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });
   }
 })
 
 app.controller('ProfilCtrl', function($scope, $stateParams, $http){
-  $http.get('http://localhost:1337/user/'+$stateParams.userId).success(function(data){
+  $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
     $scope.user = data;
   }).error(function(){
-    console.log('error');
+    console.log('error profil');
   });
 })
 
@@ -91,7 +113,7 @@ $scope.field.origin = "private";
 
 //Routes
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/')
 
   $stateProvider.state('home', {
@@ -122,4 +144,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/new_field.html',
     controller: 'FieldCtrl'   
   })
-})
+
+  $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+            return {
+                'request': function (config) {
+                    config.headers = config.headers || {};
+                    if ($localStorage.token) {
+                        config.headers.Authorization = $localStorage.token;
+                    }
+                    return config;
+                },
+                'responseError': function(response) {
+                    if(response.status === 403) {
+                        $location.path('/login');
+                    }
+                    return $q.reject(response);
+                }
+            };
+        });
+     })  

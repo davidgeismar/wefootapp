@@ -129,7 +129,6 @@ p{
 	height: 60px;
 	margin-left: 5%;
 	margin-right: 5%;
-	margin-top: 10px;
 	color:#fff;
 	font-weight: bold;
 	border-radius: 5px;
@@ -237,3 +236,8 @@ p{
 	position: relative;
 	right: 20px;
 }
+.err_container{
+	text-align: center;
+	font-weight: bold;
+	color: #cd0000;
+};

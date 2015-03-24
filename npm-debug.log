@@ -1,214 +1,189 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'node-sass' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'auth0-angular' ]
 2 info using npm@2.5.1
 3 info using node@v0.12.0
-4 verbose node symlink /usr/local/bin/node
-5 warn package.json wefootapp1@1.0.0 No repository field.
-6 warn package.json wefootapp1@1.0.0 No README data
-7 silly cache add args [ 'node-sass', null ]
-8 verbose cache add spec node-sass
-9 silly cache add parsed spec { raw: 'node-sass',
-9 silly cache add   scope: null,
-9 silly cache add   name: 'node-sass',
-9 silly cache add   rawSpec: '',
-9 silly cache add   spec: '*',
-9 silly cache add   type: 'range' }
-10 verbose addNamed node-sass@*
-11 silly addNamed semver.valid null
-12 silly addNamed semver.validRange *
-13 silly addNameRange { name: 'node-sass', range: '*', hasData: false }
-14 silly mapToRegistry name node-sass
-15 silly mapToRegistry using default registry
-16 silly mapToRegistry registry https://registry.npmjs.org/
-17 silly mapToRegistry uri https://registry.npmjs.org/node-sass
-18 verbose addNameRange registry:https://registry.npmjs.org/node-sass not in flight; fetching
-19 verbose request uri https://registry.npmjs.org/node-sass
-20 verbose request no auth needed
-21 info attempt registry request try #1 at 14:33:56
-22 verbose request id bc9424ce9e72337e
-23 http request GET https://registry.npmjs.org/node-sass
-24 http 200 https://registry.npmjs.org/node-sass
-25 silly get cb [ 200,
-25 silly get   { date: 'Mon, 23 Mar 2015 13:33:54 GMT',
-25 silly get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-25 silly get     etag: '"7TSGA842S2MHBIADJIKC0XSJN"',
-25 silly get     'content-type': 'application/json',
-25 silly get     'cache-control': 'max-age=60',
-25 silly get     'content-length': '108038',
-25 silly get     'accept-ranges': 'bytes',
-25 silly get     via: '1.1 varnish',
-25 silly get     age: '19',
-25 silly get     'x-served-by': 'cache-fra1232-FRA',
-25 silly get     'x-cache': 'HIT',
-25 silly get     'x-cache-hits': '1',
-25 silly get     'x-timer': 'S1427117634.013253,VS0,VE0',
-25 silly get     vary: 'Accept',
-25 silly get     'keep-alive': 'timeout=10, max=50',
-25 silly get     connection: 'Keep-Alive' } ]
-26 verbose get saving node-sass to /Users/mac/.npm/registry.npmjs.org/node-sass/.cache.json
-27 silly addNameRange number 2 { name: 'node-sass', range: '*', hasData: true }
-28 silly addNameRange versions [ 'node-sass',
-28 silly addNameRange   [ '0.2.0',
-28 silly addNameRange     '0.2.1',
-28 silly addNameRange     '0.2.2',
-28 silly addNameRange     '0.2.3',
-28 silly addNameRange     '0.2.4',
-28 silly addNameRange     '0.2.5',
-28 silly addNameRange     '0.2.6',
-28 silly addNameRange     '0.3.0',
-28 silly addNameRange     '0.4.0',
-28 silly addNameRange     '0.4.1',
-28 silly addNameRange     '0.4.2',
-28 silly addNameRange     '0.4.3',
-28 silly addNameRange     '0.4.4',
-28 silly addNameRange     '0.5.0',
-28 silly addNameRange     '0.5.1',
-28 silly addNameRange     '0.5.2',
-28 silly addNameRange     '0.5.3',
-28 silly addNameRange     '0.5.4',
-28 silly addNameRange     '0.6.0',
-28 silly addNameRange     '0.6.1',
-28 silly addNameRange     '0.6.2',
-28 silly addNameRange     '0.6.3',
-28 silly addNameRange     '0.6.4',
-28 silly addNameRange     '0.6.5',
-28 silly addNameRange     '0.6.6',
-28 silly addNameRange     '0.6.7',
-28 silly addNameRange     '0.7.0-alpha',
-28 silly addNameRange     '0.7.0',
-28 silly addNameRange     '0.8.0',
-28 silly addNameRange     '0.8.1',
-28 silly addNameRange     '0.8.2',
-28 silly addNameRange     '0.8.3',
-28 silly addNameRange     '0.8.4',
-28 silly addNameRange     '0.8.5',
-28 silly addNameRange     '0.8.6',
-28 silly addNameRange     '0.9.0',
-28 silly addNameRange     '0.9.1',
-28 silly addNameRange     '0.9.2',
-28 silly addNameRange     '0.9.3',
-28 silly addNameRange     '0.9.4-rc1',
-28 silly addNameRange     '0.9.4',
-28 silly addNameRange     '0.9.5-rc1',
-28 silly addNameRange     '0.9.5',
-28 silly addNameRange     '0.9.6',
-28 silly addNameRange     '1.0.0',
-28 silly addNameRange     '1.0.1',
-28 silly addNameRange     '1.0.2-alpha',
-28 silly addNameRange     '1.0.2',
-28 silly addNameRange     '1.0.3',
-28 silly addNameRange     '1.1.0',
-28 silly addNameRange     '1.1.1',
-28 silly addNameRange     '1.1.2',
-28 silly addNameRange     '1.1.3',
-28 silly addNameRange     '1.1.4',
-28 silly addNameRange     '1.2.0',
-28 silly addNameRange     '1.2.1',
-28 silly addNameRange     '1.2.2',
-28 silly addNameRange     '1.2.3',
-28 silly addNameRange     '2.0.0-beta',
-28 silly addNameRange     '2.0.0',
-28 silly addNameRange     '2.0.1',
-28 silly addNameRange     '3.0.0-pre',
-28 silly addNameRange     '3.0.0-alpha.0' ] ]
-29 verbose addNamed node-sass@3.0.0-alpha.0
-30 silly addNamed semver.valid 3.0.0-alpha.0
-31 silly addNamed semver.validRange 3.0.0-alpha.0
-32 silly mapToRegistry name node-sass
-33 silly mapToRegistry using default registry
-34 silly mapToRegistry registry https://registry.npmjs.org/
-35 silly mapToRegistry uri https://registry.npmjs.org/node-sass
-36 verbose addRemoteTarball https://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz not in flight; adding
-37 verbose addRemoteTarball [ 'https://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz',
-37 verbose addRemoteTarball   'bad2073ebfc2c6c3f3bc354fa5059f5437babf02' ]
-38 info retry fetch attempt 1 at 14:33:56
-39 info attempt registry request try #1 at 14:33:56
-40 http fetch GET https://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz
-41 http fetch 200 https://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz
-42 silly fetchAndShaCheck shasum bad2073ebfc2c6c3f3bc354fa5059f5437babf02
-43 verbose addTmpTarball /var/folders/g7/0nyy4x1d6j17_x0jd3wtzmg00000gn/T/npm-29940-559cdf99/registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz not in flight; adding
-44 verbose addTmpTarball already have metadata; skipping unpack for node-sass@3.0.0-alpha.0
-45 silly cache afterAdd node-sass@3.0.0-alpha.0
-46 verbose afterAdd /Users/mac/.npm/node-sass/3.0.0-alpha.0/package/package.json not in flight; writing
-47 verbose afterAdd /Users/mac/.npm/node-sass/3.0.0-alpha.0/package/package.json written
-48 silly install resolved [ { name: 'node-sass',
-48 silly install resolved     version: '3.0.0-alpha.0',
-48 silly install resolved     libsass: '3.1.0',
-48 silly install resolved     description: 'Wrapper around libsass',
-48 silly install resolved     license: 'MIT',
-48 silly install resolved     homepage: 'https://github.com/sass/node-sass',
-48 silly install resolved     repository: { type: 'git', url: 'https://github.com/sass/node-sass' },
-48 silly install resolved     author:
-48 silly install resolved      { name: 'Andrew Nesbitt',
-48 silly install resolved        email: 'andrewnez@gmail.com',
-48 silly install resolved        url: 'http://andrew.github.com' },
-48 silly install resolved     engines: { node: '>=0.10.0' },
-48 silly install resolved     main: 'lib/index.js',
-48 silly install resolved     bin: { 'node-sass': 'bin/node-sass' },
-48 silly install resolved     gypfile: true,
-48 silly install resolved     scripts:
-48 silly install resolved      { coverage: 'node scripts/coverage.js',
-48 silly install resolved        install: 'node scripts/install.js',
-48 silly install resolved        postinstall: 'node scripts/build.js',
-48 silly install resolved        pretest: 'jshint bin lib test',
-48 silly install resolved        test: 'mocha test' },
-48 silly install resolved     files: [ 'bin', 'binding.gyp', 'lib', 'scripts', 'src' ],
-48 silly install resolved     keywords: [ 'css', 'libsass', 'preprocessor', 'sass', 'scss', 'style' ],
-48 silly install resolved     dependencies:
-48 silly install resolved      { chalk: '^1.0.0',
-48 silly install resolved        gaze: '^0.5.1',
-48 silly install resolved        'get-stdin': '^4.0.1',
-48 silly install resolved        meow: '^3.1.0',
-48 silly install resolved        mkdirp: '^0.5.0',
-48 silly install resolved        nan: '^1.7.0',
-48 silly install resolved        npmconf: '^2.1.1',
-48 silly install resolved        pangyp: '^2.1.0',
-48 silly install resolved        request: '^2.53.0',
-48 silly install resolved        'sass-graph': '^1.0.3' },
-48 silly install resolved     devDependencies:
-48 silly install resolved      { coveralls: '^2.11.2',
-48 silly install resolved        'cross-spawn': '^0.2.6',
-48 silly install resolved        jscoverage: '^0.5.9',
-48 silly install resolved        jshint: '^2.6.3',
-48 silly install resolved        mocha: '^2.2.1',
-48 silly install resolved        'mocha-lcov-reporter': '^0.0.2' },
-48 silly install resolved     gitHead: 'd72463da6be026ae41d124c0ab6d613259ed1dad',
-48 silly install resolved     bugs: { url: 'https://github.com/sass/node-sass/issues' },
-48 silly install resolved     _id: 'node-sass@3.0.0-alpha.0',
-48 silly install resolved     _shasum: 'bad2073ebfc2c6c3f3bc354fa5059f5437babf02',
-48 silly install resolved     _from: 'node-sass@*',
-48 silly install resolved     _npmVersion: '2.5.1',
-48 silly install resolved     _nodeVersion: '0.12.0',
-48 silly install resolved     _npmUser: { name: 'am11', email: 'adeelbm@outlook.com' },
-48 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object], [Object] ],
-48 silly install resolved     dist:
-48 silly install resolved      { shasum: 'bad2073ebfc2c6c3f3bc354fa5059f5437babf02',
-48 silly install resolved        tarball: 'http://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz' },
-48 silly install resolved     directories: {},
-48 silly install resolved     _resolved: 'https://registry.npmjs.org/node-sass/-/node-sass-3.0.0-alpha.0.tgz' } ]
-49 info install node-sass@3.0.0-alpha.0 into /Users/mac/wefootapp
-50 info installOne node-sass@3.0.0-alpha.0
-51 verbose installOne of node-sass to /Users/mac/wefootapp not in flight; installing
-52 warn locking Error: EACCES, open '/Users/mac/.npm/_locks/node-sass-779a6d13fbd9972a.lock'
-52 warn locking     at Error (native)
-52 warn locking  /Users/mac/.npm/_locks/node-sass-779a6d13fbd9972a.lock failed { [Error: EACCES, open '/Users/mac/.npm/_locks/node-sass-779a6d13fbd9972a.lock']
-52 warn locking   errno: -13,
-52 warn locking   code: 'EACCES',
-52 warn locking   path: '/Users/mac/.npm/_locks/node-sass-779a6d13fbd9972a.lock' }
-53 verbose stack Error: Attempt to unlock /Users/mac/wefootapp/node_modules/node-sass, which hasn't been locked
-53 verbose stack     at unlock (/usr/local/lib/node_modules/npm/lib/utils/locker.js:66:11)
-53 verbose stack     at cb (/usr/local/lib/node_modules/npm/lib/install.js:929:5)
-53 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:933:20
-53 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/locker.js:40:9
-53 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:149:38)
-53 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:177:38
-53 verbose stack     at FSReqWrap.oncomplete (fs.js:99:15)
-54 verbose cwd /Users/mac/wefootapp
-55 error Darwin 14.0.0
-56 error argv "node" "/usr/local/bin/npm" "install" "node-sass"
-57 error node v0.12.0
-58 error npm  v2.5.1
-59 error Attempt to unlock /Users/mac/wefootapp/node_modules/node-sass, which hasn't been locked
-60 error If you need help, you may report this error at:
-60 error     <http://github.com/npm/npm/issues>
-61 verbose exit [ 1, true ]
+4 warn package.json wefootapp1@1.0.0 No repository field.
+5 warn package.json wefootapp1@1.0.0 No README data
+6 silly cache add args [ 'auth0-angular', null ]
+7 verbose cache add spec auth0-angular
+8 silly cache add parsed spec { raw: 'auth0-angular',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'auth0-angular',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 verbose addNamed auth0-angular@*
+10 silly addNamed semver.valid null
+11 silly addNamed semver.validRange *
+12 silly addNameRange { name: 'auth0-angular', range: '*', hasData: false }
+13 silly mapToRegistry name auth0-angular
+14 silly mapToRegistry using default registry
+15 silly mapToRegistry registry https://registry.npmjs.org/
+16 silly mapToRegistry uri https://registry.npmjs.org/auth0-angular
+17 verbose addNameRange registry:https://registry.npmjs.org/auth0-angular not in flight; fetching
+18 verbose request uri https://registry.npmjs.org/auth0-angular
+19 verbose request no auth needed
+20 info attempt registry request try #1 at 17:36:25
+21 verbose request id 63a8fb9133f6369e
+22 http request GET https://registry.npmjs.org/auth0-angular
+23 http 200 https://registry.npmjs.org/auth0-angular
+24 silly get cb [ 200,
+24 silly get   { date: 'Mon, 23 Mar 2015 16:36:27 GMT',
+24 silly get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+24 silly get     etag: '"31YUBP4H6UXD7K91IY5RVFZA7"',
+24 silly get     'content-type': 'application/json',
+24 silly get     'cache-control': 'max-age=60',
+24 silly get     'content-length': '98891',
+24 silly get     'accept-ranges': 'bytes',
+24 silly get     via: '1.1 varnish',
+24 silly get     age: '0',
+24 silly get     'x-served-by': 'cache-fra1236-FRA',
+24 silly get     'x-cache': 'MISS',
+24 silly get     'x-cache-hits': '0',
+24 silly get     'x-timer': 'S1427128585.862991,VS0,VE1189',
+24 silly get     vary: 'Accept',
+24 silly get     'keep-alive': 'timeout=10, max=50',
+24 silly get     connection: 'Keep-Alive' } ]
+25 verbose get saving auth0-angular to /Users/raphaelfettaya/.npm/registry.npmjs.org/auth0-angular/.cache.json
+26 silly addNameRange number 2 { name: 'auth0-angular', range: '*', hasData: true }
+27 silly addNameRange versions [ 'auth0-angular',
+27 silly addNameRange   [ '0.0.2',
+27 silly addNameRange     '0.1.1',
+27 silly addNameRange     '0.1.2',
+27 silly addNameRange     '0.2.0',
+27 silly addNameRange     '0.3.1',
+27 silly addNameRange     '0.3.2',
+27 silly addNameRange     '0.3.3',
+27 silly addNameRange     '0.4.0',
+27 silly addNameRange     '0.4.1',
+27 silly addNameRange     '0.4.2',
+27 silly addNameRange     '0.4.3',
+27 silly addNameRange     '0.4.4',
+27 silly addNameRange     '0.4.5',
+27 silly addNameRange     '0.4.6',
+27 silly addNameRange     '0.4.7',
+27 silly addNameRange     '1.0.0',
+27 silly addNameRange     '1.0.1',
+27 silly addNameRange     '1.1.0',
+27 silly addNameRange     '1.1.1',
+27 silly addNameRange     '1.1.2',
+27 silly addNameRange     '1.1.4',
+27 silly addNameRange     '1.1.5',
+27 silly addNameRange     '2.0.0',
+27 silly addNameRange     '2.0.1',
+27 silly addNameRange     '2.0.2',
+27 silly addNameRange     '2.0.3',
+27 silly addNameRange     '2.0.4',
+27 silly addNameRange     '2.0.5',
+27 silly addNameRange     '2.0.6',
+27 silly addNameRange     '2.0.7',
+27 silly addNameRange     '2.1.0',
+27 silly addNameRange     '2.2.0',
+27 silly addNameRange     '2.2.1',
+27 silly addNameRange     '2.2.3',
+27 silly addNameRange     '2.2.5',
+27 silly addNameRange     '2.2.6',
+27 silly addNameRange     '2.2.7',
+27 silly addNameRange     '2.2.9',
+27 silly addNameRange     '2.2.10',
+27 silly addNameRange     '3.0.2',
+27 silly addNameRange     '4.0.0' ] ]
+28 verbose addNamed auth0-angular@4.0.0
+29 silly addNamed semver.valid 4.0.0
+30 silly addNamed semver.validRange 4.0.0
+31 silly mapToRegistry name auth0-angular
+32 silly mapToRegistry using default registry
+33 silly mapToRegistry registry https://registry.npmjs.org/
+34 silly mapToRegistry uri https://registry.npmjs.org/auth0-angular
+35 verbose addRemoteTarball https://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz not in flight; adding
+36 verbose addRemoteTarball [ 'https://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz',
+36 verbose addRemoteTarball   'd45e6bdd8832a96978f79b249565895a69131496' ]
+37 info retry fetch attempt 1 at 17:36:27
+38 info attempt registry request try #1 at 17:36:27
+39 http fetch GET https://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz
+40 http fetch 200 https://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz
+41 silly fetchAndShaCheck shasum d45e6bdd8832a96978f79b249565895a69131496
+42 verbose addTmpTarball /var/folders/gd/z1n0ns0136j694_823qy_4gm0000gn/T/npm-3220-33723027/registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz not in flight; adding
+43 verbose addTmpTarball already have metadata; skipping unpack for auth0-angular@4.0.0
+44 silly cache afterAdd auth0-angular@4.0.0
+45 verbose afterAdd /Users/raphaelfettaya/.npm/auth0-angular/4.0.0/package/package.json not in flight; writing
+46 verbose afterAdd /Users/raphaelfettaya/.npm/auth0-angular/4.0.0/package/package.json written
+47 silly install resolved [ { name: 'auth0-angular',
+47 silly install resolved     description: 'Angular SDK to use with Auth0',
+47 silly install resolved     homepage: 'https://auth0.com',
+47 silly install resolved     author: { name: 'Martin Gontovnikas' },
+47 silly install resolved     version: '4.0.0',
+47 silly install resolved     main: './build/auth0-angular.js',
+47 silly install resolved     devDependencies:
+47 silly install resolved      { bower: '^1.3.3',
+47 silly install resolved        chai: '^1.9.1',
+47 silly install resolved        grunt: '^0.4.4',
+47 silly install resolved        'grunt-cli': '^0.1.13',
+47 silly install resolved        'grunt-contrib-clean': '~0.5.0',
+47 silly install resolved        'grunt-contrib-concat': '^0.3.0',
+47 silly install resolved        'grunt-contrib-connect': '^0.7.1',
+47 silly install resolved        'grunt-contrib-copy': '~0.4.1',
+47 silly install resolved        'grunt-contrib-jshint': '^0.10.0',
+47 silly install resolved        'grunt-contrib-uglify': '~0.2.4',
+47 silly install resolved        'grunt-contrib-watch': '~0.2.0',
+47 silly install resolved        'grunt-karma': '^0.8.2',
+47 silly install resolved        'grunt-maxcdn': 'https://github.com/siacomuzzi/grunt-maxcdn/tarball/0.0.1',
+47 silly install resolved        'grunt-ngmin': '0.0.3',
+47 silly install resolved        'grunt-protractor-runner': '^0.2.4',
+47 silly install resolved        'grunt-protractor-webdriver': '^0.1.6',
+47 silly install resolved        'grunt-s3': '~0.2.0-alpha.3',
+47 silly install resolved        'karma-chai': '^0.1.0',
+47 silly install resolved        'karma-chrome-launcher': '~0.1',
+47 silly install resolved        'karma-mocha': '^0.1.3',
+47 silly install resolved        'karma-phantomjs-launcher': '^0.1.3',
+47 silly install resolved        'karma-sinon': '^1.0.3',
+47 silly install resolved        matchdep: '^0.3.0',
+47 silly install resolved        mocha: '^1.18.2',
+47 silly install resolved        phantomjs: '^1.9.0',
+47 silly install resolved        protractor: '^0.21.0',
+47 silly install resolved        'selenium-webdriver': '^2.41.0',
+47 silly install resolved        sinon: '^1.9.1',
+47 silly install resolved        'uglify-js': '~2.4.0' },
+47 silly install resolved     scripts: { test: 'grunt test -v' },
+47 silly install resolved     repository:
+47 silly install resolved      { type: 'git',
+47 silly install resolved        url: 'https://github.com/auth0/auth0-angular.git' },
+47 silly install resolved     gitHead: '57c002edcfd31f40619bd492cdcc0c92a55a0ee0',
+47 silly install resolved     bugs: { url: 'https://github.com/auth0/auth0-angular/issues' },
+47 silly install resolved     _id: 'auth0-angular@4.0.0',
+47 silly install resolved     _shasum: 'd45e6bdd8832a96978f79b249565895a69131496',
+47 silly install resolved     _from: 'auth0-angular@*',
+47 silly install resolved     _npmVersion: '2.0.0-alpha-5',
+47 silly install resolved     _npmUser: { name: 'mgonto', email: 'martin@gonto.com.ar' },
+47 silly install resolved     maintainers: [ [Object], [Object], [Object] ],
+47 silly install resolved     dist:
+47 silly install resolved      { shasum: 'd45e6bdd8832a96978f79b249565895a69131496',
+47 silly install resolved        tarball: 'http://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz' },
+47 silly install resolved     directories: {},
+47 silly install resolved     _resolved: 'https://registry.npmjs.org/auth0-angular/-/auth0-angular-4.0.0.tgz' } ]
+48 info install auth0-angular@4.0.0 into /Users/raphaelfettaya/wefootapp
+49 info installOne auth0-angular@4.0.0
+50 verbose installOne of auth0-angular to /Users/raphaelfettaya/wefootapp not in flight; installing
+51 warn locking Error: EACCES, open '/Users/raphaelfettaya/.npm/_locks/auth0-angular-94d0cf42abfc3a3d.lock'
+51 warn locking     at Error (native)
+51 warn locking  /Users/raphaelfettaya/.npm/_locks/auth0-angular-94d0cf42abfc3a3d.lock failed { [Error: EACCES, open '/Users/raphaelfettaya/.npm/_locks/auth0-angular-94d0cf42abfc3a3d.lock']
+51 warn locking   errno: -13,
+51 warn locking   code: 'EACCES',
+51 warn locking   path: '/Users/raphaelfettaya/.npm/_locks/auth0-angular-94d0cf42abfc3a3d.lock' }
+52 verbose stack Error: Attempt to unlock /Users/raphaelfettaya/wefootapp/node_modules/auth0-angular, which hasn't been locked
+52 verbose stack     at unlock (/usr/local/lib/node_modules/npm/lib/utils/locker.js:66:11)
+52 verbose stack     at cb (/usr/local/lib/node_modules/npm/lib/install.js:929:5)
+52 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:933:20
+52 verbose stack     at /usr/local/lib/node_modules/npm/lib/utils/locker.js:40:9
+52 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:149:38)
+52 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/lockfile/lockfile.js:177:38
+52 verbose stack     at FSReqWrap.oncomplete (fs.js:99:15)
+53 verbose cwd /Users/raphaelfettaya/wefootapp
+54 error Darwin 14.1.0
+55 error argv "node" "/usr/local/bin/npm" "install" "auth0-angular"
+56 error node v0.12.0
+57 error npm  v2.5.1
+58 error Attempt to unlock /Users/raphaelfettaya/wefootapp/node_modules/auth0-angular, which hasn't been locked
+59 error If you need help, you may report this error at:
+59 error     <http://github.com/npm/npm/issues>
+60 verbose exit [ 1, true ]

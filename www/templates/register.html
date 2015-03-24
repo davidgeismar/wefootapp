@@ -25,11 +25,11 @@
   <label class="item item-input">
     <input type="text" name="city" ng-model="user.city" placeholder="Ville">
   </label>
-
-<div ng-click="launchReq()" class="register_inscr">
-  <button  class="homepage_button button button-positive">
-    S'inscrire
-  </button>
+  <p class="err_container"> {{err}} </p>
+  <div ng-click="launchReq()" class="register_inscr">
+    <button  class="homepage_button button button-positive">
+      S'inscrire
+    </button>
   </div>
 </form>
 </ion-content>
