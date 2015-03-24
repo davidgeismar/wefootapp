@@ -30,7 +30,6 @@ a{
 }
 
 .select_pic_field{
-	padding-top:5%;
 	font-size:14px;
 	text-align:center;
 }
@@ -47,8 +46,19 @@ a{
 	padding-bottom:5%;
 }
 
+.select_pic_container_field{
+	padding-top:10px;
+}
+
 .cam_size{
-	font-size: 90px;
+	font-size: 150px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+.upload_size{
+	font-size: 30px;
 	text-align:center;
 	margin-left:auto;
 	margin-right:auto;

@@ -5,10 +5,16 @@
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('starter', ['ionic', 'ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaSplashscreen) {
+
+
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+      setTimeout(function() {
+    $cordovaSplashscreen.hide()}, 1000)
+
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
@@ -54,7 +60,7 @@ $scope.field.origin = "private";
   };
 
   $scope.getPic = function(){
-
+    $ionicPlatform.ready(function() {
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
       for (var i = 0; i < results.length; i++) {
@@ -63,7 +69,7 @@ $scope.field.origin = "private";
     }, function(error) {
       console.log('error');
     });
-
+});
 }
 
   $scope.launchReq = function(){
@@ -95,15 +101,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'RegisterCtrl' 
   })
 
-  $stateProvider.state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'   
-  })
+  // $stateProvider.state('login', {
+  //   url: '/login',
+  //   templateUrl: 'templates/login.html',
+  //   controller: 'LoginCtrl'   
+  // })
 
     $stateProvider.state('new_field', {
     url: '/new_field',
     templateUrl: 'templates/new_field.html',
+    controller: 'FieldCtrl'   
+  })
+
+        $stateProvider.state('test', {
+    url: '/test',
+    templateUrl: 'templates/test.html',
     controller: 'FieldCtrl'   
   })
 
