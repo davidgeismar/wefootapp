@@ -1,6 +1,20 @@
 
 /* Empty. Add your own CSS if you like */
 
+@font-face {
+    font-family: 'Ubuntu';
+    src: url(../fonts/Ubuntu.ttf);
+}
+@font-face {
+    font-family: 'Ubuntu-B';
+    src: url(../fonts/UbuntuMono-B.ttf);
+    font-weight: bold;
+}
+
+p{
+	font-family: 'Ubuntu',sans-serif;
+}
+
 a{
 	text-decoration: none;
 }
@@ -136,15 +150,15 @@ p{
 	background-color:#273A59;
 }
 .homepage_connect{
-	background-color: #007dea;
+	background-color: #006ddf;
 }
 .homepage_fb{
 	background-color: #3b5998;
 }
 .homepage_register{
 	margin-top: 50px;
-	border: 1px solid #007dea;
-	color: #007dea;
+	border: 1px solid #006ddf;
+	color: #006ddf;
 }
 .actu_header{
 	background-color: #28385c;
@@ -240,4 +254,45 @@ p{
 	text-align: center;
 	font-weight: bold;
 	color: #cd0000;
-};
+}
+.img_menu_bg{
+	width: 100%;
+	height: 200px;
+	background: url('../img/default_pic.jpg') no-repeat center;
+	background-size: cover;
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: blur(5px);
+}
+.img_menu{
+	position: relative;
+	bottom: 160px;
+	width: 120px;
+	border-radius: 50%;
+	margin-left: 70px;
+}
+.content_menu{
+	background-color: #28385c;
+}
+.info_menu{
+	position: relative;
+	bottom: 90px;
+	font-size: 17px;
+	font-weight: bold;
+	padding: 10px 0px;
+	margin: 0px 20px;
+	border-top: 1px solid #6D86BF;
+}
+.info_menu p{
+	color: #ffffff;
+}
+@media screen and (max-width: 568px) { /* IPHONE 5- */
+	.img_menu_bg{
+		height: 170px;
+	}
+	.img_menu{
+	 	bottom: 140px;
+	}
+}

@@ -42,13 +42,14 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
 app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
   $scope.user={};
+  if($localStorage.user) $location.path('/user/profil/'+$localStorage.user.id);  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
-      console.log('success login');
       $localStorage.token = data.token;
-      $location.path('/profil/'+data.id);
+      $location.path('/user/profil/'+data.id);
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
+       // $location.path('/user/profil/'+data.id);
     });
   }
 })
@@ -58,22 +59,30 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage)
   $scope.user={};  
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
-       console.log(data.token);
-       console.log('success');
-       $location.path('/profil/'+data.id);
+       $localStorage.token = data.token;
+       $location.path('/user/profil/'+data.id);
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });
   }
 })
 
-app.controller('ProfilCtrl', function($scope, $stateParams, $http){
+app.controller('ProfilCtrl', function($scope, $stateParams, $http, $localStorage){
   $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
     $scope.user = data;
+    $localStorage.user = data;
   }).error(function(){
     console.log('error profil');
   });
 })
+
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+})
+
+app.controller('UserCtrl',function($scope){})
 
 app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
 $scope.field = {};
@@ -133,16 +142,27 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'LoginCtrl'   
   })
 
-  $stateProvider.state('profil', {
-    url: '/profil/:userId',
-    templateUrl: 'templates/profil.html',
-    controller: 'ProfilCtrl'   
+  $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
+    abstract: true,
+    url: '/user',
+    templateUrl: "templates/layout.html",
+    controller: 'UserCtrl'
   })
 
-    $stateProvider.state('new_field', {
+  $stateProvider.state('user.profil', {
+    url: '/profil/:userId',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/profil.html",
+      controller: 'ProfilCtrl'
+      }
+    }  
+  })
+
+    $stateProvider.state('user.new_field', {
     url: '/new_field',
     templateUrl: 'templates/new_field.html',
-    controller: 'FieldCtrl'   
+    controller: 'FieldCtrl'
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {
