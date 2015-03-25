@@ -166,6 +166,9 @@ p{
 .actu_button{
 	color:#fff;
 }
+.actu_button:hover{
+	color: #fff;
+}
 #actu_title{
 	color: #fff;
 	font-size: 26px;
@@ -197,7 +200,14 @@ p{
 	position: absolute;
 	bottom: 10px;
 }
-.tabs .tab-item .icon.accueilActive {
+.tabs .tab-item .icon.accueil {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_accueil_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.accueilB {
  	background-repeat: no-repeat;
   	background-position: 50%;
 	height: 65%;
@@ -211,11 +221,25 @@ p{
 	background-image: url('../img/nav_mes_foots_gris.svg');
   	background-size:contain;
 }
+.tabs .tab-item .icon.footsB {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_mes_foots_bleu.svg');
+  	background-size:contain;
+}
 .tabs .tab-item .icon.amis {
  	background-repeat: no-repeat;
   	background-position: 50%;
 	height: 65%;
 	background-image: url('../img/nav_amis_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.amisB {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_amis_bleu.svg');
   	background-size:contain;
 }
 .tabs .tab-item .icon.chats {
@@ -225,11 +249,25 @@ p{
 	background-image: url('../img/nav_chats_gris.svg');
   	background-size:contain;
 }
+.tabs .tab-item .icon.chatsB {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_chats_bleu.svg');
+  	background-size:contain;
+}
 .tabs .tab-item .icon.notif {
  	background-repeat: no-repeat;
   	background-position: 50%;
 	height: 65%;
 	background-image: url('../img/nav_notifications_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.notifB {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_notifications_bleu.svg');
   	background-size:contain;
 }
 .tabs{
@@ -318,13 +356,13 @@ p{
 	background-image: url('../img/ball69.svg');
 }
 .icon-power{
-		background-image: url('../img/dumbbell20.svg');
+	background-image: url('../img/dumbbell20.svg');
 }
 .icon-fp{
-		background-image: url('../img/thumbs28.svg');
+	background-image: url('../img/thumbs28.svg');
 }
 .icon-assidu{
-		background-image: url('../img/clock46.svg');
+	background-image: url('../img/clock46.svg');
 }
 .note_menu p{
 	display: inline;
