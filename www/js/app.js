@@ -121,6 +121,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
+  $stateProvider.state('chat', {
+    url: '/chat',
+    templateUrl: 'templates/chat.html',
+  })
+  
   $stateProvider.state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
