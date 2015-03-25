@@ -279,20 +279,126 @@ p{
 .info_menu{
 	position: relative;
 	bottom: 90px;
-	font-size: 17px;
+	font-size: 18px;
 	font-weight: bold;
-	padding: 10px 0px;
+	padding-top: 12px;
 	margin: 0px 20px;
-	border-top: 1px solid #6D86BF;
+	border-top: 1px solid #516082;
 }
 .info_menu p{
 	color: #ffffff;
 }
-@media screen and (max-width: 568px) { /* IPHONE 5- */
+.info_menu i{
+	font-size: 18px;
+	float: right;
+}
+.info_last{
+	border-bottom: 1px solid #516082;
+}
+.note_menu{
+	position: relative;
+  	bottom: 70px;
+  	margin-top: 5px;
+}
+.icon_menu {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 25px;
+  	background-size:contain;
+  	width: 70px;
+  	display: inline-block;
+}
+.icon-shoes {
+	background-image: url('../img/nav_mes_foots_noir.svg');
+	-ms-transform: rotate(20deg); /* IE 9 */
+    -webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
+    transform: rotate(20deg);
+}
+.icon-tech{
+	background-image: url('../img/ball69.svg');
+}
+.icon-power{
+		background-image: url('../img/dumbbell20.svg');
+}
+.icon-fp{
+		background-image: url('../img/thumbs28.svg');
+}
+.icon-assidu{
+		background-image: url('../img/clock46.svg');
+}
+.note_menu p{
+	display: inline;
+	color: #ffffff;
+	position: relative;
+	right: 8px;
+	bottom:5px;
+	font-size: 18px;
+}
+.note_menu i{
+	position: relative;
+	font-size: 20px;
+	margin: 0px 2px;
+	float: right;
+	right: 17px;
+	top:5px;
+	color: #006DDF;
+}
+.logout_menu{
+	position: relative;
+	bottom:10px;
+}
+.icon-logout{
+		background-image: url('../img/shut-down2.svg');
+		height: 20px;
+}
+.logout_menu p{
+	display: inline-block;
+	font-size: 17px;
+	color: #006dff;
+	position: relative;
+	bottom: 3px;
+	right: 15px;
+	font-weight: bold;
+}
+@media screen and (max-width: 400px) { /* ANDROID */
+	.logout_menu{
+		position: relative;
+		bottom:20px;
+	}
+}
+@media screen and (max-width: 320px) { /* IPHONE 5- */
 	.img_menu_bg{
 		height: 170px;
 	}
 	.img_menu{
 	 	bottom: 140px;
+	}
+	.info_menu{
+		font-size: 16px;
+	}
+	.icon_menu{
+		height: 20px;
+	}
+	.info_menu i{
+		font-size: 15px;
+	}
+	.note_menu p{
+		font-size: 16px;
+	}
+	.note_menu i{
+		font-size: 18px;
+		right: 17px;
+		top: 0px;
+	}
+	.logout_menu{
+		position: relative;
+		bottom:40px;
+	}
+	.icon-logout{
+		height: 15px;
+	}
+	.logout_menu p{
+		font-size: 15px;
+		bottom: 2px;
 	}
 }
