@@ -139,7 +139,6 @@ p{
 	height: 60px;
 	margin-left: 5%;
 	margin-right: 5%;
-	margin-top: 10px;
 	color:#fff;
 	font-weight: bold;
 	border-radius: 5px;
@@ -157,3 +156,98 @@ p{
 	border: 1px solid #007dea;
 	color: #007dea;
 }
+.actu_header{
+	background-color: #28385c;
+}
+.actu_button{
+	color:#fff;
+}
+#actu_title{
+	color: #fff;
+	font-size: 26px;
+	font-weight: 300
+}
+.img_container{
+	margin-top:50px;
+	border-radius: 20px;
+	width: 130px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.img_container img{
+	border-radius: 50%;
+	width: 130px;
+}
+.main_actu{
+	background: #ffffff url("../img/bg_img.jpg") no-repeat center center;
+	background-size: cover;
+}
+.actu_name{
+	color: #fff;
+	position: relative;
+	bottom: 20px;
+	font-size: 20px;
+	text-align: center;
+}
+.tab_bottom{
+	position: absolute;
+	bottom: 10px;
+}
+.tabs .tab-item .icon.accueilActive {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_accueil_bleu.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.foots {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_mes_foots_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.amis {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_amis_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.chats {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_chats_gris.svg');
+  	background-size:contain;
+}
+.tabs .tab-item .icon.notif {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 65%;
+	background-image: url('../img/nav_notifications_gris.svg');
+  	background-size:contain;
+}
+.tabs{
+	background-color: #fff;
+}
+.tab-title{
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 8px;
+}
+.tab-item{
+	padding: 5px 0px;
+}
+.actu_logo{
+	width: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	right: 20px;
+}
+.err_container{
+	text-align: center;
+	font-weight: bold;
+	color: #cd0000;
+};
