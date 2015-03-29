@@ -18,6 +18,18 @@ p{
 a{
 	text-decoration: none;
 }
+::-webkit-input-placeholder {
+    font-family: 'Ubuntu';
+}
+:-moz-placeholder {
+   font-family: 'Ubuntu';
+}
+::-moz-placeholder {
+  font-family: 'Ubuntu';
+}
+:-ms-input-placeholder {
+   font-family: 'Ubuntu';
+}
 
 .login-seco, .register_inscr{
 	margin-top:20%;
@@ -286,14 +298,13 @@ p{
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-	right: 20px;
+	right: -20px;
 }
 .err_container{
 	text-align: center;
 	font-weight: bold;
 	color: #cd0000;
 }
-<<<<<<< HEAD
 .img_menu_bg{
 	width: 100%;
 	height: 200px;
@@ -399,47 +410,8 @@ p{
 	right: 15px;
 	font-weight: bold;
 }
-@media screen and (max-width: 400px) { /* ANDROID */
-	.logout_menu{
-		position: relative;
-		bottom:20px;
-	}
-}
-@media screen and (max-width: 320px) { /* IPHONE 5- */
-	.img_menu_bg{
-		height: 170px;
-	}
-	.img_menu{
-	 	bottom: 140px;
-	}
-	.info_menu{
-		font-size: 16px;
-	}
-	.icon_menu{
-		height: 20px;
-	}
-	.info_menu i{
-		font-size: 15px;
-	}
-	.note_menu p{
-		font-size: 16px;
-	}
-	.note_menu i{
-		font-size: 18px;
-		right: 17px;
-		top: 0px;
-	}
-	.logout_menu{
-		position: relative;
-		bottom:40px;
-	}
-	.icon-logout{
-		height: 15px;
-	}
-	.logout_menu p{
-		font-size: 15px;
-		bottom: 2px;
-	}
+.no_hide{
+	display: inline-block !important;
 }
 .text_chat{
     font-size: 36px;
@@ -463,9 +435,7 @@ p{
     width: 80%;
     margin-left: 10%;
     height: 100%;
-    border-bottom-color: #000;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    border-bottom:1px solid #e4e4e4;
 }
 .img_chat{
     width: 60px;  
@@ -510,4 +480,119 @@ p{
     margin-bottom: 0px;
     line-height: 1.273;
     width: 60%;
+}
+.container_friends{
+	margin-top: 40px;
+	height: 100%;
+}
+.list{
+	border:none;
+}
+.container_list_friends{
+	background-color: rgb( 242, 243, 249 );
+	height: 100%;
+}
+.scroll{
+	height: 100%;
+}
+.one_friends{
+	margin: 0px 20px;
+    border-bottom: 1px solid #DBDAE3;
+    height: 65px
+}
+.name_friends{
+	display: inline-block;
+}
+.name_friends p{
+	position: relative;
+	bottom: 15px;
+	margin-left: 5px;
+	font-size: 17px;
+	color: #28385c;
+}
+.img_friends img{
+	width: 48px;
+}
+.star_friends{
+	display: inline-block;
+	background-color: #ffffff;
+	border-radius: 50%;
+	float: right;
+	height: 40px;
+	width: 40px;
+	margin-top: 14px;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+.star_friends i{
+	color: #fffc00;
+	font-size: 32px;
+}
+.grey i{
+	color: #919191;
+}
+.iconHeader {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 25px;
+	margin-top: 5px;
+  	background-size:contain;
+  	width: 70px;
+  	display: inline-block;
+}
+.icon_friend{
+	background-image: url('../img/icon_bonhomme_carnet.svg');
+}
+.icon_none{
+	background: none;
+}
+@media screen and (max-width: 400px) { /* ANDROID */
+	.logout_menu{
+		position: relative;
+		bottom:20px;
+	}
+}
+@media screen and (max-width: 320px) { /* IPHONE 5- */
+	.img_menu_bg{
+		height: 170px;
+	}
+	.img_menu{
+	 	bottom: 140px;
+	}
+	.info_menu{
+		font-size: 16px;
+	}
+	.icon_menu{
+		height: 20px;
+	}
+	.info_menu i{
+		font-size: 15px;
+	}
+	.note_menu p{
+		font-size: 16px;
+	}
+	.note_menu i{
+		font-size: 18px;
+		right: 17px;
+		top: 0px;
+	}
+	.logout_menu{
+		position: relative;
+		bottom:40px;
+	}
+	.icon-logout{
+		height: 15px;
+	}
+	.logout_menu p{
+		font-size: 15px;
+		bottom: 2px;
+	}
+	.star_friends{
+		float: right;
+		height: 35px;
+		width: 35px;
+		margin-top: 18px;
+		padding-left: 5px;
+		padding-top: 1px;
+	}
 }
