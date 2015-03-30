@@ -1,6 +1,8 @@
 
 //GLOBAL FUNCTIONS
-var switchIcon = function (icon) {
+var modalLink = "";
+var switchIcon = function (icon,link) {
+      modalLink = link;
       console.log(icon);
       elem = document.getElementsByClassName('iconHeader')[0];
       console.log(elem);
@@ -87,7 +89,7 @@ app.controller('ChatCtrl', function($scope, $localStorage){
 app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
   $scope.user = {};
   console.log('opened profil');
-  switchIcon('icon_none');
+  switchIcon('icon_none','');
   $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
     $scope.user = $localStorage.user;
   }).error(function(){
@@ -101,20 +103,61 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
   };
 })
 
-app.controller('UserCtrl',function($scope,$localStorage,$location){
+app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
   $scope.user = $localStorage.user;
   $scope.logout = function (){
     $localStorage.user = {};
     $localStorage.token = "";
     $location.path('/')
   };
+  //MODAL HANDLER
+  $ionicModal.fromTemplateUrl('templates/search.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+      console.log('hello');
+      $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+      $scope.modal.hide();
+  };
+  $scope.switchSearchFb = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_fb').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_wf_search').addClass('hidden');
+  }
+  $scope.switchSearchWf = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_wf').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_fb_search').addClass('hidden');
+    }
+  $scope.searchQuery = function(word){
+      if(word.length>2){
+       $http.get('http://localhost:1337/search/'+word).success(function(data){
+        $scope.results = data;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+  }
+  $scope.addFriend = function(target){
+    $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
+      console.log('ok');
+    }).error(function(){
+      console.log('error');
+    })
+  }
 })
 
 app.controller('FriendsCtrl',function($scope, $localStorage){
-   console.log('opened friends');
    $scope.user = $localStorage.user; 
-   switchIcon('icon_friend');
- })
+   switchIcon('icon_friend','search');
+  })
 
 app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
 $scope.field = {};

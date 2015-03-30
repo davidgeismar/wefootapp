@@ -31,6 +31,10 @@ a{
    font-family: 'Ubuntu';
 }
 
+.hidden{
+	display: none;
+}
+
 .login-seco, .register_inscr{
 	margin-top:20%;
 	text-align:center;
@@ -546,6 +550,106 @@ p{
 .icon_none{
 	background: none;
 }
+.title{
+	color: #ffffff;
+}
+.icon_modal{
+	color: #ffffff;
+	font-size: 18px;
+  	margin-top: 8px;
+  	margin-left: 5px;
+}
+.switcher_search{
+	background-color: #006dff;
+	height: 100px;
+}
+.switch{
+	padding-top: 15px;
+	text-align: center;
+	display: inline-block;
+	width: 49%;
+	height: 100px;
+}
+.switch_wf1{
+	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 50px;
+  	background-size:contain;
+  	width: 70px;
+  	display: inline-block;
+  	background-image: url('../img/icon_accueil_white.svg');
+}
+.opened_search .switch_wf1{
+	background-image: url('../img/icon_accueil_lightB.svg');
+}
+.switch_title{
+	color: #ffffff;
+	font-weight: bold;
+}
+.switch i{
+	color: #ffffff;
+	font-size: 50px;
+}
+.switch_fb{
+	position: relative;
+	bottom: 5px;
+  	left: 4px;
+}
+.opened_search{
+	background-color: #ffffff;
+}
+.opened_search p{
+	color: #006dff;
+}
+.opened_search i{
+	color: #006dff;
+}
+.item-input{
+	background-color: #fff;
+}
+.img_search img{
+	width: 40px;
+}
+.one_search{
+	margin: 0px 20px;
+    border-bottom: 1px solid #DBDAE3;
+    height: 60px;
+}
+.name_search{
+	display: inline-block;
+}
+.name_search p{
+	position: relative;
+	bottom: 12px;
+	margin-left: 5px;
+	font-size: 17px;
+	color: #28385c;
+}
+.icon_friend_search{
+	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 30px;
+	margin-top: 15px;
+  	background-size:contain;
+  	width: 40px;
+  	display: inline-block;
+	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
+	float: right;
+}
+.one_search i{
+	font-size: 20px;
+	float: right;
+	position: relative;
+	right: 15px;
+	top: 24px;
+	color: #c4c4c4;
+}
+.disabled p{
+	color: #c4c4c4;
+}
+.scroll-content{
+	height: auto !important;
+}
 @media screen and (max-width: 400px) { /* ANDROID */
 	.logout_menu{
 		position: relative;
@@ -595,4 +699,20 @@ p{
 		padding-left: 5px;
 		padding-top: 1px;
 	}
+	.switcher_search{
+		height: 70px;
+	}
+	.switch{
+		padding-top: 12px;
+		height: 70px;
+	}
+	.switch_wf1{
+		height: 30px;
+	}
+	.switch i{
+		font-size: 30px;
+	}
+	.switch_fb{
+		bottom: 4px;
+}
 }
