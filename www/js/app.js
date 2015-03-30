@@ -1,10 +1,24 @@
+
+//GLOBAL FUNCTIONS
+var modalLink = "";
+var switchIcon = function (icon,link) {
+      modalLink = link;
+      console.log(icon);
+      elem = document.getElementsByClassName('iconHeader')[0];
+      console.log(elem);
+      if(elem.className.indexOf("icon_")>-1)
+        elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+      else
+        elem.className = elem.className + " " + icon;
+};
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ngCordova'])
 
+var app = angular.module('starter', ['ionic', 'ngCordova'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -46,10 +60,10 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
+      $localStorage.user = data;
       $location.path('/user/profil/'+data.id);
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
-       // $location.path('/user/profil/'+data.id);
     });
   }
 })
@@ -60,6 +74,7 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage)
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
        $localStorage.token = data.token;
+       $localStorage.user = data;
        $location.path('/user/profil/'+data.id);
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
@@ -67,12 +82,18 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage)
   }
 })
 
-app.controller('ProfilCtrl', function($scope, $stateParams, $http, $localStorage){
+app.controller('ChatCtrl', function($scope, $localStorage){
+   $scope.user = $localStorage.user;
+})
+
+app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
+  $scope.user = {};
+  console.log('opened profil');
+  switchIcon('icon_none','');
   $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
-    $scope.user = data;
-    $localStorage.user = data;
+    $scope.user = $localStorage.user;
   }).error(function(){
-    console.log('error profil');
+    $location.path('/login');
   });
 })
 
@@ -82,7 +103,61 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
   };
 })
 
-app.controller('UserCtrl',function($scope){})
+app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
+  $scope.user = $localStorage.user;
+  $scope.logout = function (){
+    $localStorage.user = {};
+    $localStorage.token = "";
+    $location.path('/')
+  };
+  //MODAL HANDLER
+  $ionicModal.fromTemplateUrl('templates/search.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+      console.log('hello');
+      $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+      $scope.modal.hide();
+  };
+  $scope.switchSearchFb = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_fb').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_wf_search').addClass('hidden');
+  }
+  $scope.switchSearchWf = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_wf').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_fb_search').addClass('hidden');
+    }
+  $scope.searchQuery = function(word){
+      if(word.length>2){
+       $http.get('http://localhost:1337/search/'+word).success(function(data){
+        $scope.results = data;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+  }
+  $scope.addFriend = function(target){
+    $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
+      console.log('ok');
+    }).error(function(){
+      console.log('error');
+    })
+  }
+})
+
+app.controller('FriendsCtrl',function($scope, $localStorage){
+   $scope.user = $localStorage.user;
+   switchIcon('icon_friend','search');
+  })
 
 app.controller('FootCtrl',function($scope){})
 
@@ -124,9 +199,6 @@ $scope.field.origin = "private";
       console.log('error');
     });
   }
-
-
-
 })
 
 
@@ -140,41 +212,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
-  $stateProvider.state('user.foots', {
-    url: '/foots',
-    views: {
-      'menuContent' :{
-      templateUrl: "templates/mes_foots.html",
-      controller: 'FootCtrl'
-      }
-    }
-  })
-
-  $stateProvider.state('user.foots.tabs.crees', {
-    url: '/crees',
-    views: {
-      'menuContent' :{
-      templateUrl: "templates/crees.html",
-      controller: 'FootCtrl'
-      }
-    }
-  })
-
-   $stateProvider.state('user.foots.tabs.rejoints', {
-    url: '/rejoints',
-    views: {
-      'menuContent' :{
-      templateUrl: "templates/rejoints.html",
-      controller: 'FootCtrl'
-      }
-    }
-  })
-
-
-  $stateProvider.state('chat', {
-    url: '/chat',
-    templateUrl: 'templates/chat.html',
-  })
 
   $stateProvider.state('register', {
     url: '/register',
@@ -195,7 +232,19 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'UserCtrl'
   })
 
+    $stateProvider.state('user.chat', {
+    cache: false,
+    url: '/chat',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/chat.html",
+      controller: 'ChatCtrl'
+      }
+    }
+  })
+
   $stateProvider.state('user.profil', {
+    cache: false,
     url: '/profil/:userId',
     views: {
       'menuContent' :{
@@ -205,10 +254,21 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     }
   })
 
-    $stateProvider.state('user.new_field', {
+  $stateProvider.state('user.new_field', {
     url: '/new_field',
     templateUrl: 'templates/new_field.html',
     controller: 'FieldCtrl'
+  })
+
+  $stateProvider.state('user.friends', {
+    cache: false,
+    url: '/friends',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/friends.html",
+      controller: 'FriendsCtrl'
+      }
+    }
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {

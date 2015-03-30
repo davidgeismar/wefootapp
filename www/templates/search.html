@@ -1,0 +1,48 @@
+<ion-modal-view>
+    <ion-header-bar class="actu_header">
+     <i class="ion-chevron-down icon_modal" ng-click="closeModal()"></i>
+ 	 <h1 class="title">Rechercher</h1>
+	</ion-header-bar>
+    <ion-content>
+    <div class="switcher_search">
+    	<div ng-click="switchSearchWf()" class="switch switch_wf opened_search">
+    		<div class="switch_wf1"></div>
+    		<p class="switch_title"> WeFoot </p>
+    	</div>
+    	 <div ng-click="switchSearchFb()" class="switch switch_fb">
+    		<i class="ion-social-facebook"></i>
+    		<p class="switch_title"> Facebook </p>
+    	</div>
+    </div>
+    <!-- WEFOOT SECTION -->
+	<div class="content_wf_search container_list_friends">
+		<label class="item-input">
+    		<i class="icon ion-search placeholder-icon"></i>
+    		<input ng-model="word" ng-keydown="searchQuery(word)" type="text" placeholder="Rechercher un nom">
+  		</label>
+		<div ng-repeat="user in results" class="one_search">
+			<div class="img_chat img_search">
+				<img src="../img/default_pic.jpg">
+			</div>
+			<div class="name_search">
+				<p> {{user.first_name}} {{user.last_name}}</p>
+			</div>
+			<div ng-click="addFriend({{user.id}})" class="icon_friend_search">
+			</div>
+		</div>
+<!-- 		<div class="one_search disabled">
+			<div class="img_chat img_search">
+				<img src="../img/default_pic.jpg">
+			</div>
+			<div class="name_search">
+				<p> Johhny Ketmere {{results[0].name}}</p>
+			</div>
+			<i class="ion-checkmark-round"></i>
+		</div> -->
+	</div>
+    <!-- FACEBOOK SECTION -->
+	<div class="content_fb_search hidden" style="text-align:center;">
+	 Non disponible pour le moment.
+	</div>
+    </ion-content>
+</ion-modal-view>

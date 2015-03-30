@@ -18,6 +18,22 @@ p{
 a{
 	text-decoration: none;
 }
+::-webkit-input-placeholder {
+    font-family: 'Ubuntu';
+}
+:-moz-placeholder {
+   font-family: 'Ubuntu';
+}
+::-moz-placeholder {
+  font-family: 'Ubuntu';
+}
+:-ms-input-placeholder {
+   font-family: 'Ubuntu';
+}
+
+.hidden{
+	display: none;
+}
 
 .login-seco, .register_inscr{
 	margin-top:20%;
@@ -286,7 +302,7 @@ p{
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-	right: 20px;
+	right: -20px;
 }
 .err_container{
 	text-align: center;
@@ -399,47 +415,8 @@ p{
 	right: 15px;
 	font-weight: bold;
 }
-@media screen and (max-width: 400px) { /* ANDROID */
-	.logout_menu{
-		position: relative;
-		bottom:20px;
-	}
-}
-@media screen and (max-width: 320px) { /* IPHONE 5- */
-	.img_menu_bg{
-		height: 170px;
-	}
-	.img_menu{
-	 	bottom: 140px;
-	}
-	.info_menu{
-		font-size: 16px;
-	}
-	.icon_menu{
-		height: 20px;
-	}
-	.info_menu i{
-		font-size: 15px;
-	}
-	.note_menu p{
-		font-size: 16px;
-	}
-	.note_menu i{
-		font-size: 18px;
-		right: 17px;
-		top: 0px;
-	}
-	.logout_menu{
-		position: relative;
-		bottom:40px;
-	}
-	.icon-logout{
-		height: 15px;
-	}
-	.logout_menu p{
-		font-size: 15px;
-		bottom: 2px;
-	}
+.no_hide{
+	display: inline-block !important;
 }
 .text_chat{
     font-size: 36px;
@@ -463,9 +440,7 @@ p{
     width: 80%;
     margin-left: 10%;
     height: 100%;
-    border-bottom-color: #000;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+    border-bottom:1px solid #e4e4e4;
 }
 .img_chat{
     width: 60px;
@@ -511,6 +486,7 @@ p{
     line-height: 1.273;
     width: 60%;
 }
+<<<<<<< HEAD
 
 
 .margebas {
@@ -524,3 +500,236 @@ p{
 .margecontent {
   margin-top: 100px;
 }
+=======
+.container_friends{
+	margin-top: 40px;
+	height: 100%;
+}
+.list{
+	border:none;
+}
+.container_list_friends{
+	background-color: rgb( 242, 243, 249 );
+	height: 100%;
+}
+.scroll{
+	height: 100%;
+}
+.one_friends{
+	margin: 0px 20px;
+    border-bottom: 1px solid #DBDAE3;
+    height: 65px
+}
+.name_friends{
+	display: inline-block;
+}
+.name_friends p{
+	position: relative;
+	bottom: 15px;
+	margin-left: 5px;
+	font-size: 17px;
+	color: #28385c;
+}
+.img_friends img{
+	width: 48px;
+}
+.star_friends{
+	display: inline-block;
+	background-color: #ffffff;
+	border-radius: 50%;
+	float: right;
+	height: 40px;
+	width: 40px;
+	margin-top: 14px;
+	padding-left: 7px;
+	padding-top: 3px;
+}
+.star_friends i{
+	color: #fffc00;
+	font-size: 32px;
+}
+.grey i{
+	color: #919191;
+}
+.iconHeader {
+ 	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 25px;
+	margin-top: 5px;
+  	background-size:contain;
+  	width: 70px;
+  	display: inline-block;
+}
+.icon_friend{
+	background-image: url('../img/icon_bonhomme_carnet.svg');
+}
+.icon_none{
+	background: none;
+}
+.title{
+	color: #ffffff;
+}
+.icon_modal{
+	color: #ffffff;
+	font-size: 18px;
+  	margin-top: 8px;
+  	margin-left: 5px;
+}
+.switcher_search{
+	background-color: #006dff;
+	height: 100px;
+}
+.switch{
+	padding-top: 15px;
+	text-align: center;
+	display: inline-block;
+	width: 49%;
+	height: 100px;
+}
+.switch_wf1{
+	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 50px;
+  	background-size:contain;
+  	width: 70px;
+  	display: inline-block;
+  	background-image: url('../img/icon_accueil_white.svg');
+}
+.opened_search .switch_wf1{
+	background-image: url('../img/icon_accueil_lightB.svg');
+}
+.switch_title{
+	color: #ffffff;
+	font-weight: bold;
+}
+.switch i{
+	color: #ffffff;
+	font-size: 50px;
+}
+.switch_fb{
+	position: relative;
+	bottom: 5px;
+  	left: 4px;
+}
+.opened_search{
+	background-color: #ffffff;
+}
+.opened_search p{
+	color: #006dff;
+}
+.opened_search i{
+	color: #006dff;
+}
+.item-input{
+	background-color: #fff;
+}
+.img_search img{
+	width: 40px;
+}
+.one_search{
+	margin: 0px 20px;
+    border-bottom: 1px solid #DBDAE3;
+    height: 60px;
+}
+.name_search{
+	display: inline-block;
+}
+.name_search p{
+	position: relative;
+	bottom: 12px;
+	margin-left: 5px;
+	font-size: 17px;
+	color: #28385c;
+}
+.icon_friend_search{
+	background-repeat: no-repeat;
+  	background-position: 50%;
+	height: 30px;
+	margin-top: 15px;
+  	background-size:contain;
+  	width: 40px;
+  	display: inline-block;
+	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
+	float: right;
+}
+.one_search i{
+	font-size: 20px;
+	float: right;
+	position: relative;
+	right: 15px;
+	top: 24px;
+	color: #c4c4c4;
+}
+.disabled p{
+	color: #c4c4c4;
+}
+.scroll-content{
+	height: auto !important;
+}
+@media screen and (max-width: 400px) { /* ANDROID */
+	.logout_menu{
+		position: relative;
+		bottom:20px;
+	}
+}
+@media screen and (max-width: 320px) { /* IPHONE 5- */
+	.img_menu_bg{
+		height: 170px;
+	}
+	.img_menu{
+	 	bottom: 140px;
+	}
+	.info_menu{
+		font-size: 16px;
+	}
+	.icon_menu{
+		height: 20px;
+	}
+	.info_menu i{
+		font-size: 15px;
+	}
+	.note_menu p{
+		font-size: 16px;
+	}
+	.note_menu i{
+		font-size: 18px;
+		right: 17px;
+		top: 0px;
+	}
+	.logout_menu{
+		position: relative;
+		bottom:40px;
+	}
+	.icon-logout{
+		height: 15px;
+	}
+	.logout_menu p{
+		font-size: 15px;
+		bottom: 2px;
+	}
+	.star_friends{
+		float: right;
+		height: 35px;
+		width: 35px;
+		margin-top: 18px;
+		padding-left: 5px;
+		padding-top: 1px;
+	}
+	.switcher_search{
+		height: 70px;
+	}
+	.switch{
+		padding-top: 12px;
+		height: 70px;
+	}
+	.switch_wf1{
+		height: 30px;
+	}
+	.switch i{
+		font-size: 30px;
+	}
+	.switch_fb{
+		bottom: 4px;
+}
+}
+>>>>>>> b10b117d3b6da9dd4a09a9c0948d2b8b43c5e647
