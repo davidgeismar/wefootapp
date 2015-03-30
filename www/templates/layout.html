@@ -1,13 +1,14 @@
 <ion-side-menus enable-menu-with-back-views="false">
 
 <ion-side-menu-content>
-  <div class="bar bar-header actu_header">
+  <div class="bar bar-header actu_header has-tabs-top">
     <button class="button button-icon icon ion-navicon actu_button" menu-toggle="left"></button>
      <img class="actu_logo" src="../img/logo_alter.svg"/>
   </div>
 
 
-<ion-nav-view name="menuContent"></ion-nav-view>
+ <ion-nav-view name="menuContent"></ion-nav-view>
+
 <div class="tab_container">
 <ion-tabs class="tab_general tabs-icon-top">
   <ion-tab title="Accueil" icon-on="accueilB" icon-off="accueil" href="#/profil/{{user.id}}">
@@ -22,7 +23,7 @@
   </ion-tab>
 </ion-tabs>
 </div>
-</ion-side-menu-content> 
+</ion-side-menu-content>
 
 
 <!-- TOOGLE MENU CONTENT -->

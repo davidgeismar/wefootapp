@@ -122,8 +122,8 @@ p{
 .logo{
 	width:150px;
 	display: block;
-	margin-left: auto; 
-	margin-right: auto; 
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .login-mdpo{
@@ -293,7 +293,7 @@ p{
 	font-weight: bold;
 	color: #cd0000;
 }
-<<<<<<< HEAD
+
 .img_menu_bg{
 	width: 100%;
 	height: 200px;
@@ -446,7 +446,7 @@ p{
     font-family: "Ubuntu";
     color: rgb( 255, 255, 255 );
     font-weight: bold;
-    text-align: center; 
+    text-align: center;
     margin-left: 15%;
     width: 50%;
     margin-top: 5px;
@@ -468,7 +468,7 @@ p{
     border-bottom-width: 1px;
 }
 .img_chat{
-    width: 60px;  
+    width: 60px;
     display: inline-block;
 }
 .img_chat img{
@@ -510,4 +510,17 @@ p{
     margin-bottom: 0px;
     line-height: 1.273;
     width: 60%;
+}
+
+
+.margebas {
+  margin-bottom: 392px;
+}
+.margetop {
+ margin-top: 43px;
+ font-size: 0.6em;
+}
+
+.margecontent {
+  margin-top: 100px;
 }

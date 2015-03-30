@@ -56,7 +56,7 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
 
 app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
-  $scope.user={};  
+  $scope.user={};
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
        $localStorage.token = data.token;
@@ -83,6 +83,16 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
 })
 
 app.controller('UserCtrl',function($scope){})
+
+app.controller('FootCtrl',function($scope){})
+
+
+
+
+
+
+
+
 
 app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
 $scope.field = {};
@@ -130,21 +140,52 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
+  $stateProvider.state('user.foots', {
+    url: '/foots',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/mes_foots.html",
+      controller: 'FootCtrl'
+      }
+    }
+  })
+
+  $stateProvider.state('user.foots.tabs.crees', {
+    url: '/crees',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/crees.html",
+      controller: 'FootCtrl'
+      }
+    }
+  })
+
+   $stateProvider.state('user.foots.tabs.rejoints', {
+    url: '/rejoints',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/rejoints.html",
+      controller: 'FootCtrl'
+      }
+    }
+  })
+
+
   $stateProvider.state('chat', {
     url: '/chat',
     templateUrl: 'templates/chat.html',
   })
-  
+
   $stateProvider.state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
-    controller: 'RegisterCtrl' 
+    controller: 'RegisterCtrl'
   })
 
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'   
+    controller: 'LoginCtrl'
   })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
@@ -161,7 +202,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       templateUrl: "templates/profil.html",
       controller: 'ProfilCtrl'
       }
-    }  
+    }
   })
 
     $stateProvider.state('user.new_field', {
@@ -187,4 +228,4 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
                 }
             };
         });
-     })  
+     })
