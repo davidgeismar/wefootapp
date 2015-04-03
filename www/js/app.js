@@ -1,9 +1,8 @@
 
 //GLOBAL FUNCTIONS
 var modalLink = "";
-var switchIcon = function (icon,link) {
+var switchIcon = function (icon,link) {       // Switch the icon in the header bar
       modalLink = link;
-      console.log(icon);
       elem = document.getElementsByClassName('iconHeader')[0];
       console.log(elem);
       if(elem.className.indexOf("icon_")>-1)
@@ -62,6 +61,12 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
       $localStorage.token = data.token;
       $localStorage.user = data;
       $location.path('/user/profil/'+data.id);
+      $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
+        $localStorage.friends = data[0];
+        angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+          friend.statut = data[1][index]; 
+        });  
+      }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
     });
@@ -87,11 +92,9 @@ app.controller('ChatCtrl', function($scope, $localStorage){
 })
 
 app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
-  $scope.user = {};
-  console.log('opened profil');
+  $scope.user = $localStorage.user;
   switchIcon('icon_none','');
-  $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
-    $scope.user = $localStorage.user;
+  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
   }).error(function(){
     $location.path('/login');
   });
@@ -105,6 +108,7 @@ app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
 
 app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
   $scope.user = $localStorage.user;
+  $scope.friends = {};
   $scope.logout = function (){
     $localStorage.user = {};
     $localStorage.token = "";
@@ -118,7 +122,6 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
       $scope.modal = modal;
   });
   $scope.openModal = function() {
-      console.log('hello');
       $scope.modal.show();
   };
   $scope.closeModal = function() {
@@ -137,50 +140,79 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
       $('.content_fb_search').addClass('hidden');
     }
   $scope.searchQuery = function(word){
+      $scope.friendsId = [];
+      angular.forEach($localStorage.friends,function(friend){
+        $scope.friendsId.push(friend.id);
+      });
+      console.log($scope.friendsId);
       if(word.length>2){
        $http.get('http://localhost:1337/search/'+word).success(function(data){
-        $scope.results = data;
-      }).error(function(){
-        console.log('error');
-      });
+          $scope.results = data;
+          }).error(function(){
+          console.log('error');
+        });
     }
   }
   $scope.addFriend = function(target){
     $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
-      console.log('ok');
+      $localStorage.friends.push(data[0]);
+      $scope.friendsId.push(data[0].id);
+      $scope.friends.push(data);
     }).error(function(){
       console.log('error');
     })
   }
 })
 
-app.controller('FriendsCtrl',function($scope, $localStorage){
+app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
+  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
+    }).error(function(){
+      $location.path('/login');
+    });
    $scope.user = $localStorage.user;
    switchIcon('icon_friend','search');
+   $scope.friends = $localStorage.friends;
+
+   $scope.addFavorite = function(target){
+      console.log('hello');
+      var targetPosition = -1;
+      angular.forEach($localStorage.friends,function(friend,index){
+        if(friend.id == target){
+          targetPosition = index;
+        }
+      });
+    if($scope.friends[targetPosition].statut==0){
+     console.log("Wrong");
+     $http.post('http://localhost:1337/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+          $scope.friends[targetPosition].statut = 1;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+    else if($scope.friends[targetPosition].statut==1){
+      console.log("RIght");
+      $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+          $scope.friends[targetPosition].statut = 0;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+   } 
   })
 
 app.controller('FootCtrl',function($scope){})
 
-
-
-
-
-
-
-
-
 app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
-$scope.field = {};
-$scope.field.origin = "private";
-  var options = {
-   maximumImagesCount: 1,
-   width: 800,
-   height: 800,
-   quality: 80
-  };
+  $scope.field = {};
+  $scope.field.origin = "private";
+    var options = {
+      maximumImagesCount: 1,
+      width: 800,
+      height: 800,
+      quality: 80
+    };
 
   $scope.getPic = function(){
-
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
       for (var i = 0; i < results.length; i++) {
@@ -189,12 +221,10 @@ $scope.field.origin = "private";
     }, function(error) {
       console.log('error');
     });
-
 }
 
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(){
-      console.log('success');
     }).error(function(){
       console.log('error');
     });

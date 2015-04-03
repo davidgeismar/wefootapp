@@ -486,8 +486,6 @@ p{
     line-height: 1.273;
     width: 60%;
 }
-<<<<<<< HEAD
-
 
 .margebas {
   margin-bottom: 392px;
@@ -500,7 +498,7 @@ p{
 .margecontent {
   margin-top: 100px;
 }
-=======
+
 .container_friends{
 	margin-top: 40px;
 	height: 100%;
@@ -652,7 +650,7 @@ p{
 	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
 	float: right;
 }
-.one_search i{
+.one_search .ion-checkmark-round{
 	font-size: 20px;
 	float: right;
 	position: relative;
@@ -732,4 +730,3 @@ p{
 		bottom: 4px;
 }
 }
->>>>>>> b10b117d3b6da9dd4a09a9c0948d2b8b43c5e647
