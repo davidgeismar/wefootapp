@@ -234,6 +234,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
 
 //Routes
 
+// angular.module('ionicApp', ['ionic'])
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/')
 
@@ -242,6 +243,22 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
+  $stateProvider.state('foots', {
+      url: '/foots',
+      abstract: true,
+      templateUrl: 'templates/foots.html',
+      controller: 'FootCtrl'
+
+    })
+    .state('foots.crees', {
+        url: "/crees.html",
+        views: {
+          'crees-tab': {
+            templateUrl: "templates/crees.html",
+             controller: 'FootCreesCtrl'
+          }
+        }
+      })
 
   $stateProvider.state('register', {
     url: '/register',
