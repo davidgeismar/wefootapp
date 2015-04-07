@@ -534,8 +534,6 @@ p{
 }
 .conv_box{
     margin-top: 70px; 
-    margin-left: 15px;
-    margin-right: 15px;
 }
 .conv_box dd:after {
 	clear: both;
