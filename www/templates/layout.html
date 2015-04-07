@@ -1,0 +1,86 @@
+<ion-side-menus enable-menu-with-back-views="false">
+
+<ion-side-menu-content>
+
+  <div class="bar bar-header actu_header">
+    <button class="button button-icon icon ion-navicon actu_button no_hide" menu-toggle="left"></button>
+
+     <img class="actu_logo" src="../img/logo_alter.svg"/>
+     <div ng-click="openModal()" class="iconHeader"></div>
+  </div>
+
+
+
+<ion-nav-view name="menuContent"></ion-nav-view>
+
+
+<div class="tab_container">
+<ion-tabs class="tab_general tabs-icon-top">
+  <ion-tab title="Accueil" icon-on="accueilB" icon-off="accueil" href="#/user/profil/{{user.id}}">
+  </ion-tab>
+  <ion-tab title="Mes Foots"  icon-on="footsB" icon-off="foots"  href="hel">
+  </ion-tab>
+  <ion-tab title="Mes Amis" icon-on="amisB" icon-off="amis"  href="#/user/friends">
+  </ion-tab>
+  <ion-tab title="Chats" icon-on="chatsB" icon-off="chats"  href="#/user/chat">
+  </ion-tab>
+    <ion-tab title="Notifications" icon-on="notifB" icon-off="notif" href="help">
+  </ion-tab>
+</ion-tabs>
+</div>
+</ion-side-menu-content>
+
+
+<!-- TOOGLE MENU CONTENT -->
+<ion-side-menu side="left">
+	<ion-content class="content_menu">
+		<div class="img_menu_bg">
+		</div>
+		<img class="img_menu" src="../img/default_pic.jpg"/>
+		<div class="info_menu">
+			<p>Mathieu Lamarre 	<i class="ion-edit"></i></p>
+		</div>
+		<div class="info_menu">
+			<p>PSG<i class="ion-edit"></i></p>
+		</div>
+		<div class="info_menu info_last">
+			<p>Defenseur<i class="ion-edit"></i></p>
+		</div>
+    <div class="note_menu">
+      <div class="icon_menu icon-tech">
+      </div>
+      <p>Technique</p>
+      <i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>
+    </div>
+    <div class="note_menu">
+		  <div class="icon_menu icon-shoes">
+		  </div>
+      <p>Frappe</p>
+      <i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+    </div>
+    <div class="note_menu">
+      <div class="icon_menu icon-power">
+      </div>
+      <p>Physique</p>
+      <i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>
+    </div>
+    <div class="note_menu">
+      <div class="icon_menu icon-fp">
+      </div>
+      <p>Fair-Play</p>
+      <i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+    </div>
+    <div class="note_menu">
+      <div class="icon_menu icon-assidu">
+      </div>
+      <p>Assiduité</p>
+      <i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+    </div>
+    <div ng-click="logout()" class="logout_menu">
+      <div class="icon_menu icon-logout"></div>
+      <p> Déconnexion </p>
+    </div>
+	</ion-content>
+</ion-side-menu>
+
+</ion-side-menus>

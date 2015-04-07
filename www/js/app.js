@@ -1,10 +1,23 @@
+
+//GLOBAL FUNCTIONS
+var modalLink = "";
+var switchIcon = function (icon,link) {       // Switch the icon in the header bar
+      modalLink = link;
+      elem = document.getElementsByClassName('iconHeader')[0];
+      console.log(elem);
+      if(elem.className.indexOf("icon_")>-1)
+        elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+      else
+        elem.className = elem.className + " " + icon;
+};
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic', 'ngCordova'])
 
+var app = angular.module('starter', ['ionic', 'ngCordova'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -42,11 +55,18 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
 app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
   $scope.user={};
+  if($localStorage.user) $location.path('/user/profil/'+$localStorage.user.id);  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
-      console.log('success login');
       $localStorage.token = data.token;
-      $location.path('/profil/'+data.id);
+      $localStorage.user = data;
+      $location.path('/user/profil/'+data.id);
+      $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
+        $localStorage.friends = data[0];
+        angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+          friend.statut = data[1][index]; 
+        });  
+      }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
     });
@@ -55,38 +75,144 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
 
 app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
-  $scope.user={};  
+  $scope.user={};
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
-       console.log(data.token);
-       console.log('success');
-       $location.path('/profil/'+data.id);
+       $localStorage.token = data.token;
+       $localStorage.user = data;
+       $location.path('/user/profil/'+data.id);
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });
   }
 })
 
-app.controller('ProfilCtrl', function($scope, $stateParams, $http){
-  $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
-    $scope.user = data;
+app.controller('ChatCtrl', function($scope, $localStorage){
+   $scope.user = $localStorage.user;
+})
+
+app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
+  $scope.user = $localStorage.user;
+  switchIcon('icon_none','');
+  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
   }).error(function(){
-    console.log('error profil');
+    $location.path('/login');
   });
 })
 
-app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
-$scope.field = {};
-$scope.field.origin = "private";
-  var options = {
-   maximumImagesCount: 1,
-   width: 800,
-   height: 800,
-   quality: 80
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
   };
+})
+
+app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
+  $scope.user = $localStorage.user;
+  $scope.friends = {};
+  $scope.logout = function (){
+    $localStorage.user = {};
+    $localStorage.token = "";
+    $location.path('/')
+  };
+  //MODAL HANDLER
+  $ionicModal.fromTemplateUrl('templates/search.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+  }).then(function(modal) {
+      $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+      $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+      $scope.modal.hide();
+  };
+  $scope.switchSearchFb = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_fb').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_wf_search').addClass('hidden');
+  }
+  $scope.switchSearchWf = function(){
+      $('.opened_search').removeClass('opened_search');
+      $('.switch_wf').addClass('opened_search');
+      $('.hidden').removeClass('hidden');
+      $('.content_fb_search').addClass('hidden');
+    }
+  $scope.searchQuery = function(word){
+      $scope.friendsId = [];
+      angular.forEach($localStorage.friends,function(friend){
+        $scope.friendsId.push(friend.id);
+      });
+      console.log($scope.friendsId);
+      if(word.length>2){
+       $http.get('http://localhost:1337/search/'+word).success(function(data){
+          $scope.results = data;
+          }).error(function(){
+          console.log('error');
+        });
+    }
+  }
+  $scope.addFriend = function(target){
+    $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
+      $localStorage.friends.push(data[0]);
+      $scope.friendsId.push(data[0].id);
+      $scope.friends.push(data);
+    }).error(function(){
+      console.log('error');
+    })
+  }
+})
+
+app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
+  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
+    }).error(function(){
+      $location.path('/login');
+    });
+   $scope.user = $localStorage.user;
+   switchIcon('icon_friend','search');
+   $scope.friends = $localStorage.friends;
+
+   $scope.addFavorite = function(target){
+      console.log('hello');
+      var targetPosition = -1;
+      angular.forEach($localStorage.friends,function(friend,index){
+        if(friend.id == target){
+          targetPosition = index;
+        }
+      });
+    if($scope.friends[targetPosition].statut==0){
+     console.log("Wrong");
+     $http.post('http://localhost:1337/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+          $scope.friends[targetPosition].statut = 1;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+    else if($scope.friends[targetPosition].statut==1){
+      console.log("RIght");
+      $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+          $scope.friends[targetPosition].statut = 0;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+   } 
+  })
+
+app.controller('FootCtrl',function($scope){})
+
+app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
+  $scope.field = {};
+  $scope.field.origin = "private";
+    var options = {
+      maximumImagesCount: 1,
+      width: 800,
+      height: 800,
+      quality: 80
+    };
 
   $scope.getPic = function(){
-
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
       for (var i = 0; i < results.length; i++) {
@@ -95,24 +221,20 @@ $scope.field.origin = "private";
     }, function(error) {
       console.log('error');
     });
-
 }
 
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(){
-      console.log('success');
     }).error(function(){
       console.log('error');
     });
   }
-
-
-
 })
 
 
 //Routes
 
+// angular.module('ionicApp', ['ionic'])
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/')
 
@@ -131,28 +253,79 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/conv.html',
   })
   
+  $stateProvider.state('foots', {
+      url: '/foots',
+      abstract: true,
+      templateUrl: 'templates/foots.html',
+      controller: 'FootCtrl'
+
+    })
+    .state('foots.crees', {
+        url: "/crees.html",
+        views: {
+          'crees-tab': {
+            templateUrl: "templates/crees.html",
+             controller: 'FootCreesCtrl'
+          }
+        }
+      })
+
   $stateProvider.state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
-    controller: 'RegisterCtrl' 
+    controller: 'RegisterCtrl'
   })
 
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'   
+    controller: 'LoginCtrl'
   })
 
-  $stateProvider.state('profil', {
+  $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
+    abstract: true,
+    url: '/user',
+    templateUrl: "templates/layout.html",
+    controller: 'UserCtrl'
+  })
+
+    $stateProvider.state('user.chat', {
+    cache: false,
+    url: '/chat',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/chat.html",
+      controller: 'ChatCtrl'
+      }
+    }
+  })
+
+  $stateProvider.state('user.profil', {
+    cache: false,
     url: '/profil/:userId',
-    templateUrl: 'templates/profil.html',
-    controller: 'ProfilCtrl'   
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/profil.html",
+      controller: 'ProfilCtrl'
+      }
+    }
   })
 
-    $stateProvider.state('new_field', {
+  $stateProvider.state('user.new_field', {
     url: '/new_field',
     templateUrl: 'templates/new_field.html',
-    controller: 'FieldCtrl'   
+    controller: 'FieldCtrl'
+  })
+
+  $stateProvider.state('user.friends', {
+    cache: false,
+    url: '/friends',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/friends.html",
+      controller: 'FriendsCtrl'
+      }
+    }
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {
@@ -172,4 +345,4 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
                 }
             };
         });
-     })  
+     })

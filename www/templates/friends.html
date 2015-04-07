@@ -1,0 +1,34 @@
+<ion-view view-title="Profil">
+<ion-content>
+<div class="container_friends">	
+  	<label class="item-input">
+    	<i class="icon ion-search placeholder-icon"></i>
+    	<input type="text" ng-model="searchFriends" placeholder="Rechercher un nom">
+  	</label>
+	<div class="container_list_friends">
+		<div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
+			<div class="img_chat img_friends">
+            	<img src="../img/default_pic.jpg">
+        	</div>
+        	<div class="name_friends">
+        		<p> {{friend.first_name}} {{friend.last_name}} </p>
+        	</div>
+        	<div ng-click="addFavorite({{friend.id}})" ng-class="{grey: friend.statut==0}" class="star_friends">
+        		<i class="ion-android-star"></i>
+        	</div>
+        </div>
+<!--         <div class="one_friends">
+			<div class="img_chat img_friends">
+            	<img src="../img/default_pic.jpg">
+        	</div>
+        	<div class="name_friends">
+        		<p> Johnny Ketamere </p>
+        	</div>
+        	<div class="star_friends grey">
+        		<i class="ion-android-star"></i>
+        	</div>
+        </div> 
+	</div> -->
+</div>
+</ion-content>
+</ion-view>
