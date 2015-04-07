@@ -4,7 +4,6 @@ var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
       modalLink = link;
       elem = document.getElementsByClassName('iconHeader')[0];
-      console.log(elem);
       if(elem.className.indexOf("icon_")>-1)
         elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
       else
@@ -55,6 +54,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
 app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
   $scope.user={};
+
   if($localStorage.user) $location.path('/user/profil/'+$localStorage.user.id);  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
@@ -94,21 +94,60 @@ app.controller('ChatCtrl', function($scope, $localStorage){
 app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
   $scope.user = $localStorage.user;
   switchIcon('icon_none','');
-  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
+  $http.post('http://localhost:1337/checkConnect',{id:$scope.user.id}).success(function(){    // Check if connected
   }).error(function(){
     $location.path('/login');
   });
 })
 
-app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 })
 
 app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
+
   $scope.user = $localStorage.user;
   $scope.friends = {};
+
+//Handle edit inputs on left menu
+  $scope.toEdit = [false,false];
+  if($scope.user && $scope.user.favorite_club==null){
+    $scope.user.favorite_club = "Entrer un club";
+  }
+  if($scope.user && $scope.user.poste==null){
+    $scope.user.poste = "Entrer votre poste";
+  }
+
+  //EDITIONS
+  $scope.editClub = function(value){
+    var self = this;
+    if(value.length>0){
+      $http.post('http://localhost:1337/editUser',{favorite_club: value}).success(function(){
+        self.user.favorite_club = value;
+        self.toEdit[0] = false;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+  }
+
+    $scope.editPoste = function(value){
+    var self = this;
+    if(value.length>0){
+      $http.post('http://localhost:1337/editUser',{poste: value}).success(function(){
+        self.user.poste = value;
+        self.toEdit[1] = false;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+  }
+
+
+  //END EDITIONS
+//END Handle Menu
   $scope.logout = function (){
     $localStorage.user = {};
     $localStorage.token = "";
@@ -144,7 +183,6 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
       angular.forEach($localStorage.friends,function(friend){
         $scope.friendsId.push(friend.id);
       });
-      console.log($scope.friendsId);
       if(word.length>2){
        $http.get('http://localhost:1337/search/'+word).success(function(data){
           $scope.results = data;
@@ -156,8 +194,10 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
   $scope.addFriend = function(target){
     $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
       $localStorage.friends.push(data[0]);
+      $localStorage.friends[$localStorage.friends.length-1].statut = 0;
       $scope.friendsId.push(data[0].id);
       $scope.friends.push(data);
+      $scope.friends[$localStorage.friends.length-1].statut = 0;
     }).error(function(){
       console.log('error');
     })
@@ -165,7 +205,7 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
 })
 
 app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
-  $http.get('http://localhost:1337/checkConnect').success(function(){    // Check if connected
+  $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
     }).error(function(){
       $location.path('/login');
     });
