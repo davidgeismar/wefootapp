@@ -347,6 +347,21 @@ p{
 	font-size: 18px;
 	float: right;
 }
+.info_menu input{
+	width: 80%;
+	background-color: #28385c;
+	color: #fff;
+	position: relative;
+	bottom: 5px;
+	height: 30px;
+}
+.info_menu .ion-ios-checkmark{
+	color: #fff;
+	font-size: 25px;
+	float: right;
+	position: relative;
+	bottom: 5px;
+}
 .info_last{
 	border-bottom: 1px solid #516082;
 }

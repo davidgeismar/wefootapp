@@ -38,13 +38,15 @@
 		</div>
 		<img class="img_menu" src="../img/default_pic.jpg"/>
 		<div class="info_menu">
-			<p>Mathieu Lamarre 	<i class="ion-edit"></i></p>
+			<p>{{user.first_name}} {{user.last_name}}</p>
 		</div>
 		<div class="info_menu">
-			<p>PSG<i class="ion-edit"></i></p>
+		<p ng-click="toEdit[0] = true" ng-hide="toEdit[0]">{{user.favorite_club}}<i class="ion-edit"></i></p>
+    <span ng-hide="!toEdit[0]"><input ng-model="club"/> <i ng-click="editClub(club)" class="ion-ios-checkmark"></i></span>
 		</div>
 		<div class="info_menu info_last">
-			<p>Defenseur<i class="ion-edit"></i></p>
+			<p ng-click="toEdit[1] = true" ng-hide="toEdit[1]">{{user.poste}}<i class="ion-edit"></i></p>
+      <span ng-hide="!toEdit[1]"><input ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></span>      
 		</div>
     <div class="note_menu">
       <div class="icon_menu icon-tech">
