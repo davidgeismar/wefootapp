@@ -48,13 +48,14 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
 app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
   $scope.err = "";
   $scope.user={};
+  if($localStorage.user) $location.path('/user/profil/'+$localStorage.user.id);  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
-      console.log('success login');
       $localStorage.token = data.token;
-      $location.path('/profil/'+data.id);
+      $location.path('/user/profil/'+data.id);
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
+       // $location.path('/user/profil/'+data.id);
     });
   }
 })
@@ -64,63 +65,90 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage)
   $scope.user={};  
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
-       console.log(data.token);
-       console.log('success');
-       $location.path('/profil/'+data.id);
+       $localStorage.token = data.token;
+       $location.path('/user/profil/'+data.id);
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });
   }
 })
 
-app.controller('ProfilCtrl', function($scope, $stateParams, $http){
+app.controller('ProfilCtrl', function($scope, $stateParams, $http, $localStorage){
   $http.get('http://localhost:1337/user/profil/'+$stateParams.userId).success(function(data){
     $scope.user = data;
+    $localStorage.user = data;
   }).error(function(){
     console.log('error profil');
   });
 })
 
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate) {
+  $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+})
+
+// app.controller('UserCtrl',function($scope){})
+
 app.controller('FieldCtrl', function($scope, $http, $ionicPlatform, $cordovaImagePicker, $cordovaFileTransfer){
-$scope.field = {};
-$scope.field.origin = "private";
-  var options = {
+
+
+  var imageUrl;
+
+  $scope.field = {};
+  $scope.field.origin = "private";
+  var optionsGetPic = {
    maximumImagesCount: 1,
    width: 800,
    height: 800,
    quality: 80
   };
 
+  var optionsFt = {
+
+    params : {
+      fieldId : "fieldID"
+    }
+  };
+ 
   $scope.getPic = function(){
-    console.log("test");
+    
     $ionicPlatform.ready(function() {
 
-    $cordovaImagePicker.getPictures(options)
+    $cordovaImagePicker.getPictures(optionsGetPic)
     .then(function (results) {
-      for (var i = 0; i < results.length; i++) {
-        $cordovaFileTransfer.upload('http://localhost:1337/field_pics/assets/img/', results[i], option)
-      .then(function(result) {
-        // Success!
-      }, function(err) {
-        // Error
-      }, function (progress) {
-        // constant progress updates
-      });
+      imageUrl = results[0] ;
 
-  , false);
-        console.log('Image URI: ' + results[i]);
+      //   $cordovaFileTransfer.upload('http://localhost:1337/up/upload', results[0], optionsFt )
+      // .then(function(result) {  
+      //   // Success!
+      //   console.log("successssss");
+      // }, function(err) {
+      //   // Error
+      //   console.log("fail");
+      // }, function (progress) {
+      //   console.log("progress");
+      //   // constant progress updates
+      // });
 
-      }
+
+
+
     }, function(error) {
       console.log('error');
     });
   });
 }
 
+
+
   $scope.launchReq = function(){
-    $http.post('http://localhost:1337/field/create',$scope.field).success(function(){
-      console.log('success');
-    }).error(function(){
+    $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
+
+      console.log(data);
+
+  })
+    .error(function(){
       console.log('error');
     });
   }
@@ -152,22 +180,33 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   //   controller: 'LoginCtrl'   
   // })
 
-  $stateProvider.state('profil', {
+  $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
+    abstract: true,
+    url: '/user',
+    templateUrl: "templates/layout.html",
+    controller: 'UserCtrl'
+  })
+
+  $stateProvider.state('user.profil', {
     url: '/profil/:userId',
-    templateUrl: 'templates/profil.html',
-    controller: 'ProfilCtrl'   
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/profil.html",
+      controller: 'ProfilCtrl'
+      }
+    }  
   })
 
     $stateProvider.state('new_field', {
     url: '/new_field',
     templateUrl: 'templates/new_field.html',
-    controller: 'FieldCtrl'   
+    controller: 'FieldCtrl'
   })
 
         $stateProvider.state('test', {
     url: '/test',
     templateUrl: 'templates/test.html',
-    controller: 'FieldCtrl'   
+    controller: 'FieldCtrl'
   })
 
 
