@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var uglify = require('gulp-uglify');
 var bower = require('bower');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
@@ -34,6 +35,13 @@ gulp.task('install', ['git-check'], function() {
     .on('log', function(data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
+});
+
+gulp.task('launch',function(){
+  return gulp.src(['www/js/openFb.js','www/js/global.js','www/js/declare.js','www/js/Controllers/*.js','www/js/routes.js','www/js/provider.js'])
+      .pipe(concat('app.js'))
+      // .pipe(uglify())
+      .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('git-check', function(done) {
