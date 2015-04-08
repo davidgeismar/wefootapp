@@ -14,5 +14,5 @@
                     return $q.reject(response);
                 }
             };
-        });
-     })
+        })
+    });

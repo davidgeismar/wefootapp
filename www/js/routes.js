@@ -1,4 +1,3 @@
-//ROUTES
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/')
 
@@ -8,6 +7,17 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'HomeCtrl'
   })
 
+
+  $stateProvider.state('chat', {
+    url: '/chat',
+    templateUrl: 'templates/chat.html',
+  })
+
+   $stateProvider.state('conv', {
+    url: '/conv',
+    templateUrl: 'templates/conv.html',
+  })
+
   $stateProvider.state('foots', {
       url: '/foots',
       abstract: true,
@@ -15,7 +25,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       controller: 'FootCtrl'
     })
 
-    .state('foots.crees', {
+    $stateProvider.state('foots.crees', {
         url: "/crees.html",
         views: {
           'crees-tab': {
@@ -23,7 +33,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
              controller: 'FootCreesCtrl'
           }
         }
-      })
+    })
+
 
   $stateProvider.state('register', {
     url: '/register',
