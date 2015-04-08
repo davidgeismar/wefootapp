@@ -41,7 +41,7 @@ a{
 }
 
 .chevron_style{
-	margin-top: 2px;
+	margin -top: 2px;
   background-color: inherit;
   border: none;
   color: white;
@@ -60,7 +60,6 @@ a{
 }
 
 .select_pic_field{
-	padding-top:5%;
 	font-size:14px;
 	text-align:center;
 }
@@ -77,8 +76,19 @@ a{
 	padding-bottom:5%;
 }
 
+.select_pic_container_field{
+	padding-top:10px;
+}
+
 .cam_size{
-	font-size: 90px;
+	font-size: 150px;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+.upload_size{
+	font-size: 30px;
 	text-align:center;
 	margin-left:auto;
 	margin-right:auto;
@@ -505,6 +515,9 @@ p{
 .content_conv{
     width: 100%;
     padding-top: 44px;
+    z-index: 8;
+    position: absolute;
+    background-color: #fff;
 }
 .conv_ban{
     width: 100%;
@@ -524,6 +537,12 @@ p{
     width: 100%;
     text-transform: uppercase;
 }
+.content_conv_box{
+    overflow: scroll;
+}
+.item_conv{
+    margin-bottom: 60px;
+}
 .conv_ban_text{
     font-size: 13px;
     font-family: "Ubuntu";
@@ -534,7 +553,10 @@ p{
     width: 100%;
 }
 .conv_box{
-    margin-top: 70px;
+
+    margin-top: 70px; 
+    margin-bottom: 0px;
+
 }
 .conv_box dd:after {
 	clear: both;
@@ -545,13 +567,13 @@ p{
 .conv_box p {
 	display: inline-block;
 	z-index: 1;
-	/*margin-right: 25%;*/
 	padding: .45em .75em;
 	background: rgb(230,230,230);
 	line-height: 1.25;
 	-webkit-border-radius: 1em;
 	   -moz-border-radius: 1em;
 	        border-radius: 1em;
+    max-width: 80%;
 }
 .conv_box .to p {
 	float: right;
@@ -622,13 +644,17 @@ p{
     text-decoration: underline;
 }
 .img_chat_conv{
-    width: 40px;
+    width: 35px;  
     display: inline-block;
 }
 .img_chat_conv img{
 	border-radius: 50%;
-	width: 40px;
+	width: 35px;
     margin-top: 10px;
+}
+
+.padding_top{
+    padding-top: 40px;
 }
 
 .margebas {
@@ -817,6 +843,8 @@ p{
 
 
 }
+
+<!--
 .foot-tab{
   display: inline-block;
   width: 32%;
@@ -874,7 +902,7 @@ border-bottom: black solid 4px;
 
 }*/
 
-
+-->
 
 .name {
   color: rgb(128, 211, 231);
