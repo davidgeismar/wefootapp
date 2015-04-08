@@ -26,7 +26,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     })
 
     $stateProvider.state('foots.crees', {
-        url: "/crees.html",
+        url: "/crees",
         views: {
           'crees-tab': {
             templateUrl: "templates/crees.html",
