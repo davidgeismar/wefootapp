@@ -18,16 +18,16 @@
 	<div class="content_wf_search container_list_friends">
 		<label class="item-input">
     		<i class="icon ion-search placeholder-icon"></i>
-    		<input ng-model="word" ng-keydown="searchQuery(word)" type="text" placeholder="Rechercher un nom">
+    		<input ng-model="word" ng-keyup="searchQuery(word)" type="text" placeholder="Rechercher un nom">
   		</label>
 		<div ng-repeat="user in results" class="one_search">
 			<div class="img_chat img_search">
 				<img src="../img/default_pic.jpg">
 			</div>
-			<div class="name_search">
+			<div ng-class="{disabled: friendsId.indexOf(user.id)>-1}" class="name_search">
 				<p> {{user.first_name}} {{user.last_name}}</p>
 			</div>
-			<div ng-click="addFriend({{user.id}})" class="icon_friend_search">
+			<div ng-click="addFriend({{user.id}})" ng-class="{'ion-checkmark-round': friendsId.indexOf(user.id)>-1, 'icon_friend_search': friendsId.indexOf(user.id)==-1 }" class="icon_search">
 			</div>
 		</div>
 <!-- 		<div class="one_search disabled">

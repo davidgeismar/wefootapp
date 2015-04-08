@@ -347,6 +347,21 @@ p{
 	font-size: 18px;
 	float: right;
 }
+.info_menu input{
+	width: 80%;
+	background-color: #28385c;
+	color: #fff;
+	position: relative;
+	bottom: 5px;
+	height: 30px;
+}
+.info_menu .ion-ios-checkmark{
+	color: #fff;
+	font-size: 25px;
+	float: right;
+	position: relative;
+	bottom: 5px;
+}
 .info_last{
 	border-bottom: 1px solid #516082;
 }
@@ -486,6 +501,148 @@ p{
     line-height: 1.273;
     width: 60%;
 }
+
+.content_conv{
+    width: 100%;
+    padding-top: 44px;
+}
+.conv_ban{
+    width: 100%;
+    height: 60px;
+    border-bottom-color: #006DFF;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    padding-top: 10px;
+}
+.conv_ban_title{
+    font-size: 18px;
+    font-family: "Ubuntu";
+    color: #28385B;
+    font-weight: bold;
+    margin-bottom: 0px;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+}
+.conv_ban_text{
+    font-size: 13px;
+    font-family: "Ubuntu";
+    color: #28385B;
+    font-weight: bold;
+    margin-bottom: 0px;
+    text-align: center;
+    width: 100%;
+}
+.conv_box{
+    margin-top: 70px;
+}
+.conv_box dd:after {
+	clear: both;
+	content: " ";
+	display: block;
+	height: .1em;
+}
+.conv_box p {
+	display: inline-block;
+	z-index: 1;
+	/*margin-right: 25%;*/
+	padding: .45em .75em;
+	background: rgb(230,230,230);
+	line-height: 1.25;
+	-webkit-border-radius: 1em;
+	   -moz-border-radius: 1em;
+	        border-radius: 1em;
+}
+.conv_box .to p {
+	float: right;
+	margin-right: 0;
+	margin-left: 25%;
+	background: rgb(0,120,255);
+	color: #fff;
+}
+.conv_box p + p {
+	margin-top: .1em;
+}
+.conv_box p:last-child {
+	position: relative;
+}
+.conv_box p:last-child::before {
+	position: absolute;
+	bottom: 0;
+	left: -3em;
+	z-index: -1;
+	height: 2em;
+	border-right: 1.5em solid rgb(230,230,230);
+	border-bottom-right-radius: 50%;
+	content: " ";
+	clip: rect(1em,4em,3em,2em);
+}
+.conv_box .to p:last-child::before {
+	right: -3em;
+	left: auto;
+	border-right: none;
+	border-left: 1.5em solid rgb(0,120,255);
+	border-bottom-left-radius: 50%;
+	clip: rect(1em,2em,2em,0);
+}
+.conv_box dt,
+.conv_box p {
+	-webkit-transform: translate3d(0,0,0);
+	   -moz-transform: translate3d(0,0,0);
+	    -ms-transform: translate3d(0,0,0);
+	     -o-transform: translate3d(0,0,0);
+	        transform: translate3d(0,0,0);
+	-webkit-transition: -webkit-transform .75s ease;
+	   -moz-transition:    -moz-transform .75s ease;
+	    -ms-transition:     -ms-transform .75s ease;
+	     -o-transition:      -o-transform .75s ease;
+	        transition:         transform .75s ease;
+}
+.conv_box .past {
+	-webkit-transform: translate3d(0,-10em,0);
+	   -moz-transform: translate3d(0,-10em,0);
+	    -ms-transform: translate3d(0,-10em,0);
+	     -o-transform: translate3d(0,-10em,0);
+	        transform: translate3d(0,-10em,0);
+}
+.conv_box .to .past {
+	opacity: .5;
+}
+.conv_box .future {
+	-webkit-transform: translate3d(0,10em,0);
+	   -moz-transform: translate3d(0,10em,0);
+	    -ms-transform: translate3d(0,10em,0);
+	     -o-transform: translate3d(0,10em,0);
+	        transform: translate3d(0,10em,0);
+}
+.conv_box .to .future {
+	opacity: 1;
+}
+.message_name{
+    text-decoration: underline;
+}
+.img_chat_conv{
+    width: 40px;
+    display: inline-block;
+}
+.img_chat_conv img{
+	border-radius: 50%;
+	width: 40px;
+    margin-top: 10px;
+}
+
+.margebas {
+  margin-bottom: 392px;
+}
+.margetop {
+ margin-top: 43px;
+ font-size: 0.6em;
+}
+
+.margecontent {
+  margin-top: 100px;
+}
+>>>>>>> 1d19931c5e706d70eff5d399a438ddd45555463b
 
 .container_friends{
 	margin-top: 40px;
@@ -638,7 +795,7 @@ p{
 	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
 	float: right;
 }
-.one_search i{
+.one_search .ion-checkmark-round{
 	font-size: 20px;
 	float: right;
 	position: relative;
