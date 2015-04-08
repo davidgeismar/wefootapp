@@ -64,8 +64,8 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
       $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index]; 
-        });  
+          friend.statut = data[1][index];
+        });
       }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
@@ -101,7 +101,7 @@ app.controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $l
   });
 })
 
-app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
@@ -205,11 +205,39 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
   }
 })
 
+
+$ionicModal.fromTemplateUrl('foot-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+});
+
 app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
   $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
     }).error(function(){
       $location.path('/login');
     });
+
    $scope.user = $localStorage.user;
    switchIcon('icon_friend','search');
    $scope.friends = $localStorage.friends;
@@ -238,10 +266,13 @@ app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
         console.log('error');
       });
     }
-   } 
+   }
   })
 
-app.controller('FootCtrl',function($scope){})
+
+
+
+
 
 app.controller('FieldCtrl', function($scope, $http, $cordovaImagePicker){
   $scope.field = {};
@@ -284,32 +315,26 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
+
   $stateProvider.state('chat', {
     url: '/chat',
     templateUrl: 'templates/chat.html',
   })
-  
+
    $stateProvider.state('conv', {
     url: '/conv',
     templateUrl: 'templates/conv.html',
   })
-  
+
   $stateProvider.state('foots', {
       url: '/foots',
-      abstract: true,
-      templateUrl: 'templates/foots.html',
-      controller: 'FootCtrl'
-
-    })
-    .state('foots.crees', {
-        url: "/crees.html",
-        views: {
-          'crees-tab': {
-            templateUrl: "templates/crees.html",
-             controller: 'FootCreesCtrl'
-          }
+      views: {
+        'menuContent' :{
+        templateUrl: "templates/foots.html",
         }
-      })
+      }
+    })
+
 
   $stateProvider.state('register', {
     url: '/register',
@@ -387,3 +412,4 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             };
         });
      })
+
