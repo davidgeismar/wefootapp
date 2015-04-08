@@ -154,12 +154,40 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
   }
 })
 
+$ionicModal.fromTemplateUrl('foot-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+});
 app.controller('FriendsCtrl',function($scope, $localStorage){
    $scope.user = $localStorage.user;
    switchIcon('icon_friend','search');
   })
 
-app.controller('FootCtrl',function($scope){})
+
+
+
+
 
 
 
@@ -213,22 +241,16 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: 'templates/home.html',
   })
 
-  $stateProvider.state('foots', {
+  $stateProvider.state('user.foots', {
+      cache: false,
       url: '/foots',
-      abstract: true,
-      templateUrl: 'templates/foots.html',
-      controller: 'FootCtrl'
-
-    })
-    .state('foots.crees', {
-        url: "/crees.html",
-        views: {
-          'crees-tab': {
-            templateUrl: "templates/crees.html",
-             controller: 'FootCreesCtrl'
-          }
+      views: {
+        'menuContent' :{
+        templateUrl: "templates/foots.html",
         }
-      })
+      }
+    })
+
 
   $stateProvider.state('register', {
     url: '/register',
@@ -306,3 +328,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
             };
         });
      })
+
+
+// on click replace class gris par class bleu
