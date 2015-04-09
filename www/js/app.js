@@ -267,7 +267,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
-      imageUri = results[0] ; 
+      imageUri = results[0] ;
 
     }, function(error) {
       console.log('Error pic');
@@ -284,11 +284,11 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
                   params : {
                     fieldId: data.field
                     }
-                  
+
     };
 
       $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
-      .then(function(result) {  
+      .then(function(result) {
         // Success!
         console.log("successssss");
       }, function(err) {
@@ -298,7 +298,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
         console.log("progress");
         // constant progress updates
       });
-                  
+
 
 
   })
@@ -367,7 +367,7 @@ app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
         console.log('error');
       });
     }
-   } 
+   }
   })
 app.controller('HomeCtrl', function($scope){
 	console.log('hello');
@@ -389,15 +389,15 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
       $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index]; 
-        });  
+          friend.statut = data[1][index];
+        });
       }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
     });
   }
 })
-app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
@@ -542,19 +542,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('foots', {
       url: '/foots',
-      abstract: true,
       templateUrl: 'templates/foots.html',
-      controller: 'FootCtrl'
-    })
-
-    $stateProvider.state('foots.crees', {
-        url: "/crees",
-        views: {
-          'crees-tab': {
-            templateUrl: "templates/crees.html",
-             controller: 'FootCreesCtrl'
-          }
-        }
     })
 
 
