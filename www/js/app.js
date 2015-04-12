@@ -267,7 +267,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
-      imageUri = results[0] ;
+      imageUri = results[0] ; 
 
     }, function(error) {
       console.log('Error pic');
@@ -284,11 +284,11 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
                   params : {
                     fieldId: data.field
                     }
-
+                  
     };
 
       $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
-      .then(function(result) {
+      .then(function(result) {  
         // Success!
         console.log("successssss");
       }, function(err) {
@@ -298,7 +298,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
         console.log("progress");
         // constant progress updates
       });
-
+                  
 
 
   })
@@ -367,13 +367,21 @@ app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
         console.log('error');
       });
     }
-   }
+   } 
   })
 app.controller('HomeCtrl', function($scope){
-	console.log('hello');
   $scope.facebookConnect = function(){
-  	  openFB.init('491593424324577','https://www.facebook.com/connect/login_success.html', window.localStorage);
-      openFB.login('email',function(){alert('done')},function(){alert('error')});
+  	  openFB.init('491593424324577','http://localhost/openfb/oauthcallback.html', window.localStorage);
+      openFB.login('email',function(){
+      	console.log('here');
+        openFB.api({
+            path: '/me',
+            success: function(data) {
+                console.log(JSON.stringify(data));
+            },
+            error: function(error){alert(error.message);}
+        });
+      },function(){alert('error')});
     };
 })
 app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
@@ -389,15 +397,15 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
       $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index];
-        });
+          friend.statut = data[1][index]; 
+        });  
       }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
     });
   }
 })
-app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
@@ -415,14 +423,15 @@ app.controller('RegisterCtrl', function($scope, $http, $location, $localStorage)
   $scope.user={};
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
-       $localStorage.token = data.token;
-       $localStorage.user = data;
+       $localStorage.token = data[0].token;
+       $localStorage.user = data[0];
        $location.path('/user/profil/'+data.id);
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });
   }
 })
+
 app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
 
   $scope.user = $localStorage.user;
@@ -520,6 +529,15 @@ app.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$h
     })
   }
 })
+var modalLink = "";
+var switchIcon = function (icon,link) {       // Switch the icon in the header bar
+      modalLink = link;
+      elem = document.getElementsByClassName('iconHeader')[0];
+      if(elem.className.indexOf("icon_")>-1)
+        elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+      else
+        elem.className = elem.className + " " + icon;
+};
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/')
 
@@ -542,7 +560,19 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('foots', {
       url: '/foots',
+      abstract: true,
       templateUrl: 'templates/foots.html',
+      controller: 'FootCtrl'
+    })
+
+    $stateProvider.state('foots.crees', {
+        url: "/crees",
+        views: {
+          'crees-tab': {
+            templateUrl: "templates/crees.html",
+             controller: 'FootCreesCtrl'
+          }
+        }
     })
 
 

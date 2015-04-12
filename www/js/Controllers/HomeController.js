@@ -1,7 +1,15 @@
 app.controller('HomeCtrl', function($scope){
-	console.log('hello');
   $scope.facebookConnect = function(){
-  	  openFB.init('491593424324577','https://www.facebook.com/connect/login_success.html', window.localStorage);
-      openFB.login('email',function(){alert('done')},function(){alert('error')});
+  	  openFB.init('491593424324577','http://localhost:8100/oauthcallback.html', window.localStorage);
+      openFB.login('email',function(){
+      	console.log('here');
+        openFB.api({
+            path: '/me',
+            success: function(data) {
+                console.log(JSON.stringify(data));
+            },
+            error: function(error){alert(error.message);}
+        });
+      },function(){alert('error')});
     };
 })

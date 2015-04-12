@@ -16,17 +16,12 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-<<<<<<< HEAD
     {
       "id": "com.phonegap.plugins.facebookconnect",
       "locator": "../ngcordova-facebook/phonegap-facebook-plugin"
     },
-    "org.apache.cordova.inappbrowser"
-  ]
-}
-=======
+    "org.apache.cordova.inappbrowser",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.file-transfer"
   ]
 }
->>>>>>> 984bf0e070aaa6962c17d5806837c87a324b150e

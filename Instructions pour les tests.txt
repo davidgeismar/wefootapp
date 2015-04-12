@@ -1,0 +1,12 @@
+Instructions pour les tests: 
+
+1. Effectuer les modifs sur le controller que vous voulez.
+2. Aller dans la console et faire "gulp launch".
+3. Redemarrer le serveur ionic.
+
+Si vous voulez éviter de redemarrer le serveur à la fin de chaque modif.
+
+1. Faire les modifs sur app.js.
+2. Qd tout fonctionne, copier/coller sur le controller.
+3. Arreter le serveur et refaire gulp launch.
+ 
