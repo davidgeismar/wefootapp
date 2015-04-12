@@ -1,9 +1,9 @@
-app.controller('HomeCtrl', function($scope){
+app.controller('HomeCtrl', function($scope,OpenFB){
   $scope.facebookConnect = function(){
-  	  openFB.init('491593424324577','http://localhost:8100/oauthcallback.html', window.localStorage);
-      openFB.login('email',function(){
+  	  OpenFB.init('491593424324577');
+      OpenFB.login('email',function(){
       	console.log('here');
-        openFB.api({
+        OpenFB.api({
             path: '/me',
             success: function(data) {
                 console.log(JSON.stringify(data));

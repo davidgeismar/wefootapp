@@ -1,4 +1,5 @@
-app.controller('FootCtrl',function($scope){
+angular.module('foot',[])
+.controller('FootCtrl',function($scope){
 $ionicModal.fromTemplateUrl('foot-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'

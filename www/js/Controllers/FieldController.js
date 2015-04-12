@@ -1,4 +1,5 @@
-app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordovaImagePicker){
+angular.module('field',[])
+.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordovaImagePicker){
   $scope.field = {};
   $scope.field.origin = "private";
 

@@ -1,4 +1,4 @@
-var app = angular.module('starter', ['ionic', 'ngCordova'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -18,7 +18,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova'])
   }
 }])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,OpenFB) {
+  OpenFB.init('491593424324577')//,'http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
