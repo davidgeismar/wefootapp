@@ -17,3 +17,6 @@ Pour ajouter des fonctions :
 	2. Ajouter la dépendence dans declare.js.
 	3. Ajouter la dépendence dans index.html.
 	5. Taper la commande gulp launch dans la console pour mettre le fichier app.js à jour.
+
+
+MODIFIER CORS DE WEFOOT POUR LA MISE EN PROD !!

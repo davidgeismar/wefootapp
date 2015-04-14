@@ -571,8 +571,8 @@ p{
 	background: rgb(230,230,230);
 	line-height: 1.25;
 	-webkit-border-radius: 1em;
-	   -moz-border-radius: 1em;
-	        border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
     max-width: 80%;
 }
 .conv_box .to p {
@@ -844,7 +844,6 @@ p{
 
 }
 
-<!--
 .foot-tab{
   display: inline-block;
   width: 32%;
@@ -889,7 +888,7 @@ border-bottom: black solid 4px;
 
 #bonhomme {
   height: 35px;
-    margin-left: -15px
+  margin-left: -15px
 }
 /* p {
   color:rgb(37, 55, 91);
@@ -902,7 +901,6 @@ border-bottom: black solid 4px;
 
 }*/
 
--->
 
 .name {
   color: rgb(128, 211, 231);

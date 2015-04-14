@@ -4,14 +4,19 @@ angular.module('connections',[])
 
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location){
   $scope.facebookConnect = function(){
-      OpenFB.login('email').then(function(){
-        OpenFB.get('/me').success(function(data){
-          $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,facebook_token: window.localStorage.fbtoken}).success(function(response){
-            console.log(response);
+      OpenFB.login('email','public_profile','read_friendlists').then(function(){
+        OpenFB.get('/me/invitable_friends').success(function(data){ console.log(data);
+          $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id}).success(function(response){
             $localStorage.token = response.token;
             $localStorage.user = response;
-            $location.path('/user/profil/'+data.id);
-          });
+            $location.path('/user/profil/'+response.id);
+            $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
+              $localStorage.friends = data[0];
+              angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+                friend.statut = data[1][index]; 
+              });  
+            }).error(function(err){ console.log('error')});
+          }).error(function(err){ $scope.err = err});
         });
       },function(){alert('error')});
     };
