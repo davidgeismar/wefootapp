@@ -31,8 +31,104 @@ a{
    font-family: 'Ubuntu';
 }
 
+.flechedate{
+-webkit-transform:rotate(90deg); /*Safari 3.1+/Chrome*/
+-o-transform:rotate(90deg);  /*Opera 10.5+*/
+-moz-transform: rotate(90deg); /*Firefox 3.5+*/
+
+}
+
+.flechedispo{
+  margin-top: 18px;
+  margin-right: 15px;
+}
+.align {
+  margin-left:-40px;
+}
+
+.size_level {
+  height:30px;
+}
+.open {
+  height: 30px;
+}
+.flechelieu {
+  margin-top: 5px;
+  margin-left: 50px;
+}
+#icon_localisation
+{
+  height: 25px;
+  margin-left: -75px;
+}
+.top {
+  margin-top: 10px;
+}
+.dispo {
+    margin-top: 20px;
+
+}
+
+.time_date {
+  margin-top: -25px;
+  padding-bottom: 25px;
+  margin-left: 20px;
+}
+.icon_bonhomme {
+  height:27px;
+  margin-top: 13px;
+  margin-right: 100px;
+
+}
+.venue {
+  margin-top: 5px;
+  margin-left: -40px;
+}
 .hidden{
 	display: none;
+}
+#number_players {
+    margin-left: 50px;
+  margin-top: 10px;
+  border-right: solid 1px blue;
+}
+
+#invite_friend_toggle{
+  border: none;
+  margin-top: 5px;
+  height:50px;
+}
+
+#icon_calendar {
+  height: 23px;
+  margin-right: 15px;
+  margin-left: -55px;
+  margin-top: 30px;
+}
+.icon_size_horloge {
+  height: 23px;
+  margin-right: 15px;
+  margin-left: -80px;
+  margin-top: 30px;
+}
+.icon_size_dispo {
+  height: 23px;
+  margin-top: 15px;
+  margin-left:-75px;
+}
+.icon_size_edit_foot {
+  height: 23px;
+  margin-right: 15px;
+  margin-left: -80px;
+  margin-top: 15px;
+}
+.hauteur {
+  height: 133px;
+}
+.fond {
+
+  background-color: rgb(241, 242, 244);
+
 }
 
 .login-seco, .register_inscr{
@@ -554,7 +650,7 @@ p{
 }
 .conv_box{
 
-    margin-top: 70px; 
+    margin-top: 70px;
     margin-bottom: 0px;
 
 }
@@ -644,7 +740,7 @@ p{
     text-decoration: underline;
 }
 .img_chat_conv{
-    width: 35px;  
+    width: 35px;
     display: inline-block;
 }
 .img_chat_conv img{
@@ -864,7 +960,7 @@ li:hover, li:hover a {
   text-decoration: none;
 }
 
-.active {
+.activated {
   color: rgb(37, 55, 91);
   border-bottom: 3px solid rgb(0, 113, 227)  ;
   margin: auto;
@@ -873,10 +969,22 @@ li:hover, li:hover a {
 
 .bob{
 text-align: center;
-margin-top: 60px;
 border-bottom: black solid 4px;
+background-color: white;
+margin-left: 6%;
+margin-right: 6%;
+z-index: 1;
+height: 200px;
+
 }
 
+.background-foot {
+background-image: url('../img/terrain_640x414_3.jpg');
+background-size: cover;
+background-position: top;
+z-index: 0;
+margin-top: 60px;
+}
 .infoFoot{
   font-size:1.3em;
   margin-top: -20px;
@@ -886,10 +994,13 @@ border-bottom: black solid 4px;
 
 }
 
-
-#bonhomme {
+.photoprofil{
+  height:70px;
+  border-radius: 50%;
+}
+.bonhomme {
   height: 35px;
-    margin-left: -15px
+  margin-top: 18px;
 }
 /* p {
   color:rgb(37, 55, 91);
@@ -901,9 +1012,15 @@ border-bottom: black solid 4px;
   margin-left:10px;
 
 }*/
+.fleche {
+  margin-top: 40px;
+}
 
--->
-
+.croix {
+  height:40px;
+  margin-left: 230px;
+  margin-bottom: -20px;
+}
 .name {
   color: rgb(128, 211, 231);
 }

@@ -11,22 +11,22 @@
   },
   "devDependencies": {
     "bower": "^1.3.3",
-    "gulp-uglify": "^1.1.0",
+    "gulp": "^3.8.11",
+    "gulp-concat": "^2.5.2",
+    "gulp-jshint": "^1.10.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^0.7.3",
+    "gulp-uglify": "^1.2.0",
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-<<<<<<< HEAD
     {
       "id": "com.phonegap.plugins.facebookconnect",
       "locator": "../ngcordova-facebook/phonegap-facebook-plugin"
     },
-    "org.apache.cordova.inappbrowser"
-  ]
-}
-=======
+    "org.apache.cordova.inappbrowser",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.file-transfer"
   ]
 }
->>>>>>> 984bf0e070aaa6962c17d5806837c87a324b150e

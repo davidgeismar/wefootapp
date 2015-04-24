@@ -267,7 +267,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
-      imageUri = results[0] ;
+      imageUri = results[0] ; 
 
     }, function(error) {
       console.log('Error pic');
@@ -284,11 +284,11 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
                   params : {
                     fieldId: data.field
                     }
-
+                  
     };
 
       $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
-      .then(function(result) {
+      .then(function(result) {  
         // Success!
         console.log("successssss");
       }, function(err) {
@@ -298,7 +298,7 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
         console.log("progress");
         // constant progress updates
       });
-
+                  
 
 
   })
@@ -308,32 +308,11 @@ app.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordo
   }
 })
 
-app.controller('FootCtrl',function($scope){
-$ionicModal.fromTemplateUrl('foot-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-  // Execute action on hide modal
-  $scope.$on('modal.hidden', function() {
-    // Execute action
-  });
-  // Execute action on remove modal
-  $scope.$on('modal.removed', function() {
-    // Execute action
-  });
-})
+app.controller('FootController', function ($scope) {
+  $scope.date = "11/02/2013";
+  $scope.hour = "16h";
+});
+
 app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
   $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
     }).error(function(){
@@ -367,7 +346,7 @@ app.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
         console.log('error');
       });
     }
-   }
+   } 
   })
 app.controller('HomeCtrl', function($scope){
   $scope.facebookConnect = function(){
@@ -387,15 +366,15 @@ app.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
       $http.get('http://localhost:1337/getAllFriends/'+data.id).success(function(data){
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index];
-        });
+          friend.statut = data[1][index]; 
+        });  
       }).error(function(err){ console.log('error')});
     }).error(function(){
        $scope.err = "Identifiant ou mot de passe incorrect.";
     });
   }
 })
-app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
+app.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
@@ -527,21 +506,32 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'HomeCtrl'
   })
 
+  $stateProvider.state('user.footparams', {
+    cache: false,
+    url: '/footparams',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/footparams.html",
+       controller: 'FootController'
+      }
+    }
+  })
 
-  $stateProvider.state('chat', {
-    url: '/chat',
-    templateUrl: 'templates/chat.html',
+   $stateProvider.state('user.foots', {
+      cache: false,
+      url: '/foots',
+      views: {
+      'menuContent' :{
+      templateUrl: "templates/foots.html"
+
+      }
+    }
   })
 
    $stateProvider.state('conv', {
     url: '/conv',
     templateUrl: 'templates/conv.html',
   })
-
-  $stateProvider.state('foots', {
-      url: '/foots',
-      templateUrl: 'templates/foots.html',
-    })
 
 
   $stateProvider.state('register', {
@@ -587,12 +577,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('user.new_field', {
     url: '/new_field',
-    views: {
-      'new_field':{
-        templateUrl: 'templates/new_field.html',
-        controller: 'FieldCtrl'
-      }
-    }
+    templateUrl: 'templates/new_field.html',
+    controller: 'FieldCtrl'
   })
 
   $stateProvider.state('user.friends', {
