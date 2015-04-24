@@ -667,8 +667,8 @@ p{
 	background: rgb(230,230,230);
 	line-height: 1.25;
 	-webkit-border-radius: 1em;
-	   -moz-border-radius: 1em;
-	        border-radius: 1em;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
     max-width: 80%;
 }
 .conv_box .to p {
@@ -940,7 +940,6 @@ p{
 
 }
 
-<!--
 .foot-tab{
   display: inline-block;
   width: 32%;
@@ -1001,6 +1000,8 @@ margin-top: 60px;
 .bonhomme {
   height: 35px;
   margin-top: 18px;
+  margin-left: -15px
+
 }
 /* p {
   color:rgb(37, 55, 91);
@@ -1016,11 +1017,15 @@ margin-top: 60px;
   margin-top: 40px;
 }
 
+
 .croix {
   height:40px;
   margin-left: 230px;
   margin-bottom: -20px;
 }
+
+
+
 .name {
   color: rgb(128, 211, 231);
 }

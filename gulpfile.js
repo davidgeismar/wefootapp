@@ -3,10 +3,10 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var bower = require('bower');
 var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
+// var sass = require('gulp-sass');
+// var minifyCss = require('gulp-minify-css');
+// var rename = require('gulp-rename');
+// var sh = require('shelljs');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -38,7 +38,7 @@ gulp.task('install', ['git-check'], function() {
 });
 
 gulp.task('launch',function(){
-  return gulp.src(['www/js/openFb.js','www/js/global.js','www/js/declare.js','www/js/Controllers/*.js','www/js/routes.js','www/js/provider.js'])
+  return gulp.src(['www/js/global.js','www/js/declare.js','www/js/routes.js','www/js/provider.js'])
       .pipe(concat('app.js'))
       // .pipe(uglify())
       .pipe(gulp.dest('www/js/'));

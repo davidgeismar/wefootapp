@@ -9,16 +9,19 @@
    	<a href="#/login"><button class="button homepage_connect homepage_button icon-right ion-chevron-right">
   		Connexion
 	</button></a>
-	 <a ng-click="facebookConnect"><button class="button homepage_fb homepage_button">
+	 <a ng-click="facebookConnect()"><button class="button homepage_fb homepage_button">
   		Connexion via Facebook
 	</button></a>
 	 <a href="#/register"><button class="button homepage_register homepage_button icon-right ion-chevron-right">
   		Inscription
 	</button></a>
+
      <a href="/#/user/footparams">
   <button  class="homepage_button button button-positive">
     footparams
   </button>
   </a>
+
+  <p class="err_container"> {{err}} </p>
   </ion-content>
 </ion-view>

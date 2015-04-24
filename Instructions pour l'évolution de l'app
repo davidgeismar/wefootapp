@@ -1,0 +1,22 @@
+Instructions pour l'évolution de l'app: 
+
+Pour créer un nouveau controller :
+SOIT Ajouter à un ficher déjà existant SINON: 
+	1. Créer le fichier dans les controller et déclarer le module en première ligne (voir les autres).
+	2. Le remplir avec la syntax .controller + nom du controller.
+	3. Ajouter la dépendence dans declare.js.
+	4. Ajouter la dépendence dans index.html.
+	5. Taper la commande gulp launch dans la console pour mettre le fichier app.js à jour.
+
+Pour modifier les routes ou les providers : 
+	1. Modifier le fichier cible.
+	2. Taper la commande gulp launch dans la console pour mettre le fichier app.js à jour.
+
+Pour ajouter des fonctions :
+	1. Créer le fichier dans js et déclarer app.factory + nom.
+	2. Ajouter la dépendence dans declare.js.
+	3. Ajouter la dépendence dans index.html.
+	5. Taper la commande gulp launch dans la console pour mettre le fichier app.js à jour.
+
+
+MODIFIER CORS DE WEFOOT POUR LA MISE EN PROD !!

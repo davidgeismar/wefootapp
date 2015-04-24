@@ -1,4 +1,4 @@
-app.controller('FootController', function ($scope, $cordovaDatePicker) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker) {
   $scope.foot;
 
   //$scope.date = "11/02/2013";
@@ -24,7 +24,8 @@ app.controller('FootController', function ($scope, $cordovaDatePicker) {
       });
 
     }, false);
-  };
 
+
+};
 
 });
