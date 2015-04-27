@@ -30,19 +30,43 @@
           </a>
         </div>
       </div>
-      <a class="item item-icon-left" href="#">
+      <button class="item item-icon-left" ng-click="openModal1()">
         <div class="row">
           <div class="col col-25">
             <img id="icon_localisation" src="../img/icon_localisation.svg"/>
           </div>
           <div class="col col-50 venue">
-            <p>Le five Bobiny</p>
+            <p>Selectionner votre foot</p>
           </div>
           <div class="col col-25">
             <img class= "flechelieu" src="../img/fleche_bleuclaire.svg"/>
           </div>
         </div>
-      </a>
+      </button>
+    <script id="modal.html" type="text/ng-template">
+      <div class="modal">
+        <ion-header-bar  class="actu_header">
+ 	 <h1 class="title">Rechercher un foot</h1>
+          <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-close"></span></div>
+        </ion-header-bar>
+        <ion-content  class="padding_header">
+          <label class="item-input">
+    		<i class="icon ion-search placeholder-icon"></i>
+    		<input ng-model="word" ng-keyup="searchQuery(word)" type="text" placeholder="Rechercher un foot">
+  		</label>
+		<div ng-repeat="field in results" class="one_search">
+			<div class="img_search_field">
+				<img src="../img/default_pic.jpg">
+			</div>
+			<div ng-class="{disabled: friendsId.indexOf(user.id)>-1}" class="name_search">
+				<p> {{field.cleanname}} <span class="field_search_text">{{field.city}} {{field.zip_code}}</span></p>
+			</div>
+			<div ng-click="addFriend({{user.id}})" ng-class="{'ion-checkmark-round': friendsId.indexOf(user.id)>-1, 'icon_friend_search': friendsId.indexOf(user.id)==-1 }" class="icon_search">
+			</div>
+		</div>
+        </ion-content>
+      </div>
+    </script>
 
       <a class="item item-icon-left" href="#">
         <div class="row">
@@ -56,7 +80,6 @@
             <p id="number_players">10</p>
              <img class= "" src="../img/fleche_bleuclaire.svg"/>
           </div>
-
         </div>
       </a>
       <a class="item item-icon-left" href="#">

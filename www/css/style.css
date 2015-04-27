@@ -1103,4 +1103,18 @@ margin-top: 60px;
 		bottom: 4px;
 }
 }
+.field_search_text{
+    font-size: 12px;
+    font-family: "Ubuntu";
+    color: rgb( 78, 78, 78 );
+     text-align: right;
+}
+.img_search_field{
+width: 50px;
+    display: inline-block;
+    margin-top: 10px;
+}
 
+.img_search_field img{
+	width: 40px;
+}
