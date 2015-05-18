@@ -4,8 +4,8 @@ angular.module('connections',[])
 
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location){
   $scope.facebookConnect = function(){
-      OpenFB.login('email','public_profile','read_friendlists').then(function(){
-        OpenFB.get('/me/invitable_friends').success(function(data){ console.log(data);
+      OpenFB.login('email','public_profile','user_friends').then(function(){
+        OpenFB.get('/me').success(function(data){ console.log(data);
           $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id}).success(function(response){
             $localStorage.token = response.token;
             $localStorage.user = response;
