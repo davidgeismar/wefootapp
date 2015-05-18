@@ -1,0 +1,146 @@
+<ion-view view-title="footparams">
+  <ion-content>
+    <div class="list text-center has-header fond">
+      <a class="item item-icon-left top" href="#">
+        <div class="row">
+          <div class="col col-25">
+           <img class= "icon_size_dispo" src="../img/icon_disponibilite.svg"/>
+          </div>
+          <div class="col col-50">
+            <p class="dispo">Disponibilité du terrain</p>
+          </div>
+          <div class="col col-25">
+            <img class= "flechedispo" src="../img/fleche_bleuclaire.svg"/>
+          </div>
+        </div>
+      </a>
+      <div class="row text-center">
+        <div class="col col-50">
+          <a ng-click="datepicker()" class="item item-icon-left item-icon-right" href="#">
+            <img id= "icon_calendar" src="../img/icon_calendrier.svg"/>
+            <p class="time_date"> </p>
+            <img class= "flechedate" src="../img/fleche_bleuclaire.svg"/>
+          </a>
+        </div>
+        <div class="col col-50">
+          <a class="item item-icon-left item-icon-right hauteur" href="#">
+            <img class= "icon_size_horloge" src="../img/icon_horloge.svg"/>
+          <p class="time_date">{{ hour }}</p>
+          <img class= "flechedate" src="../img/fleche_bleuclaire.svg"/>
+          </a>
+        </div>
+      </div>
+      <button class="item item-icon-left" ng-click="openModal1()">
+        <div class="row">
+          <div class="col col-25">
+            <img id="icon_localisation" src="../img/icon_localisation.svg"/>
+          </div>
+          <div class="col col-50 venue">
+            <p>Selectionner votre foot</p>
+          </div>
+          <div class="col col-25">
+            <img class= "flechelieu" src="../img/fleche_bleuclaire.svg"/>
+          </div>
+        </div>
+      </button>
+    <script id="modal.html" type="text/ng-template">
+      <div class="modal">
+        <ion-header-bar  class="actu_header">
+ 	 <h1 class="title">Rechercher un foot</h1>
+          <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-close"></span></div>
+        </ion-header-bar>
+        <ion-content  class="padding_header">
+          <label class="item-input">
+    		<i class="icon ion-search placeholder-icon"></i>
+    		<input ng-model="word" ng-keyup="searchQuery(word)" type="text" placeholder="Rechercher un foot">
+  		</label>
+		<div ng-repeat="field in results" class="one_search">
+			<div class="img_search_field">
+				<img src="../img/default_pic.jpg">
+			</div>
+			<div ng-class="{disabled: friendsId.indexOf(user.id)>-1}" class="name_search">
+				<p> {{field.cleanname}} <span class="field_search_text">{{field.city}} {{field.zip_code}}</span></p>
+			</div>
+			<div ng-click="addFriend({{user.id}})" ng-class="{'ion-checkmark-round': friendsId.indexOf(user.id)>-1, 'icon_friend_search': friendsId.indexOf(user.id)==-1 }" class="icon_search">
+			</div>
+		</div>
+        </ion-content>
+      </div>
+    </script>
+
+      <a class="item item-icon-left" href="#">
+        <div class="row">
+          <div class="col col-25">
+            <img class= "icon_bonhomme" src="../img/icon_bonhomme.svg"/>
+          </div>
+          <div class="col col-50 venue">
+           <p>Nombre de joueurs <br> (organisateur inclus)</p>
+          </div>
+          <div class="col col-25 venue">
+            <p id="number_players">10</p>
+             <img class= "" src="../img/fleche_bleuclaire.svg"/>
+          </div>
+        </div>
+      </a>
+      <a class="item item-icon-left" href="#">
+        <div class="row">
+          <div class="col col-25">
+            <img class= "icon_size_dispo" src="../img/icon_invitation_parametres.svg"/>
+          </div>
+          <div class="col col-50">
+           <p class="dispo">Inviter vos amis </p>
+          </div>
+          <div class="col col-25">
+            <img class= "flechelieu" src="../img/fleche_bleuclaire.svg"/>
+          </div>
+        </div>
+      </a>
+
+      <a class="item item-icon-left" href="#">
+        <div class="row">
+          <div class="col col-25">
+            <img class= "icon_bonhomme" src="../img/icon_partager.svg"/>
+          </div>
+          <div class="col col-50 venue">
+            <p>Vos amis peuvent <br> inviter leurs amis</p>
+          </div>
+            <ion-toggle id="invite_friend_toggle"
+                    >
+            </ion-toggle>
+        </div>
+      </a>
+      <div class="row text-center">
+        <div class="col col-50">
+          <a class="item item-icon-left item-icon-right" href="#">
+            <img class= "open" src="../img/icon_prive_bleufonce.svg"/>
+            <p class=""> Foot Privé</p>
+          </a>
+        </div>
+        <div class="col col-50">
+          <a class="item item-icon-left item-icon-right" href="#">
+            <img class= "open" src="../img/icon_au public_gris.svg"/>
+          <p class=""> Foot Public</p>
+          </a>
+        </div>
+      </div>
+      <a class="item item-icon-left" href="#">
+       <div class="text-center"> <p>Niveau du Foot</p></div>
+       <div class="row">
+          <div class="col align"><img class= "size_level" src="../img/niveau_1.svg"/><p>Débutant</p></div>
+          <div class="col align"><img class= "size_level" src="../img/niveau_2.svg"/><p>Moyen</p></div>
+          <div class="col align"><img class= "size_level" src="../img/niveau_3.svg"/><p>Expert</p></div>
+          <div class="col align"><img class= "size_level" src="../img/niveau_tous.svg"/><p>Tous</p></div>
+       </div>
+      </a>
+    </div>
+
+    <button class="button button-block button-positive">
+      Valider
+    </button>
+
+    <button class="button button-block button-assertive">
+      <img class= "icon_size_edit_foot" src="../img/icon_carton rouge.svg"/>
+      Supprimer ce Foot
+    </button>
+  </ion-content>
+</ion-view>

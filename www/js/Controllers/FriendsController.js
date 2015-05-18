@@ -36,5 +36,6 @@ angular.module('friends',[])
 })
 
 .controller('ChatCtrl', function($scope, $localStorage){
- $scope.user = $localStorage.user;
+    $scope.user = $localStorage.user;
+    switchIcon('icon_none','');
 })

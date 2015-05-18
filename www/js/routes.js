@@ -7,33 +7,32 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'HomeCtrl'
   })
 
+  $stateProvider.state('user.footparams', {
+    cache: false,
+    url: '/footparams',
+    views: {
+      'menuContent' :{
+      templateUrl: "templates/footparams.html",
+       controller: 'FootController'
+      }
+    }
+  })
 
-  $stateProvider.state('chat', {
-    url: '/chat',
-    templateUrl: 'templates/chat.html',
+   $stateProvider.state('user.foots', {
+      cache: false,
+      url: '/foots',
+      views: {
+      'menuContent' :{
+      templateUrl: "templates/foots.html"
+
+      }
+    }
   })
 
    $stateProvider.state('conv', {
     url: '/conv',
     templateUrl: 'templates/conv.html',
   })
-
-  $stateProvider.state('foots', {
-      url: '/foots',
-      abstract: true,
-      templateUrl: 'templates/foots.html',
-      controller: 'FootCtrl'
-    })
-
-    $stateProvider.state('foots.crees', {
-        url: "/crees",
-        views: {
-          'crees-tab': {
-            templateUrl: "templates/crees.html",
-             controller: 'FootCreesCtrl'
-          }
-        }
-    })
 
 
   $stateProvider.state('register', {

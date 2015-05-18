@@ -1,60 +1,9 @@
-<!-- <ion-view view-title="foots">
-  <ion-tabs class="tabs-icon-top tabs-positive tabs-top">
-    <ion-tab title="MES FOOTS CREES" href="#/user/crees">
-      <ion-nav-view name="crees-tab"></ion-nav-view>
-    </ion-tab>
-
-    <ion-tab title="MES FOOTS REJOINTS" href="#/user/rejoints">
-      <ion-nav-view name="rejoints-tab"></ion-nav-view>
-    </ion-tab>
-
-    <ion-tab title="MES FOOTS EN ATTENTE" href="#/user/attente">
-      <ion-nav-view name="attente-tab"></ion-nav-view>
-    </ion-tab>
-  </ion-tabs>
-</ion-view>
- -->
+<ion-view view-title="foots">
+  <ion-content>
+  <section class="tab">
 
 
-<!-- <div ng-click="Footactive" class="tab-container">
-  <div ng-click="Footactive" class="foot-tab gris">
-    MES FOOTS <strong>CREES</strong>
-    <div class="borderBottom"></div>
-  </div>
-  <div ng-click="Footactive" class="foot-tab gris">
-    MES FOOTS <strong>REJOINTS</strong>
-    <div class="borderBottom"></div>
-  </div>
-  <div ng-click="Footactive" class="foot-tab gris">
-    MES FOOTS<br><strong>EN ATTENTE</strong>
-    <div class="borderBottom"></div>
-  </div>
-</div>
-<div class="container">
-  <div class="bob">
-    <div class="row">
-      <div class="col-xs-2">
-        <img src="../img/default_pic.jpg"/>
-      </div>
-      <div class="col-xs-8 infoFoot">
-        <p class="margeTop name" >Florent Pascal</p>
-        <p><strong>4 octobre, 18h00</strong></p>
-        <p>LE FIVE PARIS 14</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-offset-6 col-sx-4 place">
-       <strong>Encore 2 places</strong>
-      </div>
-      <div class="col-xs-1">
-        <img id="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<section>
-    <ul ng-init="tab = 1" class="tab-container">
+   <ul ng-init="tab = 1" class="tab-container">
       <li ng-class="{active:tab===1}" class="foot-tab">
         <a href ng-click="tab = 1" class="gris">MES FOOTS <strong>CRÉÉS</strong></a>
       </li>
@@ -65,8 +14,37 @@
         <a href ng-click="tab = 3" class="gris" >MES FOOTS <strong><br>EN ATTENTE</strong></a>
       </li>
       <br><br>
-
-        <div ng-show="tab === 1" class="container">
+        <div ng-show="tab === 1">
+        <div class="background-foot">
+        </div>
+          <div class="bob">
+            <img class="croix" src="../img/croix_supprimer.svg"/>
+            <div class="container">
+              <div class="row">
+                <div class="col col-25">
+                  <img class="photoprofil" src="../img/default_pic.jpg"/>
+                </div>
+                <div class="col col-50 infoFoot">
+                  <p class="margeTop name" >Florent Pascal</p>
+                  <p><strong>4 octobre, 18h00</strong></p>
+                  <p>LE FIVE PARIS 14</p>
+                </div>
+                <div class="col col-25">
+                  <img class="fleche"src="../img/fleche_bleufonce.svg"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col col-50 place">
+                 <strong>Encore 2 places</strong>
+                </div>
+                <div class="col col-25">
+                  <img class="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div ng-show="tab === 2" class="container">
           <div class="bob">
             <div class="row">
               <div class="col-xs-2">
@@ -86,37 +64,14 @@
                <strong>Encore 2 places</strong>
               </div>
               <div class="col-xs-1">
-                <img id="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
+                <img class="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
               </div>
             </div>
           </div>
-        </div>
-        <div ng-show="tab === 2" class="container">
-          <div class="bob">
-            <div class="row">
-              <div class="col-xs-2">
-                <img src="../img/default_pic.jpg"/>
-              </div>
-              <div class="col-xs-8 infoFoot">
-                <p class="margeTop name" >Florent Pascal</p>
-                <p><strong>4 octobre, 18h00</strong></p>
-                <p>LE FIVE PARIS 14</p>
-              </div>
-              <div class="col-xs-2">
-                <div class="close-button"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-offset-6 col-sx-4 place">
-               <strong>Encore 2 places</strong>
-              </div>
-              <div class="col-xs-1">
-                <img id="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
-              </div>
-            </div>
-          </div>
-        </div>
+        </div>  -->
 
-      <p ng-show="tab === 3"></p>
+       <p ng-show="tab === 3"></p>
     </ul>
   </section>
+</ion-content>
+</ion-view>
