@@ -5,13 +5,14 @@ angular.module('connections',[])
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location){
   $scope.facebookConnect = function(){
       OpenFB.login('email','public_profile','user_friends').then(function(){
-        OpenFB.get('/me').success(function(data){ console.log(data);
+        OpenFB.get('/me').success(function(data){;
           $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id}).success(function(response){
             $localStorage.token = response.token;
             $localStorage.user = response;
-            $location.path('/user/profil/'+response.id);
+            $location.path('/user/profil');
             $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
               $localStorage.friends = data[0];
+              console.log($localStorage.friends);
               angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
                 friend.statut = data[1][index]; 
               });  
@@ -27,7 +28,7 @@ angular.module('connections',[])
   $scope.err = "";
   $scope.user={};
 
-  if($localStorage.user) $location.path('/user/profil/'+$localStorage.user.id);  // TODO FIX PROB
+  if($localStorage.user) $location.path('/user/profil/');  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;

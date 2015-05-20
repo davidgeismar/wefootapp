@@ -1,30 +1,32 @@
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/')
-
+  $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
     templateUrl: 'templates/home.html',
     controller: 'HomeCtrl'
   })
 
-  $stateProvider.state('user.footparams', {
+  $stateProvider.state('footfield',{
+    cache: false,
+    url:'/footfield',
+    templateUrl:'templates/footfield.html',
+    controller: 'FootController'
+  })
+
+  $stateProvider.state('footparams', {
     cache: false,
     url: '/footparams',
-    views: {
-      'menuContent' :{
-      templateUrl: "templates/footparams.html",
-       controller: 'FootController'
-      }
-    }
+    templateUrl: 'templates/footparams.html',
+    controller: 'FootController'
   })
+
 
    $stateProvider.state('user.foots', {
       cache: false,
       url: '/foots',
       views: {
       'menuContent' :{
-      templateUrl: "templates/foots.html"
-
+      templateUrl: 'templates/foots.html'
       }
     }
   })
@@ -67,7 +69,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('user.profil', {
     cache: false,
-    url: '/profil/:userId',
+    url: '/profil',
     views: {
       'menuContent' :{
       templateUrl: "templates/profil.html",

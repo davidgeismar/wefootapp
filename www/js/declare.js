@@ -18,8 +18,19 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
-.run(function($ionicPlatform,OpenFB) {
-  OpenFB.init('491593424324577')//,'http://localhost:8100/oauthcallback.html',window.localStorage);
+.run(function($ionicPlatform,OpenFB,$rootScope) {
+  $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
+    setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
+      console.log($('.actu_header'));
+      if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
+        $('.actu_header').addClass('transparent');
+      }
+      else if(fromState.url.indexOf('profil')>0){
+        $('.actu_header').removeClass('transparent');
+      }
+    },0);
+  });
+  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

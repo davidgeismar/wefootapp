@@ -1,9 +1,19 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http) {
-  $scope.foot;
-
-  //$scope.date = "11/02/2013";
-  //$scope.hour = "16h";
- $scope.datepicker = function(){
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage) {
+  $scope.foot = {};
+  if($localStorage.friends){
+    $scope.friends = $localStorage.friends;
+  }
+  $scope.toInvite = [];
+  $scope.addToFoot = function(id){
+    var index = $scope.toInvite.indexOf(id);
+    if(index>-1)
+      $scope.toInvite.splice(index,1);
+    else
+      $scope.toInvite.push(id);
+    console.log($scope.toInvite);
+  }
+  $scope.date = "11/02/2013"; //DEFAULT FOR TESTING
+  $scope.hour = "16h";
   var options = {
       date: new Date(),
       mode: 'date', // or 'time'
@@ -15,19 +25,24 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
       cancelButtonLabel: 'CANCEL',
       cancelButtonColor: '#000000'
     };
-    document.addEventListener("deviceready", function () {
-
-      $cordovaDatePicker.show(options).then(function(date){
-          $scope.foot.date = date
-
-
+    var options1 = {
+      date: new Date(),
+      mode: 'time', // or 'time'
+      doneButtonLabel: 'DONE',
+      doneButtonColor: '#F2F3F4',
+      cancelButtonLabel: 'CANCEL',
+      cancelButtonColor: '#000000'
+    };
+    $scope.showDatePicker = function(){
+        $cordovaDatePicker.show(options).then(function(date){
+        $scope.foot.date = date
       });
-
-    }, false);
-
-
-};
-
+    }
+      $scope.showHourPicker = function(){
+        $cordovaDatePicker.show(options1).then(function(hour){
+        $scope.foot.hour = hour;
+      });
+    }
 
 $ionicModal.fromTemplateUrl('modal.html', {
     scope: $scope,

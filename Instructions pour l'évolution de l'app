@@ -20,3 +20,5 @@ Pour ajouter des fonctions :
 
 
 MODIFIER CORS DE WEFOOT POUR LA MISE EN PROD !!
+
+Enlever "cache false" des controllers.

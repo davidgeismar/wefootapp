@@ -1,100 +1,52 @@
+<ion-header-bar  class="actu_header">
+  <h1 class="title">Créer un foot</h1>
+  <a href='#/foot'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+</ion-header-bar>
 <ion-view view-title="footparams">
   <ion-content>
-    <div class="list text-center has-header fond">
-      <a class="item item-icon-left top" href="#">
-        <div class="row">
-          <div class="col col-25">
-           <img class= "icon_size_dispo" src="../img/icon_disponibilite.svg"/>
-          </div>
-          <div class="col col-50">
-            <p class="dispo">Disponibilité du terrain</p>
-            <i class="ion-chevron-right"></i>
-          </div>
-          <div class="col col-25">
-          </div>
-        </div>
-      </a>
+    <div class="list text-center fond bottom-marged">
       <div class="row text-center">
-        <div class="col col-50">
-          <a ng-click="datepicker()" class="item item-icon-left item-icon-right" href="#">
-            <img id= "icon_calendar" src="../img/icon_calendrier.svg"/>
-            <p class="time_date"> </p>
-          </a>
+        <div class="col">
+          <div ng-click="showDatePicker()" class="item item-icon-left item-icon-right nativedatepicker">
+            <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
+            <p class="time_date"> {{date}} </p>
+            <i class="ion-chevron-down arrow_cal"></i>
+          </div>
         </div>
-        <div class="col col-50">
-          <a class="item item-icon-left item-icon-right hauteur" href="#">
-            <img class= "icon_size_horloge" src="../img/icon_horloge.svg"/>
-          <p class="time_date">{{ hour }}</p>
-          <img class= "flechedate" src="../img/fleche_bleuclaire.svg"/>
-          </a>
+        <div class="col">
+          <div ng-click="showHourPicker()" class="item item-icon-left item-icon-right" href="#">
+            <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
+            <p class="time_date">{{ hour }}</p>
+            <i class="ion-chevron-down arrow_cal"></i>
+          </div>
         </div>
       </div>
-      <button class="item item-icon-left" ng-click="openModal1()">
-        <div class="row">
-          <div class="col col-25">
-            <img id="icon_localisation" src="../img/icon_localisation.svg"/>
-          </div>
-          <div class="col col-50 venue">
-            <p>Selectionner votre foot</p>
-          </div>
-          <div class="col col-25">
-            <img class= "flechelieu" src="../img/fleche_bleuclaire.svg"/>
-          </div>
-        </div>
-      </button>
-    <script id="modal.html" type="text/ng-template">
-      <div class="modal">
-        <ion-header-bar  class="actu_header">
- 	 <h1 class="title">Rechercher un foot</h1>
-          <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-close"></span></div>
-        </ion-header-bar>
-        <ion-content  class="padding_header">
-          <label class="item-input">
-    		<i class="icon ion-search placeholder-icon"></i>
-    		<input ng-model="word" ng-keyup="searchQuery(word)" type="text" placeholder="Rechercher un foot">
-  		</label>
-		<div ng-repeat="field in results" class="one_search">
-			<div class="img_search_field">
-				<img src="../img/default_pic.jpg">
-			</div>
-			<div ng-class="{disabled: friendsId.indexOf(user.id)>-1}" class="name_search">
-				<p> {{field.cleanname}} <span class="field_search_text">{{field.city}} {{field.zip_code}}</span></p>
-			</div>
-			<div ng-click="addFriend({{user.id}})" ng-class="{'ion-checkmark-round': friendsId.indexOf(user.id)>-1, 'icon_friend_search': friendsId.indexOf(user.id)==-1 }" class="icon_search">
-			</div>
-		</div>
-        </ion-content>
-      </div>
-    </script>
-
       <a class="item item-icon-left" href="#">
         <div class="row">
           <div class="col col-25">
             <img class= "icon_bonhomme" src="../img/icon_bonhomme.svg"/>
           </div>
-          <div class="col col-50 venue">
-           <p>Nombre de joueurs <br> (organisateur inclus)</p>
+          <div class="col col-50 venue1">
+           <p>Nombre de joueurs</p>
           </div>
-          <div class="col col-25 venue">
-            <p id="number_players">10</p>
-             <img class= "" src="../img/fleche_bleuclaire.svg"/>
+          <div class="col col-25 venue1">
+             <input maxlength="2" ng-model="ng_player" class="input_player"/>
           </div>
         </div>
       </a>
-      <a class="item item-icon-left" href="#">
+      <div ng-click="openModal1()" class="item item-icon-left">
         <div class="row">
-          <div class="col col-25">
+          <div class="col col-25 invit_params">
             <img class= "icon_size_dispo" src="../img/icon_invitation_parametres.svg"/>
           </div>
           <div class="col col-50">
-           <p class="dispo">Inviter vos amis </p>
+            <p class="dispo">Inviter vos amis </p>
           </div>
           <div class="col col-25">
-            <img class= "flechelieu" src="../img/fleche_bleuclaire.svg"/>
+            <i class="ion-chevron-right ion_invite_friends"></i>
           </div>
         </div>
-      </a>
-
+      </div>
       <a class="item item-icon-left" href="#">
         <div class="row">
           <div class="col col-25">
@@ -103,8 +55,7 @@
           <div class="col col-50 venue">
             <p>Vos amis peuvent <br> inviter leurs amis</p>
           </div>
-            <ion-toggle id="invite_friend_toggle"
-                    >
+            <ion-toggle id="invite_friend_toggle">
             </ion-toggle>
         </div>
       </a>
@@ -122,7 +73,15 @@
           </a>
         </div>
       </div>
-      <a class="item item-icon-left" href="#">
+      <div class="private_foot">
+        <p class="type-foot">Votre Foot est privé. </p>
+        <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
+      </div>
+      <div class="public_foot hidden">
+        <p class="type-foot">Votre Foot est publique. </p>
+        <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
+      </div>
+      <a class="item item-icon-left level_foot" href="#">
        <div class="text-center"> <p>Niveau du Foot</p></div>
        <div class="row">
           <div class="col align"><img class= "size_level" src="../img/niveau_1.svg"/><p>Débutant</p></div>
@@ -131,15 +90,42 @@
           <div class="col align"><img class= "size_level" src="../img/niveau_tous.svg"/><p>Tous</p></div>
        </div>
       </a>
-    </div>
 
-    <button class="button button-block button-positive">
+    <button class="button button-block button_launch_foot">
       Valider
     </button>
+  </div>
+  <script id="modal.html" type="text/ng-template">
+    <div class="modal">
+      <ion-header-bar  class="actu_header">
+      <h1 class="title">Inviter des amis</h1>
+      <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-chevron-down"></span></div>
+    </ion-header-bar>
+    <ion-content  class="padding_header">
+    <label class="item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input ng-model="searchFriends" type="text" placeholder="Rechercher un foot">
+    </label>
+    <div id="container_foot_friends" class="container_list_friends">
+      <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">
+      <label class="checkbox checkbox_foot_friends">
+       <input ng-click="addToFoot(friend.id)" type="checkbox">
+      </label>
+        
+        <div class="img_chat img_friends">
+          <img src="../img/default_pic.jpg">
+        </div>
+        <div class="name_friends name_foot_friends">
+          <p> {{friend.first_name}} {{-friend.last_name}}  </p>
+        </div>
+        <div ng-class="{grey: friend.statut==0}" class="star_friends">
+          <i class="ion-android-star"></i>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</div>
+</script>
 
-    <button class="button button-block button-assertive">
-      <img class= "icon_size_edit_foot" src="../img/icon_carton rouge.svg"/>
-      Supprimer ce Foot
-    </button>
   </ion-content>
 </ion-view>

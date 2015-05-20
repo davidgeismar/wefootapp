@@ -13,10 +13,17 @@
 
 p{
 	font-family: 'Ubuntu',sans-serif;
+	color:grey;
 }
 
 a{
 	text-decoration: none;
+}
+.transparent{
+	background-color: transparent !important;
+}
+.scroll-content{
+	background-color: #F2F3F9;
 }
 ::-webkit-input-placeholder {
     font-family: 'Ubuntu';
@@ -30,20 +37,25 @@ a{
 :-ms-input-placeholder {
    font-family: 'Ubuntu';
 }
-
-.flechedate{
--webkit-transform:rotate(90deg); /*Safari 3.1+/Chrome*/
--o-transform:rotate(90deg);  /*Opera 10.5+*/
--moz-transform: rotate(90deg); /*Firefox 3.5+*/
-
+.white{
+	color: #fff;
 }
-
-.flechedispo{
-  margin-top: 18px;
-  margin-right: 15px;
+.tab, .tab-container{
+	height: 100%;
+}
+.tab-container > div{
+	height: 100%;
+}
+.flechedate{
+	-webkit-transform:rotate(90deg); /*Safari 3.1+/Chrome*/
+	-o-transform:rotate(90deg);  /*Opera 10.5+*/
+	-moz-transform: rotate(90deg); /*Firefox 3.5+*/
 }
 .align {
   margin-left:-40px;
+}
+.hidden{
+	display: none;
 }
 
 .size_level {
@@ -56,10 +68,9 @@ a{
   margin-top: 5px;
   margin-left: 50px;
 }
-#icon_localisation
-{
+#icon_localisation{
   height: 25px;
-  margin-left: -75px;
+  margin-left: -50px;
 }
 .top {
   margin-top: 10px;
@@ -67,15 +78,33 @@ a{
 .dispo {
     margin-top: 20px;
     position: relative;
-    right: 70px;
-    width: 200px;
+    width: 120px;
     bottom: 2px;
+    display: inline-block;
 }
-
+.ion_dispo{
+	color: #006ddf;
+	display: inline-block;
+	position: relative;
+	top:17px;
+	left: 40px;
+}
+.icon_size_dispo {
+  height: 23px;
+  margin-top: 15px;
+}
 .time_date {
-  margin-top: -25px;
-  padding-bottom: 25px;
-  margin-left: 20px;
+  padding-bottom: 10px;
+}
+.ion_cal {
+	font-size: 25px;
+	text-align: center;
+	color: #5C5C5C;
+}
+.arrow_cal{
+	display: block;
+	padding-top: 10px;
+	color: #006ddf;
 }
 .icon_bonhomme {
   height:27px;
@@ -87,6 +116,10 @@ a{
   margin-top: 5px;
   margin-left: -40px;
 }
+.venue1 {
+  margin-top: 15px;
+  margin-left: -40px;
+}
 .hidden{
 	display: none;
 }
@@ -95,7 +128,6 @@ a{
   margin-top: 10px;
   border-right: solid 1px blue;
 }
-
 #invite_friend_toggle{
   border: none;
   margin-top: 5px;
@@ -108,16 +140,31 @@ a{
   margin-left: -55px;
   margin-top: 30px;
 }
+.create_foot_label{
+	color: #28385c;
+}
 .icon_size_horloge {
   height: 23px;
   margin-right: 15px;
   margin-left: -80px;
   margin-top: 30px;
 }
-.icon_size_dispo {
-  height: 23px;
-  margin-top: 15px;
-  margin-left:-75px;
+.ion_field{
+	position: relative;
+	top:3px;
+	color: #006ddf;
+}
+.input_player{
+	border: none;
+	border-bottom: 2px solid #006ddf;
+	width: 20px;
+	margin-left: 30px;
+	position: relative;
+	bottom: 3px;
+}
+.ion_player{
+	margin-left: 17px;
+	color: #006ddf;
 }
 .icon_size_edit_foot {
   height: 23px;
@@ -125,29 +172,116 @@ a{
   margin-left: -80px;
   margin-top: 15px;
 }
-.hauteur {
-  height: 133px;
+.ion_invite_friends {
+  position: relative;
+  top: 15px;
+}
+.invite_one_friend{
+	display: inline-block;
+	background-color: #ffffff;
+	float: right;
+	height: 40px;
+	width: 40px;
+	margin-top: 14px;
+	padding-left: 7px;
+	padding-top: 3px;
+	font-size: 32px;
+	color: #e0e0e0;
+}
+.invit_params{
+	height: 20px;
+  	margin-left: -15px;
+}
+.ion_invite_friends{
+	color: #006ddf;
+	position: relative;
+	right: 15px
+}
+#container_foot_friends .one_friends{
+	height: 50px;
+}
+#container_foot_friends .img_chat{
+	width: 40px;
+}
+#container_foot_friends .img_chat img{
+	width: 34px;
+}
+#container_foot_friends .star_friends{
+	height:30px;
+	width: 30px;
+	padding-top: 4px;
+	padding-left: 7px; 
+	position: relative;
+	bottom: 5px;
+}
+#container_foot_friends i{
+	font-size: 21px;
+}
+#container_foot_friends .name_foot_friends p{
+	font-size: 15px;
+	position: relative;
+	bottom: 6px;
+}
+.item_foot_friend{
+	border: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+    background-color: rgb(241, 242, 244);
+    padding-left: 45px;
+}
+.checkbox_foot_friends input{
+	width: 20px;
+	height: 20px;
+	margin-top: 5px;
+}
+.checkbox_foot_friends input:after {
+	width: 11px;
+	border-width: 2px;
 }
 .fond {
-
   background-color: rgb(241, 242, 244);
-
 }
-
+.fond .item-icon-left, .fond .item-icon-left{
+	padding: 10px 0px;
+}
+.fond .level_foot{
+	padding-left: 30px;
+}
+.fond .button_launch_foot{
+	width: 80%;
+	margin-left:10%;
+	background-color: #28385c;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 5px;
+}
+.type-foot{
+	color: #006dff;
+	text-align: left;
+	margin-left: 10px;
+	margin-bottom: 0px;
+	font-size: 16px;
+}
+.type-foot-subtitle{
+	text-align: left;
+	margin-left: 10px;
+	font-size: 15px;
+}
 .login-seco, .register_inscr{
 	margin-top:20%;
 	text-align:center;
 }
-
+.delete_foot{
+	margin-bottom: 100px;
+}
 .chevron_style{
-	margin -top: 2px;
+  margin -top: 2px;
   background-color: inherit;
   border: none;
   color: white;
   width: 20px;
   height: 20px;
   z-index: 1000000;
-
 }
 
 .id-mdp-seco{
@@ -223,10 +357,6 @@ a{
 	font-weight: 100;
 	color: #28385c;
 
-}
-
-p{
-	color:grey;
 }
 .field_input{
 	width:90%;
@@ -313,13 +443,61 @@ p{
 .main_actu{
 	background: #ffffff url("../img/bg_img.jpg") no-repeat center center;
 	background-size: cover;
+	height: 150px;
 }
-.actu_name{
+.slider-button{
+	height: 80px;
+	padding: 0;
+}
+.slider-button p{
 	color: #fff;
+	padding-top: 13px;
+	font-size: 16px;
+}
+.left-side-slider{
+	background: linear-gradient(to right,#006ddf,#0052A8);
+}
+.right-side-slider{
+	background: linear-gradient(to left,#28385c,#121826);
+}
+.right-side-slider p{
+	text-align: right;
+	padding-right: 10px;
+}
+.left-side-slider p{
+	padding-left: 10px;
+}
+.left-side-slider i{
+	font-size: 35px;
+	float: right;
 	position: relative;
-	bottom: 20px;
-	font-size: 20px;
-	text-align: center;
+	bottom: 46px;
+	right: 50px;
+	color: #ffffff;
+	font-weight: bold;
+}
+.right-side-slider i{
+	font-size: 35px;
+	float: left;
+	position: relative;
+	bottom: 46px;
+	left: 50px;
+	color: #ffffff;
+	font-weight: bold;
+}
+.logo-profil{
+	width: 80px;
+}
+.logo-profil-container{
+	padding-top: 2px;
+	padding-left: 2px;
+	width: 85px;
+	height: 85px;
+	border-radius: 50%;
+	position: relative;
+	bottom:85px;
+	background-color: #fff;
+	left: 146px;
 }
 .tab_bottom{
 	position: absolute;
@@ -945,9 +1123,10 @@ p{
 
 .foot-tab{
   display: inline-block;
-  width: 32%;
+  width: 49%;
   text-align: center;
   list-style: none;
+  padding-top: 10px;
   }
 
 
@@ -981,11 +1160,11 @@ height: 200px;
 }
 
 .background-foot {
-background-image: url('../img/terrain_640x414_3.jpg');
-background-size: cover;
-background-position: top;
-z-index: 0;
-margin-top: 60px;
+	background-color: #28385c;
+	z-index: 0;
+	padding-top: 10px;
+	margin-top:10px;
+	height: 100%;
 }
 .infoFoot{
   font-size:1.3em;
@@ -999,12 +1178,6 @@ margin-top: 60px;
 .photoprofil{
   height:70px;
   border-radius: 50%;
-}
-.bonhomme {
-  height: 35px;
-  margin-top: 18px;
-  margin-left: -15px
-
 }
 /* p {
   color:rgb(37, 55, 91);
@@ -1026,19 +1199,181 @@ margin-top: 60px;
   margin-left: 230px;
   margin-bottom: -20px;
 }
-
-
-
-.name {
+.foot_name p {
   color: rgb(128, 211, 231);
+  text-align: center;
+  font-size: 17px;
+  padding-top: 5px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-left: 40px;
+}
+.img_level_foot{
+	width: 15px;
+	float: right;
+	padding-top: 10px;
+}
+.img_pla_foot img{
+	width: 16px;
+	float: left;
+	padding-top: 5px;
+}
+.img_pla_foot p{
+	margin: 0;
+	margin-right: 3px;
+	color: #28385c;
+	float: left;
+}
+.item-divider-foot{
+	margin-bottom: 0px;
+	background-color: #fff;
+	margin-top: 20px;
+}
+.date_time_foot{
+	padding: 12px;
+	margin-left: 20px;
+}
+.date_time_foot p{
+	font-size: 16px;
+}
+.booked_foot p{
+	border: 2px solid #ED0000;
+	text-transform: uppercase;
+	color: #ED0000;
+	font-size: 17px;
+	font-weight: bold;
+	width: 83px;
+	padding: 4px;
+	border-radius: 6px;
+	margin-top: 18px;
+	margin-left: 12px;
+	-ms-transform: rotate(8deg); /* IE 9 */
+	-webkit-transform: rotate(9deg); /* Safari */
+    transform: rotate(8deg);
+}
+.not_booked p{
+	color: grey;
+	border-color: grey;
+	-ms-transform: rotate(0deg); /* IE 9 */
+	-webkit-transform: rotate(0deg); /* Safari */
+    transform: rotate(0deg);
+    font-size: 15px;
+    width: 100px;
+}
+.date_time_foot .places_foot{
+	position: relative;
+	right: 8px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #28385c;
+}
+.background-foot .list{
+	background-color: #28385c;
+	margin-top: 10px;
+}
+.select-place{
+	width: 70%;
+	border-bottom: 1px solid lightgrey;
+	margin-left: 15%;
+	font-size: 35px;
+	padding-bottom: 10px;
+	padding-top: 20px;
+}
+.select-place input{
+	border: none;
+	color: #369bff;
+}
+.select-place i{
+	float: right;
+	color: lightgrey;
+}
+.select-place ::-webkit-input-placeholder {
+   color: #369bff!important;
+   font-size: 15px;
+}
+.subtitle-footfield{
+	width: 60%;
+	margin-left: 20%;
+	margin-top: 20px;
+}
+.subtitle-footfield p{
+	text-align: left;
+	font-size: 12px;
+	color: #28385c;
+	font-weight: bold;
+	display: inline-block;
+}
+.subtitle-footfield img{
+	width: 30px;
+	float: right;
+	position: relative;
+	bottom: 3px;
+}
+.header-footfield{
+	background-color: #fff;
+	padding-bottom: 10px;
+}
+.field_img{
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	margin-top: 5px;
+}
+.one-field{
+	padding:15px;
+	padding-right: 10px;
+	border-bottom: 3px solid #28385c;
+	padding-bottom: 0px;
+	padding-top: 20px;
+}
+.content-footfield{
+	text-align: left;
+}
+.name-field{
+	font-size: 16px;
+	color: #28385c;
+	font-weight: bold;
+	padding-top: 5px;
+	margin-bottom: 2px;
+}
+.desc-field{
+	margin-bottom: 0;
+}
+.star_field{
+	display: inline-block;
+	background-color: #ffffff;
+	border-radius: 50%;
+	float: right;
+	height: 30px;
+	width: 30px;
+	margin-top: 0px;
+	padding-left: 5px;
+	padding-top: 2px;
+	position: relative;
+	bottom: 20px;
+}
+.star_field i{
+	color: #fffc00;
+	font-size: 25px;
+}
+.chevron-right{
+	float: right;
+	margin-top: 5px;
+	margin-right: 10px;
+}
+.chevron-right i{
+	color: #28385c;
 }
 
-.margeTop {
-  margin-top: 35px;
+@media screen and (min-width: 414px) { /*IPHONE 6 + */
+	.logo-profil-container{
+		left: 165px;
+	}
 }
-
-.place {
-  margin-top: 35px;
+@media screen and (min-width: 360px) and (max-width: 360px){ /* SONY XPERIA GALAXY S4 */
+	.logo-profil-container{
+		left: 138px;
+	}
 }
 @media screen and (max-width: 400px) { /* ANDROID */
 	.logout_menu{
@@ -1047,6 +1382,9 @@ margin-top: 60px;
 	}
 }
 @media screen and (max-width: 320px) { /* IPHONE 5- */
+	.main_actu{
+		height: 110px;
+	}
 	.img_menu_bg{
 		height: 170px;
 	}
@@ -1104,8 +1442,53 @@ margin-top: 60px;
 	}
 	.switch_fb{
 		bottom: 4px;
+	}
+	#container_foot_friends .name_foot_friends p{
+		font-size: 12px;
+	}
+	.subtitle-footfield{
+		width: 70%;
+		margin-left: 15%;
+	}
+	.field_img{
+		width: 60px;
+		height: 60px;
+	}
+	.content-footfield{
+		text-align: left;
+	}
+	.name-field{
+		font-size: 14px;
+	}
+	.desc-field{
+		font-size: 12px;
+	}
+	.slider-button{
+		height: 60px;
+	}
+	.slider-button p{
+		padding-top: 7px;
+		font-size: 14px;
+	}
+	.left-side-slider i{
+		font-size: 30px;
+		right: 45px;
+	}
+	.right-side-slider i{
+		font-size: 30px;
+		left: 50px;
+	}
+	.logo-profil{
+		width: 60px;
+	}
+	.logo-profil-container{
+		width: 65px;
+		height: 65px;
+		bottom:63px;
+		left: 130px;
+	}
 }
-}
+/* END MEDIA QUERY */
 .field_search_text{
     font-size: 12px;
     font-family: "Ubuntu";

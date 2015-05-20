@@ -1,5 +1,5 @@
 angular.module('user',[])
-.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
+.controller('UserCtrl',function($scope,$stateParams,$localStorage,$location,$ionicModal,$http){
   $scope.user = $localStorage.user;
   $scope.friends = {};
 
@@ -13,6 +13,7 @@ if($scope.user && $scope.user.poste==null){
 }
 
   //EDITIONS
+console.log($stateParams);
   $scope.editClub = function(value){
     var self = this;
     if(value.length>0){
