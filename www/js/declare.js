@@ -21,7 +21,6 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 .run(function($ionicPlatform,OpenFB,$rootScope) {
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
-      console.log($('.actu_header'));
       if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
       }

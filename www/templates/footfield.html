@@ -6,7 +6,7 @@
   <ion-content>
     <div class="header-footfield">
       <div class="select-place">
-      <input placeholder="Saisir un lieu"/>
+      <input ng-model="word" ng-keyup="searchQuery(word)" placeholder="Saisir un lieu"/>
       <i class="ion-ios-location-outline"></i>
       </div>
       <div class="subtitle-footfield">
@@ -17,46 +17,26 @@
       </div>
     </div>
     <div class="content-footfield">
-      <div class="one-field">
+      <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
         <div class="row">
           <div class="col col-25">
             <img class="field_img" src="../img/terrain_640x414_3.jpg"/>
           </div>
           <div class="col col-60">
-            <p class="name-field">Five Bobigny</p>
-            <p class="desc-field">265 bd du Général Leclerc</p>
-            <p class="desc-field">92035 Bobigny </p>
+            <p class="name-field">{{field.name}}</p>
+            <p class="desc-field">{{field.address}}</p>
+            <p class="desc-field">{{field.zip_code}} {{field.city}}  </p>
           </div>
           <div class="col col-10">
-            <div ng-class="{grey: friend.statut==0}" class="star_field">
+<!--             <div ng-class="{grey: field.statut==0}" class="star_field">
               <i class="ion-android-star"></i>
-            </div>
+            </div> -->
             <div class="chevron-right">
               <i class="ion-chevron-right"></i>
             </div>
           </div>
         </div>
       </div>
-            <div class="one-field">
-        <div class="row">
-          <div class="col col-25">
-            <img class="field_img" src="../img/terrain_640x414_3.jpg"/>
-          </div>
-          <div class="col col-60">
-            <p class="name-field">Five Bobigny</p>
-            <p class="desc-field">265 bd du Général Leclerc</p>
-            <p class="desc-field">92035 Bobigny </p>
-          </div>
-          <div class="col col-10">
-            <div ng-class="{grey: friend.statut==0}" class="star_field">
-              <i class="ion-android-star"></i>
-            </div>
-            <div class="chevron-right">
-              <i class="ion-chevron-right"></i>
-            </div>
-          </div>
-        </div>
-      </div> 
     </div>
   </ion-content>
 </ion-view>

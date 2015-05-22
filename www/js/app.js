@@ -33,10 +33,13 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       console.log($('.actu_header'));
       if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
+        $rootScope.toogleDrag= false;
       }
       else if(fromState.url.indexOf('profil')>0){
         $('.actu_header').removeClass('transparent');
+        if(!( typeof $rootScope.toogleDrag == 'undefined')) $rootScope.toogleDrag = true;
       }
+      console.log($rootScope.toogleDrag);
     },0);
   });
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);

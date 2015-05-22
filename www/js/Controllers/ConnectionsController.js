@@ -28,7 +28,7 @@ angular.module('connections',[])
   $scope.err = "";
   $scope.user={};
 
-  if($localStorage.user) $location.path('/user/profil/');  // TODO FIX PROB
+  if($localStorage.user.id) $location.path('/user/profil');  // TODO FIX PROB
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
@@ -53,7 +53,7 @@ angular.module('connections',[])
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
        $localStorage.token = data[0].token;
        $localStorage.user = data[0];
-       $location.path('/user/profil/'+data.id);
+       $location.path('/user/profil');
     }).error(function(){
       $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
     });

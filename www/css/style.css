@@ -37,6 +37,9 @@ a{
 :-ms-input-placeholder {
    font-family: 'Ubuntu';
 }
+.bar{
+	border-bottom: none;
+}
 .white{
 	color: #fff;
 }
@@ -57,12 +60,12 @@ a{
 .hidden{
 	display: none;
 }
-
-.size_level {
+.size_level img{
   height:30px;
 }
-.open {
-  height: 30px;
+.size_level.active p{
+	color: #006dff;
+	font-weight: bold;
 }
 .flechelieu {
   margin-top: 5px;
@@ -89,6 +92,23 @@ a{
 	top:17px;
 	left: 40px;
 }
+.icon-private i{
+	font-size: 30px;
+	color: #28385c;
+}
+.icon-private p{
+	margin-top: 7px;
+	color: #28385c;
+}
+.icon-private.active{
+	background-color: #28385c;
+}
+.icon-private.active p{
+	color: #fff;
+}
+.icon-private.active i{
+	color: #fff;
+}
 .icon_size_dispo {
   height: 23px;
   margin-top: 15px;
@@ -103,7 +123,6 @@ a{
 }
 .arrow_cal{
 	display: block;
-	padding-top: 10px;
 	color: #006ddf;
 }
 .icon_bonhomme {
@@ -161,6 +180,8 @@ a{
 	margin-left: 30px;
 	position: relative;
 	bottom: 3px;
+	color: #006ddf;
+	font-weight: bold;
 }
 .ion_player{
 	margin-left: 17px;

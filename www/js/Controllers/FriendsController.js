@@ -17,7 +17,6 @@ angular.module('friends',[])
       }
     });
     if($scope.friends[targetPosition].statut==0){
-     console.log("Wrong");
      $http.post('http://localhost:1337/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
       $scope.friends[targetPosition].statut = 1;
     }).error(function(){
@@ -25,7 +24,6 @@ angular.module('friends',[])
     });
   }
   else if($scope.friends[targetPosition].statut==1){
-    console.log("RIght");
     $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
       $scope.friends[targetPosition].statut = 0;
     }).error(function(){

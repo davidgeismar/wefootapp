@@ -3,15 +3,16 @@
   <div class="main_actu">
   </div>
   <div class="slider-button row">
-  	<div class="col col-50 left-side-slider">
+  	<div on-drag-left="" class="col col-50 left-side-slider">
   		<p class="title-slider">Trouver<br> un Foot</p><i class="ion-ios-arrow-left" style="opacity:0.7;"></i><i class="ion-ios-arrow-left" style="opacity:0.5;"></i><i class="ion-ios-arrow-left" style="opacity:0.3;"></i>
   	</div>
   	<div class="col col-50 right-side-slider">
   	<p class="title-slider">Créer<br>un Foot</p><i class="ion-ios-arrow-right" style="opacity:0.7;"></i><i class="ion-ios-arrow-right" style="opacity:0.5;"></i><i class="ion-ios-arrow-right" style="opacity:0.3;"></i>
   	</div>
   </div>
-  <div ng-click="moveIt()" class="logo-profil-container">
-  	<img class="logo-profil" src="../img/logo_rond.svg"/>
+  <div on-drag-left="moveBall($event)" on-drag-right="moveBallRight($event)" on-release="endAction($event)" class="logo-profil-container">
+  	<img  class="logo-profil" src="../img/logo_rond.svg"/>
   </div>
+  <div> feve;ezpf,ropvreorfp</div>
 </ion-content>
 </ion-view>
