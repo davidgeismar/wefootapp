@@ -1,7 +1,8 @@
 angular.module('user',[])
-.controller('UserCtrl',function($scope,$localStorage,$location,$ionicModal,$http){
+.controller('UserCtrl',function($scope, $rootScope, $localStorage,$location,$ionicModal,$http){
   $scope.user = $localStorage.user;
-  $scope.friends = {};
+  $scope.friends = $localStorage.friends;
+  console.log($scope.friends);
 
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
@@ -37,6 +38,38 @@ if($scope.user && $scope.user.poste==null){
     }
   }
 
+  $scope.editProfilPic = function(){
+    var optionsImg = {
+      maximumImagesCount: 1,
+      width: 200,
+      quality: 80
+    };
+
+    $cordovaImagePicker.getPictures(optionsImg).then(function (results) {
+
+      var optionsFt = {
+        params : {
+          userId: user.id
+        }
+      };
+      $cordovaFileTransfer.upload('http://localhost:1337/user/uploadProfilPic', results[0], optionsFt)
+      .then(function(result) {  
+        // Success!
+        console.log("success");
+      }, function(err) {
+        // Error
+        console.log("fail uploading");
+      }, function (progress) {
+        console.log("progress");
+        // constant progress updates
+      });
+
+    }, function(error) {
+      console.log('Error getting pic');
+    });
+
+  }
+
 
   //END EDITIONS
 //END Handle Menu
@@ -46,18 +79,27 @@ $scope.logout = function (){
   $location.path('/')
 };
   //MODAL HANDLER
+  if($location.path().indexOf('friend')>0)
+    modalLink = 'search';
+
+  else if($location.path().indexOf('chat')>0)
+    modalLink = 'chat-modal';
+
   $ionicModal.fromTemplateUrl('templates/search.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $scope.modal = modal;
+    $rootScope.modal = modal;
   });
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
+
+    $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $rootScope.modal2 = modal;
+  });
+
+
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_fb').addClass('opened_search');
@@ -94,6 +136,25 @@ $scope.addFriend = function(target){
     console.log('error');
   })
 }
+
+$scope.launchChat = function(user){
+  $http.post('http://localhost:1337/chat/create',{userId: $localStorage.user.id, userId2 : user}).success(function(data){
+    console.log(data);
+    $location.path('/user/conv/'+data.chat.id);
+  }).error(function(err){
+    console.log(err);
+  });
+}
+
+$scope.getAllChats = function(user){
+  $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
+    console.log(data);
+    $localStorage.chats = data;
+  }).error(function(err){
+    console.log(err);
+  });
+}
+
 })
 
 .controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 

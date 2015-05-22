@@ -34,9 +34,12 @@
 <!-- TOOGLE MENU CONTENT -->
 <ion-side-menu side="left">
 	<ion-content class="content_menu">
-		<div class="img_menu_bg">
+		<div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils/.jpg') no-repeat center;">
 		</div>
-		<img class="img_menu" src="../img/default_pic.jpg"/>
+    <div ng-click="editProfilPic()">
+		<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
+    <i class="ion-edit info_menu" style="float:right; font-size:18px; color:white; border:0px; padding-top:0px"></i>
+    </div>
 		<div class="info_menu">
 			<p>{{user.first_name}} {{user.last_name}}</p>
 		</div>

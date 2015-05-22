@@ -1,9 +1,9 @@
 angular.module('friends',[])
-.controller('FriendsCtrl',function($scope, $localStorage, $http, $location){
-  $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
-  }).error(function(){
-    $location.path('/login');
-  });
+.controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
+  // $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
+  // }).error(function(){
+  //   $location.path('/login');
+  // });
   $scope.user = $localStorage.user;
   switchIcon('icon_friend','search');
   $scope.friends = $localStorage.friends;
@@ -25,17 +25,20 @@ angular.module('friends',[])
     });
   }
   else if($scope.friends[targetPosition].statut==1){
-    console.log("RIght");
+    console.log("Right");
     $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
       $scope.friends[targetPosition].statut = 0;
     }).error(function(){
       console.log('error');
     });
   }
-} 
-})
+}
 
-.controller('ChatCtrl', function($scope, $localStorage){
-    $scope.user = $localStorage.user;
-    switchIcon('icon_none','');
+  $rootScope.openModal = function() {
+    $rootScope.modal.show();
+  };
+
+  $rootScope.closeModal = function() {
+    $rootScope.modal.hide();
+  }; 
 })

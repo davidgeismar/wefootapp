@@ -1,0 +1,26 @@
+<ion-modal-view>
+<ion-header-bar class="actu_header">
+<i class="ion-chevron-down icon_modal" ng-click="closeModal()"></i>
+<h1 class="title">Tchater</h1>
+</ion-header-bar>
+<ion-content>
+<div class="content_wf_search container_list_friends">
+	<label class="item-input">
+		<i class="icon ion-search placeholder-icon"></i>
+		<input ng-model="searchFriends" type="text" placeholder="Rechercher un nom">
+	</label>
+	<div ng-repeat="friend in friends" class="one_search">
+		<div ng-click="launchChat({{friend.id}})">
+			<div class="img_chat img_search">
+				<img src="../img/default_pic.jpg">
+			</div>
+			<div class="name_search">
+				<p> {{friend.first_name}} {{friend.last_name}}</p>
+			</div>
+			<div class="icon_search ion-ios-chatbubble-outline">
+			</div>
+		</div>
+	</div>
+</div>
+</ion-content>
+</ion-modal-view>

@@ -27,6 +27,7 @@
     },
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.splashscreen",
-    "org.apache.cordova.file-transfer"
+    "org.apache.cordova.file-transfer",
+    "com.ionic.keyboard"
   ]
 }

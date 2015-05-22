@@ -7,7 +7,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
       else
         elem.className = elem.className + " " + icon;
 };
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -27,7 +27,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
-.run(function($ionicPlatform,OpenFB) {
+.run(function($ionicPlatform,OpenFB,$rootScope) {
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -54,27 +54,23 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/footparams',
     views: {
       'menuContent' :{
-      templateUrl: "templates/footparams.html",
-       controller: 'FootController'
+        templateUrl: "templates/footparams.html",
+        controller: 'FootController'
       }
     }
   })
 
-   $stateProvider.state('user.foots', {
-      cache: false,
-      url: '/foots',
-      views: {
+  $stateProvider.state('user.foots', {
+    cache: false,
+    url: '/foots',
+    views: {
       'menuContent' :{
-      templateUrl: "templates/foots.html"
+        templateUrl: "templates/foots.html"
 
       }
     }
   })
 
-   $stateProvider.state('conv', {
-    url: '/conv',
-    templateUrl: 'templates/conv.html',
-  })
 
 
   $stateProvider.state('register', {
@@ -96,13 +92,24 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'UserCtrl'
   })
 
-    $stateProvider.state('user.chat', {
+  $stateProvider.state('user.chat', {
     cache: false,
     url: '/chat',
     views: {
       'menuContent' :{
-      templateUrl: "templates/chat.html",
-      controller: 'ChatCtrl'
+        templateUrl: "templates/chat.html",
+        controller: 'ChatCtrl'
+      }
+    }
+  })
+
+  $stateProvider.state('conv', {
+    cache: false,
+    url: '/conv/:id',
+    views: {
+      'menuContent' :{
+        templateUrl: "templates/conv.html"
+        //controller: 'ChatCtrl'
       }
     }
   })
@@ -112,11 +119,24 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/profil/:userId',
     views: {
       'menuContent' :{
-      templateUrl: "templates/profil.html",
-      controller: 'ProfilCtrl'
+        templateUrl: "templates/profil.html",
+        controller: 'ProfilCtrl'
       }
     }
   })
+
+    $stateProvider.state('friend', {
+    cache: false,
+    url: '/friend/:userId',
+    views: {
+      'menuContent' :{
+        templateUrl: "templates/friend.html",
+        controller: 'FriendCtrl'
+      }
+    }
+  })
+
+
 
   $stateProvider.state('user.new_field', {
     url: '/new_field',
@@ -129,11 +149,15 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/friends',
     views: {
       'menuContent' :{
-      templateUrl: "templates/friends.html",
-      controller: 'FriendsCtrl'
+        templateUrl: "templates/friends.html",
+        controller: 'FriendsCtrl'
       }
     }
   })
+
+
+
+
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {
             return {
                 'request': function (config) {
