@@ -9,7 +9,7 @@
 		<i class="icon ion-search placeholder-icon"></i>
 		<input ng-model="searchFriends" type="text" placeholder="Rechercher un nom">
 	</label>
-	<div ng-repeat="friend in friends" class="one_search">
+	<div ng-repeat="friend in friends | filter: searchFriends" class="one_search">
 		<div ng-click="launchChat({{friend.id}})">
 			<div class="img_chat img_search">
 				<img src="../img/default_pic.jpg">

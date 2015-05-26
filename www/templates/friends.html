@@ -10,7 +10,7 @@
 			<div class="img_chat img_friends">
             	<img src="../img/default_pic.jpg">
         	</div>
-        	<div class="name_friends">
+        	<div class="name_friends" ng-click="goFriend(friend)">
         		<p> {{friend.first_name}} {{friend.last_name}} </p>
         	</div>
         	<div ng-click="addFavorite({{friend.id}})" ng-class="{grey: friend.statut==0}" class="star_friends">

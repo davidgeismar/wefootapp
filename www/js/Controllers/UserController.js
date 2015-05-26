@@ -1,5 +1,7 @@
 angular.module('user',[])
-.controller('UserCtrl',function($scope, $rootScope, $localStorage,$location,$ionicModal,$http){
+
+.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http){
+  
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
   console.log($scope.friends);
@@ -14,6 +16,7 @@ if($scope.user && $scope.user.poste==null){
 }
 
   //EDITIONS
+
   $scope.editClub = function(value){
     var self = this;
     if(value.length>0){
@@ -140,7 +143,8 @@ $scope.addFriend = function(target){
 $scope.launchChat = function(user){
   $http.post('http://localhost:1337/chat/create',{userId: $localStorage.user.id, userId2 : user}).success(function(data){
     console.log(data);
-    $location.path('/user/conv/'+data.chat.id);
+    $rootScope.closeModal();
+    $location.path('/conv/'+data.chat.id);
   }).error(function(err){
     console.log(err);
   });

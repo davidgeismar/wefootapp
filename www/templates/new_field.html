@@ -1,15 +1,12 @@
 <ion-view view-title="Add a field">
+<ion-header-bar  class="actu_header">
+  <h1 class="title">Nouveau terrain</h1>
+  <a href="#/footfield"><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+   <img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
 <ion-content class="has-header">
-<!-- <div class="register_title">
-  <a href="#/"><h1 class="ion-chevron-left"> INSCRIPTION </h1></a>
-</div> -->
-  <div class="bar bar-header bar-positive">
- <a href="#/register"> <button class="ion-chevron-left chevron_style button"></button></a>
-    <h1 class="title">Nouveau terrain</h1>
-    <img class="logo_wf" src="../img/logo_WF.svg">
-  </div>
 
-    <div ng-click="getPic()" class="select_pic_container_field">
+<div ng-click="getPic()" class="select_pic_container_field">
   <i class="ion-android-camera cam_size"></i>
 
   <i class="ion-upload upload_size"></i>
@@ -17,22 +14,22 @@
 </div>
 
 <div class="main_app">
-<form action="localhost:1337/user/create" class="list field_form">
-  <label class="field_input item item-input field_input">
-    <input type="text" name="email" ng-model="field.name" placeholder="Nom du terrain">
-  </label>
-  <label class="field_input item item-input">
-    <input type="text" name="password" ng-model="field.address" placeholder="Rue">
-  </label>
-  <label class="field_input item item-input">
-    <input type="text" name="password_confirmation" ng-model="field.city" placeholder="Ville et code postal">
-  </label>
-<div ng-click="launchReq()">
-  <button  class="homepage_button button">
-    Valider
-  </button>
-  </div>
-</form>
+  <form action="localhost:1337/user/create" class="list field_form">
+    <label class="field_input item item-input field_input">
+      <input type="text" name="email" ng-model="field.name" placeholder="Nom du terrain">
+    </label>
+    <label class="field_input item item-input">
+      <input type="text" name="password" ng-model="field.address" placeholder="Rue">
+    </label>
+    <label class="field_input item item-input">
+      <input type="text" name="password_confirmation" ng-model="field.city" placeholder="Ville et code postal">
+    </label>
+    <div ng-click="launchReq()">
+      <button  class="homepage_button button">
+        Valider
+      </button>
+    </div>
+  </form>
 </div>
 
 </ion-content>

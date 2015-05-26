@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
 
-<ion-side-menu-content>
+<ion-side-menu-content drag-content="false">
 
   <div class="bar bar-header actu_header">
     <button class="button button-icon icon ion-navicon actu_button no_hide" menu-toggle="left"></button>
@@ -16,9 +16,9 @@
 
 <div class="tab_container">
 <ion-tabs class="tab_general tabs-icon-top">
-  <ion-tab title="Accueil" icon-on="accueilB" icon-off="accueil" href="#/user/profil/{{user.id}}">
+  <ion-tab title="Accueil" icon-on="accueilB" icon-off="accueil" href="#/user/profil">
   </ion-tab>
-  <ion-tab title="Mes Foots"  icon-on="footsB" icon-off="foots"  href="hel">
+  <ion-tab title="Mes Foots"  icon-on="footsB" icon-off="foots"  href="#/user/foots">
   </ion-tab>
   <ion-tab title="Mes Amis" icon-on="amisB" icon-off="amis"  href="#/user/friends">
   </ion-tab>

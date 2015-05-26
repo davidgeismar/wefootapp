@@ -7,7 +7,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
       else
         elem.className = elem.className + " " + icon;
 };
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -27,7 +27,19 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
+
 .run(function($ionicPlatform,OpenFB,$rootScope) {
+  $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
+    setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
+      if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
+        $('.actu_header').addClass('transparent');
+      }
+      else if(fromState.url.indexOf('profil')>0){
+        $('.actu_header').removeClass('transparent');
+      }
+    },0);
+  });
+  
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -41,32 +53,34 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   });
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/')
-
+  $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
     templateUrl: 'templates/home.html',
     controller: 'HomeCtrl'
   })
 
-  $stateProvider.state('user.footparams', {
+  $stateProvider.state('footfield',{
+    cache: false,
+    url:'/footfield',
+    templateUrl:'templates/footfield.html',
+    controller: 'FootController'
+  })
+
+  $stateProvider.state('footparams', {
     cache: false,
     url: '/footparams',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/footparams.html",
-        controller: 'FootController'
-      }
-    }
+    templateUrl: 'templates/footparams.html',
+    controller: 'FootController'
   })
+
 
   $stateProvider.state('user.foots', {
     cache: false,
     url: '/foots',
     views: {
       'menuContent' :{
-        templateUrl: "templates/foots.html"
-
+        templateUrl: 'templates/foots.html'
       }
     }
   })
@@ -86,6 +100,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
+    cache: false,
     abstract: true,
     url: '/user',
     templateUrl: "templates/layout.html",
@@ -106,17 +121,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider.state('conv', {
     cache: false,
     url: '/conv/:id',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/conv.html"
+    templateUrl: "templates/conv.html"
         //controller: 'ChatCtrl'
-      }
-    }
-  })
+      })
 
   $stateProvider.state('user.profil', {
     cache: false,
-    url: '/profil/:userId',
+    url: '/profil',
     views: {
       'menuContent' :{
         templateUrl: "templates/profil.html",
@@ -125,21 +136,25 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     }
   })
 
-    $stateProvider.state('friend', {
+  $stateProvider.state('friend', {
     cache: false,
-    url: '/friend/:userId',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/friend.html",
-        controller: 'FriendCtrl'
-      }
-    }
+    url: '/friend',
+    templateUrl: "templates/friend.html",
+    controller: 'FriendCtrl'
+
+  })
+  $stateProvider.state('noter', {
+    cache: false,
+    url: '/noter',
+    templateUrl: "templates/noter.html",
+    controller: 'NoteCtrl'
+
   })
 
 
 
-  $stateProvider.state('user.new_field', {
-    url: '/new_field',
+  $stateProvider.state('newField', {
+    url: '/newField',
     templateUrl: 'templates/new_field.html',
     controller: 'FieldCtrl'
   })

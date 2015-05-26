@@ -5,72 +5,58 @@
 
    <ul ng-init="tab = 1" class="tab-container">
       <li ng-class="{active:tab===1}" class="foot-tab">
-        <a href ng-click="tab = 1" class="gris">MES FOOTS <strong>CRÉÉS</strong></a>
+        <a href ng-click="tab = 1" class="gris">FOOTS <strong><br>A VENIR</strong></a>
       </li>
       <li ng-class="{active:tab===2}" class="foot-tab">
-        <a href ng-click="tab = 2" class="gris">MES FOOTS <strong>REJOINTS</strong></a>
+        <a href ng-click="tab = 2" class="gris" >INVITATION <strong><br>EN ATTENTE</strong></a>
       </li>
-      <li ng-class="{active:tab===3}" class="foot-tab">
-        <a href ng-click="tab = 3" class="gris" >MES FOOTS <strong><br>EN ATTENTE</strong></a>
-      </li>
-      <br><br>
         <div ng-show="tab === 1">
         <div class="background-foot">
-        </div>
-          <div class="bob">
-            <img class="croix" src="../img/croix_supprimer.svg"/>
-            <div class="container">
-              <div class="row">
-                <div class="col col-25">
-                  <img class="photoprofil" src="../img/default_pic.jpg"/>
-                </div>
-                <div class="col col-50 infoFoot">
-                  <p class="margeTop name" >Florent Pascal</p>
-                  <p><strong>4 octobre, 18h00</strong></p>
-                  <p>LE FIVE PARIS 14</p>
-                </div>
-                <div class="col col-25">
-                  <img class="fleche"src="../img/fleche_bleufonce.svg"/>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col col-50 place">
-                 <strong>Encore 2 places</strong>
-                </div>
-                <div class="col col-25">
-                  <img class="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
-                </div>
-              </div>
+          <div class="list card" ng-repeat= "foot in footTodo">
+            <div class="item item-divider item-divider-foot">
+              <div class="foot_name">
+                <span class="img_pla_foot">
+                <p class="nb_player_foot">8</p>
+                <img src="../img/icon_bonhomme_bleufonce.svg"/> 
+                </span>
+                <p>{{foot.organisator}}</p>
+                <img class="img_level_foot" src="../img/niveau_3.svg"/> 
+              </div>             
+            </div>
+            <div class="item item-text-wrap row">   
+              <div class="col col-70 date_time_foot">
+                 <p><strong>{{date}}, {{hour}}</strong></p>
+                 <p style="text-transform: uppercase;">{{foot.fieldName}}</p>
+                 <p class="places_foot">Encore 2 places</p>
+              </div> 
+              <div class="col col-30 booked_foot">
+                <p> Reservé </p>
+              </div>      
+            </div>
+            <div class="item item-divider item-divider-foot">
+              <div class="foot_name">
+                <span class="img_pla_foot">
+                <p class="nb_player_foot">8</p>
+                <img src="../img/icon_bonhomme_bleufonce.svg"/> 
+                </span>
+                <p>Florent Pascal</p>
+                <img class="img_level_foot" src="../img/niveau_3.svg"/> 
+              </div>             
+            </div>
+            <div class="item item-text-wrap row">   
+              <div class="col col-50 date_time_foot">
+                 <p><strong>4 octobre, 18h00</strong></p>
+                 <p style="text-transform: uppercase;">LE FIVE PARIS 14</p>
+                 <p class="places_foot">Encore 2 places</p>
+              </div> 
+              <div class="col col-50 booked_foot not_booked">
+                <p> A Reserver </p>
+              </div>      
             </div>
           </div>
         </div>
-        <!-- <div ng-show="tab === 2" class="container">
-          <div class="bob">
-            <div class="row">
-              <div class="col-xs-2">
-                <img src="../img/default_pic.jpg"/>
-              </div>
-              <div class="col-xs-8 infoFoot">
-                <p class="margeTop name" >Florent Pascal</p>
-                <p><strong>4 octobre, 18h00</strong></p>
-                <p>LE FIVE PARIS 14</p>
-              </div>
-              <div class="col-xs-2">
-                <div class="close-button"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-offset-6 col-sx-4 place">
-               <strong>Encore 2 places</strong>
-              </div>
-              <div class="col-xs-1">
-                <img class="bonhomme" src="../img/icon_bonhomme_bleufonce.svg"/>
-              </div>
-            </div>
-          </div>
-        </div>  -->
-
-       <p ng-show="tab === 3"></p>
+        </div>
+       <p ng-show="tab === 2"></p>
     </ul>
   </section>
 </ion-content>

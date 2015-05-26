@@ -1,0 +1,62 @@
+<ion-view view-title="friend profile">
+<ion-header-bar  class="actu_header">
+<h1 class="title">{{friend.first_name}} {{friend.last_name}}</h1>
+<a href='#/user/friends'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
+
+<ion-content class="has-header padding">
+
+<div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils/.jpg') no-repeat center;">
+</div>
+<div>
+	<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
+</div>
+<div class="info_menu">
+	<p>{{friend.favorite_club}}</p>
+
+</div>
+<div class="info_menu info_last">
+	<p>{{friend.poste}}</p>  
+</div>
+
+<a href="#/login"><button class="button button_defier">
+	Défier ce joueur
+</button></a>
+
+<div class="note_friend">
+	<div class="icon_menu icon-tech">
+	</div>
+	<p>Technique</p>
+	<i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-shoes">
+	</div>
+	<p>Frappe</p>
+	<i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-power">
+	</div>
+	<p>Physique</p>
+	<i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-fp">
+	</div>
+	<p>Fair-Play</p>
+	<i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-assidu">
+	</div>
+	<p>Assiduité</p>
+	<i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+
+<a href="#/noter"><button class="button button_noter">
+	Noter ce joueur
+</button></a>
+</ion-content>
+</ion-view>

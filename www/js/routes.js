@@ -1,30 +1,32 @@
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/')
-
+  $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
     templateUrl: 'templates/home.html',
     controller: 'HomeCtrl'
   })
 
-  $stateProvider.state('user.footparams', {
+  $stateProvider.state('footfield',{
+    cache: false,
+    url:'/footfield',
+    templateUrl:'templates/footfield.html',
+    controller: 'FootController'
+  })
+
+  $stateProvider.state('footparams', {
     cache: false,
     url: '/footparams',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/footparams.html",
-        controller: 'FootController'
-      }
-    }
+    templateUrl: 'templates/footparams.html',
+    controller: 'FootController'
   })
+
 
   $stateProvider.state('user.foots', {
     cache: false,
     url: '/foots',
     views: {
       'menuContent' :{
-        templateUrl: "templates/foots.html"
-
+        templateUrl: 'templates/foots.html'
       }
     }
   })
@@ -65,17 +67,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider.state('conv', {
     cache: false,
     url: '/conv/:id',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/conv.html"
+    templateUrl: "templates/conv.html"
         //controller: 'ChatCtrl'
-      }
-    }
-  })
+      })
 
   $stateProvider.state('user.profil', {
     cache: false,
-    url: '/profil/:userId',
+    url: '/profil',
     views: {
       'menuContent' :{
         templateUrl: "templates/profil.html",
@@ -84,21 +82,25 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     }
   })
 
-    $stateProvider.state('friend', {
+  $stateProvider.state('friend', {
     cache: false,
-    url: '/friend/:userId',
-    views: {
-      'menuContent' :{
-        templateUrl: "templates/friend.html",
-        controller: 'FriendCtrl'
-      }
-    }
+    url: '/friend',
+    templateUrl: "templates/friend.html",
+    controller: 'FriendCtrl'
+
+  })
+  $stateProvider.state('noter', {
+    cache: false,
+    url: '/noter',
+    templateUrl: "templates/noter.html",
+    controller: 'NoteCtrl'
+
   })
 
 
 
-  $stateProvider.state('user.new_field', {
-    url: '/new_field',
+  $stateProvider.state('newField', {
+    url: '/newField',
     templateUrl: 'templates/new_field.html',
     controller: 'FieldCtrl'
   })

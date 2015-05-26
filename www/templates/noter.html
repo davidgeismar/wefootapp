@@ -1,0 +1,49 @@
+<ion-view view-title="friend profile">
+<ion-header-bar  class="actu_header">
+<h1 class="title">{{friend.first_name}} {{friend.last_name}}</h1>
+<a href='#/user/friends'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
+
+<ion-content class="has-header padding">
+
+<div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils/.jpg') no-repeat center;">
+</div>
+<div>
+	<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
+</div>
+
+<div class="note_friend">
+	<div class="icon_menu icon-tech">
+	</div>
+	<p>Technique</p>
+	<i class="ion-edit" ng-click="enableNote(0)" ng-hide="activate[0]"></i><i ng-class="starStatus[0][4]" ng-click="setNote(5,0)"></i><i ng-class="starStatus[0][3]" ng-click="setNote(4,0)"></i><i ng-class="starStatus[0][2]" ng-click="setNote(3,0)"></i><i ng-class="starStatus[0][1]" ng-click="setNote(2,0)"></i><i ng-class="starStatus[0][0]" ng-click="setNote(1,0)"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-shoes">
+	</div>
+	<p>Frappe</p>
+	<i class="ion-edit"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-power">
+	</div>
+	<p>Physique</p>
+	<i class="ion-edit"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-fp">
+	</div>
+	<p>Fair-Play</p>
+	<i class="ion-edit"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+<div class="note_friend">
+	<div class="icon_menu icon-assidu">
+	</div>
+	<p>Assiduité</p>
+	<i class="ion-edit"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star-outline"></i><i class="ion-android-star"></i>
+</div>
+
+<button class="button button_noter" ng-click="postNote()">Valider</button>
+</ion-content>
+</ion-view>

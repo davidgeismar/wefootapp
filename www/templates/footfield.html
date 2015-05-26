@@ -1,0 +1,45 @@
+<ion-header-bar  class="actu_header">
+  <h1 class="title">Où</h1>
+  <a href='#/user/profil'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+  <img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
+<ion-view view-title="footparams">
+  <ion-content>
+    <div class="header-footfield">
+      <div class="select-place">
+      <input ng-model="word" ng-keyup="searchQuery(word)" placeholder="Saisir un lieu"/>
+      <i class="ion-ios-location-outline"></i>
+      </div>
+      <a href="#/newField">
+      <div class="subtitle-footfield">
+        <p>
+          Ou rajouter votre propre terrain
+        </p>
+        <img class="icon-field" src="../img/icon_nouveau_terrain.svg"/>
+      </div>
+      </a>
+    </div>
+    <div class="content-footfield">
+      <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
+        <div class="row">
+          <div class="col col-25">
+            <img class="field_img" src="../img/terrain_640x414_3.jpg"/>
+          </div>
+          <div class="col col-60">
+            <p class="name-field">{{field.name}}</p>
+            <p class="desc-field">{{field.address}}</p>
+            <p class="desc-field">{{field.zip_code}} {{field.city}}  </p>
+          </div>
+          <div class="col col-10">
+<!--             <div ng-class="{grey: field.statut==0}" class="star_field">
+              <i class="ion-android-star"></i>
+            </div> -->
+            <div class="chevron-right">
+              <i class="ion-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

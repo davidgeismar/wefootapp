@@ -5,12 +5,12 @@ angular.module('field',[])
 
   var imageUri;
 
-    var options = {
-      maximumImagesCount: 1,
-      width: 800,
-      height: 800,
-      quality: 80
-    };
+  var options = {
+    maximumImagesCount: 1,
+    width: 800,
+    height: 800,
+    quality: 80
+  };
 
 
 
@@ -22,7 +22,7 @@ angular.module('field',[])
     }, function(error) {
       console.log('Error pic');
     });
-}
+  }
 
 
 
@@ -30,15 +30,17 @@ angular.module('field',[])
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
       console.log(data.field);
 
-          var optionsFt = {
-                  params : {
-                    fieldId: data.field
-                    }
-                  
-    };
+      var optionsFt = {
+        params : {
+          fieldId: data.field
+        }
 
-      $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
-      .then(function(result) {  
+      };
+
+      $ionicPlatform.ready(function() {
+
+        $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
+        .then(function(result) {  
         // Success!
         console.log("successssss");
       }, function(err) {
@@ -48,12 +50,14 @@ angular.module('field',[])
         console.log("progress");
         // constant progress updates
       });
-                  
 
 
-  })
-    .error(function(){
-      console.log('error');
-    })
+
+      })
+          })
+      .error(function(){
+        console.log('error');
+      })
+
   }
 })
