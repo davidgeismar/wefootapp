@@ -1235,15 +1235,11 @@ a{
   width: 49%;
   text-align: center;
   list-style: none;
-  padding-top: 10px;
   }
-
-
-
-li:hover, li:hover a {
-  color: rgb(37, 55, 91);
-  text-decoration: none;
+.foot-tab .gris.active{
+	color: rgb(37, 55, 91);
 }
+
 
 .gris{
   color: rgb(207, 207, 207);
@@ -1273,7 +1269,8 @@ height: 200px;
 	z-index: 0;
 	padding-top: 10px;
 	margin-top:10px;
-	height: 100%;
+	min-height: 100%;
+	padding-bottom: 70px;
 }
 .infoFoot{
   font-size:1.3em;
@@ -1359,6 +1356,16 @@ height: 200px;
 	-ms-transform: rotate(8deg); /* IE 9 */
 	-webkit-transform: rotate(9deg); /* Safari */
     transform: rotate(8deg);
+}
+.answer_foot button{
+	border-color: #a2a2a2;
+  	background-color: #e5e5e5;
+  	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+	color: #616161;
+	font-weight: bold;
+	border-radius: 5px;
+	margin-top: 15px;
+
 }
 .not_booked p{
 	color: grey;

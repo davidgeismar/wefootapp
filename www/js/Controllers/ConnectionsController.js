@@ -12,7 +12,6 @@ angular.module('connections',[])
 
           $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
             $localStorage.friends = data[0];
-            console.log("friends "+$localStorage.friends);
               angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
                 friend.statut = data[1][index]; 
               });  

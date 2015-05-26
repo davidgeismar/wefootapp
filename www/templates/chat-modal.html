@@ -12,7 +12,7 @@
 	<div ng-repeat="friend in friends | filter: searchFriends" class="one_search">
 		<div ng-click="launchChat({{friend.id}})">
 			<div class="img_chat img_search">
-				<img src="../img/default_pic.jpg">
+				<img ng-src="img/default_pic.jpg">
 			</div>
 			<div class="name_search">
 				<p> {{friend.first_name}} {{friend.last_name}}</p>

@@ -4,7 +4,6 @@ angular.module('user',[])
   
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
-  console.log($scope.friends);
 
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];

@@ -1,6 +1,7 @@
 angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location) {
   $scope.foot = {};
   $scope.results = [];
+  $scope.tab = "1";
   if($localStorage.friends){
     $scope.friends = $localStorage.friends;
 
@@ -128,20 +129,31 @@ $scope.launchReq = function(){
     console.log('err');
   });
 }
-
 if($location.path().indexOf('user/foots')>0){
-  $scope.footInvitation = [];
-  $scope.footTodo = [];
+  $localStorage.footInvitation = [];
+  $localStorage.footTodo = [];
+  $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
+  $scope.footInvitation = $localStorage.footInvitation;
+  $scope.footTodo = $localStorage.footTodo;
+  $scope.footPlayers = $localStorage.footPlayers;
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){
-    angular.forEach(data, function(foot){
+    console.log(data);
+    angular.forEach(data, function(foot,index){
+      $localStorage.footPlayers[index] = [];
+      $localStorage.footPlayers[index].push(foot.id); //FIRST COLUMN CONTAIN ID OF FOOTS 
       $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(data){
         foot.organisator = data.orga;
+        foot.orgaName = data.orgaName;
         foot.fieldName = data.field;
+      });
+      $http.get('http://localhost:1337/foot/getPlayers/'+foot.id).success(function(data){
+        $localStorage.footPlayers[index] = $localStorage.footPlayers[index].concat(data);
+        foot.confirmedPlayers = data.length;
       })
       if(foot.statut==1)
-        $scope.footInvitation.push(foot);
+        $localStorage.footInvitation.push(foot);
       else if(foot.statut>1)
-        $scope.footTodo.push(foot);
+        $localStorage.footTodo.push(foot);
     });
   });
 }

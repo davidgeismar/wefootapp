@@ -80,7 +80,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/foots',
     views: {
       'menuContent' :{
-        templateUrl: 'templates/foots.html'
+        templateUrl: 'templates/foots.html',
+        controller: 'FootController'
       }
     }
   })
