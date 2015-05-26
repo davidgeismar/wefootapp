@@ -5,6 +5,7 @@ angular.module('user',[])
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
   console.log($scope.friends);
+  console.log($scope.user);
 
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
@@ -158,6 +159,62 @@ $scope.getAllChats = function(user){
     console.log(err);
   });
 }
+
+  $scope.friend = $localStorage.friend;
+  $scope.notes = new Array(5);
+  $scope.starStatus = new Array(5);
+  
+  for(var i=0; i<5; i++) {
+    $scope.starStatus[i] = new Array(5);
+  }
+  for(var i=0; i<5; i++) {
+    for(var j=0; j<5; j++) {
+      $scope.starStatus[i][j] = "ion-android-star";
+    }
+  }
+
+
+  $scope.setNote = function(note, target){
+
+    $scope.notes[target] = note;
+    for(var i=0; i<5; i++) {
+      if(i+1<=note)
+        $scope.starStatus[target][i] = "ion-android-star";
+      else
+        $scope.starStatus[target][i] = "ion-android-star-outline";
+    }
+  }
+
+  $scope.init = function(){
+
+    $scope.setNote($scope.user.technique, 0);
+    $scope.setNote($scope.user.frappe, 1);
+    $scope.setNote($scope.user.physique, 2);
+    $scope.setNote($scope.user.fair_play, 3);
+    $scope.setNote($scope.user.assiduite, 4);
+
+
+  }
+
+
+
+  $scope.getNbNotes = function(){
+    $http.get('http://localhost:1337/getNbGrades/'+$scope.user.id).success(function(data){
+      $scope.user.nbGrades = data.nbGrades;
+    }).error(function(){
+    console.log('error');
+  });
+  }
+
+    $scope.init();
+    $scope.getNbNotes();
+
+  $scope.displayNotes = function(){
+    if($scope.user.nbGrades<=1)
+      return $scope.user.nbGrades+" personne";
+    else
+      return $scope.user.nbGrades+ " personnes";
+  }
 
 })
 

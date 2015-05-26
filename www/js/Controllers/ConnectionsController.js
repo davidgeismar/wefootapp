@@ -15,10 +15,11 @@ angular.module('connections',[])
             console.log("friends "+$localStorage.friends);
               angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
                 friend.statut = data[1][index]; 
-              });  
+              });
+              $location.path('/user/profil');  
             }).error(function(err){ console.log('error')});
         }).error(function(err){ $scope.err = err});
-            $location.path('/user/profil');
+
       });
     },function(){alert('error')});
 
@@ -45,7 +46,7 @@ angular.module('connections',[])
     }).error(function(){
      $scope.err = "Identifiant ou mot de passe incorrect.";
    });
-          
+    
   }
 })
 
