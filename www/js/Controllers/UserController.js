@@ -81,6 +81,7 @@ if($scope.user && $scope.user.poste==null){
 $scope.logout = function (){
   $localStorage.user = {};
   $localStorage.token = "";
+  $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
   $location.path('/')
 };
   //MODAL HANDLER
@@ -190,36 +191,36 @@ $scope.createChat = function(user){
   }
 
 
-  $scope.initNotes = function(){
-    $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
-      $scope.user.nbGrades = data.nbGrades;
-      $scope.setNote(data.technique, 0);
-      $scope.setNote(data.frappe, 1);
-      $scope.setNote(data.physique, 2);
-      $scope.setNote(data.fair_play, 3);
-      $scope.setNote(data.assiduite, 4);
-    }).error(function(){
-      console.log('error');
-    });
+  // $scope.initNotes = function(){
+  //   $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
+  //     $scope.user.nbGrades = data.nbGrades;
+  //     $scope.setNote(data.technique, 0);
+  //     $scope.setNote(data.frappe, 1);
+  //     $scope.setNote(data.physique, 2);
+  //     $scope.setNote(data.fair_play, 3);
+  //     $scope.setNote(data.assiduite, 4);
+  //   }).error(function(){
+  //     console.log('error');
+  //   });
 
-  }
-
-
+  // }
 
 
-    $scope.initNotes();
 
-  $scope.displayNotes = function(){
-    if($scope.user.nbGrades<=1)
-      return $scope.user.nbGrades+" personne";
-    else
-      return $scope.user.nbGrades+ " personnes";
-  }
 
-})
+//     $scope.initNotes();
 
-.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
-  $scope.toggleLeft = function() {
-    $ionicSideMenuDelegate.toggleLeft();
-  };
+//   $scope.displayNotes = function(){
+//     if($scope.user.nbGrades<=1)
+//       return $scope.user.nbGrades+" personne";
+//     else
+//       return $scope.user.nbGrades+ " personnes";
+//   }
+
+// })
+
+// .controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
+//   $scope.toggleLeft = function() {
+//     $ionicSideMenuDelegate.toggleLeft();
+//   };
 })

@@ -54,6 +54,9 @@ a{
 	-o-transform:rotate(90deg);  /*Opera 10.5+*/
 	-moz-transform: rotate(90deg); /*Firefox 3.5+*/
 }
+.list-inset{
+	background-color: transparent;
+}
 .align {
 	margin-left:-40px;
 }
@@ -1555,6 +1558,30 @@ height: 200px;
   	text-align:right;
   }
 
+  .one-notif{
+  	margin: 0px 20px;
+  	padding: 0px;
+  	border-bottom: 2px solid #c4c4c4;
+  }
+  .text-notif{
+  	display: inline-block;
+  	line-height: 16px;
+  	font-size: 13px;
+  	color: #4e4e4e;
+  	margin-bottom: 0px;
+  }
+  .content-notif{
+  	margin-left: 10px;
+  	margin-top: 15px;
+  }
+  .one-notif img{
+  	width: 60px;
+  }
+  .date-notif{
+  	font-size: 11px;
+  	height: 11px;
+  	position: relative;
+  }
   @media screen and (min-width: 414px) { /*IPHONE 6 + */
   	.logo-profil-container{
   		left: 165px;

@@ -1,17 +1,47 @@
+//GLOBAL FUNCTIONS
+
+
 var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
-      modalLink = link;
-      elem = document.getElementsByClassName('iconHeader')[0];
-      if(elem.className.indexOf("icon_")>-1)
-        elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
-      else
-        elem.className = elem.className + " " + icon;
+	modalLink = link;
+	elem = document.getElementsByClassName('iconHeader')[0];
+	if(elem.className.indexOf("icon_")>-1)
+		elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+	else
+		elem.className = elem.className + " " + icon;
 };
 
 var newTime = function (oldTime){
 	return oldTime.prototype.getMinutes()+":"+oldTime.prototype.getHours()+" "+oldTime.prototype.getDay()+"/"+oldTime.prototype.getMonth()
+};
+
+var getStuffById = function(id,stuffArray){
+	for(var i = 0; i<stuffArray.length;i++){
+		if (id == stuffArray[i].id)
+			return stuffArray[i];
+	}
+};
+var getJour = function(date){
+    var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+    var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+    var m = mois[date.getMonth()];
+    var j = semaine[date.getDay()];
+    return(j+' '+date.getDate()+' '+m);
 }
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv'])
+var getHour = function(date){
+    var n = date.getHours();
+    var m = date.getMinutes();
+    if(n<10) n= '0'+n;
+    if(m<10) m= '0'+m;
+    return (n+'h'+m)
+  }
+// var showLoader = function(){
+
+// }
+
+
+
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -32,7 +62,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope) {
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage) {
+  $rootScope.nbNotif = 0;
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
       if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
@@ -43,14 +74,17 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       }
     },0);
   });
-  io.socket.on('connect',function(){
-    console.log('connexion doneeee');
+  io.socket.on('disconnect',function(){
+    $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
   });
+  
+  // Notification event handler
   io.socket.on('notif',function(data){
-    console.log('received');
-    console.log(data);
+    $rootScope.nbNotif++;
   });
+
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -96,7 +130,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       }
     }
   })
-
 
 
   $stateProvider.state('register', {
@@ -164,7 +197,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
 
-
   $stateProvider.state('newField', {
     url: '/newField',
     templateUrl: 'templates/new_field.html',
@@ -176,12 +208,22 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/friends',
     views: {
       'menuContent' :{
-        templateUrl: "templates/friends.html",
+        templateUrl: 'templates/friends.html',
         controller: 'FriendsCtrl'
       }
     }
   })
 
+  $stateProvider.state('user.notif',{
+    cache: true,
+    url: '/notif',
+    views: {
+      'menuContent' :{
+        templateUrl: 'templates/notif.html',
+        controller: 'NotifCtrl'
+      }
+    }
+  })
 
 
 

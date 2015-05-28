@@ -37,12 +37,12 @@ gulp.task('install', ['git-check'], function() {
     });
 });
 
-gulp.task('launch',function(){
-  return gulp.src(['www/js/global.js','www/js/declare.js','www/js/routes.js','www/js/provider.js'])
-      .pipe(concat('app.js'))
-      // .pipe(uglify())
-      .pipe(gulp.dest('www/js/'));
-});
+// gulp.task('launch',function(){
+//   return gulp.src(['www/js/global.js','www/js/declare.js','www/js/routes.js','www/js/provider.js'])
+//       .pipe(concat('app.js'))
+//       // .pipe(uglify())
+//       .pipe(gulp.dest('www/js/'));
+// });
 
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
