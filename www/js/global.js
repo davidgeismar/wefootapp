@@ -9,7 +9,8 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
 };
 
 var newTime = function (oldTime){
-	return oldTime.prototype.getMinutes()+":"+oldTime.prototype.getHours()+" "+oldTime.prototype.getDay()+"/"+oldTime.prototype.getMonth()
+	console.log("test"+oldTime);
+	return oldTime.getHours()+":"+oldTime.getMinutes()+" le "+oldTime.getDay()+"/"+oldTime.getMonth();
 };
 
 var getStuffById = function(id,stuffArray){
