@@ -1,171 +1,24 @@
 <ion-view view-title="Chat">
-    <ion-content class="has-header has-footer">
-        <!--<div class="padding">-->
-        <div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier eazy
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
+<ion-content class="has-header has-footer">
+<!--<div class="padding">-->
+<div ng-repeat="chatDisplay in chatsDisplay">
+<div class="chat_box" ng-click="launchChat(chatDisplay.id)">
+        <div class="chat_box_content">
+            <div class="img_chat">
+                <img ng-src="img/default_pic.jpg">
             </div>
-
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
-            </div>
-            <div class="chat_box">
-                <div class="chat_box_content">
-                    <div class="img_chat">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <h3 class="chat_box_title">
-                        Alexandre Lolivier
-                    </h3>
-                    <h3 class="chat_box_time">
-                        19:43
-                    </h3>
-                    <p class="chat_box_preview">
-                        Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde. Ici on met du text de merde.
-                    </p>
-                </div>
+            <h3 class="chat_box_title">
+                {{chatDisplay.user}}
+            </h3>
+            <h3 class="chat_box_time">
+                {{chatDisplay.lastTime}}
+            </h3>
+            <p class="chat_box_preview">
+                {{chatDisplay.lastMessage}}</p>
             </div>
         </div>
-    </ion-content>
+    </div>
+</ion-content>
   <!-- <div class="tab_container">
         <ion-tabs class="tab_general tabs-icon-top">
             <ion-tab title="Accueil" icon-on="accueilActive" icon-off="accueilActive" ui-sref="#/profil/{{user.id}}">

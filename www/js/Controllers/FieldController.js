@@ -28,16 +28,14 @@ angular.module('field',[])
 
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
-      console.log(data.field);
-
       var optionsFt = {
         params : {
-          fieldId: data.field
+          fieldId: data.id
         }
 
       };
 
-      $ionicPlatform.ready(function() {
+
 
         $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
         .then(function(result) {  
@@ -52,8 +50,6 @@ angular.module('field',[])
       });
 
 
-
-      })
           })
       .error(function(){
         console.log('error');

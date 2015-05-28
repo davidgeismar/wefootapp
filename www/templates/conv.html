@@ -1,11 +1,8 @@
 <ion-view view-title="Conv">
-    <div class="bar bar-header actu_header">
-        <button class="button button-icon icon ion-chevron-left actu_button">
-        </button>
-        <p class="text_chat">
-            Chats
-        </p>
-    </div>
+<ion-header-bar  class="actu_header">
+  <a href='#/user/chat'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+  <img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
     <div class="content_conv">
         <div class="conv_ban">
             <h2 class="conv_ban_title">
@@ -16,10 +13,10 @@
             </p>
         </div>
     </div>
-    <ion-content class="padding padding_top has-header">
+    <ion-content class="padding padding_top has-header has-subheader">
         <div class="content_conv_box">
-            <dl class="conv_box">
-                <dd class="from">
+            <dl class="conv_box" ng-repeat="message in chat.messages">
+                <dd ng-if="message.senderId!=user.id" class="from">
                     <div class="img_chat_conv">
                         <img ng-src="img/default_pic.jpg">
                     </div>
@@ -29,103 +26,17 @@
                             dit:
                             <br>
                         </span>
-                        <span> yo !</span>
+                        <span>{{message.messagestr}}</span>
                     </p>
                 </dd>
-                <dd class="to">
-                    <p>coucou</p>
-                </dd>
-                <dd class="to">
-                    <p>salut toi ! Ca va ?</p>
-                </dd>
-                <dd class="to">
-                    <p>Tu me rep pas ? tarba ?</p>
-                </dd>
-                <dd class="to">
-                    <p>stp quoi ! viens on est pote !</p>
-                </dd>
-                <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>t'es relou comme mec casse toi wesh</span>
-                    </p>
-                </dd>
-                
-                     <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>t'es relou comme mec casse toi wesh</span>
-                    </p>
-                </dd>     <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>t'es relou comme mec casse toi wesh</span>
-                    </p>
-                </dd>     <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>t'es relou comme mec casse toi wesh</span>
-                    </p>
-                </dd>     <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>t'es relou comme mec casse toi wesh</span>
-                    </p>
-                </dd>
-                
-                 <dd class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>Ceci est un test. Dans l'optique de voir si la mise en page de cette view marche de maniere correct, je me propose d'ecrir du text dont l(utilité est nulle, juste pour meulbler. Attention, SAUT DE LIGNE <br> Houlalala on tente un autre ? <br> BAMMMM et la double saut ! <br><br> PUTAIN JE SUIS UN OUF ! je suis une machine de guerre </span>
-                    </p>
+                <dd ng-if="message.senderId==user.id" class="to">
+                    <p>{{message.messagestr}}</p>
                 </dd>
             </dl>
             
             <label class="item item_conv item-input">
-   <input type="text" placeholder="Tapper votre message ici">
-  </label>
+   <input ng-model="messageContent" type="text" placeholder="Tapper votre message ici"></label><button  ng-click="sendMessage(messageContent)">Envoyer</button>
+
            
         </div>
     </ion-content>

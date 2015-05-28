@@ -67,9 +67,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('conv', {
     cache: false,
-    url: '/conv/:id',
-    templateUrl: "templates/conv.html"
-        //controller: 'ChatCtrl'
+    url: '/conv',
+    templateUrl: "templates/conv.html",
+    controller: 'ConvCtrl'
       })
 
   $stateProvider.state('user.profil', {

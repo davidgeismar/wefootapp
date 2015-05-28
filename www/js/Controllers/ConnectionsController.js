@@ -19,7 +19,6 @@ angular.module('connections',[])
             $location.path('/user/profil');
             }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
         }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
-            
       });
     },function(){$scope.err = "Erreur lors de la connexion via facebook"});
 
@@ -47,7 +46,7 @@ angular.module('connections',[])
     }).error(function(){
      $scope.err = "Identifiant ou mot de passe incorrect.";
    });
-          
+    
   }
 })
 

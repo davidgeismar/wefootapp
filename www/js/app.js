@@ -7,7 +7,11 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
       else
         elem.className = elem.className + " " + icon;
 };
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note'])
+
+var newTime = function (oldTime){
+	return oldTime.prototype.getMinutes()+":"+oldTime.prototype.getHours()+" "+oldTime.prototype.getDay()+"/"+oldTime.prototype.getMonth()
+}
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -57,6 +61,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       StatusBar.styleDefault();
     }
   });
+
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/');
@@ -127,9 +132,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('conv', {
     cache: false,
-    url: '/conv/:id',
-    templateUrl: "templates/conv.html"
-        //controller: 'ChatCtrl'
+    url: '/conv',
+    templateUrl: "templates/conv.html",
+    controller: 'ConvCtrl'
       })
 
   $stateProvider.state('user.profil', {
