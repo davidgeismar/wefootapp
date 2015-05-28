@@ -40,6 +40,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'RegisterCtrl'
   })
 
+    $stateProvider.state('resetPassword', {
+    url: '/resetPassword',
+    templateUrl: 'templates/resetPassword.html',
+    controller: 'ResetPasswordCtrl'
+  })
+
   $stateProvider.state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',

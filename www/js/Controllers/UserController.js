@@ -1,7 +1,6 @@
 angular.module('user',[])
 
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http){
-  
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
 
@@ -133,11 +132,11 @@ $scope.logout = function (){
 }
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
+    io.socket.post('http://localhost:1337/actu/newFriend',{user1: $localStorage.user.id, user2: target});
+    data[0].statut = 0;
     $localStorage.friends.push(data[0]);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
     $scope.friendsId.push(data[0].id);
-    $scope.friends.push(data);
-    $scope.friends[$localStorage.friends.length-1].statut = 0;
   }).error(function(){
     console.log('error');
   })
@@ -194,11 +193,11 @@ $scope.createChat = function(user){
   $scope.initNotes = function(){
     $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
       $scope.user.nbGrades = data.nbGrades;
-      $scope.setNote(data.technique, 0);
-      $scope.setNote(data.frappe, 1);
-      $scope.setNote(data.physique, 2);
-      $scope.setNote(data.fair_play, 3);
-      $scope.setNote(data.assiduite, 4);
+      $scope.setNote(Math.round(data.technique), 0);
+      $scope.setNote(Math.round(data.frappe), 1);
+      $scope.setNote(Math.round(data.physique), 2);
+      $scope.setNote(Math.round(data.fair_play), 3);
+      $scope.setNote(Math.round(data.assiduite), 4);
     }).error(function(){
       console.log('error');
     });

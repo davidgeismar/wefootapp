@@ -19,7 +19,7 @@ var getStuffById = function(id,stuffArray){
 			return stuffArray[i];
 	}
 };
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv', 'resetPassword'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -51,7 +51,13 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       }
     },0);
   });
-  
+  io.socket.on('connect',function(){
+    console.log('CONNECTEDD');
+  });
+  io.socket.on('notif',function(data){
+    console.log('received');
+    console.log(data);
+  });
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -105,6 +111,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
+  })
+
+    $stateProvider.state('resetPassword', {
+    url: '/resetPassword',
+    templateUrl: 'templates/resetPassword.html',
+    controller: 'ResetPasswordCtrl'
   })
 
   $stateProvider.state('login', {

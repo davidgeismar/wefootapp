@@ -2,6 +2,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
 $scope.chat = $localStorage.chat;
 $scope.user = $localStorage.user;
+$scope.messageContent;
 
 $scope.sendMessage = function(message){
 	// console.log($scope.chat.id);
@@ -12,9 +13,9 @@ $scope.sendMessage = function(message){
   });
 
 }
-
-$scope.init = function(){
-
+$scope.showMessageButton= function(messageContent){
+	console.log('test');
+	if(messageContent==0) return "hide-icon";
 }
 
 

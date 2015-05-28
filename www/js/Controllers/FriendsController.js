@@ -9,7 +9,6 @@ switchIcon('icon_friend','search');
 $scope.friends = $localStorage.friends;
 
 $scope.addFavorite = function(target){
-  console.log('hello');
   var targetPosition = -1;
   angular.forEach($localStorage.friends,function(friend,index){
     if(friend.id == target){
@@ -19,14 +18,15 @@ $scope.addFavorite = function(target){
   if($scope.friends[targetPosition].statut==0){
    $http.post('http://localhost:1337/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $scope.friends[targetPosition].statut = 1;
+    console.log('here1');
   }).error(function(){
     console.log('error');
   });
 }
 else if($scope.friends[targetPosition].statut==1){
-  console.log("Right");
   $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $scope.friends[targetPosition].statut = 0;
+    console.log('hgere2');
   }).error(function(){
     console.log('error');
   });

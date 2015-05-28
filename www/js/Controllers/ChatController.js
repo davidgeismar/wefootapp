@@ -33,11 +33,8 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		angular.forEach($scope.chats, function(chat) {
 			console.log(chat);
 
-
 			if(chat.messages.length>0){
-				console.log("time"+chat.messages[chat.messages.length-1].createdAt);
 				var newDate = new Date(chat.messages[chat.messages.length-1].createdAt);
-				console.log("new Date "+newDate);
 				$localStorage.chatsDisplay[cpt] = {id:chat.id, lastTime:newTime(newDate), lastMessage:chat.messages[chat.messages.length-1].messagestr, user:"test"};
 				cpt++;
 			}
