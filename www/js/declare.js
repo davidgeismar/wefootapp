@@ -30,7 +30,13 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       }
     },0);
   });
-  
+  io.socket.on('connect',function(){
+    console.log('CONNECTEDD');
+  });
+  io.socket.on('notif',function(data){
+    console.log('received');
+    console.log(data);
+  });
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

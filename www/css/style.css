@@ -520,6 +520,36 @@ a{
 	background-color: #fff;
 	left: 146px;
 }
+.left-side-slider i{
+	opacity: 1;
+}
+@keyframes pulsateOne {  /* PULSATE ON ARROWS*/
+    0% {opacity: 0.8}
+    33% {opacity: 0.3}
+    66% {opacity: 0.5}
+    100% {opacity: 0.8}
+}
+@keyframes pulsateTwo {
+    0% {opacity: 0.5}
+    33% {opacity: 0.8}
+    66% {opacity: 0.3}
+    100% {opacity: 0.5}
+}
+@keyframes pulsateThree {
+    0% {opacity: 0.3}
+    33% {opacity: 0.5}
+    66% {opacity: 0.8}
+    100% {opacity: 0.3}
+}
+.pulsate1{
+	animation: pulsateOne 1s linear infinite;
+}
+.pulsate2{
+	animation: pulsateTwo 1s linear infinite;
+}  
+.pulsate3{
+	animation: pulsateThree 1s linear infinite;
+}           
 .tab_bottom{
 	position: absolute;
 	bottom: 10px;
@@ -1245,13 +1275,6 @@ a{
   color: rgb(207, 207, 207);
   text-decoration: none;
 }
-
-.activated {
-  color: rgb(37, 55, 91);
-  border-bottom: 3px solid rgb(0, 113, 227)  ;
-  margin: auto;
-}
-
 
 .bob{
 text-align: center;
