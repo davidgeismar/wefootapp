@@ -143,24 +143,27 @@ $scope.addFriend = function(target){
   })
 }
 
-$scope.launchChat = function(user){
-  $http.post('http://localhost:1337/chat/create',{userId: $localStorage.user.id, userId2 : user}).success(function(data){
-    console.log(data);
+$scope.createChat = function(user){
+
+  $http.post('http://localhost:1337/chat/create',{chatters :[$localStorage.user.id, user], typ:1}).success(function(data){
+    console.log("data"+data);
     $rootScope.closeModal();
-    $location.path('/conv/'+data.chat.id);
+    $localStorage.chat=data.chat;
+    $location.path('/conv');
   }).error(function(err){
     console.log(err);
   });
 }
 
-$scope.getAllChats = function(user){
-  $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
-    console.log(data);
-    $localStorage.chats = data;
-  }).error(function(err){
-    console.log(err);
-  });
-}
+
+// $scope.getAllChats = function(user){
+//   $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
+//     console.log(data);
+//     $localStorage.chats = data;
+//   }).error(function(err){
+//     console.log(err);
+//   });
+// }
 
   $scope.friend = $localStorage.friend;
   $scope.notes = new Array(5);
@@ -187,29 +190,25 @@ $scope.getAllChats = function(user){
     }
   }
 
-  $scope.init = function(){
 
-    $scope.setNote($scope.user.technique, 0);
-    $scope.setNote($scope.user.frappe, 1);
-    $scope.setNote($scope.user.physique, 2);
-    $scope.setNote($scope.user.fair_play, 3);
-    $scope.setNote($scope.user.assiduite, 4);
-
-
-  }
-
-
-
-  $scope.getNbNotes = function(){
-    $http.get('http://localhost:1337/getNbGrades/'+$scope.user.id).success(function(data){
+  $scope.initNotes = function(){
+    $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
       $scope.user.nbGrades = data.nbGrades;
+      $scope.setNote(data.technique, 0);
+      $scope.setNote(data.frappe, 1);
+      $scope.setNote(data.physique, 2);
+      $scope.setNote(data.fair_play, 3);
+      $scope.setNote(data.assiduite, 4);
     }).error(function(){
-    console.log('error');
-  });
+      console.log('error');
+    });
+
   }
 
-    $scope.init();
-    $scope.getNbNotes();
+
+
+
+    $scope.initNotes();
 
   $scope.displayNotes = function(){
     if($scope.user.nbGrades<=1)

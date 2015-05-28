@@ -26,28 +26,27 @@ angular.module('friend',[])
 		}
 	}
 
-	//Initialise le
-	$scope.init = function(){
+	//Appelle setNote pour toutes les étoiles et récupère le nb de votes
+	$scope.initNotes = function(){
 
-		$scope.setNote($scope.friend.technique, 0);
-		$scope.setNote($scope.friend.frappe, 1);
-		$scope.setNote($scope.friend.physique, 2);
-		$scope.setNote($scope.friend.fair_play, 3);
-		$scope.setNote($scope.friend.assiduite, 4);
-
-
-	}
-
-
-	//récupère 
-	$scope.getNbNotes = function(){
-		$http.get('http://localhost:1337/getNbGrades/'+$scope.friend.id).success(function(data){
+		$http.get('http://localhost:1337/getDetailledGrades/'+$localStorage.friend.id).success(function(data){
+			console.log(data);
 			$scope.friend.nbGrades = data.nbGrades;
+			$scope.setNote(data.technique, 0);
+			$scope.setNote(data.frappe, 1);
+			$scope.setNote(data.physique, 2);
+			$scope.setNote(data.fair_play, 3);
+			$scope.setNote(data.assiduite, 4);
 		}).error(function(){
 			console.log('error');
 		});
+
+
+
 	}
 
+
+	//Affiche correctement le nombre de votes
 	$scope.displayNotes = function(){
 		if($scope.friend.nbGrades<=1)
 			return $scope.friend.nbGrades+" personne";
@@ -55,8 +54,7 @@ angular.module('friend',[])
 			return $scope.friend.nbGrades+ " personnes";
 	}
 
-	$scope.init();
-	$scope.getNbNotes();
+	$scope.initNotes();
 
 
 

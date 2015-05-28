@@ -80,11 +80,6 @@ angular.module('note',[])
 			}).error(function(){
 				console.log('error');
 			});
-			$http.post('http://localhost:1337/Notation/updateDetailledGrades', {note:$localStorage.friend.id }).success(function(){
-
-			}).error(function(){
-				console.log('error');
-			});
 
 
 			for(var i=0; i<5; i++) {

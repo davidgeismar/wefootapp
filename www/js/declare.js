@@ -1,4 +1,4 @@
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -42,4 +42,5 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       StatusBar.styleDefault();
     }
   });
+
 })
