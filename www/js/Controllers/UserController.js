@@ -81,6 +81,7 @@ if($scope.user && $scope.user.poste==null){
 $scope.logout = function (){
   $localStorage.user = {};
   $localStorage.token = "";
+  $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
   $location.path('/')
 };
   //MODAL HANDLER
@@ -190,6 +191,7 @@ $scope.createChat = function(user){
   }
 
 
+
   $scope.initNotes = function(){
     $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
       $scope.user.nbGrades = data.nbGrades;
@@ -202,8 +204,7 @@ $scope.createChat = function(user){
       console.log('error');
     });
 
-  }
-
+}
 
 
 

@@ -22,21 +22,6 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
       $scope.foot.toInvite.push(id);
     }
 
-  var getJour = function(date){
-    var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-    var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
-    var m = mois[date.getMonth()];
-    var j = semaine[date.getDay()];
-    return(j+' '+date.getDate()+' '+m);
-  }
-  var getHour = function(date){
-    var n = date.getHours();
-    var m = date.getMinutes();
-    if(n<10) n= '0'+n;
-    if(m<10) m= '0'+m;
-    return (n+'h'+m)
-  }
-
   $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
@@ -125,6 +110,9 @@ $scope.chooseField = function(field){
 $scope.launchReq = function(){
   $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(){
     console.log('success');
+    io.socket.post('http://localhost:1337/actu/footInvit',$scope.foot,function(err){
+      console.log('sent');
+    });
   }).error(function(){
     console.log('err');
   });
@@ -137,7 +125,6 @@ if($location.path().indexOf('user/foots')>0){
   $scope.footTodo = $localStorage.footTodo;
   $scope.footPlayers = $localStorage.footPlayers;
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){
-    console.log(data);
     angular.forEach(data, function(foot,index){
       $localStorage.footPlayers[index] = [];
       $localStorage.footPlayers[index].push(foot.id); //FIRST COLUMN CONTAIN ID OF FOOTS 
