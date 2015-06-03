@@ -533,22 +533,22 @@ a{
 	opacity: 1;
 }
 @keyframes pulsateOne {  /* PULSATE ON ARROWS*/
-    0% {opacity: 0.8}
-    33% {opacity: 0.3}
-    66% {opacity: 0.5}
-    100% {opacity: 0.8}
+	0% {opacity: 0.8}
+	33% {opacity: 0.3}
+	66% {opacity: 0.5}
+	100% {opacity: 0.8}
 }
 @keyframes pulsateTwo {
-    0% {opacity: 0.5}
-    33% {opacity: 0.8}
-    66% {opacity: 0.3}
-    100% {opacity: 0.5}
+	0% {opacity: 0.5}
+	33% {opacity: 0.8}
+	66% {opacity: 0.3}
+	100% {opacity: 0.5}
 }
 @keyframes pulsateThree {
-    0% {opacity: 0.3}
-    33% {opacity: 0.5}
-    66% {opacity: 0.8}
-    100% {opacity: 0.3}
+	0% {opacity: 0.3}
+	33% {opacity: 0.5}
+	66% {opacity: 0.8}
+	100% {opacity: 0.3}
 }
 .pulsate1{
 	animation: pulsateOne 1s linear infinite;
@@ -977,8 +977,9 @@ a{
 	overflow: scroll;
 }
 .item_conv{
-	margin-bottom: 60px;
+	width:100%;
 }
+
 .conv_ban_text{
 	font-size: 13px;
 	font-family: "Ubuntu";
@@ -1177,7 +1178,8 @@ a{
 	position: relative;
 	right: 15px;
 	top: 18px;
-	color: #c4c4c4; }
+	color: #c4c4c4; 
+}
 
 .icon_none{
 	background: none;
@@ -1188,8 +1190,8 @@ a{
 .icon_modal{
 	color: #ffffff;
 	font-size: 18px;
-  	margin-top: 8px;
-  	margin-left: 5px;
+	margin-top: 8px;
+	margin-left: 5px;
 }
 .switcher_search{
 	background-color: #006dff;
@@ -1204,12 +1206,12 @@ a{
 }
 .switch_wf1{
 	background-repeat: no-repeat;
-  	background-position: 50%;
+	background-position: 50%;
 	height: 50px;
-  	background-size:contain;
-  	width: 70px;
-  	display: inline-block;
-  	background-image: url('../img/icon_accueil_white.svg');
+	background-size:contain;
+	width: 70px;
+	display: inline-block;
+	background-image: url('../img/icon_accueil_white.svg');
 }
 .opened_search .switch_wf1{
 	background-image: url('../img/icon_accueil_lightB.svg');
@@ -1225,7 +1227,7 @@ a{
 .switch_fb{
 	position: relative;
 	bottom: 5px;
-  	left: 4px;
+	left: 4px;
 }
 .opened_search{
 	background-color: #ffffff;
@@ -1244,8 +1246,8 @@ a{
 }
 .one_search{
 	margin: 0px 20px;
-    border-bottom: 1px solid #DBDAE3;
-    height: 60px;
+	border-bottom: 1px solid #DBDAE3;
+	height: 60px;
 }
 .name_search{
 	display: inline-block;
@@ -1259,12 +1261,12 @@ a{
 }
 .icon_friend_search{
 	background-repeat: no-repeat;
-  	background-position: 50%;
+	background-position: 50%;
 	height: 30px;
 	margin-top: 15px;
-  	background-size:contain;
-  	width: 40px;
-  	display: inline-block;
+	background-size:contain;
+	width: 40px;
+	display: inline-block;
 	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
 	float: right;
 }
@@ -1284,36 +1286,36 @@ a{
 }
 
 .tab-container{
-  margin-top: 44px;
-  width:100%;
+	margin-top: 44px;
+	width:100%;
 
 
 }
 
 .foot-tab{
-  display: inline-block;
-  width: 49%;
-  text-align: center;
-  list-style: none;
-  }
+	display: inline-block;
+	width: 49%;
+	text-align: center;
+	list-style: none;
+}
 .foot-tab .gris.active{
 	color: rgb(37, 55, 91);
 }
 
 
 .gris{
-  color: rgb(207, 207, 207);
-  text-decoration: none;
+	color: rgb(207, 207, 207);
+	text-decoration: none;
 }
 
 .bob{
-text-align: center;
-border-bottom: black solid 4px;
-background-color: white;
-margin-left: 6%;
-margin-right: 6%;
-z-index: 1;
-height: 200px;
+	text-align: center;
+	border-bottom: black solid 4px;
+	background-color: white;
+	margin-left: 6%;
+	margin-right: 6%;
+	z-index: 1;
+	height: 200px;
 
 }
 
@@ -1326,33 +1328,20 @@ height: 200px;
 	padding-bottom: 70px;
 }
 .infoFoot{
-  font-size:1.3em;
-  margin-top: -20px;
-  margin-left:25px;
-  line-height: 18px;
+	font-size:1.3em;
+	margin-top: -20px;
+	margin-left:25px;
+	line-height: 18px;
 
 
 }
 
 .photoprofil{
-  height:70px;
-  border-radius: 50%;
+	height:70px;
+	border-radius: 50%;
 }
 /* p {
   color:rgb(37, 55, 91);
-}*/
-/* img{
-  border-radius: 50%;
-  width: 70px;
-  margin-top: 20px;
-  margin-left:10px;
-
-}*/
-.fleche {
-  margin-top: 40px;
-}	
-/* p {
-  color:rgb(37, 55, 91);
   }*/
 /* img{
   border-radius: 50%;
@@ -1361,6 +1350,9 @@ height: 200px;
   margin-left:10px;
 
   }*/
+  .fleche {
+  	margin-top: 40px;
+  }	
 
 
   .croix {
@@ -1979,3 +1971,18 @@ img.missing-foot{
   .img_search_field img{
   	width: 40px;
   }
+
+  .button_send_message{
+  	background-color:#28385c;
+  	color:#fff;
+  	font-weight:700;
+  	border-radius:3px;
+  	padding:1px;
+  }
+  .mdpo{
+  	text-align:left;
+  	padding-left: 20px;
+  	padding-right: 20px;
+  }
+}
+

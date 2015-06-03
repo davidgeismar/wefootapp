@@ -12,7 +12,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
 };
 
 var newTime = function (oldTime){
-	return oldTime.prototype.getMinutes()+":"+oldTime.prototype.getHours()+" "+oldTime.prototype.getDay()+"/"+oldTime.prototype.getMonth()
+	return oldTime.getHours()+":"+oldTime.getMinutes()+", le "+oldTime.getDay()+"/"+oldTime.getMonth();
 };
 
 var getStuffById = function(id,stuffArray){
@@ -21,27 +21,28 @@ var getStuffById = function(id,stuffArray){
 			return stuffArray[i];
 	}
 };
+
 var getJour = function(date){
-    var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-    var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
-    var m = mois[date.getMonth()];
-    var j = semaine[date.getDay()];
-    return(j+' '+date.getDate()+' '+m);
-}
+  var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  var m = mois[date.getMonth()];
+  var j = semaine[date.getDay()];
+  return(j+' '+date.getDate()+' '+m);
+};
 var getHour = function(date){
-    var n = date.getHours();
-    var m = date.getMinutes();
-    if(n<10) n= '0'+n;
-    if(m<10) m= '0'+m;
-    return (n+'h'+m)
-  }
+  var n = date.getHours();
+  var m = date.getMinutes();
+  if(n<10) n= '0'+n;
+  if(m<10) m= '0'+m;
+  return (n+'h'+m)
+};
 // var showLoader = function(){
 
 // }
 
 
 
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -74,6 +75,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       }
     },0);
   });
+  
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
       $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
@@ -91,61 +93,67 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
+  if(window.cordova && window.cordova.plugins.Keyboard) {
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  }
+  if(window.StatusBar) {
+    StatusBar.styleDefault();
+  }
+});
 
 })
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-  $urlRouterProvider.otherwise('/');
-  $stateProvider.state('home', {
-    url: '/',
-    templateUrl: 'templates/home.html',
-    controller: 'HomeCtrl'
-  })
+  app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    $urlRouterProvider.otherwise('/');
+    $stateProvider.state('home', {
+      url: '/',
+      templateUrl: 'templates/home.html',
+      controller: 'HomeCtrl'
+    })
 
-  $stateProvider.state('footfield',{
-    cache: false,
-    url:'/footfield',
-    templateUrl:'templates/footfield.html',
-    controller: 'FootController'
-  })
+    $stateProvider.state('footfield',{
+      cache: false,
+      url:'/footfield',
+      templateUrl:'templates/footfield.html',
+      controller: 'FootController'
+    })
 
-  $stateProvider.state('footparams', {
-    cache: false,
-    url: '/footparams',
-    templateUrl: 'templates/footparams.html',
-    controller: 'FootController'
-  })
+    $stateProvider.state('footparams', {
+      cache: false,
+      url: '/footparams',
+      templateUrl: 'templates/footparams.html',
+      controller: 'FootController'
+    })
 
 
-  $stateProvider.state('user.foots', {
-    cache: false,
-    url: '/foots',
-    views: {
-      'menuContent' :{
-        templateUrl: 'templates/foots.html',
-        controller: 'FootController'
+    $stateProvider.state('user.foots', {
+      cache: false,
+      url: '/foots',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/foots.html',
+          controller: 'FootController'
+        }
       }
-    }
-  })
+    })
 
 
-  $stateProvider.state('register', {
-    url: '/register',
-    templateUrl: 'templates/register.html',
-    controller: 'RegisterCtrl'
-  })
+    $stateProvider.state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html',
+      controller: 'RegisterCtrl'
+    })
 
-  $stateProvider.state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'
-  })
+    $stateProvider.state('resetPassword', {
+      url: '/resetPassword',
+      templateUrl: 'templates/resetPassword.html',
+      controller: 'ResetPasswordCtrl'
+    })
+
+    $stateProvider.state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+    })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
     cache: false,
@@ -171,7 +179,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/conv',
     templateUrl: "templates/conv.html",
     controller: 'ConvCtrl'
-      })
+  })
 
   $stateProvider.state('user.profil', {
     cache: false,
@@ -235,22 +243,21 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'SingleFootController'
   })
 
-
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {
-            return {
-                'request': function (config) {
-                    config.headers = config.headers || {};
-                    if ($localStorage.token) {
-                        config.headers.Authorization = $localStorage.token;
-                    }
-                    return config;
-                },
-                'responseError': function(response) {
-                    if(response.status === 403) {
-                        $location.path('/login');
-                    }
-                    return $q.reject(response);
-                }
-            };
-        })
-    });
+    return {
+      'request': function (config) {
+        config.headers = config.headers || {};
+        if ($localStorage.token) {
+          config.headers.Authorization = $localStorage.token;
+        }
+        return config;
+      },
+      'responseError': function(response) {
+        if(response.status === 403) {
+          $location.path('/login');
+        }
+        return $q.reject(response);
+      }
+    };
+  })
+});

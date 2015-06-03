@@ -31,11 +31,11 @@ angular.module('friend',[])
 		$http.get('http://localhost:1337/getDetailledGrades/'+$localStorage.friend.id).success(function(data){
 			console.log(data);
 			$scope.friend.nbGrades = data.nbGrades;
-			$scope.setNote(data.technique, 0);
-			$scope.setNote(data.frappe, 1);
-			$scope.setNote(data.physique, 2);
-			$scope.setNote(data.fair_play, 3);
-			$scope.setNote(data.assiduite, 4);
+			$scope.setNote(Math.round(data.technique), 0);
+			$scope.setNote(Math.round(data.frappe), 1);
+			$scope.setNote(Math.round(data.physique), 2);
+			$scope.setNote(Math.round(data.fair_play), 3);
+			$scope.setNote(Math.round(data.assiduite), 4);
 		}).error(function(){
 			console.log('error');
 		});

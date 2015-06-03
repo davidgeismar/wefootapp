@@ -1,44 +1,42 @@
 <ion-view view-title="Conv">
 <ion-header-bar  class="actu_header">
-  <a href='#/user/chat'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
-  <img class="logo_wf" src="../img/logo_WF.svg">
+<a href='#/user/chat'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="../img/logo_WF.svg">
 </ion-header-bar>
-    <div class="content_conv">
-        <div class="conv_ban">
-            <h2 class="conv_ban_title">
-                Conv' de fifoux
-            </h2>
-            <p class="conv_ban_text">
-                Le <span>30/05</span> à <span>19h</span> au <span>Five de Bobigny</span>
-            </p>
-        </div>
+<div class="content_conv">
+    <div class="conv_ban">
+        <h2 class="conv_ban_title">
+            Conv' de fifoux
+        </h2>
+        <p class="conv_ban_text">
+            Le <span>30/05</span> à <span>19h</span> au <span>Five de Bobigny</span>
+        </p>
     </div>
-    <ion-content class="padding padding_top has-header has-subheader">
-        <div class="content_conv_box">
-            <dl class="conv_box" ng-repeat="message in chat.messages">
-                <dd ng-if="message.senderId!=user.id" class="from">
-                    <div class="img_chat_conv">
-                        <img ng-src="img/default_pic.jpg">
-                    </div>
-                    <p>
-                        <span class="message_name">
-                            <span>Fifouxdu95</span>
-                            dit:
-                            <br>
-                        </span>
-                        <span>{{message.messagestr}}</span>
-                    </p>
-                </dd>
-                <dd ng-if="message.senderId==user.id" class="to">
-                    <p>{{message.messagestr}}</p>
-                </dd>
-            </dl>
-            
-            <label class="item item_conv item-input">
-   <input ng-model="messageContent" type="text" placeholder="Tapper votre message ici"></label><button  ng-click="sendMessage(messageContent)">Envoyer</button>
+</div>
+<ion-content class="padding padding_top has-header has-subheader">
+<div class="content_conv_box">
+    <dl class="conv_box" ng-repeat="message in chat.messages">
+        <dd ng-if="message.senderId!=user.id" class="from">
+            <div class="img_chat_conv">
+                <img ng-src="img/default_pic.jpg">
+            </div>
+            <p>
+                <span class="message_name">
+                    <span>Fifouxdu95</span>
+                    dit:
+                    <br>
+                </span>
+                <span>{{message.messagestr}}</span>
+            </p>
+        </dd>
+        <dd ng-if="message.senderId==user.id" class="to">
+            <p>{{message.messagestr}}</p>
+        </dd>
+    </dl>
 
-           
-        </div>
-    </ion-content>
-    </ion-view>
-    
+    <div class="input_message_wrapper">      
+    <input class="item item_conv item-input" ng-model="messageContent" type="text" placeholder=" Tapper votre message ici">
+     <button class="button button_send_message" ng-click="sendMessage(messageContent)" ng-class="showMessageButton(messageContent)" >Envoyer</button>
+ </div>
+</ion-content>
+</ion-view>
