@@ -58,6 +58,7 @@ angular.module('connections',[])
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
+     $localStorage.friends = [];
      io.socket.post('http://localhost:1337/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
      $location.path('/user/profil');
    }).error(function(){

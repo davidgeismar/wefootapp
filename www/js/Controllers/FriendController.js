@@ -1,6 +1,7 @@
 angular.module('friend',[])
 .controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
-	$scope.friend = $localStorage.friend;
+	var index = _.pluck($localStorage.friends,'id').indexOf($stateParams.id);
+	$scope.friend = $localStorage.friends[index];
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
 

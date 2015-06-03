@@ -134,7 +134,8 @@ $scope.logout = function (){
 }
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
-    io.socket.post('http://localhost:1337/actu/newFriend',{user1: $localStorage.user.id, user2: target});
+    var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
+    notify(notif);
     data.statut = 0;
     $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;

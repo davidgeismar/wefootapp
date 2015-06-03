@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
   
    $scope.go = function(id){
     console.log('hello');
@@ -124,25 +124,41 @@ $scope.launchReq = function(){
   });
 }
 if($location.path().indexOf('user/foots')>0){
+  $ionicLoading.show({
+      content: 'Loading Data',
+      animation: 'fade-out',
+      showBackdrop: true
+  });
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
-  $scope.footInvitation = $localStorage.footInvitation;
-  $scope.footTodo = $localStorage.footTodo;
-  $scope.footPlayers = $localStorage.footPlayers;
-  var finish = 0;
+  var count = 0;
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
     angular.forEach(data, function(foot,index){
       $localStorage.footPlayers[index] = [];
       $localStorage.footPlayers[index].push(foot.id); //FIRST COLUMN CONTAIN ID OF FOOTS 
-      $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(data){
-        foot.organisator = data.orga;
-        foot.orgaName = data.orgaName;
-        foot.field = data.field;
+      $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(elem){
+        foot.organisator = elem.orga;
+        foot.orgaName = elem.orgaName;
+        foot.field = elem.field;
+        count++;
+        if(count == 2*data.length){
+          $scope.footInvitation = $localStorage.footInvitation;
+          $scope.footTodo = $localStorage.footTodo;
+          $scope.footPlayers = $localStorage.footPlayers;
+          $ionicLoading.hide();
+      }
       });
-      $http.get('http://localhost:1337/foot/getPlayers/'+foot.id).success(function(data){
-        $localStorage.footPlayers[index] = $localStorage.footPlayers[index].concat(data);
-        foot.confirmedPlayers = data.length;
+      $http.get('http://localhost:1337/foot/getPlayers/'+foot.id).success(function(players){
+        $localStorage.footPlayers[index] = $localStorage.footPlayers[index].concat(players);
+        foot.confirmedPlayers = players.length;
+        count++;
+        if(count == 2*data.length){
+          $scope.footInvitation = $localStorage.footInvitation;
+          $scope.footTodo = $localStorage.footTodo;
+          $scope.footPlayers = $localStorage.footPlayers;
+          $ionicLoading.hide();
+        }
       });
 
       if(foot.statut==1)
@@ -192,22 +208,20 @@ if($location.path().indexOf('user/foots')>0){
     });
 
     $http.get('http://localhost:1337/foot/getPlayers/'+$stateParams.id).success(function(data){  //Get list of playersId
-      angular.forEach(data, function(player){
-        $scope.isPlaying = (player.indexOf($localStorage.user.id)>-1);
-        $http.get('http://localhost:1337/user/get/'+player).success(function(user){   //Get all players attributes
-          players.push(user);
-          console.log(user);
-          if(players.length==data.length){                //Indicate loading all players is finish
+      $scope.isPlaying = (data.indexOf($localStorage.user.id)>-1);
+      async.each(data, function(player,callback){
+          $http.get('http://localhost:1337/user/get/'+player).success(function(user){   //Get all players attributes
+            players.push(user);
+            callback();
+          });
+        },function(err){             //Indicate loading all players is finish
             foot.confirmedPlayers = players.length;
             $scope.players = players;
             $scope.foot = foot;
             $scope.date = date;
             $ionicLoading.hide();
-          }
-        });
       });
     });
-
   }
   if(isLoaded){
     var index = -1;
@@ -226,32 +240,40 @@ if($location.path().indexOf('user/foots')>0){
       }
     }
     $scope.isPlaying = ($localStorage.footPlayers[index].indexOf($localStorage.user.id)>-1);
-    angular.forEach($localStorage.footPlayers[position],function(player,index){
-      if(index>0){  //foot.id not a player
+    var realPlayers = $localStorage.footPlayers[position];
+    realPlayers.shift();
+    async.each(realPlayers,function(player,callback){
        $http.get('http://localhost:1337/user/get/'+player).success(function(data){   //Get all players attributes
           players.push(data);
-          if(players.length+1==$localStorage.footPlayers[position].length){                //Indicate loading is finish
+          callback();
+        });
+      },function(){
+            //Indicate loading is finish
             foot.confirmedPlayers = players.length;
             $scope.players = players;
             $scope.foot = foot;
             $scope.date = date;
             $ionicLoading.hide();
-          }
-        });
-      }
-     });
+    });
   }
 
   $http.get('http://localhost:1337/foot/getInvited/'+$stateParams.id).success(function(data){
     $scope.invited = data;
   });
 
-  $scope.removePlayer = function(userId){
+  $scope.removePlayer = function(userId,Invit){
     $http.post('http://localhost:1337/foot/removePlayer',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
-      var plucked = _.pluck($localStorage.footTodo,'id');
-      index = plucked.indexOf($scope.foot.id);
-      if(index>-1) $localStorage.footTodo.splice(index,1);
-      $location.path('/user/foots');
+      if(Invit){
+          var plucked = _.pluck($localStorage.footInvitation,'id');
+          index = plucked.indexOf($scope.foot.id);
+          if(index>-1) $localStorage.footInvitation.splice(index,1);
+      }
+      else{
+        var plucked = _.pluck($localStorage.footTodo,'id');
+        index = plucked.indexOf($scope.foot.id);
+        if(index>-1) $localStorage.footTodo.splice(index,1);
+      }
+        $location.path('/user/foots');
     });
   }
 
@@ -265,9 +287,11 @@ if($location.path().indexOf('user/foots')>0){
   }
 
   $scope.playFoot = function(player){
-    console.log('hello');
     $http.post('http://localhost:1337/player/update',{foot:$scope.foot.id,user:player}).success(function(){
       $scope.isPlaying = true;
+      $scope.players.push($localStorage.user);
+      var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
+      notify(notif);
     }).error(function(){
       $scope.error = "Erreur participation non enregistrée";
     });
@@ -299,8 +323,7 @@ if($location.path().indexOf('user/foots')>0){
   $scope.closeModal2 = function(){
     if($scope.foot.toInvite.length>0){
       $http.post('http://localhost:1337/foot/sendInvits',$scope.foot).success(function(){
-          console.log('here');
-          io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite});
+          io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
       });
     }
     $scope.modal2.hide();

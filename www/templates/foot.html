@@ -13,6 +13,7 @@
 <button ng-if="user.id == foot.organisator && !foot.booked" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</button>
 <button ng-if="user.id != foot.organisator && friendCanInvite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-ios-email"></i>Inviter vos amis</button>
 <button ng-if="!isPlaying" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>
+<button ng-if="!isPlaying" ng-click="removePlayer(user.id,true)" class="button button-book-foot" style="background-color: #E2334C"> <i class="ion-close-circled"></i>Je ne peux pas</button>
 <div ng-if="user.id == foot.organisator" class="bouttons3-foot">	
 	<button ng-click="closePublic()" ng-if="!foot.priv" class="boutton-foot">
 		<i class="ion-locked"></i>
