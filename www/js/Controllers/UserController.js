@@ -1,6 +1,7 @@
 angular.module('user',[])
 
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http){
+
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
 
@@ -81,7 +82,7 @@ if($scope.user && $scope.user.poste==null){
 $scope.logout = function (){
   $localStorage.user = {};
   $localStorage.token = "";
-  $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
+  $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   $location.path('/')
 };
   //MODAL HANDLER
@@ -134,10 +135,10 @@ $scope.logout = function (){
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
     io.socket.post('http://localhost:1337/actu/newFriend',{user1: $localStorage.user.id, user2: target});
-    data[0].statut = 0;
-    $localStorage.friends.push(data[0]);
+    data.statut = 0;
+    $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
-    $scope.friendsId.push(data[0].id);
+    $scope.friendsId.push(data.id);
   }).error(function(){
     console.log('error');
   })

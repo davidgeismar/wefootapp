@@ -1,5 +1,6 @@
 angular.module('notif',[])
 .controller('NotifCtrl',function($scope, $localStorage, $rootScope, $http, $location,$ionicLoading){
+	//TODO USER.LASTVIEW
 	$rootScope.notif = 0;
 	$ionicLoading.show({
 	    content: 'Loading Data',
@@ -9,7 +10,7 @@ angular.module('notif',[])
 	var parseNotif = function(typ){
 		switch(typ){
 			case 'newFriend':
-				return ('vous à ajouté à ses amis.');
+				return ('vous a ajouté à ses amis.');
 			case 'hommeDuMatch':
 				return ('avez été élu homme du match.');
 			case 'chevreDuMatch':
@@ -23,8 +24,10 @@ angular.module('notif',[])
 	$http.get('http://localhost:1337/getNotif/'+$localStorage.user.id).success(function(data){
 		var finish = 0;
 		$localStorage.notifs = data;
+		if(data.length == 0)
+			$ionicLoading.hide();
 		angular.forEach(data, function(notif,index){
-			$http.get('http://localhost:1337/user/'+notif.related_user).success(function(user){
+			$http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
 				if(user.id == $localStorage.user.id)
 					$localStorage.notifs[index].userName == "Vous";
 				else

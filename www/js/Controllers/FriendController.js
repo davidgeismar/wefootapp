@@ -1,6 +1,5 @@
 angular.module('friend',[])
-.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
-
+.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
 	$scope.friend = $localStorage.friend;
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);

@@ -75,12 +75,15 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     },0);
   });
   io.socket.on('disconnect',function(){
-    $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
+    if($localStorage.user && $localStorage.user.id)
+      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
   
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
+    $rootScope.$digest();
+    console.log(data);
   });
 
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
@@ -225,6 +228,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     }
   })
 
+  $stateProvider.state('foot',{
+    cache: false,
+    url: '/foot/:id',
+    templateUrl: 'templates/foot.html',
+    controller: 'SingleFootController'
+  })
 
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {

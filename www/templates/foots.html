@@ -1,18 +1,16 @@
 <ion-view view-title="foots" class="background-foot">
   <ion-content>
   <section class="tab">
-
-
    <ul class="tab-container">
       <li ng-class="{active: tab==1}" class="foot-tab">
         <span ng-class="{active: tab==1}" ng-click="tab = 1" class="gris">FOOTS <strong><br>A VENIR</strong></span>
       </li>
       <li ng-class="{active:tab==2}" class="foot-tab">
-        <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <strong><br>EN ATTENTE</strong></span>
+        <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <span class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
       <div ng-show="tab == 1">
         <div class="background-foot">
-          <div class="list card" ng-repeat= "foot in footTodo">
+          <div ng-click="go(foot.id)" class="list card" ng-repeat= "foot in footTodo">
             <div class="item item-divider item-divider-foot">
               <div class="foot_name">
                 <span class="img_pla_foot">
@@ -26,7 +24,7 @@
             <div class="item item-text-wrap row">   
               <div class="col col-70 date_time_foot">
                  <p><strong>{{date}}, {{hour}}</strong></p>
-                 <p style="text-transform: uppercase;">{{foot.fieldName}}</p>
+                 <p style="text-transform: uppercase;">{{foot.field.name}}</p>
                  <p class="places_foot">Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</p>
               </div> 
               <div ng-if="foot.booked == 1" class="col col-30 booked_foot">
@@ -41,7 +39,7 @@
       </div>
       <div ng-show="tab == 2">
         <div class="background-foot">
-          <div class="list card" ng-repeat= "foot in footInvitation">
+          <div class="list card" ng-click="go(foot.id)" ng-repeat= "foot in footInvitation">
             <div class="item item-divider item-divider-foot">
               <div class="foot_name">
                 <span class="img_pla_foot">
