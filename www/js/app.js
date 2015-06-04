@@ -29,6 +29,7 @@ var getJour = function(date){
   var j = semaine[date.getDay()];
   return(j+' '+date.getDate()+' '+m);
 };
+
 var getHour = function(date){
   var n = date.getHours();
   var m = date.getMinutes();
@@ -42,7 +43,7 @@ var getHour = function(date){
 
 
 
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -87,6 +88,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
   });
+
+
+
+  // io.socket.on('message',function(message){
+  //   $rootScope.nbNewMessages++;
+  // });
 
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
@@ -204,6 +211,14 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     url: '/noter',
     templateUrl: "templates/noter.html",
     controller: 'NoteCtrl'
+
+  })
+
+    $stateProvider.state('election', {
+    cache: false,
+    url: '/election',
+    templateUrl: "templates/election.html",
+    controller: 'ElectionCtrl'
 
   })
 

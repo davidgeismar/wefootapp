@@ -10,7 +10,7 @@
 		<input ng-model="searchFriends" type="text" placeholder="Rechercher un nom">
 	</label>
 	<div ng-repeat="friend in friends | filter: searchFriends" class="one_search">
-		<div ng-click="launchChat({{friend.id}})">
+		<div ng-click="launchChat(friend)">
 			<div class="img_chat img_search">
 				<img ng-src="img/default_pic.jpg">
 			</div>

@@ -1,0 +1,28 @@
+<ion-view view-title="Election">
+<ion-header-bar  class="actu_header">
+<a href='#/user/chat'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="../img/logo_WF.svg">
+</ion-header-bar>
+<div class="content_conv">
+    <div class="conv_ban">
+        <h2 class="conv_ban_title">
+            Foot de fifoux
+        </h2>
+        <p class="conv_ban_text">
+            Le <span>30/05</span> à <span>19h</span> au <span>Five de Bobigny</span>
+        </p>
+    </div>
+</div>
+<ion-content class="padding padding_top has-header has-subheader">
+<div class="election_phrase">
+<h2>Elisez <strong>la chèvre</strong> et <strong>l'homme</strong> du match !</h2>
+</div>
+<!-- <div ng-repeat="user in users"> -->
+<div class="election_user_container">
+<img class="election_pic" src="img/default_pic.jpg">
+<div ng-class="selectedOrNot('homme',user.id)" ng-click="homme=user.id";></div>
+<div ng-class="selectedOrNot('chevre',user.id)" ng-click="chevre=user.id"></div>
+</div>
+<!-- </div> -->
+</ion-content>
+</ion-view>

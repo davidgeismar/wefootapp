@@ -407,7 +407,13 @@ a{
 
 .login-mdpo{
 	text-align:right;
+
 }
+
+.login-mdpo p{ 
+	display:inline;
+}
+
 
 .register_title h1{
 	width:100%;
@@ -675,15 +681,6 @@ a{
 	background-color: #28385c;
 }
 
-.info_menu{
-	position: relative;
-	bottom: 90px;
-	font-size: 18px;
-	font-weight: bold;
-	padding-top: 12px;
-	margin: 0px 20px;
-	border-top: 1px solid #516082;
-}
 
 .info_menu{
 	position: relative;
@@ -1733,5 +1730,55 @@ a{
   	padding-left: 20px;
   	padding-right: 20px;
   }
-}
+  .info_friend{
+  	position: relative;
+  	bottom: 90px;
+  	font-size: 18px;
+  	font-weight: bold;
+  	padding-top: 12px;
+  	margin: 0px 20px;
+  	border-top: 1px solid #516082;
+  }
+  .info_friend p{
+  	color: #24365F;
+  }
+
+  .login-mdpo_chevron {
+  	display:inline;
+  	margin-left:10px;
+  }
+
+  .election_phrase h2{
+  	font-weight:100;
+  	color:#28385C;
+  	text-align:center;
+  	margin-top:20px;
+  }
+  .election_user_container{
+  	  	width:30%;
+  	  	display:inline-block;
+  	  	 	margin-left:2%;
+
+  }
+  .election_pic{
+  	border-radius:150px;
+  	width:100%;
+  }
+
+  .chevre{
+  	background-image:url('../img/chevre.png');
+  	width:30px;
+  }
+
+  .chevre_selected{
+  	background-image:url('../img/chevre_rouge.png');
+  }
+
+  .trophe{
+  	background-image:url('../img/trophe.png');
+  }
+
+  .trophe_selected{
+  	background-image:url('../img/trophe_or.png');
+  }
 

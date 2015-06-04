@@ -15,14 +15,18 @@ angular.module('connections',[])
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
               friend.statut = data[1][index]; 
-              });  
+            });
+            $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
+              console.log(data)
+
+            }).error(function(err){ console.log('error')});  
             $location.path('/user/profil');
-            }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
+          }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
         }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
       });
-    },function(){$scope.err = "Erreur lors de la connexion via facebook"});
+},function(){$scope.err = "Erreur lors de la connexion via facebook"});
 
-  };
+};
 })
 
 
@@ -40,7 +44,12 @@ angular.module('connections',[])
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
           friend.statut = data[1][index]; 
-        });  
+        });
+        $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
+          console.log(data)
+
+        }).error(function(err){ console.log('error')});
+
         $location.path('/user/profil');
       }).error(function(err){ console.log('error')});
     }).error(function(){

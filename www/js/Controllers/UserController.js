@@ -145,17 +145,28 @@ $scope.addFriend = function(target){
 
 $scope.createChat = function(user){
 
-  $http.post('http://localhost:1337/chat/create',{chatters :[$localStorage.user.id, user], typ:1}).success(function(data){
-    console.log("data"+data);
+  $http.post('http://localhost:1337/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
     $rootScope.closeModal();
-    $localStorage.chat=data.chat;
+    chat.messages = new Array();
+    $localStorage.chat=chat;
     $location.path('/conv');
   }).error(function(err){
     console.log(err);
   });
 }
 
-
+$scope.launchChat = function(user){
+  console.log($localStorage.chats);
+    angular.forEach($localStorage.chats, function(chat) {
+    if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
+          console.log('here');
+          $localStorage.chat=chat;
+          $location.path('/conv');
+          return 0;
+    }
+  });
+$scope.createChat(user);
+}
 // $scope.getAllChats = function(user){
 //   $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
 //     console.log(data);

@@ -37,4 +37,15 @@ angular.module('notif',[])
 			}).error(function(){$scope.err = "Erreur lors de la requête";});
 		});
 	}).error(function(){$scope.err = "Erreur lors de la requête";});
+
+
+
+
+
+
+	// $scope.launchElection = function(foot){
+
+
+	// }
+
 })
