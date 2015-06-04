@@ -41,7 +41,7 @@ a{
 	font-family: 'Ubuntu';
 }
 .bar{
-	border-bottom: none;
+	border-bottom: none !important;
 }
 .white{
 	color: #fff;
@@ -440,7 +440,6 @@ a{
 .homepage_register{
 	margin-top: 50px;
 	border: 1px solid #006ddf;
-	color: #006ddf;
 }
 .actu_header{
 	background-color: #28385c;

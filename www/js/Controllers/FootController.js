@@ -1,7 +1,6 @@
 angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
   
    $scope.go = function(id){
-    console.log('hello');
     $location.path('/foot/'+id);
    } 
 
@@ -35,39 +34,54 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
   $scope.foot.friendCanInvite = true;
   $scope.foot.priv = true;
   $scope.foot.level = 0;
-  
+
+  // minDate = ionic.Platform.isIOS() ? new Date() : (new Date()).valueOf();
+
   var options = {
       date: new Date(),
-      mode: 'date', // or 'time'
-      minDate: new Date() - 10000,
-      allowOldDates: false,
-      allowFutureDates: true,
-      doneButtonLabel: 'DONE',
-      doneButtonColor: '#F2F3F4',
+      mode: 'date',
+      minDate:  new Date(),
+      // allowOldDates: false,
+      // allowFutureDates: true,
+      doneButtonLabel: 'OK',
+      doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
       cancelButtonColor: '#000000'
     };
     
     var options1 = {
       date: new Date(),
+      minDate: new Date(),
       mode: 'time', // or 'time'
-      doneButtonLabel: 'DONE',
-      doneButtonColor: '#F2F3F4',
+      doneButtonLabel: 'OK',
+      doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
       cancelButtonColor: '#000000'
     };
     $scope.showDatePicker = function(){
+
         $cordovaDatePicker.show(options).then(function(date){
-        $scope.foot.date = date
-      });
+          var jour = new Date(date);
+          $scope.foot.date.setDate(jour.getDate());
+          $scope.foot.date.setMonth(jour.getMonth());
+          $scope.foot.date.setFullYear(jour.getFullYear());
+          $scope.date = getJour($scope.foot.date);
+          // $scope.foot.date = date.substring(0,11)+ $scope.foot.hour.substring(12,24);
+          // console.log($scope.foot.date);
+         });
     }
       $scope.showHourPicker = function(){
         $cordovaDatePicker.show(options1).then(function(hour){
-        $scope.foot.hour = hour;
+        var hours = new Date(hour);
+        $scope.foot.date.setHours(hours.getHours());
+        $scope.foot.date.setMinutes(new Date(hours).getMinutes());
+        $scope.hour = getHour($scope.foot.date);
+        // $scope.foot.date = hour.substring(0,11)+ $scope.foot.jour.substring(12,24);
+        // console.log($scope.foot.date);
+        // var dateJour = new Date($scope.foot.jour).toJSON()+''.substring(0,11);
+
       });
     }
-
-
 if($location.path().indexOf('footparams')>0){
   $scope.date = $scope.foot.date.toLocaleDateString();
   $scope.hour = parseInt($scope.foot.date.toLocaleTimeString().substring(0,2))+1+'h00';
@@ -102,7 +116,6 @@ if($location.path().indexOf('footparams')>0){
     if(word.length>2){
      $http.get('http://localhost:1337/field/search/'+word).success(function(data){
       $scope.results = data;
-      console.log(data);
     }).error(function(){
       console.log('error');
     });
@@ -114,11 +127,10 @@ $scope.chooseField = function(field){
   $location.path('/footparams');
 }
 $scope.launchReq = function(){
-  $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(){
-    console.log('success');
-    io.socket.post('http://localhost:1337/actu/footInvit',$scope.foot,function(err){
-      console.log('sent');
+  $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(foot){
+    io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: foot.id},function(err){
     });
+    $location.path('/foot/'+foot.id);
   }).error(function(){
     console.log('err');
   });
@@ -239,7 +251,7 @@ if($location.path().indexOf('user/foots')>0){
         }
       }
     }
-    $scope.isPlaying = ($localStorage.footPlayers[index].indexOf($localStorage.user.id)>-1);
+    $scope.isPlaying = ($localStorage.footPlayers[position].indexOf($localStorage.user.id)>-1);
     var realPlayers = $localStorage.footPlayers[position];
     realPlayers.shift();
     async.each(realPlayers,function(player,callback){
