@@ -237,7 +237,7 @@ a{
 	height:30px;
 	width: 30px;
 	padding-top: 4px;
-	padding-left: 7px; 
+	padding-left: 7px;
 	position: relative;
 	bottom: 5px;
 }
@@ -554,10 +554,10 @@ a{
 }
 .pulsate2{
 	animation: pulsateTwo 1s linear infinite;
-}  
+}
 .pulsate3{
 	animation: pulsateThree 1s linear infinite;
-}           
+}
 .tab_bottom{
 	position: absolute;
 	bottom: 10px;
@@ -1171,13 +1171,13 @@ a{
 }
 
 
-.ion-ios-chatbubble-outline{ 
+.ion-ios-chatbubble-outline{
 	font-size: 30px;
 	float: right;
 	position: relative;
 	right: 15px;
 	top: 18px;
-	color: #c4c4c4; 
+	color: #c4c4c4;
 }
 
 .icon_none{
@@ -1351,7 +1351,7 @@ a{
   }*/
   .fleche {
   	margin-top: 40px;
-  }	
+  }
 
 
   .croix {
@@ -1370,8 +1370,8 @@ a{
   }
   .img_level_foot{
   	width: 15px;
-  	float: right;
   	padding-top: 10px;
+    margin-right: 60px;
   }
   .img_pla_foot img{
   	width: 16px;
@@ -1420,13 +1420,13 @@ a{
   	font-size: 15px;
   	width: 100px;
   }
-  .date_time_foot .places_foot{
+  /*.date_time_foot .places_foot{
   	position: relative;
   	right: 8px;
   	font-size: 12px;
   	font-weight: bold;
   	color: #28385c;
-  }
+  }*/
   .background-foot .list{
   	background-color: #28385c;
   	margin-top: 10px;
@@ -1620,7 +1620,7 @@ a{
 }
 .bouttons3-foot{
 	margin : auto;
-	position: relative; 
+	position: relative;
 	left: 14%;
 }
 .boutton-foot {
@@ -1635,7 +1635,7 @@ a{
   min-height: 50px;
   border:0px;
   font-family: 'Ubuntu';
-  font-size: 0.7em; 
+  font-size: 0.7em;
   font-weight: bold;
 }
 .boutton-foot i{
@@ -1742,7 +1742,7 @@ img.missing-foot{
 	margin-left: 10%;
 }
 
-.photourban-foot{ 
+.photourban-foot{
 	vertical-align:top;
 	width: 100px;
 	height: 100px;
@@ -1811,6 +1811,15 @@ img.missing-foot{
   	}
   }
   @media screen and (max-width: 320px) { /* IPHONE 5- */
+    .fleche_bleu_fonce_foots {
+      margin-left: -40px !important;
+    }
+    .info_foots {
+        margin-right: 60px;
+        margin-top: 10px;
+        margin-left: 20px;
+        white-space: nowrap;
+    }
   	.main_actu{
   		height: 110px;
   	}
@@ -1951,7 +1960,7 @@ img.missing-foot{
   		left: 5%;
   	}
   	.boutton-foot{
-  		width: 28%; 
+  		width: 28%;
   	}
   }
   /* END MEDIA QUERY */
@@ -1983,5 +1992,67 @@ img.missing-foot{
   	padding-left: 20px;
   	padding-right: 20px;
   }
+
+
+.nbreplace {
+  margin-left: -40px;
+  margin-top: 21px;
+  color: #28385c;
+  white-space: nowrap !important;
 }
 
+.bleuciel {
+color: #006ddf;
+}
+.bleufonce {
+  color: #28385c !important;
+}
+
+.border_bottom_foot {
+  border-bottom: 4px solid #28385c ;
+  height: 200px;
+
+}
+
+ .img_level_foots{
+  width: 20px;
+  padding: 2px;
+  margin-left: -20px;
+  margin-top: 15px;
+}
+  }
+
+
+.info_foots {
+  margin-right: 70px;
+  margin-top: 10px;
+  white-space: nowrap;
+}
+
+.nbredejoueur_foots {
+  margin-left: 30px;
+}
+.fleche_bleu_fonce_foots {
+  margin-top: 30px;
+  margin-left: 60px;
+}
+
+.carte_foots {
+  padding: 10%;
+}
+
+.background_foots {
+  background-image: url("../img/photo_tour_eiffel.jpg");
+  background-size:cover;
+}
+
+.supress_foots {
+
+margin-top: -35px;
+padding: 5px;
+}
+
+.bonhomme_foots {
+  margin-left: 10px;
+  margin-top: 10px;
+}

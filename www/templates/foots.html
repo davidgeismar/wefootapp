@@ -15,24 +15,24 @@
               <div class="foot_name">
                 <span class="img_pla_foot">
                 <p class="nb_player_foot">{{foot.confirmedPlayers}}</p>
-                <img ng-src="img/icon_bonhomme_bleufonce.svg"/> 
+                <img ng-src="img/icon_bonhomme_bleufonce.svg"/>
                 </span>
                 <p>{{foot.orgaName}}</p>
-                <img class="img_level_foot" ng-src="img/niveau_3.svg"/> 
-              </div>             
+                <img class="img_level_foot" ng-src="img/niveau_3.svg"/>
+              </div>
             </div>
-            <div class="item item-text-wrap row">   
+            <div class="item item-text-wrap row">
               <div class="col col-70 date_time_foot">
                  <p><strong>{{date}}, {{hour}}</strong></p>
                  <p style="text-transform: uppercase;">{{foot.field.name}}</p>
                  <p class="places_foot">Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</p>
-              </div> 
-              <div ng-if="foot.booked == 1" class="col col-30 booked_foot">
+              </div>
+              <!-- <div ng-if="foot.booked == 1" class="col col-30 booked_foot">
                 <p> Reservé </p>
               </div>
               <div ng-if="foot.booked == 0" class="col col-50 booked_foot not_booked">
                 <p> A Reserver </p>
-              </div>        
+              </div> -->
             </div>
           </div>
         </div>
@@ -44,21 +44,21 @@
               <div class="foot_name">
                 <span class="img_pla_foot">
                 <p class="nb_player_foot">{{foot.confirmedPlayers}}</p>
-                <img ng-src="img/icon_bonhomme_bleufonce.svg"/> 
+                <img ng-src="img/icon_bonhomme_bleufonce.svg"/>
                 </span>
                 <p>{{foot.orgaName}}</p>
-                <img class="img_level_foot" ng-src="img/niveau_3.svg"/> 
-              </div>             
+                <img class="img_level_foot" ng-src="img/niveau_3.svg"/>
+              </div>
             </div>
-            <div class="item item-text-wrap row">   
+            <div class="item item-text-wrap row">
               <div class="col col-70 date_time_foot">
                  <p><strong>{{date}}, {{hour}}</strong></p>
                  <p style="text-transform: uppercase;">{{foot.fieldName}}</p>
                  <p class="places_foot">Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</p>
-              </div> 
+              </div>
               <div class="col col-30 answer_foot">
                 <button class="button button_assertive"> REPONDRE </button>
-              </div>     
+              </div>
             </div>
           </div>
         </div>

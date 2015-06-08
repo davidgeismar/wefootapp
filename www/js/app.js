@@ -89,13 +89,13 @@ var handle = function(notif,callback){
     if(user.id == $localStorage.user.id)
      notif.userName == "Vous";
     else
-      notif.userName = user.first_name; 
+      notif.userName = user.first_name;
 
    notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
 
-    date = new Date(notif.createdAt);    
+    date = new Date(notif.createdAt);
     notif.date = getHour(date)+', le '+getJour(date).substring(getJour(date).indexOf(date.getDate()),getJour(date).length); //('20h06, le 27 Mai')
     if(callback)
       callback();
@@ -117,7 +117,7 @@ return handle;
       if(toState.url.indexOf('profil')>0)                  // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
       if(toState.url.indexOf('notif')>0)
-        $rootScope.nbNotif = 0; 
+        $rootScope.nbNotif = 0;
       if(fromState.url.indexOf('profil')>0){
         $('.actu_header').removeClass('transparent');
       }
@@ -128,7 +128,7 @@ return handle;
     if($localStorage.user && $localStorage.user.id)
       $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
-  
+
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
@@ -200,15 +200,16 @@ return handle;
     })
 
 
-    $stateProvider.state('user.foots', {
+    $stateProvider.state('foots', {
       cache: true,
       url: '/foots',
-      views: {
-        'menuContent' :{
-          templateUrl: 'templates/foots.html',
-          controller: 'FootController'
-        }
-      }
+      templateUrl: 'templates/foottaff.html'
+      // views: {
+      //   'menuContent' :{
+      //     templateUrl: 'templates/foots.html'
+      //     controller: 'FootController'
+      //   }
+      // }
     })
 
 
