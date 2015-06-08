@@ -2,7 +2,9 @@ angular.module('connections',[])
 
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location){
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location,$rootScope){
+  var finish = false;
+
   $scope.facebookConnect = function(){
     OpenFB.login('email','public_profile','user_friends').then(function(){
       OpenFB.get('/me').success(function(data){;
@@ -15,9 +17,19 @@ angular.module('connections',[])
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
               friend.statut = data[1][index]; 
-              });  
-            $location.path('/user/profil');
+              });
+            if(finish)  
+              $location.path('/user/profil');
+            finish = true;
             }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
+
+          $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+            $rootScope.nbNotif = nb.length;
+            console.log(nb);
+            if(finish)
+              $location.path('/user/profil');
+            finish = true;
+          });
         }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
       });
     },function(){$scope.err = "Erreur lors de la connexion via facebook"});

@@ -10,6 +10,7 @@ angular.module('notif',[])
 		if(url)
 			$location.path(url);
 	}
+	$http.post('http://localhost:1337/user/updateSeen',{id: $localStorage.user.id});
 	$http.get('http://localhost:1337/getNotif/'+$localStorage.user.id).success(function(data){
 		$localStorage.notifs = data;
 		if(data.length == 0)

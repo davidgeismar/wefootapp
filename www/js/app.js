@@ -36,16 +36,16 @@ var getHour = function(date){
   if(m<10) m= '0'+m;
   return (n+'h'+m)
 };
-var notify = function(notif){
+var notify = function(notif,callback){
+  if(callback)
+    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
+  else
   io.socket.post('http://localhost:1337/actu/newNotif',notif);
 }
-// var showLoader = function(){
-
-// }
 
 
 
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','ui-rangeSlider'])
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -65,6 +65,27 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
+ 
+.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
+  var showConfirm = function(text,ok){
+    var confirmPopup = $ionicPopup.confirm({
+      title: text.toUpperCase(),
+      template: 'Etes vous sur de vouloir '+text
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        console.log('here');
+        ok();
+      }
+      else{
+        console.log('not');
+      }
+    });
+  };
+  return showConfirm;
+}])
+
+
 //Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
 .factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
 
@@ -82,6 +103,8 @@ var handle = function(notif,callback){
         return ['vous à invité à un foot.','/foot/'];
       case 'footConfirm':
         return ['à confirmé sa présence à votre foot.','/friend/'];
+      case 'footAnnul':
+        return['à annulé son foot.'];
     }
   };
 
@@ -149,7 +172,7 @@ return handle;
           data.orgaName = info.orgaName;
           data.field = info.field;
           if(isFinish)
-            $scope.footInvitation.push(data);
+            $localStorage.footInvitation.push(data);
           isFinish = true;
         });
         $http.get('http://localhost:1337/foot/getPlayers/'+data.id).success(function(players){
@@ -157,9 +180,16 @@ return handle;
           $localStorage.footPlayers[$localStorage.footPlayers.length-1] = $localStorage.footPlayers[$localStorage.footPlayers.length-1].concat(players);
           data.confirmedPlayers = players.length;
           if(isFinish)
-            $scope.footInvitation.push(data);
+            $localStorage.footInvitation.push(data);
           isFinish = true;
         });
+    }
+    if(data.typ == 'footAnnul'){
+      if($localStorage.footTodo){
+        var plucked = _.pluck($localStorage.footTodo,'id');
+        index = plucked.indexOf(data.related_stuff);
+        if(index>-1) $localStorage.footTodo.splice(index,1);
+      }
     }
   });
 
@@ -316,6 +346,13 @@ return handle;
     url: '/foot/:id',
     templateUrl: 'templates/foot.html',
     controller: 'SingleFootController'
+  })
+
+  $stateProvider.state('footfinder',{
+    cache: false,
+    url: '/footfinder',
+    templateUrl: 'templates/footfinder.html',
+    controller: 'FootFinderController'
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {

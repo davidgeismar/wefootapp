@@ -549,14 +549,35 @@ a{
 	66% {opacity: 0.8}
 	100% {opacity: 0.3}
 }
+@-webkit-keyframes pulsateOne{
+	0% {opacity: 0.8}
+	33% {opacity: 0.3}
+	66% {opacity: 0.5}
+	100% {opacity: 0.8}	
+}
+@-webkit-keyframes pulsateTwo{
+	0% {opacity: 0.5}
+	33% {opacity: 0.8}
+	66% {opacity: 0.3}
+	100% {opacity: 0.5}
+}
+@-webkit-keyframes pulsateThree{
+	0% {opacity: 0.3}
+	33% {opacity: 0.5}
+	66% {opacity: 0.8}
+	100% {opacity: 0.3}
+}
 .pulsate1{
 	animation: pulsateOne 1s linear infinite;
+	-webkit-animation: pulsateOne 1s linear infinite;
 }
 .pulsate2{
 	animation: pulsateTwo 1s linear infinite;
+	-webkit-animation: pulsateTwo 1s linear infinite;
 }  
 .pulsate3{
 	animation: pulsateThree 1s linear infinite;
+	-webkit-animation: pulsateThree 1s linear infinite;
 }           
 .tab_bottom{
 	position: absolute;
@@ -1769,17 +1790,16 @@ img.missing-foot{
 }
 .annuler-foot{
   font-size: 17px;
-  background-color: #E2334C;
+  background-color: transparent;
   display: inline-block;
-  padding: 15px 15px;
   border-radius: 5px;
-  width: 80%;
-  margin-left: 10%;
+  width: 60%;
+  margin-left: 20%;
   text-align: center;
-  border:0px;
-  color: #fff;
-  font-weight: bold;
+  color: red;
+  border: 1px solid red;
   font-family: 'Ubuntu';
+  margin-top: 15px;
 }
 .annuler-foot i{
 	position: relative;
@@ -1787,7 +1807,13 @@ img.missing-foot{
 	top:2px;
 	font-size: 20px;
 }
-
+.range-footfinder{
+	width: 75%;
+	margin-left: 10%;
+}
+.date-footfinder{
+	font-weight: bold;
+}
 
   @media screen and (min-width: 414px) { /*IPHONE 6 + */
   	.logo-profil-container{

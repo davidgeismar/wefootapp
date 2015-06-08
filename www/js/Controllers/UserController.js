@@ -80,9 +80,9 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
+  $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   $localStorage.user = {};
   $localStorage.token = "";
-  $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   $location.path('/')
 };
   //MODAL HANDLER

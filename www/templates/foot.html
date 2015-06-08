@@ -62,7 +62,7 @@
 		<p ng-if="foot.field.telephone!=null" style="color:#006DFF"> <i class="ion-ios-telephone"></i>{{foot.field.telephone}}</p>
 	</div>
 </div>
-<button ng-if="user.id == foot.organisator" ng-click="deleteFoot(user.id)" class="annuler-foot last">
+<button ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot last">
 	<i class="ion-close-circled"></i> Annuler le Foot
 </button>
 <button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot last">

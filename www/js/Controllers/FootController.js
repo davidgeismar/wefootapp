@@ -27,14 +27,6 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
       $scope.foot.toInvite.push(id);
     }
 
-  $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT
-  $scope.hour = getHour($scope.foot.date);
-  $scope.date = getJour($scope.foot.date);
-  $scope.foot.nbPlayer = 10;
-  $scope.foot.friendCanInvite = true;
-  $scope.foot.priv = true;
-  $scope.foot.level = 0;
-
   // minDate = ionic.Platform.isIOS() ? new Date() : (new Date()).valueOf();
 
   var options = {
@@ -83,8 +75,13 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
       });
     }
 if($location.path().indexOf('footparams')>0){
-  $scope.date = $scope.foot.date.toLocaleDateString();
-  $scope.hour = parseInt($scope.foot.date.toLocaleTimeString().substring(0,2))+1+'h00';
+  $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
+  $scope.hour = getHour($scope.foot.date);
+  $scope.date = getJour($scope.foot.date);
+  $scope.foot.nbPlayer = 10;
+  $scope.foot.friendCanInvite = true;
+  $scope.foot.priv = true;
+  $scope.foot.level = 0;
   $ionicModal.fromTemplateUrl('modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -146,6 +143,7 @@ if($location.path().indexOf('user/foots')>0){
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   var count = 0;
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
+    if(data.length==0) $ionicLoading.hide();
     angular.forEach(data, function(foot,index){
       $localStorage.footPlayers[index] = [];
       $localStorage.footPlayers[index].push(foot.id); //FIRST COLUMN CONTAIN ID OF FOOTS 
@@ -153,6 +151,7 @@ if($location.path().indexOf('user/foots')>0){
         foot.organisator = elem.orga;
         foot.orgaName = elem.orgaName;
         foot.field = elem.field;
+        foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
         count++;
         if(count == 2*data.length){
           $scope.footInvitation = $localStorage.footInvitation;
@@ -183,7 +182,7 @@ if($location.path().indexOf('user/foots')>0){
 })
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation) {
   $ionicLoading.show({
       content: 'Loading Data',
       animation: 'fade-out',
@@ -289,13 +288,25 @@ if($location.path().indexOf('user/foots')>0){
     });
   }
 
-  $scope.deleteFoot = function(userId){
+  var deleteFoot = function(userId){
     $http.post('http://localhost:1337/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
+      var pos = _.pluck(players,'id').indexOf($localStorage.user.id);
+      var toNotify = players; //Notify all players except the organisator
+      toNotify.splice(pos,1);
+      console.log(toNotify);
+      async.each(toNotify,function(guy,callback){
+        notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();});
+      },function(){
       var plucked = _.pluck($localStorage.footTodo,'id');
       index = plucked.indexOf($scope.foot.id);
       if(index>-1) $localStorage.footTodo.splice(index,1);
       $location.path('/user/foots');
+      });
     });
+  }
+
+  $scope.confirmDelete = function(userId){
+    $confirmation('annuler ce foot?',function(){deleteFoot(userId)});
   }
 
   $scope.playFoot = function(player){
@@ -343,5 +354,15 @@ if($location.path().indexOf('user/foots')>0){
   $scope.addToFoot = function(id) {
     $scope.foot.toInvite.push(id);
   };
+})
+.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$stateParams) {
+  $scope.slider = {dateValue: '0'};
+  var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
+  new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
+  $scope.updateDate = function(){
+    ind = parseInt($scope.slider.dateValue);
+    $scope.date = dates[ind].toLocaleDateString();
+  }
+  $scope.updateDate();
 
 })
