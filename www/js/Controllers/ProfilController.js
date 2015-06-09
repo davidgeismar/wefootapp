@@ -28,7 +28,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		$scope.endAction = function($event){
 			var currentX = parseInt($('.logo-profil-container').css('left').substring(0,3));
 			if(currentX>full_screen-50) $location.path('/footfield');
-			if(currentX<50) $location.path('/');
+			if(currentX<50) $location.path('/footfinder');
 			// if(currentX<initialPos/1.5){
 			// 	$('.logo-profil-container').animate({
 			//  		left: 0

@@ -124,6 +124,7 @@ $scope.chooseField = function(field){
   $location.path('/footparams');
 }
 $scope.launchReq = function(){
+  $scope.foot.created_by = $localStorage.user.id;
   $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(foot){
     io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: foot.id},function(err){
     });
@@ -133,6 +134,7 @@ $scope.launchReq = function(){
   });
 }
 if($location.path().indexOf('user/foots')>0){
+  console.log('hello');
   $ionicLoading.show({
       content: 'Loading Data',
       animation: 'fade-out',
@@ -140,8 +142,6 @@ if($location.path().indexOf('user/foots')>0){
   });
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
-  $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
-  var count = 0;
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
     if(data.length==0) $ionicLoading.hide();
     angular.forEach(data, function(foot,index){
@@ -152,26 +152,10 @@ if($location.path().indexOf('user/foots')>0){
         foot.orgaName = elem.orgaName;
         foot.field = elem.field;
         foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
-        count++;
-        if(count == 2*data.length){
           $scope.footInvitation = $localStorage.footInvitation;
           $scope.footTodo = $localStorage.footTodo;
-          $scope.footPlayers = $localStorage.footPlayers;
           $ionicLoading.hide();
-      }
       });
-      $http.get('http://localhost:1337/foot/getPlayers/'+foot.id).success(function(players){
-        $localStorage.footPlayers[index] = $localStorage.footPlayers[index].concat(players);
-        foot.confirmedPlayers = players.length;
-        count++;
-        if(count == 2*data.length){
-          $scope.footInvitation = $localStorage.footInvitation;
-          $scope.footTodo = $localStorage.footTodo;
-          $scope.footPlayers = $localStorage.footPlayers;
-          $ionicLoading.hide();
-        }
-      });
-
       if(foot.statut==1)
         $localStorage.footInvitation.push(foot);
       else if(foot.statut>1)
@@ -192,20 +176,10 @@ if($location.path().indexOf('user/foots')>0){
   $scope.friends = $localStorage.friends;
   var foot = {};  //Show them after the loading;
   var players = [];
-  var isLoaded = false;
   var position = -1;
-  if($localStorage.footPlayers){
-    for (var i=0; i<$localStorage.footPlayers.length; i++){
-      if($localStorage.footPlayers[i][0] == $stateParams.id){                   //Check if foot info are already loaded;
-        isLoaded = true;
-        position = i;             //Keep position to get players
-      }
-    }
-  }
 
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
-  // called isFinish that indicates queries are finish, and we can update scope only when all the data is loaded.
-  if(!isLoaded){
+
     var date;
     $http.get('http://localhost:1337/foot/get/'+$stateParams.id).success(function(data){  //Get foot attributes
       foot = data;
@@ -226,47 +200,12 @@ if($location.path().indexOf('user/foots')>0){
             callback();
           });
         },function(err){             //Indicate loading all players is finish
-            foot.confirmedPlayers = players.length;
-            $scope.players = players;
             $scope.foot = foot;
             $scope.date = date;
+            $scope.players = players;
             $ionicLoading.hide();
       });
     });
-  }
-  if(isLoaded){
-    var index = -1;
-    for (var i=0; i<$localStorage.footTodo.length;i++){ //GET THE RIGHT FOOT
-      if($localStorage.footTodo[i].id == $stateParams.id){
-        index = i;
-        foot = $localStorage.footTodo[i];
-      }
-    }
-    if(index==-1){                                                         
-      for (var i=0; i<$localStorage.footInvitation.length;i++){ //GET THE RIGHT FOOT
-        if($localStorage.footInvitation[i].id == $stateParams.id){
-          index = i;
-          foot = $localStorage.footInvitation[i];
-        }
-      }
-    }
-    $scope.isPlaying = ($localStorage.footPlayers[position].indexOf($localStorage.user.id)>-1);
-    var realPlayers = $localStorage.footPlayers[position];
-    realPlayers.shift();
-    async.each(realPlayers,function(player,callback){
-       $http.get('http://localhost:1337/user/get/'+player).success(function(data){   //Get all players attributes
-          players.push(data);
-          callback();
-        });
-      },function(){
-            //Indicate loading is finish
-            foot.confirmedPlayers = players.length;
-            $scope.players = players;
-            $scope.foot = foot;
-            $scope.date = date;
-            $ionicLoading.hide();
-    });
-  }
 
   $http.get('http://localhost:1337/foot/getInvited/'+$stateParams.id).success(function(data){
     $scope.invited = data;
@@ -356,13 +295,35 @@ if($location.path().indexOf('user/foots')>0){
   };
 })
 .controller('FootFinderController', function ($scope,$http,$localStorage,$location,$stateParams) {
-  $scope.slider = {dateValue: '0'};
+  $scope.go = function(id){
+    $location.path('/foot/'+id);
+   } 
+  $scope.params = {dateValue: '0', field: '', date: new Date() };
   var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
   new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
+  $scope.getData = function(params){
+    $http.post('http://localhost:1337/foot/query',$scope.params).success(function(data){
+      $scope.results =[];
+      async.each(data,function(foot,callback){
+        var finish = false;
+        $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
+          foot.organisator = info.orga;
+          foot.orgaName = info.orgaName;
+          foot.field = info.field;
+            $scope.results.push(foot);
+            callback();
+        });
+      });
+
+    });
+  }
+
+
   $scope.updateDate = function(){
-    ind = parseInt($scope.slider.dateValue);
+    ind = parseInt($scope.params.dateValue);
     $scope.date = dates[ind].toLocaleDateString();
+    $scope.params.date = dates[ind];
+    $scope.getData($scope.params);
   }
   $scope.updateDate();
-
 })

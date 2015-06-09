@@ -112,13 +112,13 @@ var handle = function(notif,callback){
     if(user.id == $localStorage.user.id)
      notif.userName == "Vous";
     else
-      notif.userName = user.first_name; 
+      notif.userName = user.first_name;
 
    notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
 
-    date = new Date(notif.createdAt);    
+    date = new Date(notif.createdAt);
     notif.date = getHour(date)+', le '+getJour(date).substring(getJour(date).indexOf(date.getDate()),getJour(date).length); //('20h06, le 27 Mai')
     if(callback)
       callback();
@@ -140,7 +140,7 @@ return handle;
       if(toState.url.indexOf('profil')>0)                  // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
       if(toState.url.indexOf('notif')>0)
-        $rootScope.nbNotif = 0; 
+        $rootScope.nbNotif = 0;
       if(fromState.url.indexOf('profil')>0){
         $('.actu_header').removeClass('transparent');
       }
@@ -151,7 +151,7 @@ return handle;
     if($localStorage.user && $localStorage.user.id)
       $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
-  
+
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
@@ -166,24 +166,14 @@ return handle;
     }
 
     if(data.typ == 'footInvit'){
-        var isFinish = false; //Two actions in the same time
         $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
           data.organisator = info.orga;
           data.orgaName = info.orgaName;
           data.field = info.field;
-          if(isFinish)
             $localStorage.footInvitation.push(data);
-          isFinish = true;
-        });
-        $http.get('http://localhost:1337/foot/getPlayers/'+data.id).success(function(players){
-          $localStorage.footPlayers.push([data.id]);
-          $localStorage.footPlayers[$localStorage.footPlayers.length-1] = $localStorage.footPlayers[$localStorage.footPlayers.length-1].concat(players);
-          data.confirmedPlayers = players.length;
-          if(isFinish)
-            $localStorage.footInvitation.push(data);
-          isFinish = true;
         });
     }
+    
     if(data.typ == 'footAnnul'){
       if($localStorage.footTodo){
         var plucked = _.pluck($localStorage.footTodo,'id');
