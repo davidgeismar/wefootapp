@@ -2085,3 +2085,75 @@ color: #006ddf;
   margin-left: 10px;
   margin-top: 10px;
 }
+
+.border_profil {
+  border-left: solid 1px grey;
+}
+
+.img_profil {
+
+  width: 30px;
+  display: inline-block;
+  margin-left : -25px;
+
+}
+
+.nowrap_foot {
+  white-space: nowrap;
+  margin-left: -20px;
+}
+
+.number_players_profil {
+  margin-left: 70px;
+  white-space: nowrap;
+  font-size: 11px;
+}
+
+.img_friends_profil {
+  width: 30px;
+  display: inline;
+  white-space: nowrap
+}
+.level_foot_profil {
+  margin-top: 35px;
+}
+
+.bonhomme_profil {
+  margin-left:75px;
+}
+.date_timeline {
+  margin-left: 25px;
+  border-top: solid 1px #006ddf;
+  margin-top: -40px;
+  margin-bottom: -40px;
+}
+
+.day_timeline {
+  margin-top : 40px !important;
+  margin-bottom: 80px;
+}
+
+.cadenas_timeline {
+  height: 15px;
+  margin-left: 74px;
+}
+
+.alter_timeline {
+  height: 15px;
+  margin-left: -20px;
+}
+
+.icon_profil {
+  height: 20px;
+  margin-left: -20px;
+}
+
+.img_etoile_timeline {
+
+  width: 10px;
+  display: inline;
+  margin-bottom: 7px;
+
+}
+
+}
