@@ -284,6 +284,14 @@ return handle;
   })
 
 
+  $stateProvider.state('profiltaff', {
+    cache: false,
+    url: '/profiltaff',
+    templateUrl: "templates/profiltaff.html"
+
+      })
+
+
   $stateProvider.state('newField', {
     url: '/newField',
     templateUrl: 'templates/new_field.html',

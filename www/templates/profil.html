@@ -1,19 +1,27 @@
 <ion-view view-title="Profil">
-<ion-content class="">
-  <div class="main_actu">
-  </div>
-  <div class="slider-button row">
-  	<div on-drag-left="" class="col col-50 left-side-slider">
-  		<p class="title-slider">Trouver<br> un Foot</p><i class="ion-ios-arrow-left pulsate1"></i><i class="ion-ios-arrow-left pulsate2"></i><i class="ion-ios-arrow-left pulsate3"></i>
-  	</div>
-  	<div class="col col-50 right-side-slider">
-  	<p class="title-slider">Créer<br>un Foot</p><i class="ion-ios-arrow-right pulsate1"></i><i class="ion-ios-arrow-right pulsate2"></i><i class="ion-ios-arrow-right pulsate3"></i>
-  	</div>
-  </div>
-  <div on-drag-left="moveBall($event)" on-drag-right="moveBallRight($event)" on-release="endAction($event)" class="logo-profil-container">
-  	<img  class="logo-profil" ng-src="img/logo_rond.svg"/>
-  </div>
-  <div>
-  </div>
-</ion-content>
+  <ion-content class="">
+    <div class="main_actu">
+    </div>
+    <div class="slider-button row">
+    	<div on-drag-left="" class="col col-50 left-side-slider">
+    		<p class="title-slider">Trouver<br> un Foot</p><i class="ion-ios-arrow-left pulsate1"></i><i class="ion-ios-arrow-left pulsate2"></i><i class="ion-ios-arrow-left pulsate3"></i>
+    </div>
+    	<div class="col col-50 right-side-slider">
+    	<p class="title-slider">Créer<br>un Foot</p><i class="ion-ios-arrow-right pulsate1"></i><i class="ion-ios-arrow-right pulsate2"></i><i class="ion-ios-arrow-right pulsate3"></i>
+    	</div>
+    </div>
+    <div on-drag-left="moveBall($event)" on-drag-right="moveBallRight($event)" on-release="endAction($event)" class="logo-profil-container">
+    	<img  class="logo-profil" ng-src="img/logo_rond.svg"/>
+    </div>
+    <div class="row">
+      <div class="col-25"></div>
+        <div class="col col-50">
+        <p>Bob participe à un foot</p>
+        <p> Samedi 16/04 à 16h </p>
+        <p> Le five Bobigny</p>
+        <p>Encore 2</p>
+        <p>Max et Antoine sont amis </p>
+      </div>
+    </div>
+  </ion-content>
 </ion-view>
