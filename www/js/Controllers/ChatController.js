@@ -6,27 +6,27 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	//Tableau contenant les chats
 	$scope.chats = $localStorage.chats;
 
-	io.socket.on('newChat',function(chat){
-  	console.log(chat);
-  	$scope.chats.push(chat);
-  	$scope.$digest;
-  	$scope.displayer();
-  });
 
-	//Récupère les chats de l'utilisateur
-	$scope.init = function(){
-		if(!$localStorage.refreshChat){
-			$http.get('http://localhost:1337/getAllChats/'+$scope.user.id).success(function(data){
-				$scope.chats = data;
-				$localStorage.chats=$scope.chats;
-				console.log($scope.chats);
-				$scope.displayer();
-			});
-			$localStorage.refreshChat = true;
-		}
+	$rootScope.updateMessage = function(){
+		$scope.displayer();
+		$scope.$digest();
+
 	}
 
-	$scope.init();
+
+	//Récupère les chats de l'utilisateur
+	// $scope.init = function(){
+	// 	if(!$localStorage.refreshChat){
+	// 		$http.get('http://localhost:1337/getAllChats/'+$scope.user.id).success(function(data){
+	// 			$localStorage.chats=data;
+	// 			console.log($scope.chats);
+	// 			// $scope.displayer();
+	// 		});
+	// 		// $localStorage.refreshChat = true;
+	// 	}
+	// }
+
+	// $scope.init();
 
 
 
@@ -34,9 +34,10 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$scope.displayer = function(){
 		$localStorage.chatsDisplay = new Array();
 		$scope.chatsDisplay = $localStorage.chatsDisplay;
-		angular.forEach($scope.chats, function(chat) {
+		angular.forEach($localStorage.chats, function(chat) {
 			console.log(chat);
 
+			// console.log(chat.updatedAt);
 			if(chat.messages.length>0){
 				var newDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 				if(chat.typ==1){
@@ -49,11 +50,17 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:chat.messages[chat.messages.length-1].messagestr, titre:chat.desc});
 				}
 			}
+			else{
+				var newDate = new Date(chat.updatedAt);
+				$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:"", titre:"test"});
+			}
 
 		});
 
 
 	}
+
+	$scope.displayer();
 
 
 

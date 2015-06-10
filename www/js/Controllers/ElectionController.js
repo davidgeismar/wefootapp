@@ -1,4 +1,4 @@
-angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage){
+angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage, $location){
 
 	$scope.homme;
 	$scope.chevre;
@@ -9,83 +9,72 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.selectedOrNot = function(hommeOuChevre, userId){
 		if(hommeOuChevre=='homme'){
-			if($scope.homme==userId)
-				return "trophe_selected";
+			if($scope.homme==userId){
+				return true;
+			}
 			else
-				return "trophe";
+				return false;
 		}
 		else if (hommeOuChevre=='chevre'){
 			if($scope.chevre==userId)
-				return "chevre_selected";
+				return true;
 			else
-				return "chevre";
-
+				return false;
 		}
 	}
 
+	$scope.select = function(hommeOuChevre,userId){
+		if(hommeOuChevre=='homme')
+			$scope.homme = userId;
+		else
+			$scope.chevre = userId;
+	}
 
-		$scope.electionPlayer = function(homme, chevre, user){
-			var cpt = 0;
-			if(homme){
-				$http.post('http://localhost:1337/election/create',{electeur:$localStorage.user.id, elu:user, note:homme, foot:$scope.foot}).success(function(){
-					console.log('success');
-					cpt++;
-					if((cpt==1 && !chevre) || (cpt == 2 && chevre))
-						$scope.showAlert();
-				}).error(function(){
-					console.log('err');
-				});
-			}
-			if(chevre){
-				$http.post('http://localhost:1337/election/create',{electeur:$localStorage.user.id, elu:user, note:chevre, foot:$scope.foot}).success(function(){
-					console.log('success');
-					cpt++;
-					if((cpt==1 && !homme) || (cpt == 2 && homme))
-						$scope.showAlert();
-				}).error(function(){
-					console.log('err');
-				});
-			}
-			if(!chevre && !homme){
-				console.log("choisir des elus");
-			}
+
+	$scope.elir = function(){
+		if($scope.homme || $scope.chevre){
+			$http.post('http://localhost:1337/vote/create',{electeur:1, homme:$scope.homme, chevre:$scope.chevre, foot:1}).success(function(){
+				$scope.showAlert();
+			}).error(function(){
+				console.log('err');
+			});
 		}
-
-		$scope.elir = function(){
-			var cpt = 0;
-			if($scope.homme){
-				$http.post('http://localhost:1337/election/create',{electeur:$localStorage.user.id, elu:$scope.homme, note:1, foot:$scope.foot}).success(function(){
-					console.log('success');
-					cpt++;
-					if((cpt==1 && !$scope.chevre) || (cpt == 2 && $scope.chevre))
-						$scope.showAlert();
-				}).error(function(){
-					console.log('err');
-				});
-			}
-			if($scope.chevre){
-				$http.post('http://localhost:1337/election/create',{electeur:$localStorage.user.id, elu:$scope.chevre, note:2, foot:$scope.foot}).success(function(){
-					console.log('success');
-					cpt++;
-					if((cpt==1 && !$scope.homme) || (cpt == 2 && $scope.homme))
-						$scope.showAlert();
-				}).error(function(){
-					console.log('err');
-				});
-			}
-			if(!$scope.chevre && !$scope.homme){
-				console.log("choisir des elus");
-			}
-
+		if(!$scope.chevre && !$scope.homme){
+			console.log("choisir des elus");
 		}
-		$scope.getUsers = function(){
-			$http.get('http://localhost:1337/getVoters'+$localStorage.footSelected.id).success(function(results){
+	}
+
+	$scope.init = function(){
+		$scope.foot = new Object();
+			// $localStorage.footSelected.id
+			$http.get('http://localhost:1337/getVotedStatus/'+1+'/'+1).success(function(result){
+				//result (vrai == déjà voté, faux == pas encore voté)
+				if(result){
+			//On récupère les joueurs d'un match
+			$http.get('http://localhost:1337/getVoters/'+1).success(function(results){
 				$scope.users = results;
+				console.log(results);
 			}).error(function(){
 				console.log('err');
 			});
 
+			$http.get('http://localhost:1337/foot/getInfo/'+1).success(function(elem){
+				$scope.foot.organisator = elem.orga;
+				$scope.foot.orgaName = elem.orgaName;
+				$scope.foot.field = elem.field;
+				console.log(elem);
+			}).error(function(err){
+				console.log(err);
+			});
 		}
+		else{
+			//AJOUTER UNE ALERTE
+			console.log("déjà voté pour cette partie")	
+		}
+	});
+		}
+
+		$scope.init();
 
 
 		$scope.showAlert = function() {

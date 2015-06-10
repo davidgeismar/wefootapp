@@ -1,6 +1,7 @@
 angular.module('user',[])
 
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http){
+
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
 
@@ -81,7 +82,7 @@ if($scope.user && $scope.user.poste==null){
 $scope.logout = function (){
   $localStorage.user = {};
   $localStorage.token = "";
-  $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
+  $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   $location.path('/')
 };
   //MODAL HANDLER
@@ -98,7 +99,7 @@ $scope.logout = function (){
     $rootScope.modal = modal;
   });
 
-    $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
+  $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
@@ -133,11 +134,12 @@ $scope.logout = function (){
 }
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
-    io.socket.post('http://localhost:1337/actu/newFriend',{user1: $localStorage.user.id, user2: target});
-    data[0].statut = 0;
-    $localStorage.friends.push(data[0]);
+    var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
+    notify(notif);
+    data.statut = 0;
+    $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
-    $scope.friendsId.push(data[0].id);
+    $scope.friendsId.push(data.id);
   }).error(function(){
     console.log('error');
   })
@@ -157,76 +159,83 @@ $scope.createChat = function(user){
 
 $scope.launchChat = function(user){
   console.log($localStorage.chats);
-    angular.forEach($localStorage.chats, function(chat) {
+  angular.forEach($localStorage.chats, function(chat) {
     if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
-          console.log('here');
-          $localStorage.chat=chat;
-          $location.path('/conv');
-          return 0;
+      console.log('here');
+      $localStorage.chat=chat;
+      $location.path('/conv');
+      return 0;
     }
   });
-$scope.createChat(user);
+  $scope.createChat(user);
 }
-// $scope.getAllChats = function(user){
-//   $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
-//     console.log(data);
-//     $localStorage.chats = data;
-//   }).error(function(err){
-//     console.log(err);
-//   });
-// }
 
-  $scope.friend = $localStorage.friend;
-  $scope.notes = new Array(5);
-  $scope.starStatus = new Array(5);
-  
-  for(var i=0; i<5; i++) {
-    $scope.starStatus[i] = new Array(5);
+$scope.friend = $localStorage.friend;
+$scope.notes = new Array(5);
+$scope.starStatus = new Array(5);
+
+for(var i=0; i<5; i++) {
+  $scope.starStatus[i] = new Array(5);
+}
+for(var i=0; i<5; i++) {
+  for(var j=0; j<5; j++) {
+    $scope.starStatus[i][j] = "ion-android-star";
   }
-  for(var i=0; i<5; i++) {
-    for(var j=0; j<5; j++) {
-      $scope.starStatus[i][j] = "ion-android-star";
-    }
-  }
-
-
-  $scope.setNote = function(note, target){
-
-    $scope.notes[target] = note;
-    for(var i=0; i<5; i++) {
-      if(i+1<=note)
-        $scope.starStatus[target][i] = "ion-android-star";
-      else
-        $scope.starStatus[target][i] = "ion-android-star-outline";
-    }
-  }
-
-
-
-  $scope.initNotes = function(){
-    $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
-      $scope.user.nbGrades = data.nbGrades;
-      $scope.setNote(Math.round(data.technique), 0);
-      $scope.setNote(Math.round(data.frappe), 1);
-      $scope.setNote(Math.round(data.physique), 2);
-      $scope.setNote(Math.round(data.fair_play), 3);
-      $scope.setNote(Math.round(data.assiduite), 4);
-    }).error(function(){
-      console.log('error');
-    });
-
 }
 
 
+$scope.setNote = function(note, target){
 
-    $scope.initNotes();
-
-  $scope.displayNotes = function(){
-    if($scope.user.nbGrades<=1)
-      return $scope.user.nbGrades+" personne";
+  $scope.notes[target] = note;
+  for(var i=0; i<5; i++) {
+    if(i+1<=note)
+      $scope.starStatus[target][i] = "ion-android-star";
     else
-      return $scope.user.nbGrades+ " personnes";
+      $scope.starStatus[target][i] = "ion-android-star-outline";
   }
+}
+
+
+
+$scope.initNotes = function(){
+  $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
+    $scope.user.nbGrades = data.nbGrades;
+    $scope.setNote(Math.round(data.technique), 0);
+    $scope.setNote(Math.round(data.frappe), 1);
+    $scope.setNote(Math.round(data.physique), 2);
+    $scope.setNote(Math.round(data.fair_play), 3);
+    $scope.setNote(Math.round(data.assiduite), 4);
+  }).error(function(){
+    console.log('error');
+  });
+
+}
+
+
+
+$scope.initNotes();
+
+$scope.displayNotes = function(){
+  if($scope.user.nbGrades<=1)
+    return $scope.user.nbGrades+" personne";
+  else
+    return $scope.user.nbGrades+ " personnes";
+}
+
+
+$scope.computeChatNotif = function(){
+  console.log($localStorage.chats);
+  angular.forEach($localStorage.chats,function(chat){
+    if(chat.messages.length>0){
+    if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
+      $rootScope.nbChatsUnseen++;
+      console.log($rootScope.nbChatsUnseen);
+    }
+  }
+  });
+}
+
+$scope.computeChatNotif();
 
 })
 

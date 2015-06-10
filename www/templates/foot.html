@@ -1,0 +1,72 @@
+<ion-view view-title="foot">
+<ion-header-bar class="actu_header">
+<a href='#/user/foots'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf_foot" src="img/logo_WF.svg">
+<i class="ion-chatbubbles ion-header-foot" ng-click="launchChat()"></i>
+</ion-header-bar>
+<ion-content class="has-header padding margin-content">
+<div class="header-foot">
+	<h4>FOOT DE {{foot.orgaName}}</h4>
+	<p>{{date}} {{foot.field.name}}</p>
+</div>
+<img id="imagehead-foot" src="img/terrain_640x414_3.jpg" />
+<button ng-if="user.id == foot.organisator && !foot.booked" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</button>
+<button ng-if="user.id != foot.organisator && friendCanInvite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-ios-email"></i>Inviter vos amis</button>
+<button ng-if="!isPlaying" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>
+<button ng-if="!isPlaying" ng-click="removePlayer(user.id,true)" class="button button-book-foot" style="background-color: #E2334C"> <i class="ion-close-circled"></i>Je ne peux pas</button>
+<div ng-if="user.id == foot.organisator" class="bouttons3-foot">	
+	<button ng-click="closePublic()" ng-if="!foot.priv" class="boutton-foot">
+		<i class="ion-locked"></i>
+		Fermer au public
+	</button>
+	<button ng-click="openPublic()" ng-if="foot.priv" class="boutton-foot">
+		<i class="ion-ios-world-outline"></i>
+		Ouvrir au public
+	</button>
+	<button class="boutton-foot">
+		<i class="ion-edit"></i>
+		Editer ce foot
+	</button>
+	<button ng-click="openModal2()" class="boutton-foot">
+		<i class="ion-ios-email"></i>
+		Inviter vos amis
+	</button>
+</div>
+<hr class="level-foot-separator" size=5px color=#28385B width=85%>
+<div class="niveau-foot">
+	<p class="level-foot" style="display:inline" >Niveau du foot</p>
+	<img class="level-foot" src="img/niveau_{{foot.level}}.svg"/>
+	<img class="missing-foot" src="img/icon_bonhomme_bleufonce.svg"/>
+	<p class="missing-foot" style="display:inline">Encore {{foot.nbPlayer-foot.confirmedPlayers}} places</p>
+</div>
+<hr class="level-foot-separator separator-bottom" size=5px color=#28385B width=85%>	
+<div class="listeparticipants-foot">
+	<div ng-repeat="player in players" ng-id="first-foot: $index == 0" class="row player-foot">
+		<div class="img_friends img_foot col col-20">
+            <img ng-src="img/default_pic.jpg">
+        </div>
+        <div class="name-player-foot col col-80">
+			<p>	{{player.first_name}} {{player.last_name}} </p>
+			<p ng-if="foot.organisator == player.id" class="orga-foot"> Organisateur de ce foot</p>
+		</div>
+	</div>
+</div>
+<hr class="field-foot-separator" size=5px color=#28385B width=85%>
+<div class="urban-foot">
+	<div class="photourban-foot" style="background-image:url('img/terrain_640x414_3.jpg');">
+	</div>
+	<div class="nomurban-foot">
+		<h5 style="margin-bottom:0px"> {{foot.field.name}}</h5>
+		<p style="margin-top:5px;"> {{foot.field.address}} </p>
+		<p>{{foot.field.zip_code}} {{foot.field.city}} </p>
+		<p ng-if="foot.field.telephone!=null" style="color:#006DFF"> <i class="ion-ios-telephone"></i>{{foot.field.telephone}}</p>
+	</div>
+</div>
+<button ng-if="user.id == foot.organisator" ng-click="deleteFoot(user.id)" class="annuler-foot last">
+	<i class="ion-close-circled"></i> Annuler le Foot
+</button>
+<button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot last">
+	<i class="ion-close-circled"></i> Se retirer du foot
+</button>
+</ion-content>
+</ion-view>

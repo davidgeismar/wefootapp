@@ -17,13 +17,19 @@ angular.module('connections',[])
               friend.statut = data[1][index]; 
             });
             $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
-              console.log(data)
+              console.log(data);
 
-            }).error(function(err){ console.log('error')});  
-            $location.path('/user/profil');
+            }).error(function(err){ console.log('error')});
+            $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+              $localStorage.chats=data;
+              console.log($localStorage.chats);
+                          $location.path('/user/profil');
+        // $scope.displayer();
+      });  
+
           }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
         }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
-      });
+});
 },function(){$scope.err = "Erreur lors de la connexion via facebook"});
 
 };
@@ -46,11 +52,16 @@ angular.module('connections',[])
           friend.statut = data[1][index]; 
         });
         $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
-          console.log(data)
+          console.log(data);
 
         }).error(function(err){ console.log('error')});
-
+        $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+          $localStorage.chats=data;
+          console.log($localStorage.chats);
+        // $scope.displayer();
         $location.path('/user/profil');
+      });
+        
       }).error(function(err){ console.log('error')});
     }).error(function(){
      $scope.err = "Identifiant ou mot de passe incorrect.";
@@ -67,6 +78,7 @@ angular.module('connections',[])
     $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
+     $localStorage.friends = [];
      io.socket.post('http://localhost:1337/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
      $location.path('/user/profil');
    }).error(function(){

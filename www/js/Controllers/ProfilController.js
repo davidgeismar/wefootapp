@@ -1,8 +1,6 @@
-angular.module('profil',[]).controller('ProfilCtrl', function($scope, $stateParams, $location, $http, $localStorage){
+angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage){
   $scope.user = $localStorage.user;
   switchIcon('icon_none','');
-
-
 
 	var done = false;
 	if(!$localStorage.initialPos){

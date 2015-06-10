@@ -6,14 +6,14 @@
 <div class="content_conv">
     <div class="conv_ban">
         <h2 class="conv_ban_title">
-            Conv' de fifoux
+            Foot de {{details.orgaName}}
         </h2>
         <p class="conv_ban_text">
-            Le <span>30/05</span> à <span>19h</span> au <span>Five de Bobigny</span>
+            Le {{details.field.date}} à <span>19h</span> au <span>{{details.field.name}}</span>
         </p>
     </div>
 </div>
-<ion-content class="padding padding_top has-header has-subheader">
+<ion-content class="padding padding_top has-header has-subheader has-footer">
 <div class="content_conv_box">
     <dl class="conv_box" ng-repeat="message in chat.messages">
         <dd ng-if="message.senderId!=user.id" class="from">
@@ -22,7 +22,7 @@
             </div>
             <p>
                 <span class="message_name">
-                    <span>Fifouxdu95</span>
+                    <span>{{getUsername(message.senderId)}}</span>
                     dit:
                     <br>
                 </span>
@@ -33,11 +33,15 @@
             <p>{{message.messagestr}}</p>
         </dd>
     </dl>
+</div>
 
-    <div class="input_message_wrapper">      
-    <input class="item item_conv item-input" ng-model="messageContent" type="text" placeholder=" Tapper votre message ici">
-     <button class="button button_send_message" ng-click="sendMessage(messageContent)" ng-class="showMessageButton(messageContent)" >Envoyer</button>
- </div>
- </div>
+
+
 </ion-content>
+<ion-footer-bar class="input_message_wrapper">
+
+<input class="item item_conv item-input" ng-model="messageContent" type="text" placeholder=" Saisissez votre message ici">
+<button class="button_send_message button" style="font-weight:700;" ng-click="sendMessage(messageContent)" ng-class="showMessageButton(messageContent)">Envoyer</button>
+
+</ion-footer-bar>
 </ion-view>

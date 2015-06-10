@@ -19,6 +19,9 @@ p{
 a{
 	text-decoration: none;
 }
+.last{
+	margin-bottom: 50px;
+}
 .transparent{
 	background-color: transparent !important;
 }
@@ -1571,6 +1574,219 @@ a{
   	height: 11px;
   	position: relative;
   }
+  .separator-bottom{
+  	margin-bottom: 0px;
+  }
+  #imagehead-foot {
+  	height: 150px;
+  	width: 100%;
+  	margin-bottom: 15px;
+  	margin-top: 0px;
+  	border-style: solid;
+  	border-width: 2px 0px 0px 0px;
+  	border-color: #006DFF;
+  }
+  .logo_wf_foot{
+  	width: 45px;
+  	margin-left: auto;
+  	margin-right: auto;
+  }
+  .ion-header-foot{
+  	font-size: 35px;
+  	color: #fff;
+  }
+  .header-foot {
+  	position: relative;
+  	text-align: center;
+  }
+  .button-book-foot{
+  	margin-left: 14%;
+  	width: 73%;
+  	margin-bottom: 10px;
+  	border-radius: 5px;
+  	background-color: #006ddf;
+  	color: #fff;
+  	font-size: 15px;
+  	font-weight: bold;
+  }
+  .button-book-foot i{
+  	float: left;
+  	font-size: 25px;
+  	position: relative;
+  	left: 10%;
+  	top: 2px;
+  }
+  .bouttons3-foot{
+  	margin : auto;
+  	position: relative; 
+  	left: 14%;
+  }
+  .boutton-foot {
+  	color: white;
+  	display: inline-block;
+  	margin: 0px 3px 10px 0;
+  	padding: 0px 5px;
+  	padding-bottom: 2px;
+  	border-radius: 5px;
+  	background-color: #28385B;
+  	width: 23%;
+  	min-height: 50px;
+  	border:0px;
+  	font-family: 'Ubuntu';
+  	font-size: 0.7em; 
+  	font-weight: bold;
+  }
+  .boutton-foot i{
+  	font-size: 27px;
+  	display: block;
+  }
+  .header-foot h4{
+  	color: #28385B;
+  	font-family: 'Ubuntu';
+  	font-weight: bold;
+  	font-size: 18px;
+  	margin-bottom: 0px;
+  	text-transform: uppercase;
+  }
+  .header-foot p{
+  	color: #28385B;
+  }
+
+  .name-player-foot p{
+  	margin-top: 14px;
+  	color: #006ddf;
+  	margin-bottom: 0;
+  }
+  .row.player-foot{
+  	border-top: 2px solid #c4c4c4;
+  	padding-top: 7px;
+  	padding-bottom: 2px;
+  }
+  .name-player-foot .orga-foot{
+  	color: #28385c;
+  	margin-top: 0px;
+  	font-style: italic;
+  	font-weight: bold;
+  	font-size: 11px;
+  	position: relative;
+  	bottom: 3px;
+  }
+  .niveau-foot{
+  	text-align: center;
+  	margin-bottom: 10px;
+  	margin-left: 30px;
+  }
+  .niveau-foot p{
+  	color:#28385B;
+  	font-family: 'Ubuntu';
+  	font-weight: bold;
+  	font-size: 10px;
+  }
+  #first-foot{
+  	border-top: none;
+  	padding-bottom: 7px;
+  }
+  .field-foot-separator{
+  	margin: 20px;
+  	height: 2px;
+  }
+  img.level-foot{
+  	width: 20px;
+  	float: left;
+  	margin-left: 10px;
+  }
+  .level-foot{
+  	float: left;
+  	position: relative;
+  	top: 4px;
+  }
+  .level-foot-separator{
+  	height: 2px;
+  }
+  .missing-foot{
+  	float: right;
+  }
+  img.missing-foot{
+  	float: right;
+  	margin-left: 10px;
+  	width: 20px;
+  	margin-right: 25px;
+  }
+  #vu-foot{
+  	color:#006DFF;
+  	position: relative;
+  	left: 65%;
+  	margin-bottom: 20px;
+  	font-size: 13px;
+  }
+  #second-foot{
+  	position: relative;
+  	left: 30%;
+  }
+
+  .listeparticipants-foot{
+  	margin: 0px 20px;
+  }
+  .orga-foot{
+  	color: #28385c;
+  	display: block;
+  	vertical-align: top;
+  }
+  .img_foot img{
+  	border-radius: 50%;
+  }
+  .urban-foot{
+  	margin-bottom: 20px;
+  	margin-left: 10%;
+  }
+
+  .photourban-foot{ 
+  	vertical-align:top;
+  	width: 100px;
+  	height: 100px;
+  	display: inline-block;
+  	background-size: cover;
+  }
+  .nomurban-foot{
+  	color: #28385B;
+  	width: 60%;
+  	display: inline-block;
+  	margin-left: 15px;
+  }
+  .nomurban-foot h5{
+  	color: #28385c;
+  	font-family: 'Ubuntu';
+  	font-weight: bold;
+  	font-size: 16px;
+  }
+  .nomurban-foot p{
+  	margin-bottom: 0px;
+  }
+  .nomurban-foot i{
+  	font-size: 18px;
+  }
+  .annuler-foot{
+  	font-size: 17px;
+  	background-color: #E2334C;
+  	display: inline-block;
+  	padding: 15px 15px;
+  	border-radius: 5px;
+  	width: 80%;
+  	margin-left: 10%;
+  	text-align: center;
+  	border:0px;
+  	color: #fff;
+  	font-weight: bold;
+  	font-family: 'Ubuntu';
+  }
+  .annuler-foot i{
+  	position: relative;
+  	right: 10px;
+  	top:2px;
+  	font-size: 20px;
+  }
+
+
   @media screen and (min-width: 414px) { /*IPHONE 6 + */
   	.logo-profil-container{
   		left: 165px;
@@ -1580,11 +1796,16 @@ a{
   	.logo-profil-container{
   		left: 138px;
   	}
+
   }
   @media screen and (max-width: 400px) { /* ANDROID */
   	.logout_menu{
   		position: relative;
   		bottom:20px;
+  	}
+  	.boutton-foot{
+  		height: 70px;
+  		vertical-align: middle;
   	}
   }
   @media screen and (max-width: 320px) { /* IPHONE 5- */
@@ -1700,6 +1921,36 @@ a{
   		bottom:63px;
   		left: 130px;
   	}
+  	.photourban-foot{
+  		height: 80px;
+  		width: 80px;
+  		margin-top: 10px;
+  	}
+  	.nomurban-foot h5{
+  		font-size: 15px;
+  	}
+  	.nomurban-foot p{
+  		font-size: 12px;
+  	}
+  	.name-player-foot{
+  		margin-left: 7px;
+  	}
+  	.header-foot h4{
+  		font-size: 15px;
+  	}
+  	.header-foot p{
+  		font-size: 13px;
+  	}
+  	.button-book-foot{
+  		margin-left: 5%;
+  		width: 90%;
+  	}
+  	.bouttons3-foot{
+  		left: 5%;
+  	}
+  	.boutton-foot{
+  		width: 28%; 
+  	}
   }
   /* END MEDIA QUERY */
   .field_search_text{
@@ -1752,12 +2003,13 @@ a{
   	font-weight:100;
   	color:#28385C;
   	text-align:center;
-  	margin-top:20px;
+  	margin-bottom:10px;
   }
   .election_user_container{
-  	  	width:30%;
-  	  	display:inline-block;
-  	  	 	margin-left:2%;
+  	margin-top:20px;
+  	width:30%;
+  	display:inline-block;
+  	margin-left:2%;
 
   }
   .election_pic{
@@ -1765,20 +2017,48 @@ a{
   	width:100%;
   }
 
-  .chevre{
-  	background-image:url('../img/chevre.png');
-  	width:30px;
-  }
+  .trophe_container{
+  	width:100%;
+  	padding-left:1%;
+  	position:relative;
+  }	
 
-  .chevre_selected{
-  	background-image:url('../img/chevre_rouge.png');
+  .trophe_container img{
+  	width:40%;
+  	margin-right:3%;
   }
+/*   .trophe_container .chevre{
+ 	margin-left:50%;
+ 	}*/
 
-  .trophe{
-  	background-image:url('../img/trophe.png');
-  }
 
-  .trophe_selected{
-  	background-image:url('../img/trophe_or.png');
-  }
+ 	.election_user_firstname p{
+ 		text-align:center;
+ 		margin-bottom:3px;
+ 	}
+
+ 	.button_valid{
+ 		margin-top:30px;
+ 		margin-bottom:30px;
+ 	}
+
+ 	.icon-techB{
+ 		background-image: url('../img/ball69B.svg');
+ 	}
+ 	.icon-powerB{
+ 		background-image: url('../img/dumbbell20B.svg');
+ 	}
+ 	.icon-fpB{
+ 		background-image: url('../img/thumbs28B.svg');
+ 	}
+ 	.icon-assiduB{
+ 		background-image: url('../img/clock46B.svg');
+ 	}
+ 	
+ 	.icon-shoesB {
+	background-image: url('../img/nav_mes_foots_noirB.svg');
+	-ms-transform: rotate(20deg); /* IE 9 */
+	-webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
+	transform: rotate(20deg);
+}
 

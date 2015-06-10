@@ -22,6 +22,13 @@ var getStuffById = function(id,stuffArray){
 	}
 };
 
+var getIndex = function(id, stuffArray){
+  for(var i = 0; i<stuffArray.length;i++){
+    if (id == stuffArray[i].id)
+      return i;
+  }
+};
+
 var getJour = function(date){
   var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
@@ -37,6 +44,9 @@ var getHour = function(date){
   if(m<10) m= '0'+m;
   return (n+'h'+m)
 };
+var notify = function(notif){
+  io.socket.post('http://localhost:1337/actu/newNotif',notif);
+}
 // var showLoader = function(){
 
 // }
@@ -63,104 +73,198 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
+//Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
+.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage) {
+  var handle = function(notif,callback){
+
+    var parseNotif = function(typ){
+      switch(typ){
+        case 'newFriend':
+        return ['vous a ajouté à ses amis.','/friend/'];
+        case 'hommeDuMatch':
+        return ['avez été élu homme du match.'];
+        case 'chevreDuMatch':
+        return['avez été élu chèvre du match.'];
+        case 'footInvit':
+        return ['vous à invité à un foot.','/foot/'];
+        case 'footConfirm':
+        return ['à confirmé sa présence à votre foot.','/friend/'];
+      }
+    };
+
+    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+      if(user.id == $localStorage.user.id)
+       notif.userName == "Vous";
+     else
+      notif.userName = user.first_name; 
+
+    notif.texte = parseNotif(notif.typ)[0];
+    if(notif.related_stuff)
+      notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
+
+    date = new Date(notif.createdAt);    
+    notif.date = getHour(date)+', le '+getJour(date).substring(getJour(date).indexOf(date.getDate()),getJour(date).length); //('20h06, le 27 Mai')
+    if(callback)
+      callback();
+
+  });
+  };
+  return handle;
+}])
+
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
+  $localStorage.notifs = []; //Prevent for bug if notif received before the notif page is opened
+  $localStorage.footInvitation = [];
+  $localStorage.footTodo = [];
+  $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
+  $rootScope.nbChatsUnseen = 0;
+  $localStorage.chats = [];
+
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
-      if(toState.url.indexOf('profil')>0){                   // Menu transparent pour profil
+      if(toState.url.indexOf('profil')>0)                  // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
-      }
-      else if(fromState.url.indexOf('profil')>0){
+      if(toState.url.indexOf('notif')>0)
+        $rootScope.nbNotif = 0; 
+      if(fromState.url.indexOf('profil')>0){
         $('.actu_header').removeClass('transparent');
       }
     },0);
   });
 
-  // io.socket.on('connect',function(){
-  //   console.log('CONNECTEDD');
-
-    io.socket.on('disconnect',function(){
-      $http.post('http://localhost:8100/connexion/delete',{id : $localStorage.user.id});
-    });
-
+  io.socket.on('disconnect',function(){
+    if($localStorage.user && $localStorage.user.id)
+      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
+  });
+  
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
-  });
+    $handleNotif(data);
+    $rootScope.$digest();//Wait the notif to be loaded
+
+    if(data.typ == 'newFriend'){
+      $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
+        user.statut = 0;
+        $localStorage.friends.push(user);
+      });
+    }
+
+    if(data.typ == 'footInvit'){
+        var isFinish = false; //Two actions in the same time
+        $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
+          data.organisator = info.orga;
+          data.orgaName = info.orgaName;
+          data.field = info.field;
+          if(isFinish)
+            $scope.footInvitation.push(data);
+          isFinish = true;
+        });
+        $http.get('http://localhost:1337/foot/getPlayers/'+data.id).success(function(players){
+          $localStorage.footPlayers.push([data.id]);
+          $localStorage.footPlayers[$localStorage.footPlayers.length-1] = $localStorage.footPlayers[$localStorage.footPlayers.length-1].concat(players);
+          data.confirmedPlayers = players.length;
+          if(isFinish)
+            $scope.footInvitation.push(data);
+          isFinish = true;
+        });
+      }
+    });
 
 
 
-  // io.socket.on('message',function(message){
-  //   $rootScope.nbNewMessages++;
-  // });
 
-  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
+io.socket.on('newChat',function(chat){
+  console.log(chat);
+  $localStorage.chats.push(chat);
+});
 
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-  if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+io.socket.on('newMessage',function(message){
+
+  var index = getIndex(message.chat, $localStorage.chats);
+
+  console.log(message);
+  $localStorage.chats[index].messages.push(message);
+  if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
+    $rootScope.nbChatsUnseen++;
   }
-  if(window.StatusBar) {
-    StatusBar.styleDefault();
+
+  if(typeof $rootScope.updateMessage == 'function'){
+    $rootScope.updateMessage();
   }
 });
 
+
+
+
+OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
+
+$ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+if(window.cordova && window.cordova.plugins.Keyboard) {
+  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+}
+if(window.StatusBar) {
+  StatusBar.styleDefault();
+}
+});
+
 })
-  app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/');
-    $stateProvider.state('home', {
-      url: '/',
-      templateUrl: 'templates/home.html',
-      controller: 'HomeCtrl'
-    })
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $urlRouterProvider.otherwise('/');
+  $stateProvider.state('home', {
+    url: '/',
+    templateUrl: 'templates/home.html',
+    controller: 'HomeCtrl'
+  })
 
-    $stateProvider.state('footfield',{
-      cache: false,
-      url:'/footfield',
-      templateUrl:'templates/footfield.html',
-      controller: 'FootController'
-    })
+  $stateProvider.state('footfield',{
+    cache: false,
+    url:'/footfield',
+    templateUrl:'templates/footfield.html',
+    controller: 'FootController'
+  })
 
-    $stateProvider.state('footparams', {
-      cache: false,
-      url: '/footparams',
-      templateUrl: 'templates/footparams.html',
-      controller: 'FootController'
-    })
+  $stateProvider.state('footparams', {
+    cache: false,
+    url: '/footparams',
+    templateUrl: 'templates/footparams.html',
+    controller: 'FootController'
+  })
 
 
-    $stateProvider.state('user.foots', {
-      cache: false,
-      url: '/foots',
-      views: {
-        'menuContent' :{
-          templateUrl: 'templates/foots.html',
-          controller: 'FootController'
-        }
+  $stateProvider.state('user.foots', {
+    cache: true,
+    url: '/foots',
+    views: {
+      'menuContent' :{
+        templateUrl: 'templates/foots.html',
+        controller: 'FootController'
       }
-    })
+    }
+  })
 
 
-    $stateProvider.state('register', {
-      url: '/register',
-      templateUrl: 'templates/register.html',
-      controller: 'RegisterCtrl'
-    })
+  $stateProvider.state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl'
+  })
 
-    $stateProvider.state('resetPassword', {
-      url: '/resetPassword',
-      templateUrl: 'templates/resetPassword.html',
-      controller: 'ResetPasswordCtrl'
-    })
+  $stateProvider.state('resetPassword', {
+    url: '/resetPassword',
+    templateUrl: 'templates/resetPassword.html',
+    controller: 'ResetPasswordCtrl'
+  })
 
-    $stateProvider.state('login', {
-      url: '/login',
-      templateUrl: 'templates/login.html',
-      controller: 'LoginCtrl'
-    })
+  $stateProvider.state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
     cache: false,
@@ -201,7 +305,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
   $stateProvider.state('friend', {
     cache: false,
-    url: '/friend',
+    url: '/friend/:id',
     templateUrl: "templates/friend.html",
     controller: 'FriendCtrl'
 
@@ -214,7 +318,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
   })
 
-    $stateProvider.state('election', {
+  $stateProvider.state('election', {
     cache: false,
     url: '/election',
     templateUrl: "templates/election.html",
@@ -251,6 +355,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     }
   })
 
+  $stateProvider.state('foot',{
+    cache: false,
+    url: '/foot/:id',
+    templateUrl: 'templates/foot.html',
+    controller: 'SingleFootController'
+  })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage) {
     return {

@@ -1,7 +1,7 @@
 <ion-view view-title="Chat">
 <ion-content class="has-header has-footer">
 <!--<div class="padding">-->
-<div ng-repeat="chatDisplay in chatsDisplay | orderBy: 'lastTime'">
+<div ng-repeat="chatDisplay in chatsDisplay | orderBy: '-lastTime'">
 <div class="chat_box" ng-click="launchChat(chatDisplay.id)">
         <div class="chat_box_content">
             <div class="img_chat">

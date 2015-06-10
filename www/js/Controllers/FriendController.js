@@ -1,9 +1,12 @@
 angular.module('friend',[])
-.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
-
-	$scope.friend = $localStorage.friend;
+.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
+	// var index = _.pluck($localStorage.friends,'id').indexOf($stateParams.id);
+	// console.log($localStorage.friends);
+	// console.log(index);
+	$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
+	console.log($scope.friend);
 
 	for(var i=0; i<5; i++) {
 		$scope.starStatus[i] = new Array(5);
@@ -29,7 +32,7 @@ angular.module('friend',[])
 	//Appelle setNote pour toutes les étoiles et récupère le nb de votes
 	$scope.initNotes = function(){
 
-		$http.get('http://localhost:1337/getDetailledGrades/'+$localStorage.friend.id).success(function(data){
+		$http.get('http://localhost:1337/getDetailledGrades/'+$scope.friend.id).success(function(data){
 			console.log(data);
 			$scope.friend.nbGrades = data.nbGrades;
 			$scope.setNote(Math.round(data.technique), 0);
