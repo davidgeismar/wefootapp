@@ -166,6 +166,15 @@ if($location.path().indexOf('user/foots')>0){
 })
 
 
+
+
+
+
+
+
+
+
+
 .controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation) {
   $ionicLoading.show({
       content: 'Loading Data',
@@ -192,7 +201,12 @@ if($location.path().indexOf('user/foots')>0){
       });
     });
 
-    $http.get('http://localhost:1337/foot/getPlayers/'+$stateParams.id).success(function(data){  //Get list of playersId
+    $http.get('http://localhost:1337/foot/getAllPlayers/'+$stateParams.id).success(function(allPlayers){  //Get list of playersId
+      $scope.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'id');
+      $scope.isInvited = ($scope.invited.indexOf($localStorage.user.id)>-1);
+      $scope.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf($localStorage.user.id)>-1);
+      data = _.filter(allPlayers,function(player){return player.statut>1});
+      data = _.pluck(data,'user'); //All confirmed players ids.
       $scope.isPlaying = (data.indexOf($localStorage.user.id)>-1);
       async.each(data, function(player,callback){
           $http.get('http://localhost:1337/user/get/'+player).success(function(user){   //Get all players attributes
@@ -206,10 +220,6 @@ if($location.path().indexOf('user/foots')>0){
             $ionicLoading.hide();
       });
     });
-
-  $http.get('http://localhost:1337/foot/getInvited/'+$stateParams.id).success(function(data){
-    $scope.invited = data;
-  });
 
   $scope.removePlayer = function(userId,Invit){
     $http.post('http://localhost:1337/foot/removePlayer',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
@@ -293,7 +303,22 @@ if($location.path().indexOf('user/foots')>0){
   $scope.addToFoot = function(id) {
     $scope.foot.toInvite.push(id);
   };
+  $scope.askToPlay = function(id){
+    $http.post('http://localhost:1337/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+      notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
+      $scope.isPending = true;
+    });
+  };
 })
+
+
+
+
+
+
+
+
+
 .controller('FootFinderController', function ($scope,$http,$localStorage,$location,$stateParams) {
   $scope.go = function(id){
     $location.path('/foot/'+id);
@@ -314,7 +339,6 @@ if($location.path().indexOf('user/foots')>0){
             callback();
         });
       });
-
     });
   }
 
