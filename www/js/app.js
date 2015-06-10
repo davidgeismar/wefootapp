@@ -22,6 +22,13 @@ var getStuffById = function(id,stuffArray){
 	}
 };
 
+var getIndex = function(id, stuffArray){
+  for(var i = 0; i<stuffArray.length;i++){
+    if (id == stuffArray[i].id)
+      return i;
+  }
+};
+
 var getJour = function(date){
   var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
@@ -29,6 +36,7 @@ var getJour = function(date){
   var j = semaine[date.getDay()];
   return(j+' '+date.getDate()+' '+m);
 };
+
 var getHour = function(date){
   var n = date.getHours();
   var m = date.getMinutes();
@@ -45,7 +53,8 @@ var notify = function(notif,callback){
 
 
 
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','ui-rangeSlider'])
+var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+
 
 //Creating local Storage Function
 .factory('$localStorage', ['$window', function($window) {
@@ -89,23 +98,23 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 //Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
 .factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
 
-var handle = function(notif,callback){
+  var handle = function(notif,callback){
 
-  var parseNotif = function(typ){
-    switch(typ){
-      case 'newFriend':
+    var parseNotif = function(typ){
+      switch(typ){
+        case 'newFriend':
         return ['vous a ajouté à ses amis.','/friend/'];
-      case 'hommeDuMatch':
+        case 'hommeDuMatch':
         return ['avez été élu homme du match.'];
-      case 'chevreDuMatch':
+        case 'chevreDuMatch':
         return['avez été élu chèvre du match.'];
-      case 'footInvit':
+        case 'footInvit':
         return ['vous à invité à un foot.','/foot/'];
-      case 'footConfirm':
+        case 'footConfirm':
         return ['à confirmé sa présence à votre foot.','/friend/'];
-      case 'footAnnul':
+        case 'footAnnul':
         return ['à annulé son foot.'];
-      case 'footDemand':
+        case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
     }
   };
@@ -115,8 +124,7 @@ var handle = function(notif,callback){
      notif.userName == "Vous";
     else
       notif.userName = user.first_name;
-
-   notif.texte = parseNotif(notif.typ)[0];
+    notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
 
@@ -126,8 +134,8 @@ var handle = function(notif,callback){
       callback();
 
   });
-};
-return handle;
+  };
+  return handle;
 }])
 
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
@@ -136,6 +144,8 @@ return handle;
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
+  $rootScope.nbChatsUnseen = 0;
+  $localStorage.chats = [];
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -185,72 +195,98 @@ return handle;
     }
   });
 
-  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-  if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+
+io.socket.on('newChat',function(chat){
+  console.log(chat);
+  $localStorage.chats.push(chat);
+});
+
+io.socket.on('newMessage',function(message){
+
+  var index = getIndex(message.chat, $localStorage.chats);
+
+  console.log(message);
+  $localStorage.chats[index].messages.push(message);
+  if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
+    $rootScope.nbChatsUnseen++;
   }
-  if(window.StatusBar) {
-    StatusBar.styleDefault();
+
+  if(typeof $rootScope.updateMessage == 'function'){
+    $rootScope.updateMessage();
   }
 });
 
+
+
+
+OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
+
+$ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+if(window.cordova && window.cordova.plugins.Keyboard) {
+  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+}
+if(window.StatusBar) {
+  StatusBar.styleDefault();
+}
+});
+
 })
-  app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-    $urlRouterProvider.otherwise('/');
-    $stateProvider.state('home', {
-      url: '/',
-      templateUrl: 'templates/home.html',
-      controller: 'HomeCtrl'
-    })
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $urlRouterProvider.otherwise('/');
+  $stateProvider.state('home', {
+    url: '/',
+    templateUrl: 'templates/home.html',
+    controller: 'HomeCtrl'
+  })
 
-    $stateProvider.state('footfield',{
-      cache: false,
-      url:'/footfield',
-      templateUrl:'templates/footfield.html',
-      controller: 'FootController'
-    })
+  $stateProvider.state('footfield',{
+    cache: false,
+    url:'/footfield',
+    templateUrl:'templates/footfield.html',
+    controller: 'FootController'
+  })
 
-    $stateProvider.state('footparams', {
-      cache: false,
-      url: '/footparams',
-      templateUrl: 'templates/footparams.html',
-      controller: 'FootController'
-    })
+  $stateProvider.state('footparams', {
+    cache: false,
+    url: '/footparams',
+    templateUrl: 'templates/footparams.html',
+    controller: 'FootController'
+  })
 
 
-    $stateProvider.state('user.foots', {
-      cache: true,
-      url: '/foots',
-      views: {
-        'menuContent' :{
-          templateUrl: 'templates/foots.html',
-          controller: 'FootController'
-        }
+  $stateProvider.state('user.foots', {
+    cache: true,
+    url: '/foots',
+    views: {
+      'menuContent' :{
+        templateUrl: 'templates/foots.html',
+        controller: 'FootController'
       }
-    })
+    }
+  })
 
 
-    $stateProvider.state('register', {
-      url: '/register',
-      templateUrl: 'templates/register.html',
-      controller: 'RegisterCtrl'
-    })
+  $stateProvider.state('register', {
+    url: '/register',
+    templateUrl: 'templates/register.html',
+    controller: 'RegisterCtrl'
+  })
 
-    $stateProvider.state('resetPassword', {
-      url: '/resetPassword',
-      templateUrl: 'templates/resetPassword.html',
-      controller: 'ResetPasswordCtrl'
-    })
+  $stateProvider.state('resetPassword', {
+    url: '/resetPassword',
+    templateUrl: 'templates/resetPassword.html',
+    controller: 'ResetPasswordCtrl'
+  })
 
-    $stateProvider.state('login', {
-      url: '/login',
-      templateUrl: 'templates/login.html',
-      controller: 'LoginCtrl'
-    })
+  $stateProvider.state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
     cache: false,
@@ -301,6 +337,14 @@ return handle;
     url: '/noter',
     templateUrl: "templates/noter.html",
     controller: 'NoteCtrl'
+
+  })
+
+  $stateProvider.state('election', {
+    cache: false,
+    url: '/election',
+    templateUrl: "templates/election.html",
+    controller: 'ElectionCtrl'
 
   })
 

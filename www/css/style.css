@@ -410,7 +410,13 @@ a{
 
 .login-mdpo{
 	text-align:right;
+
 }
+
+.login-mdpo p{ 
+	display:inline;
+}
+
 
 .register_title h1{
 	width:100%;
@@ -698,15 +704,6 @@ a{
 	background-color: #28385c;
 }
 
-.info_menu{
-	position: relative;
-	bottom: 90px;
-	font-size: 18px;
-	font-weight: bold;
-	padding-top: 12px;
-	margin: 0px 20px;
-	border-top: 1px solid #516082;
-}
 
 .info_menu{
 	position: relative;
@@ -1377,7 +1374,7 @@ a{
   .img_level_foot{
   	width: 15px;
   	padding-top: 10px;
-    margin-right: 60px;
+  	margin-right: 60px;
   }
   .img_pla_foot img{
   	width: 16px;
@@ -1430,730 +1427,856 @@ a{
   	font-size: 12px;
   	font-weight: bold;
   	color: #28385c;
-  }*/
-  .background-foot .list{
-  	background-color: #28385c;
-  	margin-top: 10px;
-  }
-  .select-place{
-  	width: 70%;
-  	border-bottom: 1px solid lightgrey;
-  	margin-left: 15%;
-  	font-size: 35px;
-  	padding-bottom: 10px;
-  	padding-top: 20px;
-  }
-  .select-place input{
-  	border: none;
-  	color: #369bff;
-  }
-  .select-place i{
-  	float: right;
-  	color: lightgrey;
-  }
-  .select-place ::-webkit-input-placeholder {
-  	color: #369bff!important;
-  	font-size: 15px;
-  }
-  .subtitle-footfield{
-  	width: 60%;
-  	margin-left: 20%;
-  	margin-top: 20px;
-  }
-  .subtitle-footfield p{
-  	text-align: left;
-  	font-size: 12px;
-  	color: #28385c;
-  	font-weight: bold;
-  	display: inline-block;
-  }
-  .subtitle-footfield img{
-  	width: 30px;
-  	float: right;
-  	position: relative;
-  	bottom: 3px;
-  }
-  .header-footfield{
-  	background-color: #fff;
-  	padding-bottom: 10px;
-  }
-  .field_img{
-  	width: 70px;
-  	height: 70px;
-  	border-radius: 50%;
-  	margin-top: 5px;
-  }
-  .one-field{
-  	padding:15px;
-  	padding-right: 10px;
-  	border-bottom: 3px solid #28385c;
-  	padding-bottom: 0px;
-  	padding-top: 20px;
-  }
-  .content-footfield{
-  	text-align: left;
-  }
-  .name-field{
-  	font-size: 16px;
-  	color: #28385c;
-  	font-weight: bold;
-  	padding-top: 5px;
-  	margin-bottom: 2px;
-  }
-  .desc-field{
-  	margin-bottom: 0;
-  }
-  .star_field{
-  	display: inline-block;
-  	background-color: #ffffff;
-  	border-radius: 50%;
-  	float: right;
-  	height: 30px;
-  	width: 30px;
-  	margin-top: 0px;
-  	padding-left: 5px;
-  	padding-top: 2px;
-  	position: relative;
-  	bottom: 20px;
-  }
-  .star_field i{
-  	color: #fffc00;
-  	font-size: 25px;
-  }
-  .chevron-right{
-  	float: right;
-  	margin-top: 5px;
-  	margin-right: 10px;
-  }
-  .chevron-right i{
-  	color: #28385c;
-  }
-
-  .nb_notes_menu{
-  	position: relative;
-  	margin-top: 0px;
-  	margin-bottom: 25px;
-  	bottom: 65px;
-  	text-align: left;
-  	padding-right: 15px;
-  }
-
-  .nb_notes_menu p{
-  	color:#fff;
-  	text-align:right;
-  }
-
-  .nb_notes_friend{
-  	position: relative;
-  	margin-top: 0px;
-  	margin-bottom: 25px;
-  	text-align: left;
-  	padding-right: 15px;
-  }
-
-  .nb_notes_friend p{
-  	color:#24365F;
-  	text-align:right;
-  }
-
-  .one-notif{
-  	margin: 0px 20px;
-  	padding: 0px;
-  	border-bottom: 2px solid #c4c4c4;
-  }
-  .text-notif{
-  	display: inline-block;
-  	line-height: 16px;
-  	font-size: 13px;
-  	color: #4e4e4e;
-  	margin-bottom: 0px;
-  }
-  .content-notif{
-  	margin-left: 10px;
-  	margin-top: 15px;
-  }
-  .one-notif img{
-  	width: 60px;
-  }
-  .date-notif{
-  	font-size: 11px;
-  	height: 11px;
-  	position: relative;
-  }
-  .separator-bottom{
-  	margin-bottom: 0px;
-  }
-  #imagehead-foot {
-	height: 150px;
-	width: 100%;
-	margin-bottom: 15px;
-	margin-top: 0px;
-	border-style: solid;
-	border-width: 2px 0px 0px 0px;
-	border-color: #006DFF;
-}
-.logo_wf_foot{
-	width: 45px;
-	margin-left: auto;
-	margin-right: auto;
-}
-.ion-header-foot{
-	font-size: 35px;
-	color: #fff;
-}
-.header-foot {
-	position: relative;
-	text-align: center;
-}
-.button-book-foot{
-	margin-left: 14%;
-	width: 73%;
-	margin-bottom: 10px;
-	border-radius: 5px;
-	background-color: #006ddf;
-	color: #fff;
-	font-size: 15px;
-	font-weight: bold;
-}
-.button-book-foot i{
-	float: left;
-	font-size: 25px;
-	position: relative;
-	left: 10%;
-  	top: 2px;
-}
-.bouttons3-foot{
-	margin : auto;
-	position: relative;
-	left: 14%;
-}
-.boutton-foot {
-  color: white;
-  display: inline-block;
-  margin: 0px 3px 10px 0;
-  padding: 0px 5px;
-  padding-bottom: 2px;
-  border-radius: 5px;
-  background-color: #28385B;
-  width: 23%;
-  min-height: 50px;
-  border:0px;
-  font-family: 'Ubuntu';
-  font-size: 0.7em;
-  font-weight: bold;
-}
-.boutton-foot i{
-	font-size: 27px;
-	display: block;
-}
-.header-foot h4{
-	color: #28385B;
-	font-family: 'Ubuntu';
-	font-weight: bold;
-	font-size: 18px;
-	margin-bottom: 0px;
-	text-transform: uppercase;
-}
-.header-foot p{
-	color: #28385B;
-}
-
-.name-player-foot p{
-	margin-top: 14px;
-	color: #006ddf;
-	margin-bottom: 0;
-}
-.row.player-foot{
-	border-top: 2px solid #c4c4c4;
-	padding-top: 7px;
-	padding-bottom: 2px;
-}
-.name-player-foot .orga-foot{
-	color: #28385c;
-	margin-top: 0px;
-	font-style: italic;
-	font-weight: bold;
-	font-size: 11px;
-	position: relative;
-	bottom: 3px;
-}
-.niveau-foot{
-	text-align: center;
-	margin-bottom: 10px;
-	margin-left: 30px;
-}
-.niveau-foot p{
-	color:#28385B;
-	font-family: 'Ubuntu';
-	font-weight: bold;
-	font-size: 10px;
-}
-#first-foot{
-	border-top: none;
-	padding-bottom: 7px;
-}
-.field-foot-separator{
-	margin: 20px;
-	height: 2px;
-}
-img.level-foot{
-	width: 20px;
-	float: left;
-	margin-left: 10px;
-}
-.level-foot{
-	float: left;
-	position: relative;
-	top: 4px;
-}
-.level-foot-separator{
-	height: 2px;
-}
-.missing-foot{
-	float: right;
-}
-img.missing-foot{
-	float: right;
-	margin-left: 10px;
-	width: 20px;
-	margin-right: 25px;
-}
-#vu-foot{
-	color:#006DFF;
-	position: relative;
-	left: 65%;
-	margin-bottom: 20px;
-	font-size: 13px;
-}
-#second-foot{
-	position: relative;
-	left: 30%;
-}
-
-.listeparticipants-foot{
-	margin: 0px 20px;
-}
-.orga-foot{
-	color: #28385c;
-	display: block;
-	vertical-align: top;
-}
-.img_foot img{
-	border-radius: 50%;
-}
-.urban-foot{
-	margin-bottom: 20px;
-	margin-left: 10%;
-}
-
-.photourban-foot{
-	vertical-align:top;
-	width: 100px;
-	height: 100px;
-	display: inline-block;
-	background-size: cover;
-}
-.nomurban-foot{
-	color: #28385B;
-	width: 60%;
-	display: inline-block;
-	margin-left: 15px;
-}
-.nomurban-foot h5{
-	color: #28385c;
-	font-family: 'Ubuntu';
-	font-weight: bold;
-	font-size: 16px;
-}
-.nomurban-foot p{
-	margin-bottom: 0px;
-}
-.nomurban-foot i{
-	font-size: 18px;
-}
-.annuler-foot{
-  font-size: 17px;
-  background-color: transparent;
-  display: inline-block;
-  border-radius: 5px;
-  width: 60%;
-  margin-left: 20%;
-  text-align: center;
-  color: red;
-  border: 1px solid red;
-  font-family: 'Ubuntu';
-  margin-top: 15px;
-}
-.annuler-foot i{
-	position: relative;
-	right: 10px;
-	top:2px;
-	font-size: 20px;
-}
-.range-footfinder{
-	width: 75%;
-	margin-left: 10%;
-}
-.date-footfinder{
-	font-weight: bold;
-}
-.background_footfinder{
-	background-image: url('../img/photo-bg-footfinder.png');
-	background-size: contain;
-	min-height: 100%;
-}
-
-  @media screen and (min-width: 414px) { /*IPHONE 6 + */
-  	.logo-profil-container{
-  		left: 165px;
+  	}*/
+  	.background-foot .list{
+  		background-color: #28385c;
+  		margin-top: 10px;
   	}
-  }
-  @media screen and (min-width: 360px) and (max-width: 360px){ /* SONY XPERIA GALAXY S4 */
-  	.logo-profil-container{
-  		left: 138px;
+  	.select-place{
+  		width: 70%;
+  		border-bottom: 1px solid lightgrey;
+  		margin-left: 15%;
+  		font-size: 35px;
+  		padding-bottom: 10px;
+  		padding-top: 20px;
   	}
-
-  }
-  @media screen and (max-width: 400px) { /* ANDROID */
-  	.logout_menu{
-  		position: relative;
-  		bottom:20px;
+  	.select-place input{
+  		border: none;
+  		color: #369bff;
   	}
-  	.boutton-foot{
-  		height: 70px;
-  		vertical-align: middle;
-  	}
-  }
-  @media screen and (max-width: 320px) { /* IPHONE 5- */
-  	.main_actu{
-  		height: 110px;
-  	}
-  	.img_menu_bg{
-  		height: 170px;
-  	}
-  	.img_menu{
-  		bottom: 140px;
-  	}
-  	.info_menu{
-  		font-size: 16px;
-  	}
-  	.icon_menu{
-  		height: 20px;
-  	}
-  	.info_menu i{
-  		font-size: 15px;
-  	}
-  	.note_menu p{
-  		font-size: 16px;
-  	}
-  	.note_menu i{
-  		font-size: 18px;
-  		right: 17px;
-  		top: 0px;
-  	}
-  	.note_friend p{
-  		color:#28385c;
-  		font-size: 18px;
-  		right: 17px;
-  		top: 0px;
-  	}
-
-  	.logout_menu{
-  		position: relative;
-  		bottom:40px;
-  	}
-  	.icon-logout{
-  		height: 15px;
-  	}
-  	.logout_menu p{
-  		font-size: 15px;
-  		bottom: 2px;
-  	}
-  	.star_friends{
+  	.select-place i{
   		float: right;
-  		height: 35px;
-  		width: 35px;
-  		margin-top: 18px;
-  		padding-left: 5px;
-  		padding-top: 1px;
+  		color: lightgrey;
   	}
-  	.switcher_search{
-  		height: 70px;
-  	}
-  	.switch{
-  		padding-top: 12px;
-  		height: 70px;
-  	}
-  	.switch_wf1{
-  		height: 30px;
-  	}
-  	.switch i{
-  		font-size: 30px;
-  	}
-  	.switch_fb{
-  		bottom: 4px;
-  	}
-  	#container_foot_friends .name_foot_friends p{
-  		font-size: 12px;
+  	.select-place ::-webkit-input-placeholder {
+  		color: #369bff!important;
+  		font-size: 15px;
   	}
   	.subtitle-footfield{
-  		width: 70%;
-  		margin-left: 15%;
+  		width: 60%;
+  		margin-left: 20%;
+  		margin-top: 20px;
+  	}
+  	.subtitle-footfield p{
+  		text-align: left;
+  		font-size: 12px;
+  		color: #28385c;
+  		font-weight: bold;
+  		display: inline-block;
+  	}
+  	.subtitle-footfield img{
+  		width: 30px;
+  		float: right;
+  		position: relative;
+  		bottom: 3px;
+  	}
+  	.header-footfield{
+  		background-color: #fff;
+  		padding-bottom: 10px;
   	}
   	.field_img{
-  		width: 60px;
-  		height: 60px;
+  		width: 70px;
+  		height: 70px;
+  		border-radius: 50%;
+  		margin-top: 5px;
+  	}
+  	.one-field{
+  		padding:15px;
+  		padding-right: 10px;
+  		border-bottom: 3px solid #28385c;
+  		padding-bottom: 0px;
+  		padding-top: 20px;
   	}
   	.content-footfield{
   		text-align: left;
   	}
   	.name-field{
-  		font-size: 14px;
+  		font-size: 16px;
+  		color: #28385c;
+  		font-weight: bold;
+  		padding-top: 5px;
+  		margin-bottom: 2px;
   	}
   	.desc-field{
-  		font-size: 12px;
+  		margin-bottom: 0;
   	}
-  	.slider-button{
-  		height: 60px;
+  	.star_field{
+  		display: inline-block;
+  		background-color: #ffffff;
+  		border-radius: 50%;
+  		float: right;
+  		height: 30px;
+  		width: 30px;
+  		margin-top: 0px;
+  		padding-left: 5px;
+  		padding-top: 2px;
+  		position: relative;
+  		bottom: 20px;
   	}
-  	.slider-button p{
-  		padding-top: 7px;
-  		font-size: 14px;
+  	.star_field i{
+  		color: #fffc00;
+  		font-size: 25px;
   	}
-  	.left-side-slider i{
-  		font-size: 30px;
-  		right: 45px;
+  	.chevron-right{
+  		float: right;
+  		margin-top: 5px;
+  		margin-right: 10px;
   	}
-  	.right-side-slider i{
-  		font-size: 30px;
-  		left: 50px;
+  	.chevron-right i{
+  		color: #28385c;
   	}
-  	.logo-profil{
+
+  	.nb_notes_menu{
+  		position: relative;
+  		margin-top: 0px;
+  		margin-bottom: 25px;
+  		bottom: 65px;
+  		text-align: left;
+  		padding-right: 15px;
+  	}
+
+  	.nb_notes_menu p{
+  		color:#fff;
+  		text-align:right;
+  	}
+
+  	.nb_notes_friend{
+  		position: relative;
+  		margin-top: 0px;
+  		margin-bottom: 25px;
+  		text-align: left;
+  		padding-right: 15px;
+  	}
+
+  	.nb_notes_friend p{
+  		color:#24365F;
+  		text-align:right;
+  	}
+
+  	.one-notif{
+  		margin: 0px 20px;
+  		padding: 0px;
+  		border-bottom: 2px solid #c4c4c4;
+  	}
+  	.text-notif{
+  		display: inline-block;
+  		line-height: 16px;
+  		font-size: 13px;
+  		color: #4e4e4e;
+  		margin-bottom: 0px;
+  	}
+  	.content-notif{
+  		margin-left: 10px;
+  		margin-top: 15px;
+  	}
+  	.one-notif img{
   		width: 60px;
   	}
-  	.logo-profil-container{
-  		width: 65px;
-  		height: 65px;
-  		bottom:63px;
-  		left: 130px;
+  	.date-notif{
+  		font-size: 11px;
+  		height: 11px;
+  		position: relative;
   	}
-  	.photourban-foot{
-  		height: 80px;
-  		width: 80px;
-  		margin-top: 10px;
+  	.separator-bottom{
+  		margin-bottom: 0px;
   	}
-  	.nomurban-foot h5{
-  		font-size: 15px;
+  	#imagehead-foot {
+  		height: 150px;
+  		width: 100%;
+  		margin-bottom: 15px;
+  		margin-top: 0px;
+  		border-style: solid;
+  		border-width: 2px 0px 0px 0px;
+  		border-color: #006DFF;
   	}
-  	.nomurban-foot p{
-  		font-size: 12px;
+  	.logo_wf_foot{
+  		width: 45px;
+  		margin-left: auto;
+  		margin-right: auto;
   	}
-  	.name-player-foot{
-  		margin-left: 7px;
+  	.ion-header-foot{
+  		font-size: 35px;
+  		color: #fff;
   	}
-  	.header-foot h4{
-  		font-size: 15px;
-  	}
-  	.header-foot p{
-  		font-size: 13px;
+  	.header-foot {
+  		position: relative;
+  		text-align: center;
   	}
   	.button-book-foot{
-  		margin-left: 5%;
-  		width: 90%;
+  		margin-left: 14%;
+  		width: 73%;
+  		margin-bottom: 10px;
+  		border-radius: 5px;
+  		background-color: #006ddf;
+  		color: #fff;
+  		font-size: 15px;
+  		font-weight: bold;
+  	}
+  	.button-book-foot i{
+  		float: left;
+  		font-size: 25px;
+  		position: relative;
+  		left: 10%;
+  		top: 2px;
   	}
   	.bouttons3-foot{
-  		left: 5%;
+  		margin : auto;
+  		position: relative;
+  		left: 14%;
   	}
-  	.boutton-foot{
-  		width: 28%;
+  	.boutton-foot {
+  		color: white;
+  		display: inline-block;
+  		margin: 0px 3px 10px 0;
+  		padding: 0px 5px;
+  		padding-bottom: 2px;
+  		border-radius: 5px;
+  		background-color: #28385B;
+  		width: 23%;
+  		min-height: 50px;
+  		border:0px;
+  		font-family: 'Ubuntu';
+  		font-size: 0.7em;
+  		font-weight: bold;
   	}
-  	.border_bottom_foot{
-  		height: 160px !important;
-  		padding: 0px;
+  	.boutton-foot i{
+  		font-size: 27px;
+  		display: block;
   	}
-  	.fleche_bleu_fonce_foots {
-      margin-left: -40px !important;
-    }
-    .info_foots {
-        margin-right: 60px;
-        margin-top: 10px;
-        margin-left: 20px;
-        white-space: nowrap;
-        font-size: 14px;
-    }
-    .info_foots .bleufonce, .info_foots .field-foot, .nbredejoueur_foots .nbreplace{
-    	font-size: 12px;
-    }
-    .field-foot{
-    	font-size: 12px;
-    }
-    .col-25 .bonhomme_foots{
-    	width: 20px;
-    	margin-left: 0px;
-    }
-  }
-  /* END MEDIA QUERY */
-  .field_search_text{
-  	font-size: 12px;
-  	font-family: "Ubuntu";
-  	color: rgb( 78, 78, 78 );
-  	text-align: right;
-  }
-  .img_search_field{
-  	width: 50px;
-  	display: inline-block;
-  	margin-top: 10px;
-  }
+  	.header-foot h4{
+  		color: #28385B;
+  		font-family: 'Ubuntu';
+  		font-weight: bold;
+  		font-size: 18px;
+  		margin-bottom: 0px;
+  		text-transform: uppercase;
+  	}
+  	.header-foot p{
+  		color: #28385B;
+  	}
 
-  .img_search_field img{
-  	width: 40px;
-  }
+  	.name-player-foot p{
+  		margin-top: 14px;
+  		color: #006ddf;
+  		margin-bottom: 0;
+  	}
+  	.row.player-foot{
+  		border-top: 2px solid #c4c4c4;
+  		padding-top: 7px;
+  		padding-bottom: 2px;
+  	}
+  	.name-player-foot .orga-foot{
+  		color: #28385c;
+  		margin-top: 0px;
+  		font-style: italic;
+  		font-weight: bold;
+  		font-size: 11px;
+  		position: relative;
+  		bottom: 3px;
+  	}
+  	.niveau-foot{
+  		text-align: center;
+  		margin-bottom: 10px;
+  		margin-left: 30px;
+  	}
+  	.niveau-foot p{
+  		color:#28385B;
+  		font-family: 'Ubuntu';
+  		font-weight: bold;
+  		font-size: 10px;
+  	}
+  	#first-foot{
+  		border-top: none;
+  		padding-bottom: 7px;
+  	}
+  	.field-foot-separator{
+  		margin: 20px;
+  		height: 2px;
+  	}
+  	img.level-foot{
+  		width: 20px;
+  		float: left;
+  		margin-left: 10px;
+  	}
+  	.level-foot{
+  		float: left;
+  		position: relative;
+  		top: 4px;
+  	}
+  	.level-foot-separator{
+  		height: 2px;
+  	}
+  	.missing-foot{
+  		float: right;
+  	}
+  	img.missing-foot{
+  		float: right;
+  		margin-left: 10px;
+  		width: 20px;
+  		margin-right: 25px;
+  	}
+  	#vu-foot{
+  		color:#006DFF;
+  		position: relative;
+  		left: 65%;
+  		margin-bottom: 20px;
+  		font-size: 13px;
+  	}
+  	#second-foot{
+  		position: relative;
+  		left: 30%;
+  	}
 
-  .button_send_message{
-  	background-color:#28385c;
-  	color:#fff;
-  	font-weight:700;
-  	border-radius:3px;
-  	padding:1px;
-  }
-  .mdpo{
-  	text-align:left;
-  	padding-left: 20px;
-  	padding-right: 20px;
-  }
+  	.listeparticipants-foot{
+  		margin: 0px 20px;
+  	}
+  	.orga-foot{
+  		color: #28385c;
+  		display: block;
+  		vertical-align: top;
+  	}
+  	.img_foot img{
+  		border-radius: 50%;
+  	}
+  	.urban-foot{
+  		margin-bottom: 20px;
+  		margin-left: 10%;
+  	}
 
 
-.nbreplace {
-  margin-left: -40px;
-  margin-top: 21px;
-  color: #28385c;
-  white-space: nowrap !important;
-}
+  	.photourban-foot{ 
+  		vertical-align:top;
+  		width: 100px;
+  		height: 100px;
+  		display: inline-block;
+  		background-size: cover;
+  	}
+  	.nomurban-foot{
+  		color: #28385B;
+  		width: 60%;
+  		display: inline-block;
+  		margin-left: 15px;
+  	}
+  	.nomurban-foot h5{
+  		color: #28385c;
+  		font-family: 'Ubuntu';
+  		font-weight: bold;
+  		font-size: 16px;
+  	}
+  	.nomurban-foot p{
+  		margin-bottom: 0px;
+  	}
+  	.nomurban-foot i{
+  		font-size: 18px;
+  	}
+  	.annuler-foot{
+  		font-size: 17px;
+  		background-color: #E2334C;
+  		display: inline-block;
+  		padding: 15px 15px;
+  		border-radius: 5px;
+  		width: 80%;
+  		margin-left: 10%;
+  		text-align: center;
+  		border:0px;
+  		color: #fff;
+  		font-weight: bold;
+  		font-family: 'Ubuntu';
+  	}
+  	.annuler-foot i{
+  		position: relative;
+  		right: 10px;
+  		top:2px;
+  		font-size: 20px;
+  	}
 
-.bleuciel {
-color: #006ddf;
-}
-.bleufonce {
-  color: #28385c !important;
-}
+  	.photourban-foot{
+  		vertical-align:top;
+  		width: 100px;
+  		height: 100px;
+  		display: inline-block;
+  		background-size: cover;
+  	}
+  	.nomurban-foot{
+  		color: #28385B;
+  		width: 60%;
+  		display: inline-block;
+  		margin-left: 15px;
+  	}
+  	.nomurban-foot h5{
+  		color: #28385c;
+  		font-family: 'Ubuntu';
+  		font-weight: bold;
+  		font-size: 16px;
+  	}
+  	.nomurban-foot p{
+  		margin-bottom: 0px;
+  	}
+  	.nomurban-foot i{
+  		font-size: 18px;
+  	}
+  	.annuler-foot{
+  		font-size: 17px;
+  		background-color: transparent;
+  		display: inline-block;
+  		border-radius: 5px;
+  		width: 60%;
+  		margin-left: 20%;
+  		text-align: center;
+  		color: red;
+  		border: 1px solid red;
+  		font-family: 'Ubuntu';
+  		margin-top: 15px;
+  	}
+  	.annuler-foot i{
+  		position: relative;
+  		right: 10px;
+  		top:2px;
+  		font-size: 20px;
+  	}
+  	.range-footfinder{
+  		width: 75%;
+  		margin-left: 10%;
+  	}
+  	.date-footfinder{
+  		font-weight: bold;
+  	}
+  	.background_footfinder{
+  		background-image: url('../img/photo-bg-footfinder.png');
+  		background-size: contain;
+  		min-height: 100%;
+  	}
 
-.border_bottom_foot {
-  border-bottom: 4px solid #28385c ;
-  height: 200px;
-}
+  	@media screen and (min-width: 414px) { /*IPHONE 6 + */
+  		.logo-profil-container{
+  			left: 165px;
+  		}
+  	}
+  	@media screen and (min-width: 360px) and (max-width: 360px){ /* SONY XPERIA GALAXY S4 */
+  		.logo-profil-container{
+  			left: 138px;
+  		}
 
- .img_level_foots{
-  width: 20px;
-  padding: 2px;
-  margin-left: -20px;
-  margin-top: 15px;
-}
-  }
+  	}
+  	@media screen and (max-width: 400px) { /* ANDROID */
+  		.logout_menu{
+  			position: relative;
+  			bottom:20px;
+  		}
+  		.boutton-foot{
+  			height: 70px;
+  			vertical-align: middle;
+  		}
+  	}
+  	@media screen and (max-width: 320px) { /* IPHONE 5- */
+  		.main_actu{
+  			height: 110px;
+  		}
+  		.img_menu_bg{
+  			height: 170px;
+  		}
+  		.img_menu{
+  			bottom: 140px;
+  		}
+  		.info_menu{
+  			font-size: 16px;
+  		}
+  		.icon_menu{
+  			height: 20px;
+  		}
+  		.info_menu i{
+  			font-size: 15px;
+  		}
+  		.note_menu p{
+  			font-size: 16px;
+  		}
+  		.note_menu i{
+  			font-size: 18px;
+  			right: 17px;
+  			top: 0px;
+  		}
+  		.note_friend p{
+  			color:#28385c;
+  			font-size: 18px;
+  			right: 17px;
+  			top: 0px;
+  		}
+
+  		.logout_menu{
+  			position: relative;
+  			bottom:40px;
+  		}
+  		.icon-logout{
+  			height: 15px;
+  		}
+  		.logout_menu p{
+  			font-size: 15px;
+  			bottom: 2px;
+  		}
+  		.star_friends{
+  			float: right;
+  			height: 35px;
+  			width: 35px;
+  			margin-top: 18px;
+  			padding-left: 5px;
+  			padding-top: 1px;
+  		}
+  		.switcher_search{
+  			height: 70px;
+  		}
+  		.switch{
+  			padding-top: 12px;
+  			height: 70px;
+  		}
+  		.switch_wf1{
+  			height: 30px;
+  		}
+  		.switch i{
+  			font-size: 30px;
+  		}
+  		.switch_fb{
+  			bottom: 4px;
+  		}
+  		#container_foot_friends .name_foot_friends p{
+  			font-size: 12px;
+  		}
+  		.subtitle-footfield{
+  			width: 70%;
+  			margin-left: 15%;
+  		}
+  		.field_img{
+  			width: 60px;
+  			height: 60px;
+  		}
+  		.content-footfield{
+  			text-align: left;
+  		}
+  		.name-field{
+  			font-size: 14px;
+  		}
+  		.desc-field{
+  			font-size: 12px;
+  		}
+  		.slider-button{
+  			height: 60px;
+  		}
+  		.slider-button p{
+  			padding-top: 7px;
+  			font-size: 14px;
+  		}
+  		.left-side-slider i{
+  			font-size: 30px;
+  			right: 45px;
+  		}
+  		.right-side-slider i{
+  			font-size: 30px;
+  			left: 50px;
+  		}
+  		.logo-profil{
+  			width: 60px;
+  		}
+  		.logo-profil-container{
+  			width: 65px;
+  			height: 65px;
+  			bottom:63px;
+  			left: 130px;
+  		}
+  		.photourban-foot{
+  			height: 80px;
+  			width: 80px;
+  			margin-top: 10px;
+  		}
+  		.nomurban-foot h5{
+  			font-size: 15px;
+  		}
+  		.nomurban-foot p{
+  			font-size: 12px;
+  		}
+  		.name-player-foot{
+  			margin-left: 7px;
+  		}
+  		.header-foot h4{
+  			font-size: 15px;
+  		}
+  		.header-foot p{
+  			font-size: 13px;
+  		}
+  		.button-book-foot{
+  			margin-left: 5%;
+  			width: 90%;
+  		}
+  		.bouttons3-foot{
+  			left: 5%;
+  		}
+  		.boutton-foot{
+  			width: 28%;
+  		}
+  		.border_bottom_foot{
+  			height: 160px !important;
+  			padding: 0px;
+  		}
+  		.fleche_bleu_fonce_foots {
+  			margin-left: -40px !important;
+  		}
+  		.info_foots {
+  			margin-right: 60px;
+  			margin-top: 10px;
+  			margin-left: 20px;
+  			white-space: nowrap;
+  			font-size: 14px;
+  		}
+  		.info_foots .bleufonce, .info_foots .field-foot, .nbredejoueur_foots .nbreplace{
+  			font-size: 12px;
+  		}
+  		.field-foot{
+  			font-size: 12px;
+  		}
+  		.col-25 .bonhomme_foots{
+  			width: 20px;
+  			margin-left: 0px;
+  		}
+  	}
+  	/* END MEDIA QUERY */
+  	.field_search_text{
+  		font-size: 12px;
+  		font-family: "Ubuntu";
+  		color: rgb( 78, 78, 78 );
+  		text-align: right;
+  	}
+  	.img_search_field{
+  		width: 50px;
+  		display: inline-block;
+  		margin-top: 10px;
+  	}
+
+  	.img_search_field img{
+  		width: 40px;
+  	}
+
+  	.button_send_message{
+  		background-color:#28385c;
+  		color:#fff;
+  		font-weight:700;
+  		border-radius:3px;
+  		padding:1px;
+  	}
+  	.mdpo{
+  		text-align:left;
+  		padding-left: 20px;
+  		padding-right: 20px;
+  	}
+
+  	.info_friend{
+  		position: relative;
+  		bottom: 90px;
+  		font-size: 18px;
+  		font-weight: bold;
+  		padding-top: 12px;
+  		margin: 0px 20px;
+  		border-top: 1px solid #516082;
+  	}
+  	.info_friend p{
+  		color: #24365F;
+  	}
+
+  	.login-mdpo_chevron {
+  		display:inline;
+  		margin-left:10px;
+  	}
+
+  	.election_phrase h2{
+  		font-weight:100;
+  		color:#28385C;
+  		text-align:center;
+  		margin-bottom:10px;
+  	}
+  	.election_user_container{
+  		margin-top:20px;
+  		width:30%;
+  		display:inline-block;
+  		margin-left:2%;
+
+  	}
+  	.election_pic{
+  		border-radius:150px;
+  		width:100%;
+  	}
+
+  	.trophe_container{
+  		width:100%;
+  		padding-left:1%;
+  		position:relative;
+  	}	
+
+  	.trophe_container img{
+  		width:40%;
+  		margin-right:3%;
+  	}
+/*   .trophe_container .chevre{
+ 	margin-left:50%;
+ 	}*/
 
 
-.info_foots {
-  margin-right: 70px;
-  margin-top: 10px;
-  white-space: nowrap;
-}
+ 	.election_user_firstname p{
+ 		text-align:center;
+ 		margin-bottom:3px;
+ 	}
 
-.nbredejoueur_foots {
-  margin-left: 30px;
-}
-.fleche_bleu_fonce_foots {
-  margin-top: 30px;
-  margin-left: 60px;
-}
+ 	.button_valid{
+ 		margin-top:30px;
+ 		margin-bottom:30px;
+ 	}
 
-.carte_foots {
-  padding: 10%;
-}
+ 	.icon-techB{
+ 		background-image: url('../img/ball69B.svg');
+ 	}
+ 	.icon-powerB{
+ 		background-image: url('../img/dumbbell20B.svg');
+ 	}
+ 	.icon-fpB{
+ 		background-image: url('../img/thumbs28B.svg');
+ 	}
+ 	.icon-assiduB{
+ 		background-image: url('../img/clock46B.svg');
+ 	}
+ 	
+ 	.icon-shoesB {
+ 		background-image: url('../img/nav_mes_foots_noirB.svg');
+ 		-ms-transform: rotate(20deg); /* IE 9 */
+ 		-webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
+ 		transform: rotate(20deg);
+ 	}
 
-.tab-container .background_foots {
-  background-image: url("../img/photo-bg-foot.png");
-  background-size:cover;
-  background-position-x: center;
-  height: 100%;
-}
+ 	.nbreplace {
+ 		margin-left: -40px;
+ 		margin-top: 21px;
+ 		color: #28385c;
+ 		white-space: nowrap !important;
+ 	}
 
-.supress_foots {
-	margin-top: -35px;
-	padding: 5px;
-}
+ 	.bleuciel {
+ 		color: #006ddf;
+ 	}
+ 	.bleufonce {
+ 		color: #28385c !important;
+ 	}
 
-.bonhomme_foots {
-  margin-left: 10px;
-  margin-top: 10px;
-}
+ 	.border_bottom_foot {
+ 		border-bottom: 4px solid #28385c ;
+ 		height: 200px;
+ 	}
 
-.border_profil {
-  border-left: solid 1px grey;
-}
+ 	.img_level_foots{
+ 		width: 20px;
+ 		padding: 2px;
+ 		margin-left: -20px;
+ 		margin-top: 15px;
+ 	}
 
-.img_profil {
 
-  width: 30px;
-  display: inline-block;
-  margin-left : -25px;
 
-}
+ 	.info_foots {
+ 		margin-right: 70px;
+ 		margin-top: 10px;
+ 		white-space: nowrap;
+ 	}
 
-.nowrap_foot {
-  white-space: nowrap;
-  margin-left: -20px;
-}
+ 	.nbredejoueur_foots {
+ 		margin-left: 30px;
+ 	}
+ 	.fleche_bleu_fonce_foots {
+ 		margin-top: 30px;
+ 		margin-left: 60px;
+ 	}
 
-.number_players_profil {
-  margin-left: 70px;
-  white-space: nowrap;
-  font-size: 11px;
-}
+ 	.carte_foots {
+ 		padding: 10%;
+ 	}
 
-.img_friends_profil {
-  width: 30px;
-  display: inline;
-  white-space: nowrap
-}
-.level_foot_profil {
-  margin-top: 35px;
-}
+ 	.tab-container .background_foots {
+ 		background-image: url("../img/photo-bg-foot.png");
+ 		background-size:cover;
+ 		background-position-x: center;
+ 		height: 100%;
+ 	}
 
-.bonhomme_profil {
-  margin-left:75px;
-}
-.date_timeline {
-  margin-left: 25px;
-  border-top: solid 1px #006ddf;
-  margin-top: -40px;
-  margin-bottom: -40px;
-}
+ 	.supress_foots {
+ 		margin-top: -35px;
+ 		padding: 5px;
+ 	}
 
-.day_timeline {
-  margin-top : 40px !important;
-  margin-bottom: 80px;
-}
+ 	.bonhomme_foots {
+ 		margin-left: 10px;
+ 		margin-top: 10px;
+ 	}
 
-.cadenas_timeline {
-  height: 15px;
-  margin-left: 74px;
-}
+ 	.border_profil {
+ 		border-left: solid 1px grey;
+ 	}
 
-.alter_timeline {
-  height: 15px;
-  margin-left: -20px;
-}
+ 	.img_profil {
 
-.icon_profil {
-  height: 20px;
-  margin-left: -20px;
-}
+ 		width: 30px;
+ 		display: inline-block;
+ 		margin-left : -25px;
 
-.img_etoile_timeline {
+ 	}
 
-  width: 10px;
-  display: inline;
-  margin-bottom: 7px;
+ 	.nowrap_foot {
+ 		white-space: nowrap;
+ 		margin-left: -20px;
+ 	}
 
-}
+ 	.number_players_profil {
+ 		margin-left: 70px;
+ 		white-space: nowrap;
+ 		font-size: 11px;
+ 	}
 
-}
+ 	.img_friends_profil {
+ 		width: 30px;
+ 		display: inline;
+ 		white-space: nowrap
+ 	}
+ 	.level_foot_profil {
+ 		margin-top: 35px;
+ 	}
+
+ 	.bonhomme_profil {
+ 		margin-left:75px;
+ 	}
+ 	.date_timeline {
+ 		margin-left: 25px;
+ 		border-top: solid 1px #006ddf;
+ 		margin-top: -40px;
+ 		margin-bottom: -40px;
+ 	}
+
+ 	.day_timeline {
+ 		margin-top : 40px !important;
+ 		margin-bottom: 80px;
+ 	}
+
+ 	.cadenas_timeline {
+ 		height: 15px;
+ 		margin-left: 74px;
+ 	}
+
+ 	.alter_timeline {
+ 		height: 15px;
+ 		margin-left: -20px;
+ 	}
+
+ 	.icon_profil {
+ 		height: 20px;
+ 		margin-left: -20px;
+ 	}
+
+ 	.img_etoile_timeline {
+
+ 		width: 10px;
+ 		display: inline;
+ 		margin-bottom: 7px;
+ 	}
+
+

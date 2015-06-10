@@ -34,8 +34,8 @@ else if($scope.friends[targetPosition].statut==1){
 }
 
 $scope.goFriend = function(friend){
-  $localStorage.friend = friend;
-  $location.path('/friend');
+console.log(friend.id)
+  $location.path('/friend/'+friend.id);
 
 }
 $rootScope.openModal = function() {

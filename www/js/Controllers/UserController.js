@@ -99,7 +99,7 @@ $scope.logout = function (){
     $rootScope.modal = modal;
   });
 
-    $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
+  $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
@@ -147,77 +147,95 @@ $scope.addFriend = function(target){
 
 $scope.createChat = function(user){
 
-  $http.post('http://localhost:1337/chat/create',{chatters :[$localStorage.user.id, user], typ:1}).success(function(data){
-    console.log("data"+data);
+  $http.post('http://localhost:1337/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
     $rootScope.closeModal();
-    $localStorage.chat=data.chat;
+    chat.messages = new Array();
+    $localStorage.chat=chat;
     $location.path('/conv');
   }).error(function(err){
     console.log(err);
   });
 }
 
-
-// $scope.getAllChats = function(user){
-//   $http.get('http://localhost:1337/getAllChats/'+user).success(function(data){
-//     console.log(data);
-//     $localStorage.chats = data;
-//   }).error(function(err){
-//     console.log(err);
-//   });
-// }
-
-  $scope.friend = $localStorage.friend;
-  $scope.notes = new Array(5);
-  $scope.starStatus = new Array(5);
-  
-  for(var i=0; i<5; i++) {
-    $scope.starStatus[i] = new Array(5);
-  }
-  for(var i=0; i<5; i++) {
-    for(var j=0; j<5; j++) {
-      $scope.starStatus[i][j] = "ion-android-star";
+$scope.launchChat = function(user){
+  console.log($localStorage.chats);
+  angular.forEach($localStorage.chats, function(chat) {
+    if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
+      console.log('here');
+      $localStorage.chat=chat;
+      $location.path('/conv');
+      return 0;
     }
+  });
+  $scope.createChat(user);
+}
+
+$scope.friend = $localStorage.friend;
+$scope.notes = new Array(5);
+$scope.starStatus = new Array(5);
+
+for(var i=0; i<5; i++) {
+  $scope.starStatus[i] = new Array(5);
+}
+for(var i=0; i<5; i++) {
+  for(var j=0; j<5; j++) {
+    $scope.starStatus[i][j] = "ion-android-star";
   }
+}
 
 
-  $scope.setNote = function(note, target){
+$scope.setNote = function(note, target){
 
-    $scope.notes[target] = note;
-    for(var i=0; i<5; i++) {
-      if(i+1<=note)
-        $scope.starStatus[target][i] = "ion-android-star";
-      else
-        $scope.starStatus[target][i] = "ion-android-star-outline";
-    }
+  $scope.notes[target] = note;
+  for(var i=0; i<5; i++) {
+    if(i+1<=note)
+      $scope.starStatus[target][i] = "ion-android-star";
+    else
+      $scope.starStatus[target][i] = "ion-android-star-outline";
   }
+}
 
 
 
-  $scope.initNotes = function(){
-    $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
-      $scope.user.nbGrades = data.nbGrades;
-      $scope.setNote(Math.round(data.technique), 0);
-      $scope.setNote(Math.round(data.frappe), 1);
-      $scope.setNote(Math.round(data.physique), 2);
-      $scope.setNote(Math.round(data.fair_play), 3);
-      $scope.setNote(Math.round(data.assiduite), 4);
-    }).error(function(){
-      console.log('error');
-    });
+$scope.initNotes = function(){
+  $http.get('http://localhost:1337/getDetailledGrades/'+$scope.user.id).success(function(data){
+    $scope.user.nbGrades = data.nbGrades;
+    $scope.setNote(Math.round(data.technique), 0);
+    $scope.setNote(Math.round(data.frappe), 1);
+    $scope.setNote(Math.round(data.physique), 2);
+    $scope.setNote(Math.round(data.fair_play), 3);
+    $scope.setNote(Math.round(data.assiduite), 4);
+  }).error(function(){
+    console.log('error');
+  });
 
 }
 
 
 
-    $scope.initNotes();
+$scope.initNotes();
 
-  $scope.displayNotes = function(){
-    if($scope.user.nbGrades<=1)
-      return $scope.user.nbGrades+" personne";
-    else
-      return $scope.user.nbGrades+ " personnes";
+$scope.displayNotes = function(){
+  if($scope.user.nbGrades<=1)
+    return $scope.user.nbGrades+" personne";
+  else
+    return $scope.user.nbGrades+ " personnes";
+}
+
+
+$scope.computeChatNotif = function(){
+  console.log($localStorage.chats);
+  angular.forEach($localStorage.chats,function(chat){
+    if(chat.messages.length>0){
+    if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
+      $rootScope.nbChatsUnseen++;
+      console.log($rootScope.nbChatsUnseen);
+    }
   }
+  });
+}
+
+$scope.computeChatNotif();
 
 })
 

@@ -17,24 +17,22 @@ angular.module('connections',[])
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
               friend.statut = data[1][index]; 
-              });
-            if(finish)  
-              $location.path('/user/profil');
-            finish = true;
-            }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
+            });
 
-          $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
-            $rootScope.nbNotif = nb.length;
-            console.log(nb);
-            if(finish)
-              $location.path('/user/profil');
-            finish = true;
-          });
-        }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
-      });
-    },function(){$scope.err = "Erreur lors de la connexion via facebook"});
+            $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+              $localStorage.chats=data;
+            });
 
-  };
+            $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+              $rootScope.nbNotif = nb.length;
+              $location.path('/user/profil');
+            });           
+          }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
+        });
+}).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
+},function(){$scope.err = "Erreur lors de la connexion via facebook"});
+
+};
 })
 
 
@@ -52,13 +50,22 @@ angular.module('connections',[])
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
           friend.statut = data[1][index]; 
-        });  
-        $location.path('/user/profil');
+        });
       }).error(function(err){ console.log('error')});
+
+      $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+        $localStorage.chats=data;
+        console.log($localStorage.chats);
+      });
+
+      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+        $rootScope.nbNotif = nb.length;
+        console.log(nb);
+        $location.path('/user/profil');
+      });                 
     }).error(function(){
      $scope.err = "Identifiant ou mot de passe incorrect.";
-   });
-    
+   });   
   }
 })
 

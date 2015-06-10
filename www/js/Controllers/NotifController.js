@@ -23,4 +23,15 @@ angular.module('notif',[])
 				$ionicLoading.hide(); $scope.notifs = $localStorage.notifs;
 		});
 	}).error(function(){$scope.err = "Erreur lors de la requête";});
+
+
+
+
+
+
+	// $scope.launchElection = function(foot){
+
+
+	// }
+
 })
