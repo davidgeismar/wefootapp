@@ -2228,11 +2228,16 @@ a{
  	}
 
  	.number_players_profil {
- 		margin-left: 70px;
  		white-space: nowrap;
  		font-size: 11px;
  	}
-
+ 	.indic-profil{
+ 		float: right;
+ 	}
+ 	.left_player_profil{
+ 		margin-left: 15px;
+ 		margin-top: 63px;
+ 	}
  	.img_friends_profil {
  		width: 30px;
  		display: inline;
@@ -2240,6 +2245,7 @@ a{
  	}
  	.level_foot_profil {
  		margin-top: 35px;
+ 		float: right;
  	}
 
  	.bonhomme_profil {
