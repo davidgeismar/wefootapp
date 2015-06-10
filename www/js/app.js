@@ -114,7 +114,9 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         case 'footConfirm':
         return ['à confirmé sa présence à votre foot.','/friend/'];
         case 'footAnnul':
-        return['à annulé son foot.'];
+        return ['à annulé son foot.'];
+        case 'footDemand':
+        return['demande à participer à votre foot.','/friend/'];
     }
   };
 
