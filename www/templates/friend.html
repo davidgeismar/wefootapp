@@ -20,10 +20,12 @@
 	<p>Poste : {{friend.poste}}</p>  
 </div>
 
-<a href="#/login"><button class="button button_defier">
+<a ng-hide="isInvitationConfirmation" href="#/login"><button class="button button_defier">
 	Défier ce joueur
 </button></a>
 
+<button ng-show="isInvitationConfirmation" ng-click="acceptInvitation(true,friend.id)" class="dont-accept-invitation-btn">Accepter ce joueur</button>
+<button ng-show="isInvitationConfirmation" ng-click="acceptInvitation(false,friend.id)" class="accept-invitation-btn">Ne pas accepter ce joueur</button>
 <div class="note_friend">
       <div class="icon_menu icon-techB">
       </div>
@@ -59,7 +61,7 @@
 	<p>(noté par {{displayNotes()}})</p>
 </div>
 
-<a href="#/noter"><button class="button button_noter">
+<a ng-hide="isInvitationConfirmation" href="#/noter/{{friend.id}}"><button class="button button_noter last">
 	Noter ce joueur
 </button></a>
 </ion-content>

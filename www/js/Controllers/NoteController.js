@@ -1,5 +1,5 @@
 angular.module('note',[])
-.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
+.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
 
 	$scope.activate = [false, false, false, false, false];
 	$scope.notes = new Array(5);
@@ -15,11 +15,11 @@ angular.module('note',[])
 
 	$scope.initBypass = true;
 
-	$scope.friend = $localStorage.friend;
+	$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 
 	$scope.init = function(){
 	$scope.initBypass = true;
-					$http.get('http://localhost:1337/getGrade/'+$localStorage.user.id+'/'+$localStorage.friend.id).success(function(response){
+					$http.get('http://localhost:1337/getGrade/'+$localStorage.user.id+'/'+$scope.friend.id).success(function(response){
 						console.log(response);
 						if(response.length==0){
 							console.log("here");
@@ -69,13 +69,12 @@ angular.module('note',[])
 				cpt++;
 		}
 		if (cpt==5){
-			console.log("test1")
 			return 0;
 		}
 		else
 		{
-			console.log($scope.notes[0]);
-			$http.post('http://localhost:1337/Notation/grade',{noteur: $localStorage.user.id, note: $localStorage.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
+
+			$http.post('http://localhost:1337/Notation/grade',{noteur: $localStorage.user.id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
 
 			}).error(function(){
 				console.log('error');

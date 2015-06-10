@@ -20,6 +20,7 @@ var getStuffById = function(id,stuffArray){
 		if (id == stuffArray[i].id)
 			return stuffArray[i];
 	}
+  return null;
 };
 
 var getIndex = function(id, stuffArray){
@@ -332,7 +333,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
   $stateProvider.state('noter', {
     cache: false,
-    url: '/noter',
+    url: '/noter/:id',
     templateUrl: "templates/noter.html",
     controller: 'NoteCtrl'
 
