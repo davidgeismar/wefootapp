@@ -1,0 +1,69 @@
+<ion-view view-title="foots" class="background-foot">
+  <ion-content>
+  <section class="tab">
+   <ul class="tab-container">
+      <li ng-class="{active: tab==1}" class="foot-tab">
+        <span ng-class="{active: tab==1}" ng-click="tab = 1" class="gris">FOOTS <strong><br>A VENIR</strong></span>
+      </li>
+      <li ng-class="{active:tab==2}" class="foot-tab">
+        <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
+      </li>
+      <div ng-show="tab == 1">
+        <div class="background-foot">
+          <div ng-click="go(foot.id)" class="list card" ng-repeat= "foot in footTodo">
+            <div class="item item-divider item-divider-foot">
+              <div class="foot_name">
+                <span class="img_pla_foot">
+                <p class="nb_player_foot">{{foot.confirmedPlayers}}</p>
+                <img ng-src="img/icon_bonhomme_bleufonce.svg"/>
+                </span>
+                <p>{{foot.orgaName}}</p>
+                <img class="img_level_foot" ng-src="img/niveau_3.svg"/>
+              </div>
+            </div>
+            <div class="item item-text-wrap row">
+              <div class="col col-70 date_time_foot">
+                 <p><strong>{{foot.dateString}}</strong></p>
+                 <p style="text-transform: uppercase;">{{foot.field.name}}</p>
+                 <p class="places_foot">Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</p>
+              </div>
+              <!-- <div ng-if="foot.booked == 1" class="col col-30 booked_foot">
+                <p> Reservé </p>
+              </div>
+              <div ng-if="foot.booked == 0" class="col col-50 booked_foot not_booked">
+                <p> A Reserver </p>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-show="tab == 2">
+        <ion-scroll direction="y" class="background-foot">
+          <div class="list card" ng-click="go(foot.id)" ng-repeat= "foot in footInvitation">
+            <div class="item item-divider item-divider-foot">
+              <div class="foot_name">
+                <span class="img_pla_foot">
+                <p class="nb_player_foot">{{foot.confirmedPlayers}}</p>
+                <img ng-src="img/icon_bonhomme_bleufonce.svg"/>
+                </span>
+                <p>{{foot.orgaName}}</p>
+                <img class="img_level_foot" ng-src="img/niveau_3.svg"/>
+              </div>
+            </div>
+            <div class="item item-text-wrap row">
+              <div class="col col-70 date_time_foot">
+                 <p><strong>{{foot.dateString}}</strong></p>
+                 <p style="text-transform: uppercase;">{{foot.fieldName}}</p>
+                 <p class="places_foot">Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</p>
+              </div>
+              <div class="col col-30 answer_foot">
+                <button class="button button_assertive"> REPONDRE </button>
+              </div>
+            </div>
+          </div>
+        </ion-scroll>
+      </div>
+    </ul>
+  </section>
+</ion-content>
+</ion-view>

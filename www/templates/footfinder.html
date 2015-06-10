@@ -1,0 +1,44 @@
+<ion-view view-title='footfinder'>
+    <ion-header-bar class="actu_header">
+     <a class="icon_modal" href="#/user/profil"><i class="ion-chevron-left"></i></a>
+ 	 <h1 class="title">Rechercher un foot</h1>
+	</ion-header-bar>
+    <ion-content>
+    	<div class="header-footfinder">
+    		<div class="select-place">
+       			<input ng-model="params.field" ng-keyup="getData(params)" placeholder="Saisir un lieu"/>
+      			<i class="ion-ios-location-outline"></i>
+      		</div>
+      		<div class="range-footfinder range range-positive">
+      			<input type="range" ng-change="updateDate()" ng-model="params.dateValue" min="0" max="4"><p class="date-footfinder">{{date}}</p>
+      		</div>
+      	</div>
+      	<ion-scroll direction="y" class= "carte_foots background_footfinder">
+      	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results">
+            <div class="row">
+              <div class="col col-25">
+                <div class="img_chat"><img ng-src="img/default_pic.jpg" alt=""></div>
+              </div>
+                <div class= "col col-50 info_foots">
+                  <div class="bleuciel"> <strong>{{foot.orgaName}}</strong></div>
+                   <p class="bleufonce"><strong>{{foot.dateString}}</strong></p>
+                   <p style="text-transform: uppercase;" class="ng-binding">{{foot.field.name}}</p>
+                </div>
+                <div class="col col-25 fleche_bleu_fonce_foots"><img src="img/fleche_bleufonce.svg" alt=""></div>
+            </div>
+
+              <div class="row nbredejoueur_foots">
+                <div class="col-25"><img class="img_level_foots" ng-src="img/niveau_3.svg" src="img/niveau_3.svg"></div>
+                <div class="col-25"></div>
+
+                <div class="col-25">
+                 <p class="bleufonce nbreplace"> <strong>Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</strong></p>
+                </div>
+                <div class="col-25">
+                  <img ng-src="img/icon_bonhomme_bleufonce.svg" height="30" class="bonhomme_foots">
+                </div>
+              </div>
+        </div>
+    	</ion-scroll>
+    </ion-content>
+</ion-view>

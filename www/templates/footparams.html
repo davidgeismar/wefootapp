@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="col">
-          <div ng-click="showHourPicker()" class="item item-icon-left item-icon-right" href="#">
+          <div ng-click="showHourPicker()" class="item item-icon-left item-icon-right">
             <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
             <p class="time_date">{{hour}}</p>
             <i class="ion-chevron-down arrow_cal"></i>
@@ -74,21 +74,21 @@
           </a>
         </div>
       </div>
-      <div class="private_foot" ng-class="{hidden: foot.priv == true}">
+<!--       <div class="private_foot" ng-if="foot.priv">
         <p class="type-foot">Votre Foot est privé. </p>
         <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
-      </div>
-      <div class="public_foot hidden" ng-class="{hidden: foot.priv == false}">
+      </div> -->
+<!--       <div class="public_foot hidden" ng-if="!foot.priv">
         <p class="type-foot">Votre Foot est publique. </p>
         <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
-      </div>
+      </div> -->
       <a class="item item-icon-left level_foot" href="#">
        <div class="text-center"> <p>Niveau du Foot</p></div>
        <div class="row">
           <div class="size_level col align" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img src="../img/niveau_1.svg"/><p>Débutant</p></div>
           <div class="size_level col align" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img src="../img/niveau_2.svg"/><p>Moyen</p></div>
           <div class="size_level col align" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img src="../img/niveau_3.svg"/><p>Expert</p></div>
-          <div class="size_level col align" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img src="../img/niveau_tous.svg"/><p>Tous</p></div>
+          <div class="size_level col align" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img src="../img/niveau_0.svg"/><p>Tous</p></div>
        </div>
       </a>
 

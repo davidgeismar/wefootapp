@@ -2,7 +2,9 @@ angular.module('connections',[])
 
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location){
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location,$rootScope){
+  var finish = false;
+
   $scope.facebookConnect = function(){
     OpenFB.login('email','public_profile','user_friends').then(function(){
       OpenFB.get('/me').success(function(data){;
@@ -16,20 +18,18 @@ angular.module('connections',[])
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
               friend.statut = data[1][index]; 
             });
-            $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
-              console.log(data);
 
-            }).error(function(err){ console.log('error')});
             $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
               $localStorage.chats=data;
-              console.log($localStorage.chats);
-                          $location.path('/user/profil');
-        // $scope.displayer();
-      });  
+            });
 
+            $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+              $rootScope.nbNotif = nb.length;
+              $location.path('/user/profil');
+            });           
           }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
-        }).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
-});
+        });
+}).error(function(err){ $scope.err = "Erreur lors de la connexion via facebook"});
 },function(){$scope.err = "Erreur lors de la connexion via facebook"});
 
 };
@@ -51,22 +51,21 @@ angular.module('connections',[])
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
           friend.statut = data[1][index]; 
         });
-        $http.get('http://localhost:1337/getChatNotif/'+data.id).success(function(data){
-          console.log(data);
-
-        }).error(function(err){ console.log('error')});
-        $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
-          $localStorage.chats=data;
-          console.log($localStorage.chats);
-        // $scope.displayer();
-        $location.path('/user/profil');
-      });
-        
       }).error(function(err){ console.log('error')});
+
+      $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+        $localStorage.chats=data;
+        console.log($localStorage.chats);
+      });
+
+      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+        $rootScope.nbNotif = nb.length;
+        console.log(nb);
+        $location.path('/user/profil');
+      });                 
     }).error(function(){
      $scope.err = "Identifiant ou mot de passe incorrect.";
-   });
-    
+   });   
   }
 })
 

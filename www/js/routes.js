@@ -89,6 +89,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     }
   })
 
+
+
   $stateProvider.state('friend', {
     cache: false,
     url: '/friend',
