@@ -58,7 +58,7 @@ angular.module('connections',[])
         console.log($localStorage.chats);
       });
 
-      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',data).success(function(nb){
         $rootScope.nbNotif = nb.length;
         console.log(nb);
         $location.path('/user/profil');

@@ -8,6 +8,21 @@ angular.module('friend',[])
 	$scope.starStatus = new Array(5);
 	console.log($scope.friend);
 
+
+	if(getStuffById($stateParams.id,$localStorage.friends)){
+		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
+		$scope.isInvitationConfirmation = false;
+	}
+	else{
+		$scope.isInvitationConfirmation = true;
+		$http.get('http://localhost:1337/get/user/'+$stateParams.id).success(function(user){
+			$scope.friend = user;
+
+		});
+
+	}
+
+
 	for(var i=0; i<5; i++) {
 		$scope.starStatus[i] = new Array(5);
 	}
@@ -49,6 +64,8 @@ angular.module('friend',[])
 	}
 
 
+
+
 	//Affiche correctement le nombre de votes
 	$scope.displayNotes = function(){
 		if($scope.friend.nbGrades<=1)
@@ -59,7 +76,15 @@ angular.module('friend',[])
 
 	$scope.initNotes();
 
+	$scope.acceptInvitation = function (yesNo, userId){
+		if(yesNo){
+			//SEND ACCEPTATION
+		}
+		else{
+			//SEND REFUSATION
+		}
+		
 
-
+	}
 
 })
