@@ -534,6 +534,9 @@ a{
 	background-color: #fff;
 	left: 146px;
 }
+.container_actu{
+	margin-top: -50px;
+}
 .left-side-slider i{
 	opacity: 1;
 }
@@ -703,7 +706,6 @@ a{
 .content_menu{
 	background-color: #28385c;
 }
-
 
 .info_menu{
 	position: relative;
@@ -1276,7 +1278,7 @@ a{
 	background-size:contain;
 	width: 40px;
 	display: inline-block;
-	background-image: url('../img/icon_bonhomme_carnet_Bl.svg');
+	background-image: url('../img/icon_bonhomme_carnet_bleu.svg');
 	float: right;
 }
 .one_search .ion-checkmark-round{
@@ -2035,6 +2037,9 @@ a{
   			width: 20px;
   			margin-left: 0px;
   		}
+  		.day_timeline p{
+  			font-size: 12px;
+  		}
   	}
   	/* END MEDIA QUERY */
   	.field_search_text{
@@ -2222,21 +2227,15 @@ a{
 
  	}
 
- 	.nowrap_foot {
- 		white-space: nowrap;
- 		margin-left: -20px;
- 	}
-
- 	.number_players_profil {
- 		white-space: nowrap;
- 		font-size: 11px;
+ 	p.number_players_profil {
+ 		font-size: 9px;
  	}
  	.indic-profil{
  		float: right;
  	}
  	.left_player_profil{
- 		margin-left: 15px;
  		margin-top: 63px;
+ 		margin-left: -25px;
  	}
  	.img_friends_profil {
  		width: 30px;
@@ -2284,5 +2283,20 @@ a{
  		display: inline;
  		margin-bottom: 7px;
  	}
-
-
+ .default-friend{
+ 	font-weight: 100;
+ 	font-style: italic;
+ }
+ .button-confirm-friend{
+ 	width: 100px;
+ 	line-height: 25px;
+ 	height: 70px;
+ 	font-weight: bold;
+ }
+ .button-container-friend{
+ 	margin-top: -50px;
+  	margin-bottom: 20px;
+  	width: 205px;
+  	margin-left: auto;
+  	margin-right: auto;
+ }

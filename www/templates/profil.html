@@ -15,23 +15,24 @@
     </div>
 
     <!-- ACTUS SECTIONS -->
+  <div class="container_actu">
    <div ng-repeat="actus in actusByDay" class="row day_timeline">
-      <div class="col-25">
+      <div class="col-20">
         <p class= "date_timeline">{{dates[$index].substring(0,5)}}</p>
       </div>
-      <div class="col col-75 border_profil">
+      <div class="col col-80 border_profil">
         <div class="row" ng-repeat="actu in actus">
-          <div class="col-25">
+          <div class="col-10">
             <img class= "img_profil" ng-src="img/default_pic.jpg" alt="">
           </div>
-          <div class="col-50">
-             <p class="nowrap_foot"> <a href="#/{{actu.userLink}}" class="bleuciel">{{actu.userName}}</a> {{actu.texte}} <a class="bleuciel" ng-if="actu.userName2" href="#/{{actu.userLink2}}"> {{actu.userName2}} </a></p>
+          <div class="col-80 main_content_profil">
+             <p class="nowrap_foot"> <a href="#/{{actu.userLink}}" class="bleuciel">{{actu.userName}}</a> {{actu.texte}} <a class="bleuciel" ng-if="actu.userName2" href="#/{{actu.userLink2}}"> {{actu.userName2}}</a></p>
              <img ng-if="actu.related_info" class= "img_friends_profil" ng-src="img/default_pic.jpg" alt="">
              <img ng-if="actu.related_info" class= "img_friends_profil" ng-src="img/default_pic.jpg" alt="">
              <img ng-if="actu.userName2" class="img_friends_profil" ng-src="img/default_pic.jpg" alt="">
              <p class="nowrap_foot" ng-if="actu.related_info"> {{actu.related_info.dateString}} <br></p>
           </div>
-          <div class="col-25">
+          <div class="col-10">
             <p ng-if="actu.related_info" class="number_players_profil indic-profil">{{actu.related_info.format}}</p>
             <img ng-if="actu.userName2" ng-src="img/icon_bonhomme_carnet_bleu.svg" height="20" class="level_foot_profil bonhomme_profil" >
             <img ng-if="actu.related_info" class="img_level_foots number_players_profil level_foot_profil" ng-src="img/niveau_3.svg" src="img/niveau_{{actu.related_info.level}}.svg">
@@ -40,5 +41,6 @@
         </div>
       </div>
     </div>
+  </div>
   </ion-content>
 </ion-view>

@@ -13,19 +13,23 @@
 	<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
 </div>
 <div class="info_friend">
-	<p>Club Favori : {{friend.favorite_club}}</p>
+	<p>Club Favori : <span ng-if="friend.favorite_club">{{friend.favorite_club}}</span>
+  <span ng-if="!friend.favorite_club" class="default-friend">Aucun Club</span></p>
 
 </div>
 <div class="info_friend info_last">
-	<p>Poste : {{friend.poste}}</p>  
+	 <p>Poste : <span ng-if="friend.poste">{{friend.poste}</span>
+  <span ng-if="!friend.poste" class="default-friend">Aucun Poste</span></p>
+
 </div>
 
-<a ng-hide="isInvitationConfirmation" href="#/login"><button class="button button_defier">
+<!-- <a ng-hide="isInvitationConfirmation" href="#/login"><button class="button button_defier">
 	Défier ce joueur
-</button></a>
-
-<button ng-show="isInvitationConfirmation" ng-click="acceptInvitation(true,friend.id)" class="dont-accept-invitation-btn">Accepter ce joueur</button>
-<button ng-show="isInvitationConfirmation" ng-click="acceptInvitation(false,friend.id)" class="accept-invitation-btn">Ne pas accepter ce joueur</button>
+</button></a> -->
+<div ng-if="isInvitationConfirmation" class="button-container-friend">
+  <button ng-click="acceptInvitation(true)" class="button  button-positive button-confirm-friend">Accepter ce joueur</button>
+  <button ng-click="acceptInvitation(false)" class="button button-assertive button-confirm-friend">Refuser ce joueur</button>
+</div>
 <div class="note_friend">
       <div class="icon_menu icon-techB">
       </div>
@@ -58,10 +62,11 @@
     </div>
 
 <div class="nb_notes_friend">
-	<p>(noté par {{displayNotes()}})</p>
+  <p ng-if="nbGrades>1">(noté par {{nbGrades}} personnes)</p>
+  <p ng-if="nbGrades<1">(noté par {{nbGrades}} personne)</p>
 </div>
 
-<a ng-hide="isInvitationConfirmation" href="#/noter/{{friend.id}}"><button class="button button_noter last">
+<a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last">
 	Noter ce joueur
 </button></a>
 </ion-content>

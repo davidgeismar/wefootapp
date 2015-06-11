@@ -36,7 +36,7 @@ angular.module('connections',[])
 })
 
 
-.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
+.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope){
   $scope.err = "";
   $scope.user={};
 

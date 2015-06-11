@@ -117,6 +117,10 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['à annulé son foot.'];
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
+        case 'demandAccepted':
+        return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
+        case 'demandRefused':
+        return ['à accepté votre demande pour rejoindre son foot.'];
     }
   };
 
@@ -148,7 +152,9 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         case 'chevreDuMatch':
         return['a été élu chèvre du match.','/friend/'];
         case 'footConfirm':
-        return ['participe à un foot','/foot/'];
+        return ['participe à un foot.','/foot/'];
+        case 'demandAccepted':
+        return ['participe à un foot.','/foot/'];
     }
   };
   $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
@@ -156,7 +162,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     actu.userLink = '/friend/'+user.id;
     actu.texte = parseActu(actu.typ)[0];
 
-    if(actu.typ == 'footConfirm'){
+    if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
       $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
         console.log(data);
         actu.related_info = data;
@@ -169,8 +175,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     }
     if(actu.typ == 'newFriend'){
       $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
-        actu.userName2 = user.first_name;
-        actu.userLink2 = '/friend/'+user.id;
+        actu.userName2 = data.first_name;
+        actu.userLink2 = '/friend/'+data.id;
         if(callback)
           callback();
       });
