@@ -1,11 +1,14 @@
-angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage, $location){
+angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage, $location, $stateParams){
 
 	$scope.homme;
 	$scope.chevre;
 	$scope.foot = $localStorage.footSelected;
 	$scope.usersSelected = new Array();
 	$scope.user = $localStorage.user;
+
 	$scope.users;
+
+	$scope.foot = { id : $stateParams.id};
 
 	$scope.selectedOrNot = function(hommeOuChevre, userId){
 		if(hommeOuChevre=='homme'){
@@ -33,7 +36,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.elir = function(){
 		if($scope.homme || $scope.chevre){
-			$http.post('http://localhost:1337/vote/create',{electeur:1, homme:$scope.homme, chevre:$scope.chevre, foot:1}).success(function(){
+			$http.post('http://localhost:1337/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
 				$scope.showAlert();
 			}).error(function(){
 				console.log('err');
@@ -45,20 +48,19 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	}
 
 	$scope.init = function(){
-		$scope.foot = new Object();
-			// $localStorage.footSelected.id
-			$http.get('http://localhost:1337/getVotedStatus/'+1+'/'+1).success(function(result){
+
+			$http.get('http://localhost:1337/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
 				//result (vrai == déjà voté, faux == pas encore voté)
-				if(result){
+				if(!result){
 			//On récupère les joueurs d'un match
-			$http.get('http://localhost:1337/getVoters/'+1).success(function(results){
+			$http.get('http://localhost:1337/getVoters/'+$scope.foot.id).success(function(results){
 				$scope.users = results;
 				console.log(results);
 			}).error(function(){
 				console.log('err');
 			});
 
-			$http.get('http://localhost:1337/foot/getInfo/'+1).success(function(elem){
+			$http.get('http://localhost:1337/foot/getInfo/'+$scope.foot.id).success(function(elem){
 				$scope.foot.organisator = elem.orga;
 				$scope.foot.orgaName = elem.orgaName;
 				$scope.foot.field = elem.field;

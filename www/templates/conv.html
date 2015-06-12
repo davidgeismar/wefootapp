@@ -6,15 +6,15 @@
 <div class="content_conv">
     <div class="conv_ban">
         <h2 class="conv_ban_title">
-            Foot de {{details.orgaName}}
+            Foot de {{detail.orgaName}}
         </h2>
         <p class="conv_ban_text">
-            Le {{details.field.date}} à <span>19h</span> au <span>{{details.field.name}}</span>
+            Le {{detail.field.date}} à <span>19h</span> au <span>{{detail.field.name}}</span>
         </p>
     </div>
 </div>
-<ion-content class="padding padding_top has-header has-subheader has-footer">
-<div class="content_conv_box">
+<ion-content class="padding padding_top has-header has-subheader has-footer padding_bottom">
+<div class="content_conv_box" id="convContent">
     <dl class="conv_box" ng-repeat="message in chat.messages">
         <dd ng-if="message.senderId!=user.id" class="from">
             <div class="img_chat_conv">
@@ -34,14 +34,11 @@
         </dd>
     </dl>
 </div>
-
-
-
 </ion-content>
-<ion-footer-bar class="input_message_wrapper">
-
-<input class="item item_conv item-input" ng-model="messageContent" type="text" placeholder=" Saisissez votre message ici">
-<button class="button_send_message button" style="font-weight:700;" ng-click="sendMessage(messageContent)" ng-class="showMessageButton(messageContent)">Envoyer</button>
+<ion-footer-bar class="input_message_wrapper" id="footerChat">
+<!-- class="item item_conv item-input"-->
+ <textarea id="messageArea" ng-model="messageContent" type="text" placeholder="Saisissez votre message ici" ng-keyup="autoExpand()"></textarea>
+<button class="button_send_message button" style="font-weight:700;" ng-click="sendMessage(messageContent)" ng-class="showMessageButton(messageContent)"><i class="ion-paper-airplane"></i></button>
 
 </ion-footer-bar>
 </ion-view>

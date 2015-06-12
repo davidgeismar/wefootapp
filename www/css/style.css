@@ -930,7 +930,7 @@ a{
 	margin-top: 10px;
 }
 .chat_box_title{
-	font-size: 8px;
+	font-size: 10px;
 	font-family: "Ubuntu";
 	color: rgb( 78, 78, 78 );
 	font-weight: bold;
@@ -1100,6 +1100,7 @@ a{
 .img_chat_conv{
 	width: 35px;
 	display: inline-block;
+	vertical-align: top;
 }
 .img_chat_conv img{
 	border-radius: 50%;
@@ -1564,6 +1565,7 @@ a{
   		font-size: 13px;
   		color: #4e4e4e;
   		margin-bottom: 0px;
+  		padding-right:20px;
   	}
   	.content-notif{
   		margin-left: 10px;
@@ -2279,4 +2281,78 @@ a{
  		margin-bottom: 7px;
  	}
 
+ 	#convContent{
+ 		padding-bottom: 40px;
+ 	}
+
+ 	textarea {
+ 		resize: none;
+ 		height:auto;
+ 		color:#999;
+ 		font-weight:400;
+ 		height:44px;
+ 		font-family:'Ubuntu', Helvetica, Arial, sans-serif;
+ 		width:100%;
+ 		background:#fff;
+ 		border-radius:3px;
+ 		line-height:1.5em;
+ 		border:none;
+ 		box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+ 		padding:5px;
+ 		-webkit-transition: height 2s ease;
+ 		-moz-transition: height 2s ease;
+ 		-ms-transition: height 2s ease;
+ 		-o-transition: height 2s ease;
+ 		transition: height 2s ease;
+ 	}
+
+/* 	.not_read_chat_desc_time{
+ 		color:rgb(95, 13, 136);
+ 	}*/
+ 	.not_read_short_message{
+ 		font-weight:700;
+ 		color:#000;
+ 	}
+
+ 	@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+@-moz-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+.not_read_chat_desc_time {
+-webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: ease-in-out;
+    
+-moz-animation-direction: normal;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: blink;
+    -moz-animation-timing-function: ease-in-out;    
+}
 

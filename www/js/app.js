@@ -1,6 +1,4 @@
 //GLOBAL FUNCTIONS
-
-
 var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
@@ -22,6 +20,7 @@ var getStuffById = function(id,stuffArray){
 	}
   return null;
 };
+
 
 var getIndex = function(id, stuffArray){
   for(var i = 0; i<stuffArray.length;i++){
@@ -45,11 +44,13 @@ var getHour = function(date){
   if(m<10) m= '0'+m;
   return (n+'h'+m)
 };
+
+
 var notify = function(notif,callback){
   if(callback)
     io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
   else
-  io.socket.post('http://localhost:1337/actu/newNotif',notif);
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
 }
 
 
@@ -75,7 +76,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
- 
+
 .factory('$confirmation',['$ionicPopup',function($ionicPopup) {
   var showConfirm = function(text,ok){
     var confirmPopup = $ionicPopup.confirm({
@@ -117,14 +118,20 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['à annulé son foot.'];
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
-    }
-  };
+        case 'endGame':
+        return['cliquer pour élir l\'homme et la chèvre du match', '/election/'];
+      }
+    };
 
-  $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
-    if(user.id == $localStorage.user.id)
-     notif.userName == "Vous";
-    else
+    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+      if(user.id == $localStorage.user.id)
+       notif.userName == "Vous";
+     else{
+      if(notif.typ!="endGame")
       notif.userName = user.first_name;
+      else
+        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
+    }
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
@@ -147,6 +154,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   $rootScope.nbNotif = 0;
   $rootScope.nbChatsUnseen = 0;
   $localStorage.chats = [];
+
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -179,12 +187,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     }
 
     if(data.typ == 'footInvit'){
-        $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
-          data.organisator = info.orga;
-          data.orgaName = info.orgaName;
-          data.field = info.field;
-            $localStorage.footInvitation.push(data);
-        });
+      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
+        data.organisator = info.orga;
+        data.orgaName = info.orgaName;
+        data.field = info.field;
+        $localStorage.footInvitation.push(data);
+      });
     }
     
     if(data.typ == 'footAnnul'){
@@ -198,41 +206,60 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
 
 
+  //Nouveau chat 
+  io.socket.on('newChat',function(chat){
+    console.log(chat);
+    $localStorage.chats.push(chat);
+  });
 
-io.socket.on('newChat',function(chat){
-  console.log(chat);
-  $localStorage.chats.push(chat);
-});
+  //Nouveau message dans un chat
+  io.socket.on('newMessage',function(message){
 
-io.socket.on('newMessage',function(message){
+    var index = getIndex(message.chat, $localStorage.chats);
 
-  var index = getIndex(message.chat, $localStorage.chats);
+    console.log(message);
+    $localStorage.chats[index].messages.push(message);
+    if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
+      $localStorage.chats[index].seen = false;
+    }
 
-  console.log(message);
-  $localStorage.chats[index].messages.push(message);
-  if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
-    $rootScope.nbChatsUnseen++;
+    if(typeof $rootScope.updateMessage == 'function'){
+      $rootScope.updateMessage();
+    }
+  });
+
+  //Nouvel user dans un chat existant
+
+  io.socket.on('newChatter', function(chatter){
+    var index = getIndex(chatter.chat, $localStorage.chats);
+    $localStorage.chats[index].users.push(chatter);
+  })
+
+  $rootScope.getNbChatsNotif = function (){
+    var cpt = 0;
+    for (var i = 0; i<$localStorage.chats.length; i++){
+      if(!$localStorage.chats[i].seen){
+        cpt++;
+      }
+    }
+    console.log(cpt);
+    return cpt;
   }
 
-  if(typeof $rootScope.updateMessage == 'function'){
-    $rootScope.updateMessage();
-  }
-});
 
 
 
+  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
-OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
-
-$ionicPlatform.ready(function() {
+  $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-if(window.cordova && window.cordova.plugins.Keyboard) {
-  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-}
-if(window.StatusBar) {
-  StatusBar.styleDefault();
-}
+  if(window.cordova && window.cordova.plugins.Keyboard) {
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  }
+  if(window.StatusBar) {
+    StatusBar.styleDefault();
+  }
 });
 
 })
@@ -343,7 +370,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('election', {
     cache: false,
-    url: '/election',
+    url: '/election/:id',
     templateUrl: "templates/election.html",
     controller: 'ElectionCtrl'
 
@@ -355,7 +382,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/profiltaff',
     templateUrl: "templates/profiltaff.html"
 
-      })
+  })
 
 
   $stateProvider.state('newField', {

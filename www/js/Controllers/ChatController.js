@@ -13,7 +13,14 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 
 	}
 
+	var shrinkMessage = function(message){
+		message = message.replace(/[\n\r]/g, ' ');
+		if(message.length>80){
+			message = message.substring(0,88)+"...";
+		}
+		return message;
 
+	};
 	//Récupère les chats de l'utilisateur
 	// $scope.init = function(){
 	// 	if(!$localStorage.refreshChat){
@@ -40,45 +47,45 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 			// console.log(chat.updatedAt);
 			if(chat.messages.length>0){
 				var newDate = new Date(chat.messages[chat.messages.length-1].createdAt);
+				var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);
 				if(chat.typ==1){
-					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:chat.messages[chat.messages.length-1].messagestr, titre:"test"});
+					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:lastMessage, titre:"test", seen:chat.seen });
 				}
 				else if(chat.typ==2){
-					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:chat.messages[chat.messages.length-1].messagestr, titre:chat.desc});
+					console.log("seen"+chat.seen);
+					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:lastMessage, titre:chat.desc, seen:chat.seen });
 				}
 				else if(chat.typ==3){
-					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:chat.messages[chat.messages.length-1].messagestr, titre:chat.desc});
+					$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:lastMessage, titre:chat.desc, seen:chat.seen });
 				}
 			}
 			else{
-				var newDate = new Date(chat.updatedAt);
-				$localStorage.chatsDisplay.push({id:chat.id, lastTime:newTime(newDate), lastMessage:"", titre:"test"});
+				$localStorage.chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"", titre:chat.desc});
 			}
 
 		});
 
 
-	}
+}
 
+$scope.displayer();
+
+
+$scope.launchChat = function(chatId){
+	$localStorage.chat = getStuffById(chatId, $scope.chats);
+	$location.path('/conv');
+}
+
+$rootScope.openModal = function() {
+	$rootScope.modal2.show();
+}
+
+$rootScope.closeModal = function() {
+	$rootScope.modal2.hide();
+}
+
+if($localStorage.refreshChat){
 	$scope.displayer();
-
-
-
-	$scope.launchChat = function(chatId){
-		$localStorage.chat = getStuffById(chatId, $scope.chats);
-		$location.path('/conv');
-	}
-
-	$rootScope.openModal = function() {
-		$rootScope.modal2.show();
-	}
-
-	$rootScope.closeModal = function() {
-		$rootScope.modal2.hide();
-	}
-	
-	if($localStorage.refreshChat){
-		$scope.displayer();
-	}
+}
 
 })

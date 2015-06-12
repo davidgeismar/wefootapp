@@ -21,6 +21,7 @@ angular.module('connections',[])
 
             $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
               $localStorage.chats=data;
+              initChatsNotif();
             });
 
             $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
@@ -33,10 +34,28 @@ angular.module('connections',[])
 },function(){$scope.err = "Erreur lors de la connexion via facebook"});
 
 };
+
+var initChatsNotif = function (){
+
+  $localStorage.chats.forEach(function(chat){
+    if(chat.messages.length>0){
+      if(chat.messages[chat.messages.length-1].createdAt>chat.lastTime){
+        chat.seen = false;
+      }
+      else
+        chat.seen = true;
+    }
+    else
+      chat.seen = true;
+  });
+
+  console.log($localStorage.chats);
+
+}
 })
 
 
-.controller('LoginCtrl', function($scope, $http, $location, $localStorage){
+.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope){
   $scope.err = "";
   $scope.user={};
 
@@ -55,7 +74,7 @@ angular.module('connections',[])
 
       $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
         $localStorage.chats=data;
-        console.log($localStorage.chats);
+        initChatsNotif();      
       });
 
       $http.post('http://localhost:1337/user/getLastNotif',data).success(function(nb){
@@ -67,6 +86,25 @@ angular.module('connections',[])
      $scope.err = "Identifiant ou mot de passe incorrect.";
    });   
   }
+
+  var initChatsNotif = function (){
+
+    $localStorage.chats.forEach(function(chat){
+      if(chat.messages.length>0){
+        if(chat.messages[chat.messages.length-1].createdAt>chat.lastTime){
+          chat.seen = false;
+        }
+        else
+          chat.seen = true;
+      }
+      else
+        chat.seen = true;
+    });
+
+    console.log($localStorage.chats);
+
+  };
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage){
