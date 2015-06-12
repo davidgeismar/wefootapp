@@ -16,7 +16,7 @@ angular.module('notif',[])
 		if(data.length == 0)
 			$ionicLoading.hide();
 		async.each($localStorage.notifs, function(notif,callback){
-			$handleNotif(notif,function(){
+			$handleNotif.handleNotif(notif,function(){
 				callback();
 			});
 			},function(){ 

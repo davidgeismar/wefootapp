@@ -26,7 +26,6 @@ $scope.addFavorite = function(target){
 else if($scope.friends[targetPosition].statut==1){
   $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $scope.friends[targetPosition].statut = 0;
-    console.log('hgere2');
   }).error(function(){
     console.log('error');
   });
@@ -34,9 +33,7 @@ else if($scope.friends[targetPosition].statut==1){
 }
 
 $scope.goFriend = function(friend){
-console.log(friend.id)
   $location.path('/friend/'+friend.id);
-
 }
 $rootScope.openModal = function() {
   $rootScope.modal.show();
