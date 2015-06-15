@@ -9,10 +9,10 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
   $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].seen = true;
   $ionicScrollDelegate.scrollBottom();
   $rootScope.updateMessage = function(){
-    $scope.$digest();
-    $ionicScrollDelegate.scrollBottom();
     $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
     io.socket.post('http://localhost:1337/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+    $scope.$digest();
+    $ionicScrollDelegate.scrollBottom();
   }
 
 

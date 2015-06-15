@@ -13,6 +13,17 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 
 	}
 
+	$rootScope.getNbChatsNotif = function (){
+		var cpt = 0;
+		for (var i = 0; i<$localStorage.chats.length; i++){
+			if(!$localStorage.chats[i].seen){
+				cpt++;
+			}
+		}
+		console.log(cpt);
+		return cpt;
+	}
+
 	var shrinkMessage = function(message){
 		message = message.replace(/[\n\r]/g, ' ');
 		if(message.length>80){
@@ -66,26 +77,26 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		});
 
 
-}
+	}
 
-$scope.displayer();
-
-
-$scope.launchChat = function(chatId){
-	$localStorage.chat = getStuffById(chatId, $scope.chats);
-	$location.path('/conv');
-}
-
-$rootScope.openModal = function() {
-	$rootScope.modal2.show();
-}
-
-$rootScope.closeModal = function() {
-	$rootScope.modal2.hide();
-}
-
-if($localStorage.refreshChat){
 	$scope.displayer();
-}
+
+
+	$scope.launchChat = function(chatId){
+		$localStorage.chat = getStuffById(chatId, $scope.chats);
+		$location.path('/conv');
+	}
+
+	$rootScope.openModal = function() {
+		$rootScope.modal2.show();
+	}
+
+	$rootScope.closeModal = function() {
+		$rootScope.modal2.hide();
+	}
+
+	if($localStorage.refreshChat){
+		$scope.displayer();
+	}
 
 })

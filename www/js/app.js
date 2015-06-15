@@ -51,7 +51,25 @@ var notify = function(notif,callback){
     io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
   else
     io.socket.post('http://localhost:1337/actu/newNotif',notif);
-}
+};
+
+var initChatsNotif = function (chats){
+
+  chats.forEach(function(chat){
+    if(chat.messages.length>0){
+      var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
+      var lastTime = new Date (chat.lastTime);
+      if(lastMessage>lastTime){
+        chat.seen = false;
+      }
+      else
+        chat.seen = true;
+    }
+    else
+      chat.seen = true;
+  });
+
+};
 
 
 
@@ -119,13 +137,13 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
         case 'endGame':
-        return['cliquer pour élir l\'homme et la chèvre du match', '/election/'];
+        return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
         return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
         return ['à accepté votre demande pour rejoindre son foot.'];
-    }
-  };
+      }
+    };
 
 
     $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
@@ -133,7 +151,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
        notif.userName == "Vous";
      else{
       if(notif.typ!="endGame")
-      notif.userName = user.first_name;
+        notif.userName = user.first_name;
       else
         notif.userName = "Le foot de "+user.first_name+" est terminé, ";
     }
@@ -163,36 +181,36 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['participe à un foot.','/foot/'];
         case 'demandAccepted':
         return ['participe à un foot.','/foot/'];
-    }
-  };
-  $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
-    actu.userName = user.first_name;
-    actu.userLink = '/friend/'+user.id;
-    actu.texte = parseActu(actu.typ)[0];
+      }
+    };
+    $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
+      actu.userName = user.first_name;
+      actu.userLink = '/friend/'+user.id;
+      actu.texte = parseActu(actu.typ)[0];
 
-    if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-      $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
-        console.log(data);
-        actu.related_info = data;
-        date = new Date(data.date);
-        actu.related_info.dateString = getJour(date)+' à '+getHour(date);
-        actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
-        if(callback)
-          callback();
-      });
-    }
-    if(actu.typ == 'newFriend'){
-      $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
-        actu.userName2 = data.first_name;
-        actu.userLink2 = '/friend/'+data.id;
-        if(callback)
-          callback();
-      });
-    }
-    else if(callback){
-      callback();
-    }
-  });
+      if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
+        $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
+          console.log(data);
+          actu.related_info = data;
+          date = new Date(data.date);
+          actu.related_info.dateString = getJour(date)+' à '+getHour(date);
+          actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
+          if(callback)
+            callback();
+        });
+      }
+      if(actu.typ == 'newFriend'){
+        $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
+          actu.userName2 = data.first_name;
+          actu.userLink2 = '/friend/'+data.id;
+          if(callback)
+            callback();
+        });
+      }
+      else if(callback){
+        callback();
+      }
+    });
   };
 
   return handle;
@@ -272,7 +290,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
     console.log(message);
     $localStorage.chats[index].messages.push(message);
-    if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
+    var firstDate = new Date($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
+    var secondDate = new Date($localStorage.chats[index].lastTime);
+    console.log(firstDate);
+    console.log(secondDate);
+    var fiveSeconds = secondDate.getSeconds() + 5;
+    if(firstDate>secondDate+fiveSeconds){
       $localStorage.chats[index].seen = false;
     }
 
@@ -287,17 +310,6 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     var index = getIndex(chatter.chat, $localStorage.chats);
     $localStorage.chats[index].users.push(chatter);
   })
-
-  $rootScope.getNbChatsNotif = function (){
-    var cpt = 0;
-    for (var i = 0; i<$localStorage.chats.length; i++){
-      if(!$localStorage.chats[i].seen){
-        cpt++;
-      }
-    }
-    console.log(cpt);
-    return cpt;
-  }
 
 
 
