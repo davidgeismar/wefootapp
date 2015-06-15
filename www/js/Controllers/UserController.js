@@ -131,6 +131,8 @@ $scope.logout = function (){
       console.log('error');
     });
   }
+  else
+    $scope.results = [];
 }
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){

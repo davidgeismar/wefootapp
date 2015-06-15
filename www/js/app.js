@@ -31,6 +31,7 @@ var getIndex = function(id, stuffArray){
 };
 
 var getJour = function(date){
+  date = new Date(date);
   var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
   var m = mois[date.getMonth()];
@@ -39,6 +40,7 @@ var getJour = function(date){
 };
 
 var getHour = function(date){
+  date = new Date(date);
   var n = date.getHours();
   var m = date.getMinutes();
   if(n<10) n= '0'+n;
@@ -117,6 +119,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['à annulé son foot.'];
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
+        case 'footEdit':
+        return['à modifié son foot.','/friend/'];
         case 'demandAccepted':
         return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':

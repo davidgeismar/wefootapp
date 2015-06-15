@@ -1,0 +1,77 @@
+ <div class="modal">
+      <ion-header-bar  class="actu_header">
+      <div class="button button-clear" ng-click="closeModal3(false)"><span class="icon ion-chevron-down"></span></div>
+      <h1 class="title">Editer le foot</h1>
+    </ion-header-bar>
+ <ion-content>
+   		<div class="list text-center fond bottom-marged">
+   			<div class="field-name-edit">{{selectedField.name}}</div>
+      		<div class="list list-inset input-searchfield-edit">
+  				<label class="item item-input">
+    				<i class="icon ion-location placeholder-icon"></i>
+   					<input ng-keyup="searchField(word)" ng-model= "word" type="text" value="{{foot.field.name}}"
+   					 placeholder="Changer le terrain">
+  				</label>
+			</div>
+      	   	<ul class="list list-inset list-field-edit">
+      			<li ng-click="updateField(aField)" ng-repeat="aField in fields" class="item">
+      			    {{aField.name}}
+      			</li>
+      		</ul>
+      	</div>
+      <div class="row text-center">
+        <div class="col">
+          <div ng-click="showDatePicker()" class="item nativedatepicker">
+            <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
+            <p class="time_date"> {{date}} </p>
+            <i class="ion-chevron-down arrow_cal"></i>
+          </div>
+        </div>
+        <div class="col">
+          <div ng-click="showHourPicker()" class="item">
+            <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
+            <p class="time_date">{{hour}}</p>
+            <i class="ion-chevron-down arrow_cal"></i>
+          </div>
+        </div>
+      </div>
+      <a class="item item-icon-left" href="#">
+        <div class="row">
+          <div class="col col-25">
+            <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
+          </div>
+          <div class="col col-50 venue1">
+           <p>Nombre de joueurs</p>
+          </div>
+          <div class="col col-25 venue1">
+             <input maxlength="2" ng-model="foot.nbPlayer" value="{{foot.nbPlayer}}" class="input_player"/>
+          </div>
+        </div>
+      </a>
+      <a class="item item-icon-left" href="#">
+        <div class="row">
+          <div class="col col-25">
+            <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
+          </div>
+          <div class="col col-50 venue">
+            <p>Vos amis peuvent <br> inviter leurs amis</p>
+          </div>
+            <ion-toggle ng-model="foot.friendCanInvite" id="invite_friend_toggle">
+            </ion-toggle>
+        </div>
+      </a>
+      <a class="item item-icon-leftlevel_foot" href="#">
+       <div class="text-center"> <p>Niveau du Foot</p></div>
+       <div class="row">
+          <div class="size_level col" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img src="../img/niveau_1.svg"/><p>Débutant</p></div>
+          <div class="size_level col" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img src="../img/niveau_2.svg"/><p>Moyen</p></div>
+          <div class="size_level col" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img src="../img/niveau_3.svg"/><p>Expert</p></div>
+          <div class="size_level col" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img src="../img/niveau_0.svg"/><p>Tous</p></div>
+       </div>
+      </a>
+    <button ng-click="closeModal3(true)" class="button button-book-foot">
+      Valider
+    </button>
+  </div>
+  </ion-content>
+</div>

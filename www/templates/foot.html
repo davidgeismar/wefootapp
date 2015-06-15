@@ -5,6 +5,7 @@
 <i class="ion-chatbubbles ion-header-foot" ng-click="launchChat()"></i>
 </ion-header-bar>
 <ion-content class="has-header padding margin-content">
+<div class="err_container">{{err}}</div>
 <div class="header-foot">
 	<h4>FOOT DE {{foot.orgaName}}</h4>
 	<p>{{date}} {{foot.field.name}}</p>
@@ -24,7 +25,7 @@
 		<i class="ion-ios-world-outline"></i>
 		Ouvrir au public
 	</button>
-	<button class="boutton-foot">
+	<button ng-click="openModal3()" class="boutton-foot">
 		<i class="ion-edit"></i>
 		Editer ce foot
 	</button>

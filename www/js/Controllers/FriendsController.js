@@ -1,9 +1,5 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
-  // $http.post('http://localhost:1337/checkConnect',{id:$localStorage.user.id}).success(function(){    // Check if connected
-  // }).error(function(){
-  //   $location.path('/login');
-  // });
 $scope.user = $localStorage.user;
 switchIcon('icon_friend','search');
 $scope.friends = $localStorage.friends;

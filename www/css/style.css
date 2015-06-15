@@ -28,6 +28,9 @@ a{
 .scroll-content{
 	background-color: #F2F3F9;
 }
+.margin-top-ios{
+	margin-top: 30px;
+}
 ::-webkit-input-placeholder {
 	font-family: 'Ubuntu';
 }
@@ -88,7 +91,7 @@ a{
 	margin-top: 20px;
 	position: relative;
 	width: 120px;
-	bottom: 2px;
+	bottom: 5px;
 	display: inline-block;
 }
 .ion_dispo{
@@ -182,7 +185,7 @@ a{
 .input_player{
 	border: none;
 	border-bottom: 2px solid #006ddf;
-	width: 20px;
+	width: 35px;
 	margin-left: 30px;
 	position: relative;
 	bottom: 3px;
@@ -1297,10 +1300,7 @@ a{
 }
 
 .tab-container{
-	margin-top: 44px;
 	width:100%;
-
-
 }
 
 .foot-tab{
@@ -1445,6 +1445,7 @@ a{
   	.select-place input{
   		border: none;
   		color: #369bff;
+  		width: 90%;
   	}
   	.select-place i{
   		float: right;
@@ -1455,8 +1456,7 @@ a{
   		font-size: 15px;
   	}
   	.subtitle-footfield{
-  		width: 60%;
-  		margin-left: 20%;
+  		margin-left: 15%;
   		margin-top: 20px;
   	}
   	.subtitle-footfield p{
@@ -1468,9 +1468,9 @@ a{
   	}
   	.subtitle-footfield img{
   		width: 30px;
-  		float: right;
   		position: relative;
-  		bottom: 3px;
+  		top: 10px;
+  		left: 15px;
   	}
   	.header-footfield{
   		background-color: #fff;
@@ -1838,10 +1838,12 @@ a{
   	}
   	.range-footfinder{
   		width: 75%;
-  		margin-left: 10%;
+  		margin-left: 15%;
+  		padding: 0px;
   	}
   	.date-footfinder{
   		font-weight: bold;
+  		width: 150px;
   	}
   	.background_footfinder{
   		background-image: url('../img/photo-bg-footfinder.png');
@@ -1945,6 +1947,7 @@ a{
   		.subtitle-footfield{
   			width: 70%;
   			margin-left: 15%;
+  			display: inline;
   		}
   		.field_img{
   			width: 60px;
@@ -2300,3 +2303,37 @@ a{
   	margin-left: auto;
   	margin-right: auto;
  }
+ .list-field-edit{
+ 	width: 95%;
+ 	text-align: left;
+ 	margin-bottom: 0px;
+ 	margin-top: 0px;
+ }
+.list-field-edit li{
+	width: 100%;
+	padding-top: 5px;
+	height: 30px;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 0px;
+}
+.change-place-foot{
+	border-bottom: none;
+}
+.change-place-foot input{
+	background-color: #fff;
+	width: 100%;
+}
+.input-searchfield-edit{
+	margin-bottom: 0px;
+}
+.field-name-edit{
+	color: #006ddf;
+  	font-weight: bold;
+  	text-align: left;
+  	margin-left: 15px;
+  	font-size: 20px;
+  	padding-top: 15px;
+  	margin-bottom: 15px;
+}
+}

@@ -1,5 +1,6 @@
 angular.module('notif',[])
 .controller('NotifCtrl',function($scope, $localStorage, $rootScope, $http, $location,$ionicLoading,$handleNotif){
+	switchIcon('icon_none','');
 	//TODO USER.LASTVIEW
 	$ionicLoading.show({
 	    content: 'Loading Data',
