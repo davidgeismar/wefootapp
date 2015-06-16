@@ -34,7 +34,9 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		}
 	}
 	var friends_id = _.pluck($localStorage.friends,'id');
+	console.log(friends_id);
 	$http.post('http://localhost:1337/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:0}).success(function(data){
+		console.log(data);
 		$scope.dates = _.allKeys(data);
 		var actusByDay = _.values(data);
 		_.each(actusByDay,function(actus,index){

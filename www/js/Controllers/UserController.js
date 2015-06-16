@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http){
+.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading){
 
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
@@ -55,19 +55,28 @@ if($scope.user && $scope.user.poste==null){
 
       var optionsFt = {
         params : {
-          userId: user.id
+          userId: $localStorage.user.id
         }
       };
       $cordovaFileTransfer.upload('http://localhost:1337/user/uploadProfilPic', results[0], optionsFt)
       .then(function(result) {  
         // Success!
-        console.log("success");
+        console.log('hello');
+        setTimeout(function(){
+          $localStorage.user.picture = result.response+'#'+ new Date().getTime();
+            $scope.user.picture = $localStorage.user.picture;
+          $ionicLoading.hide();
+        },3000);
       }, function(err) {
         // Error
         console.log("fail uploading");
       }, function (progress) {
-        console.log("progress");
-        // constant progress updates
+        console.log('onEzdoe,ozp');
+      $ionicLoading.show({
+        content: 'Loading Data',
+        animation: 'fade-out',
+        showBackdrop: true
+      });
       });
 
     }, function(error) {

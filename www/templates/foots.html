@@ -8,12 +8,12 @@
       <li ng-class="{active:tab==2}" class="foot-tab">
         <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
-    <ion-scroll direction="y" class= "carte_foots background_foots">
-      <div ng-show="tab == 1">
+    <ion-scroll direction="y" class= "carte_foots background_foots last">
+      <div ng-show="tab == 1" class="last">
        <div ng-click="go(foot.id)" class="item item-text-wrap border_bottom_foot" ng-repeat= "foot in footTodo">
             <div class="row">
               <div class="col col-25">
-                <div class="img_chat"><img ng-src="img/default_pic.jpg" alt=""></div>
+                <div class="img_chat"><img ng-src="{{foot.orgaPic}}" alt=""></div>
               </div>
                 <div class= "col col-50 info_foots">
                   <div class="bleuciel"> <strong>{{foot.orgaName}}</strong></div>

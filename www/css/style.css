@@ -20,7 +20,7 @@ a{
 	text-decoration: none;
 }
 .last{ /* END OF CONTENT */
-	margin-bottom: 50px;
+	padding-bottom: 150px !important;
 }
 .transparent{
 	background-color: transparent !important;
@@ -935,7 +935,7 @@ a{
 	margin-top: 10px;
 }
 .chat_box_title{
-	font-size: 8px;
+	font-size: 10px;
 	font-family: "Ubuntu";
 	color: rgb( 78, 78, 78 );
 	font-weight: bold;
@@ -972,7 +972,6 @@ a{
 
 .content_conv{
 	width: 100%;
-	padding-top: 44px;
 	z-index: 8;
 	position: absolute;
 	background-color: #fff;
@@ -1105,6 +1104,7 @@ a{
 .img_chat_conv{
 	width: 35px;
 	display: inline-block;
+	vertical-align: top;
 }
 .img_chat_conv img{
 	border-radius: 50%;
@@ -1566,6 +1566,7 @@ a{
   		font-size: 13px;
   		color: #4e4e4e;
   		margin-bottom: 0px;
+  		padding-right:20px;
   	}
   	.content-notif{
   		margin-left: 10px;
@@ -1710,12 +1711,16 @@ a{
   	}
   	.missing-foot{
   		float: right;
+  		position: relative;
+  		top:3px;
   	}
   	img.missing-foot{
   		float: right;
   		margin-left: 10px;
   		width: 20px;
   		margin-right: 25px;
+  		position: relative;
+  		top:0px;
   	}
   	#vu-foot{
   		color:#006DFF;
@@ -1772,18 +1777,18 @@ a{
   		font-size: 18px;
   	}
   	.annuler-foot{
-  		font-size: 17px;
-  		background-color: #E2334C;
+		font-size: 15px;
+  		background-color: transparent;
   		display: inline-block;
-  		padding: 15px 15px;
   		border-radius: 5px;
-  		width: 80%;
-  		margin-left: 10%;
+ 		width: 55%;
+  		margin-left: 22%;
   		text-align: center;
-  		border:0px;
-  		color: #fff;
-  		font-weight: bold;
+  		color: red;
+  		border: 1px solid red;
   		font-family: 'Ubuntu';
+  		margin-top: 25px;
+  		height: 40px;
   	}
   	.annuler-foot i{
   		position: relative;
@@ -1816,25 +1821,6 @@ a{
   	}
   	.nomurban-foot i{
   		font-size: 18px;
-  	}
-  	.annuler-foot{
-  		font-size: 17px;
-  		background-color: transparent;
-  		display: inline-block;
-  		border-radius: 5px;
-  		width: 60%;
-  		margin-left: 20%;
-  		text-align: center;
-  		color: red;
-  		border: 1px solid red;
-  		font-family: 'Ubuntu';
-  		margin-top: 15px;
-  	}
-  	.annuler-foot i{
-  		position: relative;
-  		right: 10px;
-  		top:2px;
-  		font-size: 20px;
   	}
   	.range-footfinder{
   		width: 75%;
@@ -2188,6 +2174,9 @@ a{
  		margin-top: 10px;
  		white-space: nowrap;
  	}
+ 	.nbredejoueur_foots .nbreplace{
+ 		font-size: 12px;
+ 	}
 
  	.nbredejoueur_foots {
  		margin-left: 30px;
@@ -2216,6 +2205,9 @@ a{
  	.bonhomme_foots {
  		margin-left: 10px;
  		margin-top: 10px;
+ 		position: relative;
+ 		top:2px;
+ 		width: 20px;
  	}
 
  	.border_profil {
@@ -2286,6 +2278,84 @@ a{
  		display: inline;
  		margin-bottom: 7px;
  	}
+
+
+ 	#convContent{
+ 		padding-bottom: 40px;
+ 	}
+
+ 	textarea {
+ 		resize: none;
+ 		height:auto;
+ 		color:#999;
+ 		font-weight:400;
+ 		height:44px;
+ 		font-family:'Ubuntu', Helvetica, Arial, sans-serif;
+ 		width:100%;
+ 		background:#fff;
+ 		border-radius:3px;
+ 		line-height:1.5em;
+ 		border:none;
+ 		box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+ 		padding:5px;
+ 		-webkit-transition: height 2s ease;
+ 		-moz-transition: height 2s ease;
+ 		-ms-transition: height 2s ease;
+ 		-o-transition: height 2s ease;
+ 		transition: height 2s ease;
+ 	}
+
+/* 	.not_read_chat_desc_time{
+ 		color:rgb(95, 13, 136);
+ 	}*/
+ 	.not_read_short_message{
+ 		font-weight:700;
+ 		color:#000;
+ 	}
+
+ 	@-webkit-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+@-moz-keyframes blink {
+    0% {
+        opacity:1;
+    }
+    50% {
+        opacity:0;
+    }
+    100% {
+        opacity:1;
+    }
+}
+.not_read_chat_desc_time {
+-webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    
+    -webkit-animation-direction: normal;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: blink;
+    -webkit-animation-timing-function: ease-in-out;
+    
+-moz-animation-direction: normal;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: blink;
+    -moz-animation-timing-function: ease-in-out;    
+}
+
+
  .default-friend{
  	font-weight: 100;
  	font-style: italic;
@@ -2335,5 +2405,4 @@ a{
   	font-size: 20px;
   	padding-top: 15px;
   	margin-bottom: 15px;
-}
 }

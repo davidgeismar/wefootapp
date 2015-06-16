@@ -1,7 +1,8 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $http, $cordovaFileTransfer, $cordovaImagePicker){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker){
   $scope.field = {};
   $scope.field.origin = "private";
+  $scope.field.related_to = $localStorage.user.id;
 
   var imageUri;
 
@@ -28,15 +29,15 @@ angular.module('field',[])
 
   $scope.launchReq = function(){
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
-      var optionsFt = {
-        params : {
-          fieldId: data.id
-        }
+      console.log('CALLEEDDDD');
 
-      };
+      if(imageUri){
+        var optionsFt = {
+          params : {
+            fieldId: data.id
+          }
 
-
-
+        };
         $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
         .then(function(result) {  
         // Success!
@@ -48,12 +49,7 @@ angular.module('field',[])
         console.log("progress");
         // constant progress updates
       });
-
-
-          })
-      .error(function(){
-        console.log('error');
-      })
-
+      }
+    })
   }
 })

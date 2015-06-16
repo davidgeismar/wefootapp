@@ -1,14 +1,14 @@
 //GLOBAL FUNCTIONS
-
-
 var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
 	elem = document.getElementsByClassName('iconHeader')[0];
-	if(elem.className.indexOf("icon_")>-1)
-		elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
-	else
-		elem.className = elem.className + " " + icon;
+  if(elem){
+	  if(elem.className.indexOf("icon_")>-1)
+		  elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+  	else
+	   	elem.className = elem.className + " " + icon;
+  }
 };
 
 var newTime = function (oldTime){
@@ -22,6 +22,7 @@ var getStuffById = function(id,stuffArray){
 	}
   return null;
 };
+
 
 var getIndex = function(id, stuffArray){
   for(var i = 0; i<stuffArray.length;i++){
@@ -47,12 +48,32 @@ var getHour = function(date){
   if(m<10) m= '0'+m;
   return (n+'h'+m)
 };
+
+
 var notify = function(notif,callback){
   if(callback)
     io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
   else
-  io.socket.post('http://localhost:1337/actu/newNotif',notif);
-}
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
+};
+
+var initChatsNotif = function (chats){
+
+  chats.forEach(function(chat){
+    if(chat.messages.length>0){
+      var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
+      var lastTime = new Date (chat.lastTime);
+      if(lastMessage>lastTime){
+        chat.seen = false;
+      }
+      else
+        chat.seen = true;
+    }
+    else
+      chat.seen = true;
+  });
+
+};
 
 
 
@@ -77,7 +98,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   }
 }])
 
- 
+
 .factory('$confirmation',['$ionicPopup',function($ionicPopup) {
   var showConfirm = function(text,ok){
     var confirmPopup = $ionicPopup.confirm({
@@ -121,18 +142,27 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return['demande à participer à votre foot.','/friend/'];
         case 'footEdit':
         return['à modifié son foot.','/friend/'];
+        case 'endGame':
+        return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
         return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
         return ['à accepté votre demande pour rejoindre son foot.'];
-    }
-  };
+      }
+    };
 
-  $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
-    if(user.id == $localStorage.user.id)
-     notif.userName == "Vous";
-    else
-      notif.userName = user.first_name;
+
+    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+      if(user.id == $localStorage.user.id)
+       notif.userName == "Vous";
+     else{
+      if(notif.typ!="endGame")
+        notif.userName = user.first_name;
+      else
+        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
+    }
+    notif.picture = user.picture;
+    console.log(notif.picture);
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
@@ -159,36 +189,37 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['participe à un foot.','/foot/'];
         case 'demandAccepted':
         return ['participe à un foot.','/foot/'];
-    }
-  };
-  $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
-    actu.userName = user.first_name;
-    actu.userLink = '/friend/'+user.id;
-    actu.texte = parseActu(actu.typ)[0];
+      }
+    };
+    $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
+      actu.userName = user.first_name;
+      actu.userLink = '/friend/'+user.id;
+      actu.texte = parseActu(actu.typ)[0];
+      actu.picture = user.picture;
 
-    if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-      $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
-        console.log(data);
-        actu.related_info = data;
-        date = new Date(data.date);
-        actu.related_info.dateString = getJour(date)+' à '+getHour(date);
-        actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
-        if(callback)
-          callback();
-      });
-    }
-    if(actu.typ == 'newFriend'){
-      $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
-        actu.userName2 = data.first_name;
-        actu.userLink2 = '/friend/'+data.id;
-        if(callback)
-          callback();
-      });
-    }
-    else if(callback){
-      callback();
-    }
-  });
+      if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
+        $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
+          actu.related_info = data;
+          date = new Date(data.date);
+          actu.related_info.dateString = getJour(date)+' à '+getHour(date);
+          actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
+          if(callback)
+            callback();
+        });
+      }
+      if(actu.typ == 'newFriend'){
+        $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
+          actu.userName2 = data.first_name;
+          actu.userLink2 = '/friend/'+data.id;
+          actu.picture2 = data.picture;
+          if(callback)
+            callback();
+        });
+      }
+      else if(callback){
+        callback();
+      }
+    });
   };
 
   return handle;
@@ -203,6 +234,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   $rootScope.nbNotif = 0;
   $rootScope.nbChatsUnseen = 0;
   $localStorage.chats = [];
+
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -224,7 +256,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
-    $handleNotif.handleNotif(data);
+    $localStorage.notifs.push($handleNotif.handleNotif(data));
     $rootScope.$digest();//Wait the notif to be loaded
 
     if(data.typ == 'newFriend'){
@@ -235,12 +267,12 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
     }
 
     if(data.typ == 'footInvit'){
-        $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
-          data.organisator = info.orga;
-          data.orgaName = info.orgaName;
-          data.field = info.field;
-            $localStorage.footInvitation.push(data);
-        });
+      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
+        data.organisator = info.orga;
+        data.orgaName = info.orgaName;
+        data.field = info.field;
+        $localStorage.footInvitation.push(data);
+      });
     }
     
     if(data.typ == 'footAnnul'){
@@ -254,41 +286,54 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
 
 
+  //Nouveau chat 
+  io.socket.on('newChat',function(chat){
+    console.log(chat);
+    $localStorage.chats.push(chat);
+  });
 
-io.socket.on('newChat',function(chat){
-  console.log(chat);
-  $localStorage.chats.push(chat);
-});
+  //Nouveau message dans un chat
+  io.socket.on('newMessage',function(message){
 
-io.socket.on('newMessage',function(message){
+    var index = getIndex(message.chat, $localStorage.chats);
 
-  var index = getIndex(message.chat, $localStorage.chats);
+    console.log(message);
+    $localStorage.chats[index].messages.push(message);
+    var firstDate = new Date($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
+    var secondDate = new Date($localStorage.chats[index].lastTime);
+    console.log(firstDate);
+    console.log(secondDate);
+    var fiveSeconds = secondDate.getSeconds() + 5;
+    if(firstDate>secondDate+fiveSeconds){
+      $localStorage.chats[index].seen = false;
+    }
 
-  console.log(message);
-  $localStorage.chats[index].messages.push(message);
-  if($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1]>$localStorage.chats[index].lastTimeSeen){
-    $rootScope.nbChatsUnseen++;
-  }
+    if(typeof $rootScope.updateMessage == 'function'){
+      $rootScope.updateMessage();
+    }
+  });
 
-  if(typeof $rootScope.updateMessage == 'function'){
-    $rootScope.updateMessage();
-  }
-});
+  //Nouvel user dans un chat existant
+
+  io.socket.on('newChatter', function(chatter){
+    var index = getIndex(chatter.chat, $localStorage.chats);
+    $localStorage.chats[index].users.push(chatter);
+  })
 
 
 
 
-OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
+  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
-$ionicPlatform.ready(function() {
+  $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-if(window.cordova && window.cordova.plugins.Keyboard) {
-  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-}
-if(window.StatusBar) {
-  StatusBar.styleDefault();
-}
+  if(window.cordova && window.cordova.plugins.Keyboard) {
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+  }
+  if(window.StatusBar) {
+    StatusBar.styleDefault();
+  }
 });
 
 })
@@ -399,7 +444,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   $stateProvider.state('election', {
     cache: false,
-    url: '/election',
+    url: '/election/:id',
     templateUrl: "templates/election.html",
     controller: 'ElectionCtrl'
 
@@ -411,7 +456,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     url: '/profiltaff',
     templateUrl: "templates/profiltaff.html"
 
-      })
+  })
 
 
   $stateProvider.state('newField', {

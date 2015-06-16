@@ -7,13 +7,13 @@
             <div class="img_chat">
                 <img ng-src="img/default_pic.jpg">
             </div>
-            <h3 class="chat_box_title">
-                {{chatDisplay.user}}
+            <h3 class="chat_box_title" ng-class="{'not_read_chat_desc_time': chatDisplay.seen == false}" >
+                {{chatDisplay.titre}}
             </h3>
-            <h3 class="chat_box_time">
+            <h3 class="chat_box_time" ng-class="{'not_read_chat_desc_time': chatDisplay.seen == false}">
                 {{chatDisplay.lastTime}}
             </h3>
-            <p class="chat_box_preview">
+            <p class="chat_box_preview" ng-class="{'not_read_short_message': chatDisplay.seen == false}">
                 {{chatDisplay.lastMessage}}</p>
             </div>
         </div>

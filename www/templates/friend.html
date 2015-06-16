@@ -10,7 +10,7 @@
 <div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils.jpg') no-repeat center;">
 </div>
 <div>
-	<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
+	<img class="img_menu" ng-src="{{friend.picture}}"/>
 </div>
 <div class="info_friend">
 	<p>Club Favori : <span ng-if="friend.favorite_club">{{friend.favorite_club}}</span>
@@ -66,7 +66,7 @@
   <p ng-if="nbGrades<1">(noté par {{nbGrades}} personne)</p>
 </div>
 
-<a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last">
+<a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter">
 	Noter ce joueur
 </button></a>
 </ion-content>

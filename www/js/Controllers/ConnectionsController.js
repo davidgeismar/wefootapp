@@ -13,12 +13,11 @@ angular.module('connections',[])
       hideOnStateChange: true
     });
     OpenFB.login('email','public_profile','user_friends').then(function(){
-      OpenFB.get('/me').success(function(data){;
-        $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id}).success(function(response){
+      OpenFB.get('/me').success(function(data){
+        $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;
           io.socket.post('http://localhost:1337/connexion/setSocket',{id: response.id}); //Link socketId with the user.
-
           $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
@@ -27,6 +26,7 @@ angular.module('connections',[])
 
             $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
               $localStorage.chats=data;
+              initChatsNotif($localStorage.chats);
             });
 
             $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
@@ -39,6 +39,7 @@ angular.module('connections',[])
 },function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
 
 };
+
 })
 
 
@@ -67,7 +68,7 @@ angular.module('connections',[])
 
       $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
         $localStorage.chats=data;
-        console.log($localStorage.chats);
+        initChatsNotif($localStorage.chats);      
       });
 
       $http.post('http://localhost:1337/user/getLastNotif',data).success(function(nb){
@@ -80,6 +81,7 @@ angular.module('connections',[])
      $scope.err = "Identifiant ou mot de passe incorrect.";
    });   
   }
+
 })
 
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading){

@@ -3,7 +3,7 @@
 <div class="container-notif">
     <div ng-click="go(notif.url)" ng-repeat="notif in notifs | orderBy:'-createdAt'" class="one-notif row">
         <div class="img_chat img_search col-20">
-            <img ng-src="img/default_pic.jpg">
+            <img ng-src="{{notif.picture}}">
         </div>
         <div class="col col-80 content-notif">
             <p class="text-notif"><strong>{{notif.userName}}</strong> {{notif.texte}}</p>
