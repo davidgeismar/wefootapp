@@ -4,7 +4,8 @@
 <img class="logo_wf_foot" src="img/logo_WF.svg">
 <i class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>
-<ion-content class="has-header padding margin-content">
+<ion-content class="has-header padding margin-content last">
+<div class="err_container">{{err}}</div>
 <div class="header-foot">
 	<h4>FOOT DE {{foot.orgaName}}</h4>
 	<p>{{date}} {{foot.field.name}}</p>
@@ -24,7 +25,7 @@
 		<i class="ion-ios-world-outline"></i>
 		Ouvrir au public
 	</button>
-	<button class="boutton-foot">
+	<button ng-click="openModal3()" class="boutton-foot">
 		<i class="ion-edit"></i>
 		Editer ce foot
 	</button>
@@ -63,11 +64,13 @@
 		<p ng-if="foot.field.telephone!=null" style="color:#006DFF"> <i class="ion-ios-telephone"></i>{{foot.field.telephone}}</p>
 	</div>
 </div>
-<button ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot last">
+<div class="last">
+<button ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot">
 	<i class="ion-close-circled"></i> Annuler le Foot
 </button>
-<button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot last">
+<button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot">
 	<i class="ion-close-circled"></i> Se retirer du foot
 </button>
+</div>
 </ion-content>
 </ion-view>

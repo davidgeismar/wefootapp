@@ -1,6 +1,6 @@
 <ion-view view-title="Profil">
-<ion-content>
-<div class="container_friends container-margin">	
+<ion-content class="has-header">
+<div class="container_friends">	
   	<label class="item-input">
     	<i class="icon ion-search placeholder-icon"></i>
     	<input type="text" ng-model="searchFriends" placeholder="Rechercher un nom">
@@ -8,7 +8,8 @@
 	<div class="container_list_friends">
 		<div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
 			<div class="img_chat img_friends" ng-click="goFriend(friend)">
-            	<img ng-src="img/default_pic.jpg">
+            	<img ng-src="{{friend.picture}}">
+
         	</div>
         	<div class="name_friends" ng-click="goFriend(friend)">
         		<p> {{friend.first_name}} {{friend.last_name}} </p>

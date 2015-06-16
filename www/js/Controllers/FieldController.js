@@ -32,6 +32,7 @@ angular.module('field',[])
     $scope.field.related_to = $localStorage.user.id;
   }
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
+      console.log('CALLEEDDDD');
 
       if($scope.imageUri){
         var optionsFt = {

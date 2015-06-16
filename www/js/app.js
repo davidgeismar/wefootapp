@@ -3,10 +3,12 @@ var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
 	elem = document.getElementsByClassName('iconHeader')[0];
-	if(elem.className.indexOf("icon_")>-1)
-		elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
-	else
-		elem.className = elem.className + " " + icon;
+  if(elem){
+	  if(elem.className.indexOf("icon_")>-1)
+		  elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+  	else
+	   	elem.className = elem.className + " " + icon;
+  }
 };
 
 var newTime = function (oldTime){
@@ -30,6 +32,7 @@ var getIndex = function(id, stuffArray){
 };
 
 var getJour = function(date){
+  date = new Date(date);
   var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
   var m = mois[date.getMonth()];
@@ -38,6 +41,7 @@ var getJour = function(date){
 };
 
 var getHour = function(date){
+  date = new Date(date);
   var n = date.getHours();
   var m = date.getMinutes();
   if(n<10) n= '0'+n;
@@ -133,6 +137,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         return ['à annulé son foot.'];
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
+        case 'footEdit':
+        return['à modifié son foot.','/friend/'];
         case 'endGame':
         return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
@@ -154,6 +160,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       else
         notif.userName = "Le foot de "+user.first_name+" est terminé, ";
     }
+    notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
@@ -186,10 +193,10 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       actu.userName = user.first_name;
       actu.userLink = '/friend/'+user.id;
       actu.texte = parseActu(actu.typ)[0];
+      actu.picture = user.picture;
 
       if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
         $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
-          console.log(data);
           actu.related_info = data;
           date = new Date(data.date);
           actu.related_info.dateString = getJour(date)+' à '+getHour(date);
@@ -202,6 +209,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
           actu.userName2 = data.first_name;
           actu.userLink2 = '/friend/'+data.id;
+          actu.picture2 = data.picture;
           if(callback)
             callback();
         });
@@ -217,7 +225,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
 
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
-  $localStorage.notifs = []; //Prevent for bug if notif received before the notif page is opened
+  $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
@@ -255,7 +263,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
-    $handleNotif.handleNotif(data);
     $rootScope.$digest();//Wait the notif to be loaded
 
     if(data.typ == 'newFriend'){
@@ -443,7 +450,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.profil', {
-    cache: false,
+    cache: true,
     url: '/profil',
     views: {
       'menuContent' :{
@@ -503,7 +510,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.notif',{
-    cache: true,
+    cache: false,
     url: '/notif',
     views: {
       'menuContent' :{

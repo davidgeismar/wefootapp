@@ -22,7 +22,7 @@
   		</label>
 		<div ng-repeat="user in results" class="one_search">
 			<div class="img_chat img_search">
-				<img ng-src="img/default_pic.jpg">
+				<img ng-src="{{user.picture}}">
 			</div>
 			<div ng-class="{disabled: friendsId.indexOf(user.id)>-1}" class="name_search">
 				<p> {{user.first_name}} {{user.last_name}}</p>

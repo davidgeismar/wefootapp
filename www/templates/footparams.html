@@ -3,18 +3,18 @@
   <a href='#/footfield'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
 </ion-header-bar>
 <ion-view view-title="footparams">
-  <ion-content>
+  <ion-content class="padding">
     <div class="list text-center fond bottom-marged">
       <div class="row text-center">
         <div class="col">
-          <div ng-click="showDatePicker()" class="item item-icon-left item-icon-right nativedatepicker">
+          <div ng-click="showDatePicker()" class="item nativedatepicker">
             <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
             <p class="time_date"> {{date}} </p>
             <i class="ion-chevron-down arrow_cal"></i>
           </div>
         </div>
         <div class="col">
-          <div ng-click="showHourPicker()" class="item item-icon-left item-icon-right">
+          <div ng-click="showHourPicker()" class="item">
             <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
             <p class="time_date">{{hour}}</p>
             <i class="ion-chevron-down arrow_cal"></i>
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <a class="item item-icon-left" href="#">
+      <div class="item item-icon-left" href="#">
         <div class="row">
           <div class="col col-25">
             <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
@@ -56,10 +56,9 @@
             <p>Vos amis peuvent <br> inviter leurs amis</p>
           </div>
             <ion-toggle ng-model="foot.friendCanInvite" id="invite_friend_toggle">
-            {{foot.friendCanInvite}}
             </ion-toggle>
         </div>
-      </a>
+      </div>
       <div class="row text-center">
         <div class="col col-50">
           <a ng-click="foot.priv = true" ng-class="{active: foot.priv == true}" class="icon-private item item-icon-left item-icon-right" href="#">
@@ -74,14 +73,14 @@
           </a>
         </div>
       </div>
-<!--       <div class="private_foot" ng-if="foot.priv">
+      <div class="private_foot" ng-if="foot.priv">
         <p class="type-foot">Votre Foot est privé. </p>
         <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
-      </div> -->
-<!--       <div class="public_foot hidden" ng-if="!foot.priv">
+      </div>
+      <div class="public_foot" ng-if="!foot.priv">
         <p class="type-foot">Votre Foot est publique. </p>
         <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
-      </div> -->
+      </div>
       <a class="item item-icon-left level_foot" href="#">
        <div class="text-center"> <p>Niveau du Foot</p></div>
        <div class="row">
@@ -114,7 +113,7 @@
       </label>
         
         <div class="img_chat img_friends">
-          <img src="../img/default_pic.jpg">
+          <img ng-src="{{friend.picture}}">
         </div>
         <div class="name_friends name_foot_friends">
           <p> {{friend.first_name}} {{friend.last_name}}  </p>

@@ -1,6 +1,8 @@
 angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
 
 
+switchIcon('icon_none','');  
+
  $scope.go = function(id){
   $location.path('/foot/'+id);
 } 
@@ -59,8 +61,6 @@ $scope.addToFoot = function(id){
         $scope.foot.date.setMonth(jour.getMonth());
         $scope.foot.date.setFullYear(jour.getFullYear());
         $scope.date = getJour($scope.foot.date);
-          // $scope.foot.date = date.substring(0,11)+ $scope.foot.hour.substring(12,24);
-          // console.log($scope.foot.date);
         });
     }
     $scope.showHourPicker = function(){
@@ -69,10 +69,6 @@ $scope.addToFoot = function(id){
         $scope.foot.date.setHours(hours.getHours());
         $scope.foot.date.setMinutes(new Date(hours).getMinutes());
         $scope.hour = getHour($scope.foot.date);
-        // $scope.foot.date = hour.substring(0,11)+ $scope.foot.jour.substring(12,24);
-        // console.log($scope.foot.date);
-        // var dateJour = new Date($scope.foot.jour).toJSON()+''.substring(0,11);
-
       });
     }
     if($location.path().indexOf('footparams')>0){
@@ -113,15 +109,17 @@ $scope.addToFoot = function(id){
 
 $scope.searchQuery = function(word){
   if(word.length>2){
-   $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+"/"+word).success(function(data){
-    $scope.results = data;
-    console.log(data);
-  }).error(function(){
-    console.log('error');
-  });
+
+    $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
+      $scope.results = data;
+    }).error(function(){
+      console.log('error');
+    });
+  }
+  else
+    $scope.results = [];
 }
 
-}
 
 $scope.chooseField = function(field){
   $localStorage.fieldChosen = field;
@@ -161,6 +159,7 @@ if($location.path().indexOf('user/foots')>0){
         foot.organisator = elem.orga;
         foot.orgaName = elem.orgaName;
         foot.field = elem.field;
+        foot.orgaPic = elem.picture;
         foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
         $scope.footInvitation = $localStorage.footInvitation;
         $scope.footTodo = $localStorage.footTodo;
@@ -212,7 +211,7 @@ if($location.path().indexOf('user/foots')>0){
     });
 
     $http.get('http://localhost:1337/foot/getAllPlayers/'+$stateParams.id).success(function(allPlayers){  //Get list of playersId
-      $scope.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'id');
+      $scope.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'user');
       $scope.isInvited = ($scope.invited.indexOf($localStorage.user.id)>-1);
       $scope.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf($localStorage.user.id)>-1);
       data = _.filter(allPlayers,function(player){return player.statut>1});
@@ -323,6 +322,96 @@ $scope.askToPlay = function(id){
   });
 };
 
+    $scope.openModal2 = function() {
+      $scope.foot.toInvite = [];
+      $scope.modal2.show();
+    };
+    $scope.closeModal2 = function(){
+      if($scope.foot.toInvite.length>0){
+        $http.post('http://localhost:1337/foot/sendInvits',$scope.foot).success(function(){
+          io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
+          $scope.invited = $scope.invited.concat($scope.foot.toInvite);
+      });
+    }
+    $scope.modal2.hide();
+  };
+  $scope.addToFoot = function(id) {
+    $scope.foot.toInvite.push(id);
+  };
+  $scope.askToPlay = function(id){
+    $http.post('http://localhost:1337/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+      notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
+      $scope.isPending = true;
+    });
+  };
+
+  $ionicModal.fromTemplateUrl('templates/modalEdit.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal3 = modal;
+    });
+
+  $scope.openModal3 = function() {
+    $scope.hour = getHour($scope.foot.date);
+    $scope.date = getJour($scope.foot.date);
+    $scope.selectedField = {};
+    angular.copy($scope.foot.field,$scope.selectedField);
+    console.log($scope.selectedField);
+    $scope.modal3.show();
+  };
+
+  $scope.closeModal3 = function(launch){
+    $scope.modal3.hide();
+    if(launch){
+      $scope.foot.field = $scope.selectedField.id; //Just send the id
+      console.log($scope.foot);
+      $http.post('http://localhost:1337/foot/update',$scope.foot).success(function(){
+          $scope.foot.field = $scope.selectedField;
+          async.each($scope.players,function(player){
+            notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id});
+          })
+      }).error(function(){
+        $scope.err = 'Erreur lors de la mise à jour du foot.'
+      });
+    }
+  };
+
+  $scope.searchField = function(word){
+    if(word.length>1){
+      $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
+        $scope.fields = data;
+      }).error(function(){
+        console.log('error');
+      });
+    }
+    else
+      $scope.fields = [];
+  };
+
+
+  $scope.updateField = function(field){
+    $scope.selectedField = field;
+    $scope.fields = [];
+  };
+
+    $scope.showDatePicker = function(){
+      $cordovaDatePicker.show(options).then(function(date){
+        var jour = new Date(date);
+        $scope.foot.date.setDate(jour.getDate());
+        $scope.foot.date.setMonth(jour.getMonth());
+        $scope.foot.date.setFullYear(jour.getFullYear());
+        $scope.date = getJour($scope.foot.date);
+        });
+    }
+    $scope.showHourPicker = function(){
+      $cordovaDatePicker.show(options1).then(function(hour){
+        var hours = new Date(hour);
+        $scope.foot.date.setHours(hours.getHours());
+        $scope.foot.date.setMinutes(new Date(hours).getMinutes());
+        $scope.hour = getHour($scope.foot.date);
+      });
+    }
 
 $scope.launchChat = function (footId){
   console.log("test");
@@ -355,6 +444,7 @@ $scope.launchChat = function (footId){
           foot.organisator = info.orga;
           foot.orgaName = info.orgaName;
           foot.field = info.field;
+          foot.orgaPic = info.picture;
           $scope.results.push(foot);
           callback();
         });
@@ -365,7 +455,7 @@ $scope.launchChat = function (footId){
 
   $scope.updateDate = function(){
     ind = parseInt($scope.params.dateValue);
-    $scope.date = dates[ind].toLocaleDateString();
+    $scope.date = getJour(dates[ind]);
     $scope.params.date = dates[ind];
     $scope.getData($scope.params);
   }
