@@ -3,7 +3,7 @@ angular.module('connections',[])
 
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope){
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading){
 
   var finish = false;
 
@@ -25,14 +25,14 @@ angular.module('connections',[])
   };
 
   $scope.facebookConnect = function(){
-    $ionicLoading.show({
-      content: 'Loading Data',
-      animation: 'fade-out',
-      showBackdrop: false,
-      hideOnStateChange: true
-    });
     OpenFB.login('email','public_profile','user_friends').then(function(){
       OpenFB.get('/me').success(function(data){
+        $ionicLoading.show({
+          content: 'Loading Data',
+          animation: 'fade-out',
+          showBackdrop: false,
+          hideOnStateChange: true
+        });
         $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;

@@ -45,7 +45,7 @@
 <div class="listeparticipants-foot">
 	<div ng-repeat="player in players" ng-id="first-foot: $index == 0" class="row player-foot">
 		<div class="img_friends img_foot col col-20">
-            <img ng-src="img/default_pic.jpg">
+            <img ng-src="{{player.picture}}">
         </div>
         <div class="name-player-foot col col-80">
 			<p>	{{player.first_name}} {{player.last_name}} </p>
