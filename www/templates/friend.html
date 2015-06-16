@@ -66,12 +66,12 @@
   <p ng-if="nbGrades<1">(noté par {{nbGrades}} personne)</p>
 </div>
 
-<a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter">
+<a ng-show="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter">
 	Noter ce joueur
 </button></a>
-<a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last">
+<!-- <a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last">
   Noter ce joueur
-</button></a>
+</button></a> -->
 
 </ion-content>
 </ion-view>
