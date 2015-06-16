@@ -162,7 +162,6 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         notif.userName = "Le foot de "+user.first_name+" est terminé, ";
     }
     notif.picture = user.picture;
-    console.log(notif.picture);
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
       notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
@@ -227,7 +226,7 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
 
 
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
-  $localStorage.notifs = []; //Prevent for bug if notif received before the notif page is opened
+  $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
@@ -256,7 +255,6 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
-    $localStorage.notifs.push($handleNotif.handleNotif(data));
     $rootScope.$digest();//Wait the notif to be loaded
 
     if(data.typ == 'newFriend'){
@@ -417,7 +415,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.profil', {
-    cache: false,
+    cache: true,
     url: '/profil',
     views: {
       'menuContent' :{
@@ -477,7 +475,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.notif',{
-    cache: true,
+    cache: false,
     url: '/notif',
     views: {
       'menuContent' :{
