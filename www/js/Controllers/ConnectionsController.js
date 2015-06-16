@@ -2,8 +2,25 @@ angular.module('connections',[])
 
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$location,$rootScope){
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope){
   var finish = false;
+
+  $scope.pushRegister = function() {
+    console.log('Ionic Push: Registering user');
+
+    // Register with the Ionic Push service.  All parameters are optional.
+    $ionicPush.register({
+      canShowAlert: true, //Can pushes show an alert on your screen?
+      canSetBadge: true, //Can pushes update app icon badges?
+      canPlaySound: true, //Can notifications play a sound?
+      canRunActionsOnWake: true, //Can run actions outside the app,
+      onNotification: function(notification) {
+        // Handle new push notifications here
+        console.log(notification);
+        return true;
+      }
+    });
+  };
 
   $scope.facebookConnect = function(){
     OpenFB.login('email','public_profile','user_friends').then(function(){
@@ -11,8 +28,18 @@ angular.module('connections',[])
         $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;
-          io.socket.post('http://localhost:1337/connexion/setSocket',{id: response.id}); //Link socketId with the user.
-
+          $localStorage.user.push = $ionicUser.get();
+          $localStorage.user.push.user_id= $localStorage.user.id.toString();
+          $ionicUser.identify($localStorage.user.push).then(function(){
+            console.log('identification push');
+            $scope.pushRegister();
+          }, function(err) {
+            console.log(err);
+          });
+          $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+            console.log('Got token', data.token, data.platform);
+            io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+          });
           $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
@@ -21,7 +48,7 @@ angular.module('connections',[])
 
             $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
               $localStorage.chats=data;
-              initChatsNotif($localStorage.chats);
+              $rootScope.initChatsNotif();
             });
 
             $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
@@ -57,7 +84,7 @@ angular.module('connections',[])
 
       $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
         $localStorage.chats=data;
-        initChatsNotif($localStorage.chats);      
+        $rootScope.initChatsNotif();      
       });
 
       $http.post('http://localhost:1337/user/getLastNotif',data).success(function(nb){

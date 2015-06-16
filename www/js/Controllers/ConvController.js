@@ -8,6 +8,8 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
   $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
   $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].seen = true;
   $ionicScrollDelegate.scrollBottom();
+
+
   $rootScope.updateMessage = function(){
     $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
     io.socket.post('http://localhost:1337/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
@@ -43,7 +45,8 @@ $scope.init = function(){
       $scope.detail = { 
         organisator : elem.orga,
         orgaName : elem.orgaName,
-        field : elem.field
+        field : elem.field,
+        date : getJour(new Date(elem.field.date))+' '+getHour(new Date(elem.field.date))
       }
     }).error(function(err){
       console.log(err);
@@ -57,16 +60,22 @@ $scope.getUsername = function(userId){
   return getStuffById(userId, $scope.chat.users).first_name; 
 }
 
+$scope.getPic = function(userId){
+  return getStuffById(userId, $scope.chat.users).picture; 
+}
+
 $scope.autoExpand = function() {
   var footer = document.getElementById("footerChat");
   var element = document.getElementById("messageArea");
-  var paddingBottom = document.getElementById("convContent");
+  var convcontent = document.getElementById("convcontent");
         var scrollHeight = element.scrollHeight; // replace 60 by the sum of padding-top and padding-bottom
         element.style.height =  scrollHeight + "px";
         footer.style.height = scrollHeight +  "px";
-        console.log(parseInt(paddingBottom.style.paddingBottom.substring(0, paddingBottom.style.paddingBottom.length - 2)) + scrollHeight + "px");
-        paddingBottom.style.paddingBottom = parseInt(paddingBottom.style.paddingBottom.substring(0, paddingBottom.style.paddingBottom.length - 2)) + scrollHeight + "px";
-
+        console.log(convcontent.style);
+        console.log(parseInt(convcontent.style.paddingBottom.substring(0, convcontent.style.paddingBottom.length - 2)) + scrollHeight + "px");
+        if(scrollHeight>0)
+        convcontent.style.paddingBottom = scrollHeight + "px";
+        $ionicScrollDelegate.scrollBottom();
       };
 
 

@@ -1,14 +1,11 @@
 angular.module('friend',[])
 .controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
-	// var index = _.pluck($localStorage.friends,'id').indexOf($stateParams.id);
-	// console.log($localStorage.friends);
-	// console.log(index);
+
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
 
 		//Appelle setNote pour toutes les étoiles et récupère le nb de votes
 	$scope.initNotes = function(){
-
 		$http.get('http://localhost:1337/getDetailledGrades/'+$scope.friend.id).success(function(data){
 			$scope.friend.nbGrades = data.nbGrades;
 			$scope.setNote(Math.round(data.technique), 0);
@@ -29,7 +26,7 @@ angular.module('friend',[])
 		 	else $scope.isInvitationConfirmation = false;		 	
 	});
 
-	if(_.pluck($localStorage.friends,'id').indexOf($stateParams.id)>-1){
+	if(getStuffById($stateParams.id, $localStorage.friends)){
 		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;

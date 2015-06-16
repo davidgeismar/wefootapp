@@ -5,7 +5,7 @@
 <div class="chat_box" ng-click="launchChat(chatDisplay.id)">
         <div class="chat_box_content">
             <div class="img_chat">
-                <img ng-src="img/default_pic.jpg">
+                <img ng-src="{{chatDisplay.chatPic}}">
             </div>
             <h3 class="chat_box_title" ng-class="{'not_read_chat_desc_time': chatDisplay.seen == false}" >
                 {{chatDisplay.titre}}
@@ -19,28 +19,4 @@
         </div>
     </div>
 </ion-content>
-  <!-- <div class="tab_container">
-        <ion-tabs class="tab_general tabs-icon-top">
-            <ion-tab title="Accueil" icon-on="accueilActive" icon-off="accueilActive" ui-sref="#/profil/{{user.id}}">
-                <ion-nav-view name="home">
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Mes Foots"  icon-on="foots" icon-off="foots"  ui-sref="help">
-                <ion-nav-view name="help">
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Mes Amis" icon-on="amis" icon-off="amis"  ui-sref="help">
-                <ion-nav-view name="help">
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Chats" icon-on="chats" icon-off="chats"  ui-sref="help">
-                <ion-nav-view name="help">
-                </ion-nav-view>
-            </ion-tab>
-            <ion-tab title="Notifications" icon-on="notif" icon-off="notif" ui-sref="help">
-                <ion-nav-view name="help">
-                </ion-nav-view>
-            </ion-tab>
-        </ion-tabs>
-    </div> -->
 </ion-view>

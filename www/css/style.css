@@ -41,7 +41,13 @@ a{
 	font-family: 'Ubuntu';
 }
 .bar{
-	border-bottom: none !important;
+	background-size: 100% 0px;
+}
+.bar-header{
+	border: 0px !important;
+	border-bottom-color: transparent !important;
+	background-image: none;
+	border-bottom: none;
 }
 .white{
 	color: #fff;
@@ -2287,9 +2293,6 @@ a{
  	}
 
 
- 	#convContent{
- 		padding-bottom: 40px;
- 	}
 
  	textarea {
  		resize: none;
@@ -2314,69 +2317,81 @@ a{
 
 /* 	.not_read_chat_desc_time{
  		color:rgb(95, 13, 136);
- 	}*/
- 	.not_read_short_message{
- 		font-weight:700;
- 		color:#000;
- 	}
+ 		}*/
+ 		.not_read_short_message{
+ 			font-weight:700;
+ 			color:#000;
+ 		}
 
- 	@-webkit-keyframes blink {
-    0% {
-        opacity:1;
-    }
-    50% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
-    }
-}
-@-moz-keyframes blink {
-    0% {
-        opacity:1;
-    }
-    50% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
-    }
-}
-.not_read_chat_desc_time {
--webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    transition: all 1s ease-in-out;
-    
-    -webkit-animation-direction: normal;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-name: blink;
-    -webkit-animation-timing-function: ease-in-out;
-    
--moz-animation-direction: normal;
-    -moz-animation-duration: 1s;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-name: blink;
-    -moz-animation-timing-function: ease-in-out;    
-}
+ 		@-webkit-keyframes blink {
+ 			0% {
+ 				opacity:1;
+ 			}
+ 			50% {
+ 				opacity:0;
+ 			}
+ 			100% {
+ 				opacity:1;
+ 			}
+ 		}
+ 		@-moz-keyframes blink {
+ 			0% {
+ 				opacity:1;
+ 			}
+ 			50% {
+ 				opacity:0;
+ 			}
+ 			100% {
+ 				opacity:1;
+ 			}
+ 		}
+ 		.not_read_chat_desc_time {
+ 			-webkit-transition: all 1s ease-in-out;
+ 			-moz-transition: all 1s ease-in-out;
+ 			-o-transition: all 1s ease-in-out;
+ 			-ms-transition: all 1s ease-in-out;
+ 			transition: all 1s ease-in-out;
+
+ 			-webkit-animation-direction: normal;
+ 			-webkit-animation-duration: 1s;
+ 			-webkit-animation-iteration-count: infinite;
+ 			-webkit-animation-name: blink;
+ 			-webkit-animation-timing-function: ease-in-out;
+
+ 			-moz-animation-direction: normal;
+ 			-moz-animation-duration: 1s;
+ 			-moz-animation-iteration-count: infinite;
+ 			-moz-animation-name: blink;
+ 			-moz-animation-timing-function: ease-in-out;    
+ 		}
 
 
- .default-friend{
- 	font-weight: 100;
- 	font-style: italic;
- }
- .button-confirm-friend{
- 	width: 100px;
- 	line-height: 25px;
- 	height: 70px;
- 	font-weight: bold;
- }
- .button-container-friend{
- 	margin-top: -50px;
-  	margin-bottom: 20px;
-  	width: 205px;
-  	margin-left: auto;
-  	margin-right: auto;
- }
+ 		.default-friend{
+ 			font-weight: 100;
+ 			font-style: italic;
+ 		}
+ 		.button-confirm-friend{
+ 			width: 100px;
+ 			line-height: 25px;
+ 			height: 70px;
+ 			font-weight: bold;
+ 		}
+ 		.button-container-friend{
+ 			margin-top: -50px;
+ 			margin-bottom: 20px;
+ 			width: 205px;
+ 			margin-left: auto;
+ 			margin-right: auto;
+ 		}
+
+ 		.green-check{
+ 			color:green;
+ 			/*margin-left:80%;*/
+ 			font-size:32px;
+ 			position:absolute;
+ 			margin-top:115px;
+ 		}
+
+ 		#convcontent{
+ 			padding-bottom: 40px;
+ 		}

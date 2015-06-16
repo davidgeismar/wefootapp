@@ -9,16 +9,16 @@
             Foot de {{detail.orgaName}}
         </h2>
         <p class="conv_ban_text">
-            Le {{detail.field.date}} à <span>19h</span> au <span>{{detail.field.name}}</span>
+            Le {{detail.date}} au <span>{{detail.field.name}}</span>
         </p>
     </div>
 </div>
 <ion-content class="padding padding_top has-header has-subheader has-footer padding_bottom">
-<div class="content_conv_box" id="convContent">
+<div class="content_conv_box padding" id="convcontent">
     <dl class="conv_box" ng-repeat="message in chat.messages">
         <dd ng-if="message.senderId!=user.id" class="from">
             <div class="img_chat_conv">
-                <img ng-src="img/default_pic.jpg">
+                <img ng-src="{{getPic(message.senderId)}}">
             </div>
             <p>
                 <span class="message_name">

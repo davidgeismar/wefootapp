@@ -64,7 +64,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 				$scope.foot.organisator = elem.orga;
 				$scope.foot.orgaName = elem.orgaName;
 				$scope.foot.field = elem.field;
-				console.log(elem);
+				$scope.foot.date = getJour(new Date(elem.field.date))+' '+getHour(new Date(elem.field.date));
 			}).error(function(err){
 				console.log(err);
 			});

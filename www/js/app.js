@@ -53,27 +53,24 @@ var notify = function(notif,callback){
     io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
-var initChatsNotif = function (chats){
 
-  chats.forEach(function(chat){
-    if(chat.messages.length>0){
-      var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
-      var lastTime = new Date (chat.lastTime);
-      if(lastMessage>lastTime){
-        chat.seen = false;
-      }
-      else
-        chat.seen = true;
-    }
-    else
-      chat.seen = true;
+
+
+var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+
+
+app.config(['$ionicAppProvider', function($ionicAppProvider) {
+  // Identify app
+  $ionicAppProvider.identify({
+    // The App ID (from apps.ionic.io) for the server
+    app_id: '82c453c4',
+    // The public API key all services will use for this app
+    api_key: '72368d6e12d814f27c62c1c661533630011c436206637e5f',
+    // Set the app to use development pushes
+    dev_push: true
   });
+}])
 
-};
-
-
-
-var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
 
 //Creating local Storage Function
@@ -142,6 +139,8 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
         return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
         return ['à accepté votre demande pour rejoindre son foot.'];
+        case '3hoursBefore':
+        return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
       }
     };
 
@@ -244,6 +243,15 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
       $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
 
+  io.socket.on('connect', function(){
+    if($localStorage.user && $localStorage.user.id){
+      $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+        console.log('Got token', data.token, data.platform);
+        io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+      });
+    }
+  })
+
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
@@ -312,6 +320,33 @@ var app = angular.module('starter', ['ionic', 'ngCordova','openfb','connections'
   })
 
 
+  $rootScope.initChatsNotif = function (){
+    $localStorage.chats.forEach(function(chat, i) {
+      if(chat.messages.length>0){
+        var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
+        var lastTime = new Date (chat.lastTime);
+        console.log(lastMessage);
+        console.log(lastTime);
+        if(lastMessage>lastTime){
+          $localStorage.chats[i].seen = false;
+        }
+        else
+          $localStorage.chats[i].seen = true;
+      }
+      else
+        $localStorage.chats[i].seen = true;
+    });
+  };
+
+  $rootScope.getNbChatsNotif = function (){
+    var cpt = 0;
+    for (var i = 0; i<$localStorage.chats.length; i++){
+      if(!$localStorage.chats[i].seen){
+        cpt++;
+      }
+    }
+    return cpt;
+  };
 
 
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);

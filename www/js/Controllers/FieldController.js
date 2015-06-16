@@ -4,7 +4,7 @@ angular.module('field',[])
   $scope.field.origin = "private";
   $scope.field.related_to = $localStorage.user.id;
 
-  var imageUri;
+  $scope.imageUri;
 
   var options = {
     maximumImagesCount: 1,
@@ -18,7 +18,7 @@ angular.module('field',[])
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
-      imageUri = results[0] ; 
+      $scope.imageUri = results[0] ; 
 
     }, function(error) {
       console.log('Error pic');
@@ -28,16 +28,19 @@ angular.module('field',[])
 
 
   $scope.launchReq = function(){
+  if($scope.imageUri){
+    $scope.field.related_to = $localStorage.user.id;
+  }
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
 
-      if(imageUri){
+      if($scope.imageUri){
         var optionsFt = {
           params : {
             fieldId: data.id
           }
 
         };
-        $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', imageUri, optionsFt)
+        $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', $scope.imageUri, optionsFt)
         .then(function(result) {  
         // Success!
         console.log("successssss");

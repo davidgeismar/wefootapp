@@ -115,6 +115,7 @@ $scope.searchQuery = function(word){
   if(word.length>2){
    $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+"/"+word).success(function(data){
     $scope.results = data;
+    console.log(data);
   }).error(function(){
     console.log('error');
   });
