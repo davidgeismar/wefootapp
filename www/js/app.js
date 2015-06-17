@@ -253,10 +253,10 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id){
-      $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-        console.log('Got token', data.token, data.platform);
-        io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
-      });
+      // $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+      //   console.log('Got token', data.token, data.platform);
+        io.socket.post('http://localhost:1337/connexion/setSocket',{id: $localStorage.user.id}); 
+      // });
     }
   })
 

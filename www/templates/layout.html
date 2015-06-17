@@ -36,10 +36,11 @@
 	<ion-content class="content_menu">
 		<div class="img_menu_bg" style="background: url({{user.picture}}) no-repeat center; background-size: cover;">
 		</div>
-    <div ng-click="editProfilPic()">
-		<img class="img_menu" src="{{user.picture}}"/>
-    <i class="ion-edit info_menu" style="float:right; font-size:18px; color:white; border:0px; padding-top:0px"></i>
-    </div>
+
+		<img class="img_menu" src="{{user.picture}}" ng-click="editProfilPic()"/>
+    <i class="ion-edit info_menu" style="font-size:22px; color:white; border:0px; top: 130px;
+  right: 60px; position:absolute;" ng-click="editProfilPic()"></i>
+
 		<div class="info_menu">
 			<p>{{user.first_name}} {{user.last_name}}</p>
 		</div>
