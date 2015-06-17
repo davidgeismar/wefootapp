@@ -46,6 +46,7 @@ angular.module('connections',[])
           });
           $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
             console.log('Got token', data.token, data.platform);
+            $localStorage.user.pushToken = data.token;
             io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
           });
           $http.get('http://localhost:1337/getAllFriends/'+response.id).success(function(data){
