@@ -1,7 +1,5 @@
 angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location){
-	modalLink = "chat-modal";
 	$scope.user = $localStorage.user;
-	switchIcon('icon_chat','chat-modal');
 	$scope.friends = $localStorage.friends;
 	//Tableau contenant les chats
 	$scope.chats = $localStorage.chats;

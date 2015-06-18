@@ -1,8 +1,5 @@
 angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
 
-
-switchIcon('icon_none','');  
-
  $scope.go = function(id){
   $location.path('/foot/'+id);
 } 
@@ -153,8 +150,7 @@ if($location.path().indexOf('user/foots')>0){
   $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
     if(data.length==0) $ionicLoading.hide();
     angular.forEach(data, function(foot,index){
-      $localStorage.footPlayers[index] = [];
-      $localStorage.footPlayers[index].push(foot.id); //FIRST COLUMN CONTAIN ID OF FOOTS 
+      console.log(foot);
       $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(elem){
         foot.organisator = elem.orga;
         foot.orgaName = elem.orgaName;
@@ -170,7 +166,10 @@ if($location.path().indexOf('user/foots')>0){
       else if(foot.statut>1)
         $localStorage.footTodo.push(foot);
     });
-  });
+  }).error(function(){
+    $scope.err = "Une erreur est survenue vérifiez la connexion internet.";
+    $ionicLoading.hide();
+  }); 
 }
 })
 

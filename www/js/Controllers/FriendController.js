@@ -18,7 +18,6 @@ angular.module('friend',[])
 		});
 	}
 	$http.get('http://localhost:1337/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
-			console.log(foot);
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];

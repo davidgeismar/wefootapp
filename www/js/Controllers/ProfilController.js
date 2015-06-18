@@ -1,6 +1,5 @@
-angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif){
+angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
   $scope.user = $localStorage.user;
-  switchIcon('icon_none','');
 
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
 	var full_screen = window.innerWidth-sizeElem;
@@ -34,17 +33,26 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		}
 	}
 	var friends_id = _.pluck($localStorage.friends,'id');
-	console.log(friends_id);
+	$ionicLoading.show({
+	    content: 'Loading Data',
+	    animation: 'fade-out',
+	    showBackdrop: false
+	});
 	$http.post('http://localhost:1337/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:0}).success(function(data){
-		console.log(data);
 		$scope.dates = _.allKeys(data);
 		var actusByDay = _.values(data);
-		_.each(actusByDay,function(actus,index){
-			_.each(actus,function(actu){
-				$handleNotif.handleActu(actu);
+		if(actusByDay.length==0) $ionicLoading.hide();
+		async.each(actusByDay,function(actus,callback2){
+			async.each(actus,function(actu,callback){
+				$handleNotif.handleActu(actu,function(){
+					callback();
+				});
+			},function(){
+					callback2();
 			});
-		if(index==actusByDay.length-1)
+		},function(){
 			$scope.actusByDay = actusByDay;
+			$ionicLoading.hide();
 		});
 	});
 

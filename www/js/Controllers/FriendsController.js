@@ -1,7 +1,6 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
 $scope.user = $localStorage.user;
-switchIcon('icon_friend','search');
 $scope.friends = $localStorage.friends;
 
 $scope.addFavorite = function(target){

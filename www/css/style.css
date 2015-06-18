@@ -1839,7 +1839,7 @@ a{
   	}
   	.background_footfinder{
   		background-image: url('../img/photo-bg-footfinder.png');
-  		background-size: contain;
+  		background-size: cover;
   		min-height: 100%;
   	}
 
