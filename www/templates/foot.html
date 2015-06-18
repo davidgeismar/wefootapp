@@ -10,7 +10,7 @@
 	<h4>FOOT DE {{foot.orgaName}}</h4>
 	<p>{{date}} {{foot.field.name}}</p>
 </div>
-<img id="imagehead-foot" src="img/terrain_640x414_3.jpg" />
+<img id="imagehead-foot" ng-src="{{foot.field.picture}}" />
 <button ng-if="user.id == foot.organisator && !foot.booked" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</button>
 <button ng-if="user.id != foot.organisator && friendCanInvite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-ios-email"></i>Inviter vos amis</button>
 <button ng-if="!isPlaying && isInvited" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>

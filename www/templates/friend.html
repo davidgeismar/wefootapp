@@ -7,18 +7,18 @@
 
 <ion-content class="has-header padding">
 
-<div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils.jpg') no-repeat center;">
+<div class="img_menu_bg" style="background:url({{friend.picture}}) no-repeat center;   background-size: cover; ">
 </div>
-<div>
-	<img class="img_menu" ng-src="{{friend.picture}}"/>
-</div>
+
+	<img class="img_menu" style="display: block;margin-left: auto;margin-right: auto;" ng-src="{{friend.picture}}"/>
+
 <div class="info_friend">
 	<p>Club Favori : <span ng-if="friend.favorite_club">{{friend.favorite_club}}</span>
   <span ng-if="!friend.favorite_club" class="default-friend">Aucun Club</span></p>
 
 </div>
 <div class="info_friend info_last">
-	 <p>Poste : <span ng-if="friend.poste">{{friend.poste}</span>
+	 <p>Poste : <span ng-if="friend.poste">{{friend.poste}}</span>
   <span ng-if="!friend.poste" class="default-friend">Aucun Poste</span></p>
 
 </div>

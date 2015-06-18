@@ -22,7 +22,7 @@
       <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
         <div class="row">
           <div class="col col-25">
-            <img class="field_img" src="../img/terrain_640x414_3.jpg"/>
+            <img class="field_img" ng-src="{{field.picture}}"/>
           </div>
           <div class="col col-60">
             <p class="name-field">{{field.name}}</p>

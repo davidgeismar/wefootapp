@@ -941,7 +941,7 @@ a{
 	margin-top: 10px;
 }
 .chat_box_title{
-	font-size: 10px;
+	font-size: 12px;
 	font-family: "Ubuntu";
 	color: rgb( 78, 78, 78 );
 	font-weight: bold;
@@ -952,7 +952,7 @@ a{
 	margin-bottom: 0px;
 }
 .chat_box_time{
-	font-size: 8px;
+	font-size: 10px;
 	font-family: "Ubuntu";
 	color: rgb( 78, 78, 78 );
 	font-weight: bold;
@@ -1565,6 +1565,7 @@ a{
   		margin: 0px 20px;
   		padding: 0px;
   		border-bottom: 2px solid #c4c4c4;
+  		padding-right: 20px;
   	}
   	.text-notif{
   		display: inline-block;
@@ -2423,13 +2424,13 @@ a{
 	-o-transition: all 1s ease-in-out;
 	-ms-transition: all 1s ease-in-out;
 	transition: all 1s ease-in-out;
-	
+
 	-webkit-animation-direction: normal;
 	-webkit-animation-duration: 1s;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-name: blink;
 	-webkit-animation-timing-function: ease-in-out;
-	
+
 	-moz-animation-direction: normal;
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
