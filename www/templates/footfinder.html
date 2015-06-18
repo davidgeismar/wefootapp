@@ -3,7 +3,7 @@
      <a class="icon_modal" href="#/user/profil"><i class="ion-chevron-left"></i></a>
  	 <h1 class="title">Rechercher un foot</h1>
 	</ion-header-bar>
-    <ion-content>
+    <ion-content class="last">
     	<div class="header-footfinder">
     		<div class="select-place">
        			<input ng-model="params.field" ng-keyup="getData(params)" placeholder="Saisir un lieu"/>
@@ -12,8 +12,8 @@
       		<div class="range-footfinder range range-positive">
       			<input type="range" ng-change="updateDate()" ng-model="params.dateValue" min="0" max="4"><p class="date-footfinder">{{date}}</p>
       		</div>
-      	</div>
-      	<ion-scroll direction="y" class= "carte_foots background_footfinder">
+      	</div>	
+        <ion-scroll direction="y" class= "carte_foots background_footfinder">
       	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results">
             <div class="row">
               <div class="col col-25">

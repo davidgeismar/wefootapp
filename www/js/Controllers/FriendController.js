@@ -13,12 +13,9 @@ angular.module('friend',[])
 			$scope.setNote(Math.round(data.physique), 2);
 			$scope.setNote(Math.round(data.fair_play), 3);
 			$scope.setNote(Math.round(data.assiduite), 4);
-		}).error(function(){
-			console.log('error');
 		});
 	}
 	$http.get('http://localhost:1337/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
-			console.log(foot);
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];
@@ -33,7 +30,6 @@ angular.module('friend',[])
 		$scope.initNotes();
 	}
 	else{
-		console.log('http://localhost:1337/user/toConfirm/'+$stateParams.id+''+$localStorage.user.id);
 		$http.get('http://localhost:1337/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
 			// $scope.initNotes();
@@ -63,7 +59,6 @@ angular.module('friend',[])
 
 
 	$scope.acceptInvitation = function (yes){
-		console.log('hello');
 		if(yes){
 			$http.post('http://localhost:1337/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');

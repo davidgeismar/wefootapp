@@ -1,4 +1,5 @@
 //GLOBAL FUNCTIONS
+
 var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
@@ -14,7 +15,6 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
 var newTime = function (oldTime){
   return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
-
 var getStuffById = function(id,stuffArray){
 	for(var i = 0; i<stuffArray.length;i++){
 		if (id == stuffArray[i].id)
@@ -140,7 +140,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         case 'footInvit':
         return ['vous à invité à un foot.','/foot/'];
         case 'footConfirm':
-        return ['à confirmé sa présence à votre foot.','/friend/'];
+        return ['à confirmé sa présence à votre foot.','/foot/'];
         case 'footAnnul':
         return ['à annulé son foot.'];
         case 'footDemand':
@@ -232,7 +232,7 @@ return handle;
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -241,16 +241,22 @@ return handle;
   $rootScope.nbChatsUnseen = 0;
   $localStorage.chats = [];
 
+  $rootScope.$on('loading:hide', function() {
+    $ionicLoading.hide()
+  })
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
-      if(toState.url.indexOf('profil')>0)                  // Menu transparent pour profil
+      if(toState.url.indexOf('profil')>-1)                  // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
-      if(toState.url.indexOf('notif')>0)
+      if(toState.url.indexOf('notif')>-1)
         $rootScope.nbNotif = 0;
-      if(fromState.url.indexOf('profil')>0){
+      if(fromState.url.indexOf('profil')>-1)
         $('.actu_header').removeClass('transparent');
-      }
+      if(fromState.url.indexOf('friends')>-1)
+        $('.iconHeader').removeClass('icon_friend');
+      if(toState.url.indexOf('friends')>-1)
+        $('.iconHeader').addClass('icon_friend');
     },0);
   });
 
@@ -555,7 +561,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'FootFinderController'
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
@@ -568,6 +574,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         if(response.status === 403) {
           $location.path('/login');
         }
+        $rootScope.$broadcast('loading:hide');
+        $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       }
     };

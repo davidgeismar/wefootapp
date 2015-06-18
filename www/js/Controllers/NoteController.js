@@ -37,8 +37,6 @@ angular.module('note',[])
 							$scope.setNote(response[0].assiduite, 4);
 							$scope.initBypass = false;
 						}
-			}).error(function(){
-				console.log('error');
 			});
 			
 	}
@@ -52,7 +50,6 @@ angular.module('note',[])
 	$scope.setNote = function(note, target){
 		if($scope.activate[target] || $scope.initBypass){
 			$scope.notes[target] = note;
-			console.log('test note'+note);
 			for(var i=0; i<5; i++) {
 				if(i+1<=note)
 					$scope.starStatus[target][i] = "ion-android-star";
@@ -76,8 +73,6 @@ angular.module('note',[])
 
 			$http.post('http://localhost:1337/Notation/grade',{noteur: $localStorage.user.id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
 
-			}).error(function(){
-				console.log('error');
 			});
 
 
