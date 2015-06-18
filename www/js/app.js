@@ -1,6 +1,19 @@
 //GLOBAL FUNCTIONS
+
+var modalLink = "";
+var switchIcon = function (icon,link) {       // Switch the icon in the header bar
+	modalLink = link;
+	elem = document.getElementsByClassName('iconHeader')[0];
+  if(elem){
+   if(elem.className.indexOf("icon_")>-1)
+    elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
+  else
+   elem.className = elem.className + " " + icon;
+}
+};
+
 var newTime = function (oldTime){
-	return oldTime.getHours()+":"+oldTime.getMinutes()+", le "+oldTime.getDay()+"/"+oldTime.getMonth();
+  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
 var getStuffById = function(id,stuffArray){
 	for(var i = 0; i<stuffArray.length;i++){
@@ -44,6 +57,14 @@ var notify = function(notif,callback){
     io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
+var shrinkMessage = function(message){
+  message = message.replace(/[\n\r]/g, ' ');
+  if(message.length>80){
+    message = message.substring(0,88)+"...";
+  }
+  return message;
+
+};
 
 
 
@@ -125,7 +146,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
         case 'footEdit':
-        return['à modifié son foot.','/friend/'];
+        return['à modifié son foot.','/foot/'];
         case 'endGame':
         return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
@@ -205,9 +226,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         callback();
       }
     });
-  };
+};
 
-  return handle;
+return handle;
 }])
 
 
@@ -245,11 +266,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.user && $localStorage.user.id){
-      $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-        console.log('Got token', data.token, data.platform);
-        io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
-      });
+    if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:$localStorage.user.pushToken}); 
     }
   })
 
@@ -293,19 +311,34 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   io.socket.on('newMessage',function(message){
 
     var index = getIndex(message.chat, $localStorage.chats);
-
     $localStorage.chats[index].messages.push(message);
-    var firstDate = new Date($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
-    var secondDate = new Date($localStorage.chats[index].lastTime);
-    var fiveSeconds = secondDate.getSeconds() + 5;
-    if(firstDate>secondDate+fiveSeconds){
+
+    var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
+    var lastTimeSeen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
+    console.log(lastMessage);
+    console.log(lastTimeSeen);
+
+    if(lastMessage.diff(lastTimeSeen)>0){
       $localStorage.chats[index].seen = false;
     }
+
+    var indexToUpdate = getIndex(message.chat, $localStorage.chatsDisplay);
+    var newDate = new Date(message.createdAt);
+    var lastMessage = shrinkMessage(message.messagestr);
+    var chatPic = getStuffById(message.senderId, $localStorage.chats[index].users).picture;
+    $localStorage.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$localStorage.chats[index].desc, seen:$localStorage.chats[index].seen, chatPic:chatPic};
+
 
     if(typeof $rootScope.updateMessage == 'function'){
       $rootScope.updateMessage();
     }
   });
+
+$rootScope.updateChatDisplay = function(){
+
+
+
+}
 
   //Nouvel user dans un chat existant
 

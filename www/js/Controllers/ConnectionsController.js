@@ -2,12 +2,11 @@ angular.module('connections',[])
 
 
 
-
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading){
 
   var finish = false;
 
-  $scope.pushRegister = function() {
+    var pushRegister = function() {
     console.log('Ionic Push: Registering user');
 
     // Register with the Ionic Push service.  All parameters are optional.
@@ -40,12 +39,13 @@ angular.module('connections',[])
           $localStorage.user.push.user_id= $localStorage.user.id.toString();
           $ionicUser.identify($localStorage.user.push).then(function(){
             console.log('identification push');
-            $scope.pushRegister();
+            pushRegister();
           }, function(err) {
             console.log(err);
           });
           $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
             console.log('Got token', data.token, data.platform);
+            $localStorage.user.pushToken = data.token;
             io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
           });
           $http.get('http://localhost:1337/getAllFriends/'+response.id+'/0').success(function(data){
@@ -118,7 +118,6 @@ angular.module('connections',[])
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading){
   $scope.err = "";
   $scope.user={};
-  $scope.user.picture = "img/default.jpg";
   $scope.launchReq = function(){
     $ionicLoading.show({
       content: 'Loading Data',

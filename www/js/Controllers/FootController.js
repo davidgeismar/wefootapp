@@ -394,9 +394,10 @@ $scope.askToPlay = function(id){
       console.log($scope.foot);
       $http.post('http://localhost:1337/foot/update',$scope.foot).success(function(){
           $scope.foot.field = $scope.selectedField;
-          async.each($scope.players,function(player){
+          var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.user.id});
+          async.each(toNotify,function(player){
             notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id});
-          })
+          });
       });
     }
     else{

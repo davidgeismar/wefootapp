@@ -7,14 +7,14 @@
         <h2 class="conv_ban_title">
             Foot de {{detail.orgaName}}
         </h2>
-        <p class="conv_ban_text">
+        <p class="conv_ban_text"> 
             Le {{detail.date}} au <span>{{detail.field.name}}</span>
         </p>
     </div>
 </div>
 <ion-content class="padding padding_top has-header has-subheader has-footer padding_bottom">
 <div class="content_conv_box padding" id="convcontent">
-    <dl class="conv_box" ng-repeat="message in chat.messages">
+    <dl class="conv_box" ng-repeat="message in chat.messages | orderBy:'createdAt'">
         <dd ng-if="message.senderId!=user.id" class="from">
             <div class="img_chat_conv">
                 <img ng-src="{{getPic(message.senderId)}}">

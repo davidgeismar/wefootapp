@@ -6,24 +6,14 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 
 
 	$rootScope.updateMessage = function(){
-		$scope.displayer();
 		$scope.$digest();
 
 	}
 
-	var shrinkMessage = function(message){
-		message = message.replace(/[\n\r]/g, ' ');
-		if(message.length>80){
-			message = message.substring(0,88)+"...";
-		}
-		return message;
-
-	};
-
 
 
 	//Affiche les chats qui comportent des messages dans leur liste
-	$scope.displayer = function(){
+	$scope.initDisplayer = function(){
 		$localStorage.chatsDisplay = new Array();
 		$scope.chatsDisplay = $localStorage.chatsDisplay;
 		angular.forEach($localStorage.chats, function(chat) {
@@ -51,7 +41,8 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 
 	}
 
-	$scope.displayer();
+
+	$scope.initDisplayer();
 
 
 	$scope.launchChat = function(chatId){
