@@ -1,5 +1,7 @@
 <ion-view view-title="Profil">
   <ion-content class="">
+    <ion-refresher on-refresh="refresh()">                 
+    </ion-refresher>
     <div class="main_actu">
     </div>
     <div class="slider-button row">
@@ -34,7 +36,7 @@
           <div class="col-10">
             <p ng-if="actu.related_info" class="number_players_profil indic-profil">{{actu.related_info.format}}</p>
             <img ng-if="actu.userName2" ng-src="img/icon_bonhomme_carnet_bleu.svg" height="20" class="level_foot_profil bonhomme_profil" >
-            <img ng-if="actu.related_info" class="img_level_foots number_players_profil level_foot_profil" ng-src="img/niveau_3.svg" src="img/niveau_{{actu.related_info.level}}.svg">
+            <img ng-if="actu.related_info" class="img_level_foots number_players_profil level_foot_profil" ng-src="img/niveau_{{actu.related_info.level}}.svg">
             <p ng-if="actu.related_info" class= "number_players_profil left_player_profil">Encore <span class="bleuciel">{{actu.related_info.nbPlayer-actu.related_info.confirmedPlayers}}</span></p>
           </div>
         </div>

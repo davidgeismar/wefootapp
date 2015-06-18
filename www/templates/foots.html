@@ -9,6 +9,8 @@
         <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
     <ion-scroll direction="y" class= "carte_foots background_foots last">
+      <ion-refresher on-refresh="refresh()">                 
+      </ion-refresher>
       <div ng-show="tab == 1" class="last">
        <div ng-click="go(foot.id)" class="item item-text-wrap border_bottom_foot" ng-repeat= "foot in footTodo">
             <div class="row">

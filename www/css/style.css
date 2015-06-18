@@ -1436,10 +1436,6 @@ a{
   	font-weight: bold;
   	color: #28385c;
   	}*/
-  	.background-foot .list{
-  		background-color: #28385c;
-  		margin-top: 10px;
-  	}
   	.select-place{
   		width: 70%;
   		border-bottom: 1px solid lightgrey;
@@ -2201,6 +2197,10 @@ a{
  		background-size:cover;
  		background-position-x: center;
  		height: 100%;
+ 	}
+
+ 	.background_foots .scroll-refresher .ionic-refresher-content{
+ 		color: #fff;
  	}
 
  	.supress_foots {

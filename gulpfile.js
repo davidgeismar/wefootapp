@@ -3,10 +3,17 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var bower = require('bower');
 var concat = require('gulp-concat');
+var replace = require('gulp-regex-replace');
 // var sass = require('gulp-sass');
 // var minifyCss = require('gulp-minify-css');
 // var rename = require('gulp-rename');
 // var sh = require('shelljs');
+ 
+gulp.task('templates', function(){
+  gulp.src(['file.txt'])
+    .pipe(replace(/foo(.{3})/g, '$1foo'))
+    .pipe(gulp.dest('build/file.txt'));
+});
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -37,6 +44,10 @@ gulp.task('install', ['git-check'], function() {
     });
 });
 
+// gulp.task('product', function(){
+//   return gulp.src('www/js/app.js')
+//     .pipe(replace({regex:'localhost:1337',replace:'62.210.115.66:9000'}));
+// })
 // gulp.task('launch',function(){
 //   return gulp.src(['www/js/global.js','www/js/declare.js','www/js/routes.js','www/js/provider.js'])
 //       .pipe(concat('app.js'))
