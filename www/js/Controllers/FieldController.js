@@ -53,6 +53,7 @@ angular.module('field',[])
         // constant progress updates
       });
       }
+      $location.path('/footfield')
     })
   }
 })

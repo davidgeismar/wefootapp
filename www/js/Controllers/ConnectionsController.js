@@ -117,7 +117,6 @@ angular.module('connections',[])
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading){
   $scope.err = "";
   $scope.user={};
-  $scope.user.picture = "img/default.jpg";
   $scope.launchReq = function(){
     $ionicLoading.show({
       content: 'Loading Data',
