@@ -21,7 +21,7 @@ angular.module('notif',[])
 				},function(){ 
 					$ionicLoading.hide(); $rootScope.notifs = data;
 			});
-		}).error(function(){$scope.err = "Erreur lors de la requête";});
+		});
 	}
 	else{  //Update
 		$http.post('http://localhost:1337/user/getLastNotif',{id: $localStorage.user.id,last_seen: $localStorage.user.last_seen}).success(function(data){
@@ -34,7 +34,7 @@ angular.module('notif',[])
 				},function(){ 
 					$ionicLoading.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
 			});
-		}).error(function(){$scope.err = "Erreur lors de la requête";});
+		});
 	}
 
 	$http.post('http://localhost:1337/user/updateSeen',{id: $localStorage.user.id}).success(function(user){

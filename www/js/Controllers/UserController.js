@@ -26,8 +26,6 @@ if($scope.user && $scope.user.poste==null){
       $http.post('http://localhost:1337/editUser',{favorite_club: value}).success(function(){
         self.user.favorite_club = value;
         self.toEdit[0] = false;
-      }).error(function(){
-        console.log('error');
       });
     }
   }
@@ -38,8 +36,6 @@ if($scope.user && $scope.user.poste==null){
       $http.post('http://localhost:1337/editUser',{poste: value}).success(function(){
         self.user.poste = value;
         self.toEdit[1] = false;
-      }).error(function(){
-        console.log('error');
       });
     }
   }
@@ -137,8 +133,6 @@ $scope.logout = function (){
     if(word.length>2){
      $http.get('http://localhost:1337/search/'+word).success(function(data){
       $scope.results = data;
-    }).error(function(){
-      console.log('error');
     });
   }
   else
@@ -152,9 +146,7 @@ $scope.addFriend = function(target){
     $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
     $scope.friendsId.push(data.id);
-  }).error(function(){
-    console.log('error');
-  })
+  });
 }
 
 $scope.createChat = function(user){
@@ -164,8 +156,6 @@ $scope.createChat = function(user){
     chat.messages = new Array();
     $localStorage.chat=chat;
     $location.path('/conv');
-  }).error(function(err){
-    console.log(err);
   });
 }
 
@@ -217,8 +207,6 @@ $scope.initNotes = function(){
     $scope.setNote(Math.round(data.physique), 2);
     $scope.setNote(Math.round(data.fair_play), 3);
     $scope.setNote(Math.round(data.assiduite), 4);
-  }).error(function(){
-    console.log('error');
   });
 
 }

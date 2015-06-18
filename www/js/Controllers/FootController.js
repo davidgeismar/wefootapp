@@ -109,8 +109,6 @@ $scope.searchQuery = function(word){
 
     $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
       $scope.results = data;
-    }).error(function(){
-      console.log('error');
     });
   }
   else
@@ -134,8 +132,6 @@ $scope.launchReq = function(){
     $http.post('http://localhost:1337/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+$localStorage.user.first_name}).success(function(){
     });
     $location.path('/foot/'+foot.id);
-  }).error(function(){
-    console.log('err');
   });
 }
 
@@ -166,10 +162,7 @@ if($location.path().indexOf('user/foots')>0){
       else if(foot.statut>1)
         $localStorage.footTodo.push(foot);
     });
-  }).error(function(){
-    $scope.err = "Une erreur est survenue vérifiez la connexion internet.";
-    $ionicLoading.hide();
-  }); 
+  });
 }
 })
 
@@ -183,7 +176,7 @@ if($location.path().indexOf('user/foots')>0){
 
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -243,8 +236,6 @@ $scope.removePlayer = function(userId,Invit){
       if(index>-1) $localStorage.footTodo.splice(index,1);
     }
     $location.path('/user/foots');
-  }).error(function(){
-    console.log('error');
   });
 }
 
@@ -275,8 +266,6 @@ $scope.playFoot = function(player){
     $scope.players.push($localStorage.user);
     var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
     notify(notif);
-  }).error(function(){
-    $scope.error = "Erreur participation non enregistrée";
   });
 }
 
@@ -344,6 +333,14 @@ $scope.askToPlay = function(id){
     });
   };
 
+
+
+
+
+
+//Modal edit
+
+
   $ionicModal.fromTemplateUrl('templates/modalEdit.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -354,8 +351,11 @@ $scope.askToPlay = function(id){
   $scope.openModal3 = function() {
     $scope.hour = getHour($scope.foot.date);
     $scope.date = getJour($scope.foot.date);
+    $scope.foot.date = new Date($scope.foot.date);
     $scope.selectedField = {};
+    $scope.oldFoot = {};
     angular.copy($scope.foot.field,$scope.selectedField);
+    angular.copy($scope.foot, $scope.oldFoot);
     console.log($scope.selectedField);
     $scope.modal3.show();
   };
@@ -370,29 +370,54 @@ $scope.askToPlay = function(id){
           async.each($scope.players,function(player){
             notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id});
           })
-      }).error(function(){
-        $scope.err = 'Erreur lors de la mise à jour du foot.'
       });
     }
+    else{
+      angular.copy($scope.oldFoot,$scope.foot);
+      console.log($scope.foot);
+      date = new Date($scope.foot.date);
+      $scope.date = getJour(date)+' '+getHour(date);
+    }
   };
+
 
   $scope.searchField = function(word){
     if(word.length>1){
       $http.get('http://localhost:1337/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
         $scope.fields = data;
-      }).error(function(){
-        console.log('error');
       });
     }
     else
       $scope.fields = [];
   };
 
-
   $scope.updateField = function(field){
     $scope.selectedField = field;
     $scope.fields = [];
   };
+
+  var options = {
+    date: new Date(),
+    mode: 'date',
+    minDate:  new Date(),
+      // allowOldDates: false,
+      // allowFutureDates: true,
+      doneButtonLabel: 'OK',
+      doneButtonColor: '#000000',
+      cancelButtonLabel: 'CANCEL',
+      cancelButtonColor: '#000000'
+    };
+    
+    var options1 = {
+      date: new Date(),
+      minDate: new Date(),
+      mode: 'time', // or 'time'
+      doneButtonLabel: 'OK',
+      doneButtonColor: '#000000',
+      cancelButtonLabel: 'CANCEL',
+      cancelButtonColor: '#000000'
+    };
+
 
     $scope.showDatePicker = function(){
       $cordovaDatePicker.show(options).then(function(date){
@@ -401,6 +426,7 @@ $scope.askToPlay = function(id){
         $scope.foot.date.setMonth(jour.getMonth());
         $scope.foot.date.setFullYear(jour.getFullYear());
         $scope.date = getJour($scope.foot.date);
+        console.log($scope.date);
         });
     }
     $scope.showHourPicker = function(){
@@ -409,6 +435,7 @@ $scope.askToPlay = function(id){
         $scope.foot.date.setHours(hours.getHours());
         $scope.foot.date.setMinutes(new Date(hours).getMinutes());
         $scope.hour = getHour($scope.foot.date);
+        console.log($scope.hour);
       });
     }
 

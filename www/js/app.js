@@ -211,7 +211,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif) {
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -220,6 +220,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $rootScope.nbChatsUnseen = 0;
   $localStorage.chats = [];
 
+  $rootScope.$on('loading:hide', function() {
+    $ionicLoading.hide()
+  })
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -524,7 +527,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     controller: 'FootFinderController'
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
@@ -537,6 +540,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         if(response.status === 403) {
           $location.path('/login');
         }
+        $rootScope.$broadcast('loading:hide');
+        $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       }
     };

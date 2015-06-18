@@ -14,15 +14,11 @@ $scope.addFavorite = function(target){
    $http.post('http://localhost:1337/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $scope.friends[targetPosition].statut = 1;
     console.log('here1');
-  }).error(function(){
-    console.log('error');
   });
 }
 else if($scope.friends[targetPosition].statut==1){
   $http.post('http://localhost:1337/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $scope.friends[targetPosition].statut = 0;
-  }).error(function(){
-    console.log('error');
   });
 }
 }
