@@ -1,13 +1,6 @@
 angular.module('connections',[])
 
-
-
-
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading){
-
-  var finish = false;
-
-  $scope.pushRegister = function() {
+  var pushRegister = function() {
     console.log('Ionic Push: Registering user');
 
     // Register with the Ionic Push service.  All parameters are optional.
@@ -23,6 +16,11 @@ angular.module('connections',[])
       }
     });
   };
+
+
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading){
+
+  var finish = false;
 
   $scope.facebookConnect = function(){
     OpenFB.login('email','public_profile','user_friends').then(function(){
@@ -40,7 +38,7 @@ angular.module('connections',[])
           $localStorage.user.push.user_id= $localStorage.user.id.toString();
           $ionicUser.identify($localStorage.user.push).then(function(){
             console.log('identification push');
-            $scope.pushRegister();
+            pushRegister();
           }, function(err) {
             console.log(err);
           });
@@ -118,7 +116,6 @@ angular.module('connections',[])
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading){
   $scope.err = "";
   $scope.user={};
-  $scope.user.picture = "img/default.jpg";
   $scope.launchReq = function(){
     $ionicLoading.show({
       content: 'Loading Data',

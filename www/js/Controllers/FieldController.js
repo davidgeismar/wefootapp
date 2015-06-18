@@ -18,7 +18,7 @@ angular.module('field',[])
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
-      $scope.imageUri = results[0] ; 
+      $scope.imageUri = results[0]; 
 
     }, function(error) {
       console.log('Error pic');
@@ -28,11 +28,10 @@ angular.module('field',[])
 
 
   $scope.launchReq = function(){
-  if($scope.imageUri){
-    $scope.field.related_to = $localStorage.user.id;
-  }
+    // if($scope.imageUri){
+    //   $scope.field.hasPicture = true;
+    // }
     $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
-      console.log('CALLEEDDDD');
 
       if($scope.imageUri){
         var optionsFt = {
