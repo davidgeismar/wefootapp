@@ -279,6 +279,7 @@ return handle;
       $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
+        $localStorage.newFriend = true;  //refresh on actu load his data
       });
     }
 
@@ -387,6 +388,14 @@ $rootScope.updateChatDisplay = function(){
     StatusBar.styleDefault();
   }
 });
+
+  $ionicPlatform.on('resume',function(){
+    if($localStorage.user && $localStorage.user.id){
+      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+        $rootScope.nbNotif = nb.length;
+      });
+    }
+  });
 
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -568,7 +577,15 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         }
         $rootScope.$broadcast('loading:hide');
         $rootScope.err = "Erreur connexion";
+        console.log('here');
         return $q.reject(response);
+      },
+      'response': function(response){
+        if(response.status == 200){
+          $rootScope.err = "";
+          console.log('okk');
+          return response;
+        }
       }
     };
   })

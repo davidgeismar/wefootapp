@@ -30,7 +30,7 @@ angular.module('connections',[])
           content: 'Loading Data',
           animation: 'fade-out',
           showBackdrop: false,
-          hideOnStateChange: true
+          hideOnStateChange: false
         });
         $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
@@ -84,7 +84,7 @@ angular.module('connections',[])
       content: 'Loading Data',
       animation: 'fade-out',
       showBackdrop: false,
-      hideOnStateChange: true
+      hideOnStateChange: false
     });
     $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
@@ -100,12 +100,12 @@ angular.module('connections',[])
 
       $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
         $localStorage.chats=data;
-        $rootScope.initChatsNotif();      
+        $rootScope.initChatsNotif();
+        $location.path('/user/profil');      
       });
 
       $http.post('http://localhost:1337/user/getLastNotif',data).success(function(nb){
         $rootScope.nbNotif = nb.length;
-        $location.path('/user/profil');
       });                 
     }).error(function(){
      $ionicLoading.hide();

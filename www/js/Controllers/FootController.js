@@ -207,6 +207,7 @@ if($location.path().indexOf('user/foots')>0){
 
   var loadInfo = function(callback2){
     var date;
+    var finish = false;
     $http.get('http://localhost:1337/foot/get/'+$stateParams.id).success(function(data){  //Get foot attributes
       $scope.foot = data;
       date = new Date(data.date);
@@ -215,6 +216,8 @@ if($location.path().indexOf('user/foots')>0){
         $scope.foot.organisator = info.orga;
         $scope.foot.orgaName = info.orgaName;
         $scope.foot.field = info.field;
+        if(finish) $scope.ready = true;
+          finish = true;
       });
     });
 
@@ -232,8 +235,9 @@ if($location.path().indexOf('user/foots')>0){
           });
         },function(err){             //Indicate loading all players is finish
           $scope.date = date;
+          if(finish) $scope.ready = true;
           $ionicLoading.hide();
-          $scope.ready = true; // Show everything
+          finish = true; // Show everything
           if(callback2) callback2();
         });
     });
@@ -383,7 +387,6 @@ $scope.askToPlay = function(id){
     $scope.oldFoot = {};
     angular.copy($scope.foot.field,$scope.selectedField);
     angular.copy($scope.foot, $scope.oldFoot);
-    console.log($scope.selectedField);
     $scope.modal3.show();
   };
 
@@ -468,9 +471,7 @@ $scope.askToPlay = function(id){
     }
 
 $scope.launchChat = function (footId){
-  console.log("test");
   $localStorage.chats.forEach(function(chat){
-    console.log(chat);
     if(chat.typ==2 && chat.related == footId){
       $localStorage.chat = chat;
       $location.path('/conv');

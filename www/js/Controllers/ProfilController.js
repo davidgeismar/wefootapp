@@ -37,7 +37,6 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			$('.logo-profil-container').css({'left': initialPos});
 		}
 	}
-	var friends_id = _.pluck($localStorage.friends,'id');
 	$ionicLoading.show({
 	    content: 'Loading Data',
 	    animation: 'fade-out',
@@ -55,18 +54,22 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 //ACTUS SECTION
 
 	getLastId = function(){
-		if(!$scope.actusByDay || $scope.actusByDay.length==0)
+		if(!$scope.actusByDay || $scope.actusByDay.length==0 || $localStorage.newFriend){
+			$localStorage.newFriend = false;
 			return 0;
+		}
 		else{
 			var lastRow = $scope.actusByDay[$scope.actusByDay.length-1];
-
+			$localStorage.newFriend = false;
 			return lastRow[lastRow.length-1].id;
 		}
 	}
 
 	var getAllActu = function(callback3){
+	var friends_id = _.pluck($localStorage.friends,'id');
 	$http.post('http://localhost:1337/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:getLastId()}).success(function(data){
 		var actusByDay = _.values(data);
+		console.log(actusByDay);
 		if(actusByDay.length==0) $ionicLoading.hide();
 		async.each(actusByDay,function(actus,callback2){
 			async.each(actus,function(actu,callback){
@@ -94,6 +97,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	getAllActu();
 
 	$scope.refresh = function(){
+		console.log(getLastId());
 		getAllActu(function(){
 			$scope.$broadcast('scroll.refreshComplete');
 		});

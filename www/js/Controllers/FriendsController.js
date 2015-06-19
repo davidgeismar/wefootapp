@@ -30,6 +30,7 @@ $scope.refresh = function(){
     var maxId = _.max($localStorage.friends, function(friend){return friend.friendship}).friendship;
 
   $http.get('http://localhost:1337/getAllFriends/'+$localStorage.user.id+'/'+maxId).success(function(data){
+    if(data.length>0) $localStorage.newFriend = true; //Load his data on refresh actu
     $localStorage.friends.concat(data);
     $scope.$broadcast('scroll.refreshComplete');
   });
