@@ -1,5 +1,5 @@
 angular.module('note',[])
-.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
+.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $ionicPopup){
 
 	$scope.activate = [false, false, false, false, false];
 	$scope.notes = new Array(5);
@@ -18,27 +18,27 @@ angular.module('note',[])
 	$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 
 	$scope.init = function(){
-	$scope.initBypass = true;
-					$http.get('http://localhost:1337/getGrade/'+$localStorage.user.id+'/'+$scope.friend.id).success(function(response){
-						console.log(response);
-						if(response.length==0){
-							console.log("here");
-							for(var i = 0; i<5; i++){
-								$scope.setNote(0,i);
-							}
-							$scope.initBypass = false;
-						}
-						else
-						{	
-							$scope.setNote(response[0].technique, 0);
-							$scope.setNote(response[0].frappe, 1);
-							$scope.setNote(response[0].physique, 2);
-							$scope.setNote(response[0].fair_play, 3);
-							$scope.setNote(response[0].assiduite, 4);
-							$scope.initBypass = false;
-						}
-			});
-			
+		$scope.initBypass = true;
+		$http.get('http://localhost:1337/getGrade/'+$localStorage.user.id+'/'+$scope.friend.id).success(function(response){
+			console.log(response);
+			if(response.length==0){
+				console.log("here");
+				for(var i = 0; i<5; i++){
+					$scope.setNote(0,i);
+				}
+				$scope.initBypass = false;
+			}
+			else
+			{	
+				$scope.setNote(response[0].technique, 0);
+				$scope.setNote(response[0].frappe, 1);
+				$scope.setNote(response[0].physique, 2);
+				$scope.setNote(response[0].fair_play, 3);
+				$scope.setNote(response[0].assiduite, 4);
+				$scope.initBypass = false;
+			}
+		});
+
 	}
 
 	$scope.init();
@@ -72,13 +72,12 @@ angular.module('note',[])
 		{
 
 			$http.post('http://localhost:1337/Notation/grade',{noteur: $localStorage.user.id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
+				for(var i=0; i<5; i++) {
+					$scope.activate[i] = false;
+				}
+				$scope.showAlert();
 
 			});
-
-
-			for(var i=0; i<5; i++) {
-				$scope.activate[i] = false;
-			}
 
 		}
 	}
@@ -87,6 +86,19 @@ angular.module('note',[])
 		if($scope.activate[target]){
 			return "hide-icon";
 		}
+	}
+
+	$scope.showAlert = function() {
+		var alertPopup = $ionicPopup.alert({
+			title: 'Confirmation des notes',
+			template: 'Vos notes ont bien été enregistrées',
+			okText: '', 
+			okType: '',
+			cssClass: ''
+		});
+		alertPopup.then(function(res) {
+			$location.path('/friend/'+$scope.friend.id);
+		});
 	}
 
 

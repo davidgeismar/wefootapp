@@ -33,7 +33,7 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 				}
 			}
 			else{
-				$localStorage.chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"", titre:chat.desc});
+				$localStorage.chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"Entrez en contact avec vos potes !", titre:chat.desc, chatPic:"img/logo.jpg"});
 			}
 
 		});
