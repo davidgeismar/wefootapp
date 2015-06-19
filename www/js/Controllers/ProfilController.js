@@ -50,6 +50,8 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 
 	var height = window.innerHeight - $('.main_actu').height() - $('.slider-button').height() - 90;
 	$('.container_actu').find('.scroll').height(height);
+	var setPositon = $('.main_actu').height() + $('.slider-button').height()+3; //Paddings
+	$('.container_actu').css('top',setPositon);
 
 //ACTUS SECTION
 

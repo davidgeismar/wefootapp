@@ -111,13 +111,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       template: 'Etes vous sur de vouloir '+text
     });
     confirmPopup.then(function(res) {
-      if(res) {
-        console.log('here');
+      if(res)
         ok();
-      }
-      else{
-        console.log('not');
-      }
     });
   };
   return showConfirm;
@@ -391,8 +386,9 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
+        $rootScope.$digest();
       });
     }
   });
@@ -577,13 +573,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         }
         $rootScope.$broadcast('loading:hide');
         $rootScope.err = "Erreur connexion";
-        console.log('here');
         return $q.reject(response);
       },
       'response': function(response){
         if(response.status == 200){
           $rootScope.err = "";
-          console.log('okk');
           return response;
         }
       }
