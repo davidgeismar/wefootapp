@@ -1,11 +1,11 @@
-<ion-view view-title="friend profile">
+<ion-view view-title="friend profile"> 
 <ion-header-bar  class="actu_header">
 <a href='#/user/friends'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
 <h1 class="title" style="text-align: center;">{{friend.first_name}} {{friend.last_name}}</h1>
 <img class="logo_wf" src="img/logo_WF.svg">
 </ion-header-bar>
 
-<ion-content class="has-header padding">
+<ion-content class="has-header padding last">
 
 <div class="img_menu_bg" style="background:url({{friend.picture}}) no-repeat center;   background-size: cover; ">
 </div>
@@ -62,8 +62,8 @@
     </div>
 
 <div class="nb_notes_friend">
-  <p ng-if="nbGrades>1">(noté par {{nbGrades}} personnes)</p>
-  <p ng-if="nbGrades<1">(noté par {{nbGrades}} personne)</p>
+  <p ng-if="friend.nbGrades>1">(noté par {{friend.nbGrades}} personnes)</p>
+  <p ng-if="friend.nbGrades<=1">(noté par {{friend.nbGrades}} personne)</p>
 </div>
 
 <a ng-show="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter">

@@ -7,11 +7,10 @@
 
 <ion-content class="has-header padding">
 
-<div class="img_menu_bg" style="background: url('http://localhost:1337/assets/images/profils/.jpg') no-repeat center;">
+<div class="img_menu_bg" style="background:url({{friend.picture}}) no-repeat center;   background-size: cover; ">
 </div>
-<div>
-	<img class="img_menu" src="http://localhost:1337/assets/images/profils/.jpg"/>
-</div>
+
+	<img class="img_menu" style="display: block;margin-left: auto;margin-right: auto;" ng-src="{{friend.picture}}"/>
 
 <div class="note_friend">
 	<div class="icon_menu icon-techB">

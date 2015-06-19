@@ -313,7 +313,7 @@ return handle;
     var lastTimeSeen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
     console.log(lastMessage);
     console.log(lastTimeSeen);
-
+    console.log(lastMessage.diff(lastTimeSeen));
     if(lastMessage.diff(lastTimeSeen)>0){
       $localStorage.chats[index].seen = false;
     }
