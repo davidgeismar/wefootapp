@@ -1,6 +1,11 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
   $scope.user = $localStorage.user;
 
+
+
+
+  	//SLIDER BALL
+
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
 	var full_screen = window.innerWidth-sizeElem;
 	if(!$localStorage.initialPos){
@@ -40,13 +45,19 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	});
 
 
+
+
+	//SET WIDTH CONTENT
+
+	var height = window.innerHeight - $('.main_actu').height() - $('.slider-button').height() - 90;
+	$('.container_actu').find('.scroll').height(height);
+
 //ACTUS SECTION
 
 	getLastId = function(){
 		if(!$scope.actusByDay || $scope.actusByDay.length==0)
 			return 0;
 		else{
-			console.log($scope.actusByDay);
 			var lastRow = $scope.actusByDay[$scope.actusByDay.length-1];
 
 			return lastRow[lastRow.length-1].id;
