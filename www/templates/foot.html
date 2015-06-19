@@ -4,10 +4,9 @@
 <img class="logo_wf_foot" src="img/logo_WF.svg">
 <i class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>
-<ion-content ng-show="ready" class="has-header padding margin-content last">
+<ion-content ng-if="ready" class="has-header padding margin-content last">
 <ion-refresher on-refresh="refresh()">                 
 </ion-refresher>
-<div class="err_container">{{err}}</div>
 <div class="header-foot">
 	<h4>FOOT DE {{foot.orgaName}}</h4>
 	<p>{{date}} {{foot.field.name}}</p>
@@ -76,4 +75,5 @@
 </button>
 </div>
 </ion-content>
+<div class="err_container">{{err}}</div>
 </ion-view>

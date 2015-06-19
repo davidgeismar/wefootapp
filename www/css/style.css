@@ -545,6 +545,7 @@ a{
 }
 .container_actu{
 	margin-top: -50px;
+	height: auto;
 }
 .left-side-slider i{
 	opacity: 1;
@@ -1839,7 +1840,6 @@ a{
   		background-size: cover;
   		min-height: 100%;
   	}
-
   	@media screen and (min-width: 414px) { /*IPHONE 6 + */
   		.logo-profil-container{
   			left: 165px;
