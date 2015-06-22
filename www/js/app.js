@@ -79,7 +79,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     // The public API key all services will use for this app
     api_key: '72368d6e12d814f27c62c1c661533630011c436206637e5f',
     // Set the app to use development pushes
-    dev_push: true
+    dev_push: false
   });
 }])
 
@@ -386,7 +386,7 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
+        $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
