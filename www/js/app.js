@@ -33,7 +33,7 @@ var getIndex = function(id, stuffArray){
 
 var getJour = function(date){
   date = new Date(date);
-  var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
