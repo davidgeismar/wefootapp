@@ -67,9 +67,9 @@ var shrinkMessage = function(message){
 };
 
 
+var device = window.device;
 
 var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
-
 
 app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
@@ -117,6 +117,111 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   };
   return showConfirm;
 }])
+
+
+.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser){
+
+  //Execute all functions asynchronously.
+
+  var connect = function(userId, generalCallback,setUUID){
+    var allFunction = [];
+
+    var pushRegister = function() {
+
+    // Register with the Ionic Push service.  All parameters are optional.
+      $ionicPush.register({
+        canShowAlert: true, //Can pushes show an alert on your screen?
+        canSetBadge: true, //Can pushes update app icon badges?
+        canPlaySound: true, //Can notifications play a sound?
+        canRunActionsOnWake: true, //Can run actions outside the app,
+        onNotification: function(notification) {
+        // Handle new push notifications here
+          console.log(notification);
+          return true;
+       }
+      });
+    };
+    
+    if(window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
+    allFunction.push(function(callback){
+      $ionicUser.identify($localStorage.user.push).then(function(){  
+        pushRegister();
+        $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+        $localStorage.user.pushToken = data.token;
+          $http.post('http://localhost:1337/push/create',{user: userId, pushId: data.token},function(){
+            callback();
+          });
+        });
+      });
+    });
+    }
+
+    allFunction.push(function(callback){
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: userId},function(){
+        callback();
+      }); 
+    });
+
+    if(setUUID && window.device){  //no device on testing
+      allFunction.push(function(callback){
+        $http.post('http://localhost:1337/session/create',{user: userId, uuid: window.device.uuid}).success(function(){
+          callback();
+        });
+      });
+    }
+
+    allFunction.push(function(callback){
+      $http.get('http://localhost:1337/getAllFriends/'+userId+'/0').success(function(data){
+        $localStorage.friends = data[0];
+          angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+            friend.statut = data[1][index].stat; 
+            friend.friendship = data[1][index].friendship;
+            if(index == $localStorage.friends.length-1) callback();
+          });
+      });
+    });
+
+    allFunction.push(function(callback){
+      $http.get('http://localhost:1337/getAllChats/'+userId).success(function(data){
+        $localStorage.chats=data;
+        $rootScope.initChatsNotif();
+        callback();
+      });
+    });
+
+    allFunction.push(function(callback){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
+        $rootScope.nbNotif = nb.length;
+        callback();
+      });         
+    });
+
+
+    async.each(allFunction, function(oneFunc,callback){
+      oneFunc(function(){callback();})
+    },function(){
+      generalCallback();
+    });
+};
+
+  return connect;
+
+}])
+
+.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
+  var showConfirm = function(text,ok){
+    var confirmPopup = $ionicPopup.confirm({
+      title: text.toUpperCase(),
+      template: 'Etes vous sur de vouloir '+text
+    });
+    confirmPopup.then(function(res) {
+      if(res)
+        ok();
+    });
+  };
+  return showConfirm;
+}])
+
 
 
 //Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
@@ -239,6 +344,7 @@ return handle;
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
+
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -374,6 +480,8 @@ $rootScope.updateChatDisplay = function(){
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
   $ionicPlatform.ready(function() {
+    console.log('123');
+    $rootScope.$broadcast('appReady');
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -385,6 +493,7 @@ $rootScope.updateChatDisplay = function(){
 });
 
   $ionicPlatform.on('resume',function(){
+    console.log("HELLOOO");
     if($localStorage.user && $localStorage.user.id){
         $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
@@ -448,7 +557,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
-    cache: false,
+    cache: true,
     abstract: true,
     url: '/user',
     templateUrl: "templates/layout.html",
@@ -456,7 +565,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.chat', {
-    cache: false,
+    cache: true,
     url: '/chat',
     views: {
       'menuContent' :{
@@ -508,14 +617,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
 
-  $stateProvider.state('profiltaff', {
-    cache: false,
-    url: '/profiltaff',
-    templateUrl: "templates/profiltaff.html"
-
-  })
-
-
   $stateProvider.state('newField', {
     url: '/newField',
     templateUrl: 'templates/new_field.html',
@@ -523,7 +624,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.friends', {
-    cache: false,
+    cache: true,
     url: '/friends',
     views: {
       'menuContent' :{

@@ -1,9 +1,5 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
   $scope.user = $localStorage.user;
-
-
-
-
   	//SLIDER BALL
 
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
