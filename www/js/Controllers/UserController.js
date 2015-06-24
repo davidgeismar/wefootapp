@@ -60,7 +60,7 @@ if($scope.user && $scope.user.poste==null){
         console.log('hello');
         setTimeout(function(){
           $localStorage.user.picture = result.response+'#'+ new Date().getTime();
-            $scope.user.picture = $localStorage.user.picture;
+          $scope.user.picture = $localStorage.user.picture;
           $ionicLoading.hide();
         },3000);
       }, function(err) {
@@ -68,11 +68,11 @@ if($scope.user && $scope.user.poste==null){
         console.log("fail uploading");
       }, function (progress) {
         console.log('onEzdoe,ozp');
-      $ionicLoading.show({
-        content: 'Loading Data',
-        animation: 'fade-out',
-        showBackdrop: true
-      });
+        $ionicLoading.show({
+          content: 'Loading Data',
+          animation: 'fade-out',
+          showBackdrop: true
+        });
       });
 
     }, function(error) {
@@ -135,8 +135,8 @@ $scope.logout = function (){
      $http.get('http://localhost:1337/search/'+word).success(function(data){
       $scope.results = data;
     });
-  }
-  else
+   }
+   else
     $scope.results = [];
 }
 $scope.addFriend = function(target){
@@ -229,11 +229,11 @@ $scope.computeChatNotif = function(){
   console.log($localStorage.chats);
   angular.forEach($localStorage.chats,function(chat){
     if(chat.messages.length>0){
-    if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
-      $rootScope.nbChatsUnseen++;
-      console.log($rootScope.nbChatsUnseen);
+      if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
+        $rootScope.nbChatsUnseen++;
+        console.log($rootScope.nbChatsUnseen);
+      }
     }
-  }
   });
 }
 
