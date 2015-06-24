@@ -37,7 +37,7 @@
 <script src="lib/sailsIo/sails.io.js"></script>
 <script type="text/javascript">
     io.sails.useCORSRouteToGetCookie = false;
-    io.sails.url = 'http://62.210.115.66:9000/';
+    io.sails.url = 'http://localhost:1337/';
 </script>
 
 <script src="lib/move/index.js"></script>
@@ -53,6 +53,11 @@
 <!-- your app's js -->
 <script src="js/app.js"></script>
 <script src="js/openFb.js"></script>
+<!-- Factories -->
+<script src="js/Factories/NotifFactory.js"></script>
+<script src="js/Factories/PopupFactory.js"></script>
+<script src="js/Factories/LocalStorageFactory.js"></script>
+<!-- Controllers -->
 <script src="js/Controllers/ConnectionsController.js"></script>
 <script src="js/Controllers/FieldController.js"></script>
 <script src="js/Controllers/FootController.js"></script>
@@ -66,5 +71,6 @@
 <script src="js/Controllers/ResetPasswordController.js"></script>
 <script src="js/Controllers/NotifController.js"></script>
 <script src="js/Controllers/ElectionController.js"></script>
+
 
 </html>

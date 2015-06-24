@@ -15,6 +15,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
 var newTime = function (oldTime){
   return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
+
 var getStuffById = function(id,stuffArray){
 	for(var i = 0; i<stuffArray.length;i++){
 		if (id == stuffArray[i].id)
@@ -22,7 +23,6 @@ var getStuffById = function(id,stuffArray){
 	}
   return null;
 };
-
 
 var getIndex = function(id, stuffArray){
   for(var i = 0; i<stuffArray.length;i++){
@@ -49,12 +49,11 @@ var getHour = function(date){
   return (n+'h'+m)
 };
 
-
 var notify = function(notif,callback){
   if(callback)
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif,callback());
+    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
   else
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
 var shrinkMessage = function(message){
@@ -66,8 +65,6 @@ var shrinkMessage = function(message){
 
 };
 
-
-
 var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
 
@@ -76,161 +73,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $ionicAppProvider.identify({
     // The App ID (from apps.ionic.io) for the server
     app_id: '82c453c4',
+    //GOOGLE APP
+    gcm_id: 'wefoot-985',
     // The public API key all services will use for this app
     api_key: '72368d6e12d814f27c62c1c661533630011c436206637e5f',
     // Set the app to use development pushes
     dev_push: false
   });
 }])
-
-
-
-//Creating local Storage Function
-.factory('$localStorage', ['$window', function($window) {
-  return {
-    set: function(key, value) {
-      $window.localStorage[key] = value;
-    },
-    get: function(key, defaultValue) {
-      return $window.localStorage[key] || defaultValue;
-    },
-    setObject: function(key, value) {
-      $window.localStorage[key] = JSON.stringify(value);
-    },
-    getObject: function(key) {
-      return JSON.parse($window.localStorage[key] || '{}');
-    }
-  }
-}])
-
-
-.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
-  var showConfirm = function(text,ok){
-    var confirmPopup = $ionicPopup.confirm({
-      title: text.toUpperCase(),
-      template: 'Etes vous sur de vouloir '+text
-    });
-    confirmPopup.then(function(res) {
-      if(res) {
-        console.log('here');
-        ok();
-      }
-      else{
-        console.log('not');
-      }
-    });
-  };
-  return showConfirm;
-}])
-
-
-//Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
-.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
-  var handle = {};
-  handle.handleNotif = function(notif,callback){
-
-    var parseNotif = function(typ){
-      switch(typ){
-        case 'newFriend':
-        return ['vous a ajouté à ses amis.','/friend/'];
-        case 'hommeDuMatch':
-        return ['avez été élu homme du match.'];
-        case 'chevreDuMatch':
-        return['avez été élu chèvre du match.'];
-        case 'footInvit':
-        return ['vous à invité à un foot.','/foot/'];
-        case 'footConfirm':
-        return ['à confirmé sa présence à votre foot.','/foot/'];
-        case 'footAnnul':
-        return ['à annulé son foot.'];
-        case 'footDemand':
-        return['demande à participer à votre foot.','/friend/'];
-        case 'footEdit':
-        return['à modifié son foot.','/foot/'];
-        case 'endGame':
-        return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
-        case 'demandAccepted':
-        return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
-        case 'demandRefused':
-        return ['à accepté votre demande pour rejoindre son foot.'];
-        case '3hoursBefore':
-        return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
-      }
-    };
-
-
-    $http.get('http://62.210.115.66:9000/user/get/'+notif.related_user).success(function(user){
-      if(user.id == $localStorage.user.id)
-       notif.userName == "Vous";
-     else{
-      if(notif.typ!="endGame")
-        notif.userName = user.first_name;
-      else
-        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
-    }
-    notif.picture = user.picture;
-    notif.texte = parseNotif(notif.typ)[0];
-    if(notif.related_stuff)
-      notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
-
-    date = new Date(notif.createdAt);
-    notif.date = getHour(date)+', le '+getJour(date).substring(getJour(date).indexOf(date.getDate()),getJour(date).length); //('20h06, le 27 Mai')
-    if(callback)
-      callback();
-
-  });
-  };
-
-  handle.handleActu = function(actu,callback){
-
-    var parseActu = function(typ){
-      switch(typ){
-        case 'newFriend':
-        return ['est amis avec','/friend/'];
-        case 'hommeDuMatch':
-        return ['a été élu homme du match','/friend/'];
-        case 'chevreDuMatch':
-        return['a été élu chèvre du match.','/friend/'];
-        case 'footConfirm':
-        return ['participe à un foot.','/foot/'];
-        case 'demandAccepted':
-        return ['participe à un foot.','/foot/'];
-      }
-    };
-    $http.get('http://62.210.115.66:9000/user/get/'+actu.related_user).success(function(user){
-      actu.userName = user.first_name;
-      actu.userLink = '/friend/'+user.id;
-      actu.texte = parseActu(actu.typ)[0];
-      actu.picture = user.picture;
-
-      if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-        $http.get('http://62.210.115.66:9000/foot/get/'+actu.related_stuff).success(function(data){
-          actu.related_info = data;
-          date = new Date(data.date);
-          actu.related_info.dateString = getJour(date)+' à '+getHour(date);
-          actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
-          if(callback)
-            callback();
-        });
-      }
-      else if(actu.typ == 'newFriend'){
-        $http.get('http://62.210.115.66:9000/user/get/'+actu.user).success(function(data){
-          actu.userName2 = data.first_name;
-          actu.userLink2 = '/friend/'+data.id;
-          actu.picture2 = data.picture;
-          if(callback)
-            callback();
-        });
-      }
-      else if(callback){
-        callback();
-      }
-    });
-};
-
-return handle;
-}])
-
 
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
@@ -262,12 +112,12 @@ return handle;
 
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
-      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
+      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:$localStorage.user.pushToken}); 
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:$localStorage.user.pushToken}); 
     }
   })
 
@@ -276,7 +126,7 @@ return handle;
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
     if(data.typ == 'newFriend'){
-      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
+      $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
         $localStorage.newFriend = true;  //refresh on actu load his data
@@ -284,7 +134,7 @@ return handle;
     }
 
     if(data.typ == 'footInvit'){
-      $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){
+      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
         data.organisator = info.orga;
         data.orgaName = info.orgaName;
         data.field = info.field;
@@ -391,7 +241,7 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',response).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
         $rootScope.nbNotif = nb.length;
       });
     }
@@ -431,7 +281,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       }
     }
   })
-
 
   $stateProvider.state('register', {
     url: '/register',
@@ -518,7 +367,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     templateUrl: "templates/profiltaff.html"
 
   })
-
 
   $stateProvider.state('newField', {
     url: '/newField',
