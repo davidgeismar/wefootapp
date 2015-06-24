@@ -4,14 +4,12 @@ angular.module('connections',[])
 
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform){
 
-$scope.toShow = false;
+$rootScope.toShow = false;
 $ionicPlatform.ready(function(){  //Prevent for loading to early
-  console.log(window.device);
   if(window.device){ //If user has already sat connection from this device he will be logged automatically
     $http.post('http://localhost:1337/session/isConnected',{uuid: window.device.uuid}).success(function(response){
       if(response.userId>0){  //Connexion finded
         $http.get('http://localhost:1337/user/'+response.userId).success(function(data){
-          console.log(data);
           $localStorage.user = data;
           $localStorage.token = data.token;
           $ionicLoading.show({
@@ -26,15 +24,15 @@ $ionicPlatform.ready(function(){  //Prevent for loading to early
         });
       }
       else{
-        $scope.toShow = true;
+        $rootScope.toShow = true;
       }
     }).error(function(){
-      $scope.toShow = true;
+      $rootScope.toShow = true;
       $rootScope.err = "Veuillez vérifier votre connexion internet.";
     });
   }
   else{
-    $scope.toShow = true;
+    $rootScope.toShow = true;
   }
 });
   $scope.facebookConnect = function(){

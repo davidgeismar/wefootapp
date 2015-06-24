@@ -333,6 +333,7 @@ return handle;
 
 
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
+  $rootScope.toShow = false;
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -480,7 +481,6 @@ $rootScope.updateChatDisplay = function(){
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
   $ionicPlatform.ready(function() {
-    console.log('123');
     $rootScope.$broadcast('appReady');
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -493,7 +493,6 @@ $rootScope.updateChatDisplay = function(){
 });
 
   $ionicPlatform.on('resume',function(){
-    console.log("HELLOOO");
     if($localStorage.user && $localStorage.user.id){
         $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
@@ -503,7 +502,7 @@ $rootScope.updateChatDisplay = function(){
   });
 
 })
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -684,4 +683,5 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
       }
     };
   })
+  $ionicConfigProvider.views.forwardCache(true);
 });
