@@ -20,8 +20,8 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
       }
     });
   };
-  
-if(window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
+
+if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
     $localStorage.user.push = $ionicUser.get();
     $localStorage.user.push.user_id = $localStorage.user.id.toString();
