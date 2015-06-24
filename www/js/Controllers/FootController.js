@@ -272,10 +272,10 @@ $scope.removePlayer = function(userId,Invit){
 
 var deleteFoot = function(userId){
   $http.post('http://localhost:1337/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
-    var pos = _.pluck(players,'id').indexOf($localStorage.user.id);
-      var toNotify = players; //Notify all players except the organisator
+    var pos = _.pluck($scope.players,'id').indexOf($localStorage.user.id);
+      var toNotify = $scope.players; //Notify all players except the organisator
       toNotify.splice(pos,1);
-      console.log(toNotify);
+      if(toNotify.length == 0) $location.path('/user/foots');
       async.each(toNotify,function(guy,callback){
         notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();});
       },function(){

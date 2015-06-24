@@ -1,4 +1,4 @@
-.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
+app.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
   var showConfirm = function(text,ok){
     var confirmPopup = $ionicPopup.confirm({
       title: text.toUpperCase(),

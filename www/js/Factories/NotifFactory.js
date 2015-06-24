@@ -1,5 +1,5 @@
 //Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
-.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
+app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
   var handle = {};
   handle.handleNotif = function(notif,callback){
 

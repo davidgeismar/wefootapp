@@ -1,5 +1,6 @@
 <ion-view view-title="Signin">
   <ion-content class="padding">
+  <div ng-show="toShow" class="container_all">
     <div class="col-90 homepage_logo_container">
     	<img class="homepage_logo" ng-src="img/logo_rond.svg"/>
     </div>
@@ -16,5 +17,6 @@
   		Inscription
 	</button></a>
   <p class="err_container"> {{err}} </p>
+  </div>
   </ion-content>
 </ion-view>

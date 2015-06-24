@@ -31,6 +31,7 @@
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.splashscreen",
     "org.apache.cordova.file-transfer",
+<<<<<<< HEAD
     "com.ionic.keyboard",
     {
       "locator": "https://github.com/phonegap-build/PushPlugin.git",
@@ -38,4 +39,8 @@
     }
   ],
   "cordovaPlatforms": []
+=======
+    "com.ionic.keyboard"
+  ]
+>>>>>>> e7242c557fc98046dabbbc335b0f48681c4500b6
 }

@@ -544,8 +544,9 @@ a{
 	left: 146px;
 }
 .container_actu{
-	margin-top: -50px;
+	padding-top: 20px;
 	height: auto;
+	position: absolute;
 }
 .left-side-slider i{
 	opacity: 1;
@@ -1692,9 +1693,8 @@ a{
   		font-weight: bold;
   		font-size: 10px;
   	}
-  	#first-foot{
-  		border-top: none;
-  		padding-bottom: 7px;
+  	.first-foot{
+  		border-top: none !important;
   	}
   	.field-foot-separator{
   		margin: 20px;

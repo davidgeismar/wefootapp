@@ -33,7 +33,7 @@ var getIndex = function(id, stuffArray){
 
 var getJour = function(date){
   date = new Date(date);
-  var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
@@ -65,8 +65,11 @@ var shrinkMessage = function(message){
 
 };
 
-var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
+var device = window.device;
+
+
+var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
 app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
@@ -82,6 +85,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 }])
 
+
 .run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -94,6 +98,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
+
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -229,6 +234,8 @@ $rootScope.updateChatDisplay = function(){
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
   $ionicPlatform.ready(function() {
+    console.log('123');
+    $rootScope.$broadcast('appReady');
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -240,9 +247,11 @@ $rootScope.updateChatDisplay = function(){
 });
 
   $ionicPlatform.on('resume',function(){
+    console.log("HELLOOO");
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
+        $rootScope.$digest();
       });
     }
   });
@@ -301,7 +310,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
-    cache: false,
+    cache: true,
     abstract: true,
     url: '/user',
     templateUrl: "templates/layout.html",
@@ -309,7 +318,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.chat', {
-    cache: false,
+    cache: true,
     url: '/chat',
     views: {
       'menuContent' :{
@@ -360,14 +369,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   })
 
-
-  $stateProvider.state('profiltaff', {
-    cache: false,
-    url: '/profiltaff',
-    templateUrl: "templates/profiltaff.html"
-
-  })
-
   $stateProvider.state('newField', {
     url: '/newField',
     templateUrl: 'templates/new_field.html',
@@ -375,7 +376,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   })
 
   $stateProvider.state('user.friends', {
-    cache: false,
+    cache: true,
     url: '/friends',
     views: {
       'menuContent' :{
@@ -425,7 +426,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
         }
         $rootScope.$broadcast('loading:hide');
         $rootScope.err = "Erreur connexion";
-        console.log('here');
         return $q.reject(response);
       },
       'response': function(response){

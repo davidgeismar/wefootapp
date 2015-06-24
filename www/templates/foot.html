@@ -4,7 +4,8 @@
 <img class="logo_wf_foot" src="img/logo_WF.svg">
 <i class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>
-<ion-content ng-if="ready" class="has-header padding margin-content last">
+<ion-content class="has-header padding margin-content last">
+<div class="container-foot-all" ng-if="ready">
 <ion-refresher on-refresh="refresh()">                 
 </ion-refresher>
 <div class="header-foot">
@@ -45,7 +46,7 @@
 </div>
 <hr class="level-foot-separator separator-bottom" size=5px color=#28385B width=85%>	
 <div class="listeparticipants-foot">
-	<div ng-repeat="player in players" ng-id="first-foot: $index == 0" class="row player-foot">
+	<div ng-repeat="player in players" ng-class="{'first-foot': $index == 0}" class="row player-foot">
 		<div class="img_friends img_foot col col-20">
             <img ng-src="{{player.picture}}">
         </div>
@@ -73,6 +74,7 @@
 <button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot">
 	<i class="ion-close-circled"></i> Se retirer du foot
 </button>
+</div>
 </div>
 </ion-content>
 <div class="err_container">{{err}}</div>

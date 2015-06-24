@@ -23,10 +23,13 @@
     <label class="field_input item item-input">
       <input type="text" ng-model="field.address" placeholder="Rue">
     </label>
-    <label class="field_input item item-input">
-      <input type="text" ng-model="field.city" placeholder="Ville et code postal">
+    <label class="field_input item item-input" style="display:inline-block; width:45%; margin-right:0;">
+      <input type="text" ng-model="field.city" placeholder="Ville">
     </label>
-      <button ng-click="launchReq()" style="margin-bottom: 50px;" class="homepage_button button">
+        <label class="field_input item item-input" style="display:inline-block; float:right; width:40%; margin-left:0;">
+    <input type="text" ng-model="field.zipcode" placeholder="Code postal">
+    </label>
+      <button ng-click="launchReq()" style="margin-top:20px;margin-bottom: 50px;" class="homepage_button button">
         Valider
       </button>
   </form>
