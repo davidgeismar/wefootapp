@@ -27,12 +27,13 @@
       <input type="text" ng-model="field.city" placeholder="Ville">
     </label>
         <label class="field_input item item-input" style="display:inline-block; float:right; width:40%; margin-left:0;">
-    <input type="text" ng-model="field.zipcode" placeholder="Code postal">
+    <input type="text" ng-model="field.zip_code" placeholder="Code postal">
     </label>
       <button ng-click="launchReq()" style="margin-top:20px;margin-bottom: 50px;" class="homepage_button button">
         Valider
       </button>
   </form>
+  <p class="err_container ng-binding">{{err}}</p>
 </div>
 
 </ion-content>

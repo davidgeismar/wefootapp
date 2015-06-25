@@ -3,6 +3,8 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
+    $localStorage.user.lastUpdate = moment();
+
     var allFunction = [];
 
     var pushRegister = function() {
@@ -31,7 +33,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         $localStorage.user.pushToken = data.token;
         console.log('3ACTION')
-        $http.post('http://62.210.115.66:9000/push/create',{user: userId, pushId: data.token}).success(function(){
+        $http.post('http://localhost:1337/push/create',{user: userId, pushId: data.token}).success(function(){
           callback();
         }).error(function(err){
           console.log(err);

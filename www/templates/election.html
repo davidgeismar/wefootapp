@@ -23,10 +23,10 @@
 	<img class="election_pic" ng-src="{{user.picture}}">
 	<div class="election_user_firstname"><p>{{user.first_name}}</p></div>
 	<div class="trophe_container">
-		<img class="trophe" ng-src="img/trophe.png" ng-show="!selectedOrNot('homme',user.id)" ng-hide="selectedOrNot('homme',user.id)" ng-click="select('homme',user.id)">
-		<img class="trophe" ng-src="img/trophe_or.png" ng-show="selectedOrNot('homme',user.id)" ng-hide="!selectedOrNot('homme',user.id)">
-		<img class="chevre" ng-src="img/chevre.png" ng-show="!selectedOrNot('chevre',user.id)" ng-hide="selectedOrNot('chevre',user.id)" ng-click="select('chevre',user.id)">
-		<img class="chevre" ng-src="img/chevre_rouge.png" ng-show="selectedOrNot('chevre',user.id)" ng-hide="!selectedOrNot('chevre',user.id)">
+		<img class="trophe" ng-src="img/trophe.png" ng-if="!selectedOrNot('homme',user.id)" ng-click="select('homme',user.id)">
+		<img class="trophe" ng-src="img/trophe_or.png" ng-if="selectedOrNot('homme',user.id)">
+		<img class="chevre" ng-src="img/chevre.png" ng-if="!selectedOrNot('chevre',user.id)" ng-click="select('chevre',user.id)">
+		<img class="chevre" ng-src="img/chevre_rouge.png" ng-if="selectedOrNot('chevre',user.id)">
 	</div>
 </div>
 

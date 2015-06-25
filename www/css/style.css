@@ -2380,9 +2380,8 @@ a{
 }
 
 .green-check{
-	color:green;
-	/*margin-left:80%;*/
-	font-size:32px;
+	color:rgb(10, 189, 10);
+	font-size:50px;
 	position:absolute;
 	margin-top:115px;
 }

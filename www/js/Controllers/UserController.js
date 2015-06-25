@@ -86,6 +86,8 @@ $scope.logout = function (){
     $http.post('http://localhost:1337/session/delete',{uuid : window.device.uuid});
   io.socket.post('http://localhost:1337/connexion/delete');
   $rootScope.toShow = true;
+  if($localStorage.user.pushToken)
+    $http.post('http://localhost:1337/push/delete',{pushId : $localStorage.user.pushToken});
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');
