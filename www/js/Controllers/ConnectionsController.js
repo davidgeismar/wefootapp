@@ -52,35 +52,12 @@ $rootScope.toShow = false;
           $localStorage.user = response;
           $connection(response.id,function(){
             $location.path('/user/profil');
-          },true);
-          // $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-          //   console.log('Got token', data.token, data.platform);
-          //   $localStorage.user.pushToken = data.token;
-          //   io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
-          // });
-          // $http.get('http://localhost:1337/getAllFriends/'+response.id+'/0').success(function(data){
-          //   $localStorage.friends = data[0];
-          //   angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          //     friend.statut = data[1][index].stat; 
-          //     friend.friendship = data[1][index].friendship;
-          //   });
-          // });
-
-          //   $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
-          //     $localStorage.chats=data;
-          //     $rootScope.initChatsNotif();
-          //   });
-
-          //   $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
-          //     $rootScope.nbNotif = nb.length;
-          //     $location.path('/user/profil');
-          //   });           
+          },true);         
         });
-});
-},function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
+      });
+    },function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
 
-};
-
+  };
 })
 
 

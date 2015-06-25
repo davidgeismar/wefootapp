@@ -12,12 +12,21 @@ angular.module('openfb', [])
     .factory('OpenFB', function ($rootScope, $q, $window, $http) {
 
         var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth',
+            FB_LOGOUT_URL = 'https://www.facebook.com/logout.php',
+
 
         // By default we store fbtoken in sessionStorage. This can be overriden in init()
             tokenStore = window.sessionStorage,
 
             fbAppId,
-            oauthRedirectURL,
+
+            context = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2)),
+
+            baseURL = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + context,
+
+            oauthRedirectURL = baseURL + '/oauthcallback.html',
+
+            logoutRedirectURL = baseURL + '/logoutcallback.html',
 
         // Because the OAuth login spans multiple processes, we need to keep the success/error handlers as variables
         // inside the module instead of keeping them local within the login function.
@@ -28,6 +37,9 @@ angular.module('openfb', [])
 
         // Used in the exit event handler to identify if the login has already been processed elsewhere (in the oauthCallback function)
             loginProcessed;
+
+        console.log(oauthRedirectURL);
+        console.log(logoutRedirectURL);
 
         document.addEventListener("deviceready", function () {
             runningInCordova = true;
@@ -66,25 +78,14 @@ angular.module('openfb', [])
 
             loginProcessed = false;
 
-            logout();
+            // logout();
 
-            // Check if an explicit oauthRedirectURL has been provided in init(). If not, infer the appropriate value
-            if (!oauthRedirectURL) {
-                if (runningInCordova) {
-                    oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
-                } else {
-                    // Trying to calculate oauthRedirectURL based on the current URL.
-                    var index = document.location.href.indexOf('index.html');
-                    if (index > 0) {
-                        oauthRedirectURL = document.location.href.substring(0, index) + 'oauthcallback.html';
-                    } else {
-                        return alert("Can't reliably infer the OAuth redirect URI. Please specify it explicitly in openFB.init()");
-                    }
-                }
-            }
+            if (runningInCordova) {
+                oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
+            } 
 
             loginWindow = window.open(FB_LOGIN_URL + '?client_id=' + fbAppId + '&redirect_uri=' + oauthRedirectURL +
-                '&response_type=token&display=popup&scope=' + fbScope, '_blank', 'location=no');
+                '&response_type=token&display=popup&scope=' + fbScope, '_blank', 'location=no,clearcache=yes');
 
             // If the app is running in Cordova, listen to URL changes in the InAppBrowser until we get a URL with an access_token or an error
             if (runningInCordova) {
@@ -138,7 +139,20 @@ angular.module('openfb', [])
          * Application-level logout: we simply discard the token.
          */
         function logout() {
-            tokenStore['fbtoken'] = undefined;
+            var logoutWindow,
+            token = tokenStore['fbtoken'];
+
+        /* Remove token. Will fail silently if does not exist */
+        tokenStore.removeItem('fbtoken');
+
+        if (token) {
+            logoutWindow = window.open(FB_LOGOUT_URL + '?access_token=' + token + '&next=' + logoutRedirectURL, '_blank', 'location=no,clearcache=yes');
+            if (runningInCordova) {
+                setTimeout(function() {
+                    logoutWindow.close();
+                }, 700);
+            }
+        }
         }
 
         /**
@@ -168,7 +182,7 @@ angular.module('openfb', [])
 
             params['access_token'] = tokenStore['fbtoken'];
 
-            return $http({method: method, url: 'https://graph.facebook.com' + obj.path, params: params})
+            return $http({method: method, url: 'https://graph.facebook.com' + obj.path + '?' + toQueryString(params), params: params})
                 .error(function(data, status, headers, config) {
                     if (data.error && data.error.type === 'OAuthException') {
                         $rootScope.$emit('OAuthException');
@@ -205,6 +219,16 @@ angular.module('openfb', [])
                 obj[splitter[0]] = splitter[1];
             });
             return obj;
+        }
+
+        function toQueryString(obj) {
+            var parts = [];
+            for (var i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    parts.push(encodeURIComponent(i) + "=" + encodeURIComponent(obj[i]));
+                }
+            }
+            return parts.join("&");
         }
 
         return {

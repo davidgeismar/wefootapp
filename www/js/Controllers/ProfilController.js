@@ -11,15 +11,12 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 
 	$scope.moveBall = function($event){
 		var targetPos = initialPos+$event.gesture.deltaX;
-		var velocity = $event.gesture.velocityX;
 		if(parseInt($('.logo-profil-container').css('left').substring(0,3))>0){
 			$('.logo-profil-container').css({'left': (targetPos)});
 		}
-
 	}
 	$scope.moveBallRight = function($event){
 		var targetPos = initialPos+$event.gesture.deltaX;
-		var velocity = $event.gesture.velocityX;
 		if(parseInt($('.logo-profil-container').css('left').substring(0,3))<full_screen){
 			$('.logo-profil-container').css({'left': (targetPos)});
 		}
@@ -36,6 +33,9 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	    showBackdrop: false
 	});
 
+	$scope.go = function(url){
+		$location.path(url);
+	};
 
 
 
@@ -62,7 +62,6 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	var friends_id = _.pluck($localStorage.friends,'id');
 	$http.post('http://localhost:1337/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:getLastId()}).success(function(data){
 		var actusByDay = _.values(data);
-		console.log(actusByDay);
 		if(actusByDay.length==0) $ionicLoading.hide();
 		async.each(actusByDay,function(actus,callback2){
 			async.each(actus,function(actu,callback){
@@ -74,8 +73,27 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			});
 		},function(){
 			if($scope.actusByDay){ //On update
-				$scope.dates = _.allKeys(data).concat($scope.dates);
-				$scope.actusByDay = actusByDay.concat($scope.actusByDay);
+				var indexOldDates = [];
+				var newElems = [];  //Keep new elems to replace them in the right order
+				var count = -1;
+				_.each(data,function(array,index){ //Index = a date here
+					count++;
+					if($scope.dates.indexOf(index)>-1)			//contained in $scope.dates.
+						$scope.actusByDay[$scope.dates.indexOf(index)] =array.concat($scope.actusByDay[$scope.dates.indexOf(index)]);
+					else{
+						newElems.push(array);
+					}
+					if(count == _.allKeys(data).length-1){
+						console.log('here');
+						for(i = newElems.length-1; i>-1; i--){ //Concatenate 2 2D Arrays
+							console.log(newElems[i]);
+							$scope.actusByDay.unshift(newElems[i]);
+						}
+						console.log($scope.actusByDay);
+					}
+				});
+				$scope.dates = _.union(_.allKeys(data),$scope.dates);
+
 			}
 			else{
 				$scope.actusByDay = actusByDay;
@@ -90,7 +108,6 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	getAllActu();
 
 	$scope.refresh = function(){
-		console.log(getLastId());
 		getAllActu(function(){
 			$scope.$broadcast('scroll.refreshComplete');
 		});
