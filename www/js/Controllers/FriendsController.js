@@ -39,11 +39,4 @@ $scope.refresh = function(){
 $scope.goFriend = function(friend){
   $location.path('/friend/'+friend.id);
 }
-$rootScope.openModal = function() {
-  $rootScope.modal.show();
-};
-
-$rootScope.closeModal = function() {
-  $rootScope.modal.hide();
-}; 
 })

@@ -110,9 +110,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       if(fromState.url.indexOf('profil')>-1)
         $('.actu_header').removeClass('transparent');
       if(fromState.url.indexOf('friends')>-1)
-        $('.iconHeader').removeClass('icon_friend');
+        $rootScope.friendsOpen = false;
       if(toState.url.indexOf('friends')>-1)
-        $('.iconHeader').addClass('icon_friend');
+        $rootScope.friendsOpen = true;
     },0);
   });
 

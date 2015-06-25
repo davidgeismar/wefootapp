@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -295,6 +295,14 @@ $scope.playFoot = function(player){
   $http.post('http://localhost:1337/player/update',{foot:$scope.foot.id,user:player}).success(function(){
     $scope.isPlaying = true;
     $scope.players.push($localStorage.user);
+    var plucked = _.pluck($localStorage.footInvitation,'id');
+    index = plucked.indexOf($scope.foot.id);
+    if(index>-1) $localStorage.footInvitation.splice(index,1);
+    $scope.foot.dateString = $scope.date;
+    var indexOrga = _.pluck($scope.players,'id');
+    indexOrga = indexOrga.indexOf($scope.foot.created_by);
+    $scope.foot.orgaPic = $scope.players[indexOrga].picture;
+    $localStorage.footTodo.push($scope.foot);
     var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
     notify(notif);
   });

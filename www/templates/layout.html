@@ -6,7 +6,8 @@
     <button class="button button-icon icon ion-navicon actu_button no_hide" menu-toggle="left"></button>
 
      <img class="actu_logo" ng-src="img/logo_alter.svg"/>
-     <div ng-click="openModal()" class="iconHeader"></div>
+     <div ng-if="friendsOpen" ng-click="openModal()" class="iconHeader icon_friend"></div>
+     <div ng-if="!friendsOpen" class="iconHeader"></div>
   </div>
 
 
