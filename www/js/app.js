@@ -79,7 +79,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     //GOOGLE APP
     gcm_id: 'wefoot-985',
     // The public API key all services will use for this app
-    api_key: '72368d6e12d814f27c62c1c661533630011c436206637e5f',
+    api_key: 'd39ad338ce33f0a8cca8f6facabafeebaeef3e63ae1cdd32',
     // Set the app to use development pushes
     dev_push: false
   });
@@ -424,6 +424,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/login');
         }
         $rootScope.$broadcast('loading:hide');
+        console.log(response.status);
         $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       },

@@ -1,7 +1,6 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
   $scope.user = $localStorage.user;
   	//SLIDER BALL
-
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
 	var full_screen = window.innerWidth-sizeElem;
 	if(!$localStorage.initialPos){
@@ -29,9 +28,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		var currentX = parseInt($('.logo-profil-container').css('left').substring(0,3));
 		if(currentX>full_screen-50) $location.path('/footfield');
 		if(currentX<50) $location.path('/footfinder');
-		else{
-			$('.logo-profil-container').css({'left': initialPos});
-		}
+		$('.logo-profil-container').css({'left': initialPos});
 	}
 	$ionicLoading.show({
 	    content: 'Loading Data',

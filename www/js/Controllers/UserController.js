@@ -5,9 +5,6 @@ angular.module('user',[])
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
 
-  console.log($scope.friends);
-  console.log($scope.user);
-
 
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
@@ -88,6 +85,7 @@ $scope.logout = function (){
   if(window.device)
     $http.post('http://localhost:1337/session/delete',{uuid : window.device.uuid});
   io.socket.post('http://localhost:1337/connexion/delete');
+  $rootScope.toShow = true;
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');
@@ -96,9 +94,6 @@ $scope.logout = function (){
   if($location.path().indexOf('friend')>0)
     modalLink = 'search';
 
-  else if($location.path().indexOf('chat')>0)
-    modalLink = 'chat-modal';
-
   $ionicModal.fromTemplateUrl('templates/search.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -106,12 +101,6 @@ $scope.logout = function (){
     $rootScope.modal = modal;
   });
 
-  $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $rootScope.modal2 = modal;
-  });
 
 
   $scope.switchSearchFb = function(){

@@ -1,10 +1,10 @@
 angular.module('connections',[])
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform){
-
+.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory){
 $rootScope.toShow = false;
-$ionicPlatform.ready(function(){  //Prevent for loading to early
+ //Prevent for loading to early
+ $ionicPlatform.ready(function(){
   if(window.device){ //If user has already sat connection from this device he will be logged automatically
     $http.post('http://localhost:1337/session/isConnected',{uuid: window.device.uuid}).success(function(response){
       if(response.userId>0){  //Connexion finded
@@ -34,7 +34,11 @@ $ionicPlatform.ready(function(){  //Prevent for loading to early
     $rootScope.toShow = true;
   }
 });
+
+
   $scope.facebookConnect = function(){
+    $ionicHistory.clearCache();
+    $ionicHistory.clearHistory();
     OpenFB.login('email','public_profile','user_friends').then(function(){
       OpenFB.get('/me').success(function(data){
         $ionicLoading.show({
@@ -82,12 +86,14 @@ $ionicPlatform.ready(function(){  //Prevent for loading to early
 })
 
 
-.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope,$ionicLoading,$connection){
+.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope,$ionicLoading,$connection,$ionicHistory){
   $scope.err = "";
   $scope.user={};
 
   if($localStorage.user && $localStorage.user.id) $location.path('/user/profil');  // TODO FIX PROB
   $scope.launchReq = function(){
+    $ionicHistory.clearCache();
+    $ionicHistory.clearHistory();
     $ionicLoading.show({
       content: 'Loading Data',
       animation: 'fade-out',
