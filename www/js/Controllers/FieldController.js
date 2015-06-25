@@ -28,20 +28,25 @@ angular.module('field',[])
 
 
   $scope.launchReq = function(){
-    // if($scope.imageUri){
-    //   $scope.field.hasPicture = true;
-    // }
-    $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
+    $scope.err = "";
+    if(!$scope.field.zip_code === parseInt($scope.field.zip_code,10) && !$scope.field.zip_code.length==5)
+      $scope.err = "Veuillez vérifier le code postal";
+    if(!$scope.field.address && !$scope.field.zip_code && !$scope.field.city && !$scope.field.name){
+      $scope.err = "Veuillez vérifier les champs";
+    }
+    else {
 
-      if($scope.imageUri){
-        var optionsFt = {
-          params : {
-            fieldId: data.id
-          }
+      $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
 
-        };
-        $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', $scope.imageUri, optionsFt)
-        .then(function(result) {  
+        if($scope.imageUri){
+          var optionsFt = {
+            params : {
+              fieldId: data.id
+            }
+
+          };
+          $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', $scope.imageUri, optionsFt)
+          .then(function(result) {  
         // Success!
         console.log("successssss");
       }, function(err) {
@@ -51,8 +56,10 @@ angular.module('field',[])
         console.log("progress");
         // constant progress updates
       });
-      }
-      $location.path('/footparams')
-    })
+        }
+        $location.path('/footparams');
+      })
+    }
+
   }
 })

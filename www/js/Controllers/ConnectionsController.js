@@ -46,8 +46,6 @@ $ionicPlatform.ready(function(){  //Prevent for loading to early
         $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;
-          $localStorage.user.push = $ionicUser.get();
-          $localStorage.user.push.user_id= $localStorage.user.id.toString();
           $connection(response.id,function(){
             $location.path('/user/profil');
           },true);
