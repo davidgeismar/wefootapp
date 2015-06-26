@@ -10,7 +10,7 @@
       			<i class="ion-ios-location-outline"></i>
       		</div>
       		<div class="range-footfinder range range-positive">
-      			<input type="range" ng-change="updateDate()" ng-model="params.dateValue" min="0" max="4"><p class="date-footfinder">{{date}}</p>
+      			<input type="range" ng-change="updatedAte()" ng-model="params.dateValue" min="0" max="4"><p class="date-footfinder">{{date}}</p>
       		</div>
       	</div>	
         <ion-scroll direction="y" class= "carte_foots background_footfinder">
@@ -32,7 +32,7 @@
                 <div class="col-25"></div>
 
                 <div class="col-25">
-                 <p class="bleufonce nbreplace"> <strong>Encore {{foot.nbPlayer - foot.confirmedPlayers}} places</strong></p>
+                 <p class="bleufonce nbreplace"> <strong>Encore {{foot.nb_player - foot.confirmed_players}} places</strong></p>
                 </div>
                 <div class="col-25">
                   <img ng-src="img/icon_bonhomme_bleufonce.svg" height="30" class="bonhomme_foots">

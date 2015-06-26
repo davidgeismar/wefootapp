@@ -83,7 +83,7 @@ Manager.prototype.emitAll = function() {
  * @api private
  */
 
-Manager.prototype.updateSocketIds = function(){
+Manager.prototype.updatesocket_ids = function(){
   for (var nsp in this.nsps) {
     this.nsps[nsp].id = this.engine.id;
   }
@@ -533,6 +533,6 @@ Manager.prototype.onreconnect = function(){
   var attempt = this.backoff.attempts;
   this.reconnecting = false;
   this.backoff.reset();
-  this.updateSocketIds();
+  this.updatesocket_ids();
   this.emitAll('reconnect', attempt);
 };

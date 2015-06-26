@@ -15,20 +15,20 @@
 <ion-content class="padding padding_top has-header has-subheader has-footer padding_bottom">
 <div class="content_conv_box padding" id="convcontent">
     <dl class="conv_box" ng-repeat="message in chat.messages | orderBy:'createdAt'">
-        <dd ng-if="message.senderId!=user.id" class="from">
+        <dd ng-if="message.sender_id!=user.id" class="from">
             <div class="img_chat_conv">
-                <img ng-src="{{getPic(message.senderId)}}">
+                <img ng-src="{{getPic(message.sender_id)}}">
             </div>
             <p>
                 <span class="message_name">
-                    <span>{{getUsername(message.senderId)}}</span>
+                    <span>{{getUsername(message.sender_id)}}</span>
                     dit:
                     <br>
                 </span>
                 <span>{{message.messagestr}}</span>
             </p>
         </dd>
-        <dd ng-if="message.senderId==user.id" class="to">
+        <dd ng-if="message.sender_id==user.id" class="to">
             <p>{{message.messagestr}}</p>
         </dd>
     </dl>

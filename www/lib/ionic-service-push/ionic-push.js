@@ -38,7 +38,7 @@ function($http, $cordovaPush, $cordovaLocalNotification, $ionicApp, $ionicPushAc
 
     //Default configuration
     var config = {
-      "senderID": gcmKey,
+      "sender_id": gcmKey,
       "badge": true,
       "sound": true,
       "alert": true

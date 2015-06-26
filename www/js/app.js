@@ -123,7 +123,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:$localStorage.user.pushToken}); 
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
     }
   })
 
@@ -171,18 +171,18 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $localStorage.chats[index].messages.push(message);
 
     var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
-    var lastTimeSeen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
+    var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
     console.log(lastMessage);
-    console.log(lastTimeSeen);
-    console.log(lastMessage.diff(lastTimeSeen));
-    if(lastMessage.diff(lastTimeSeen)>0){
+    console.log(last_time_seen);
+    console.log(lastMessage.diff(last_time_seen));
+    if(lastMessage.diff(last_time_seen)>0){
       $localStorage.chats[index].seen = false;
     }
 
     var indexToUpdate = getIndex(message.chat, $localStorage.chatsDisplay);
     var newDate = new Date(message.createdAt);
     var lastMessage = shrinkMessage(message.messagestr);
-    var chatPic = getStuffById(message.senderId, $localStorage.chats[index].users).picture;
+    var chatPic = getStuffById(message.sender_id, $localStorage.chats[index].users).picture;
     $localStorage.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$localStorage.chats[index].desc, seen:$localStorage.chats[index].seen, chatPic:chatPic};
 
 

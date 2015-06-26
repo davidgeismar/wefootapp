@@ -104,7 +104,7 @@ $rootScope.toShow = false;
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
      $localStorage.friends = [];
-     io.socket.post('http://localhost:1337/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
+     io.socket.post('http://localhost:1337/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.
      $location.path('/user/profil');
    }).error(function(){
     $ionicLoading.hide();

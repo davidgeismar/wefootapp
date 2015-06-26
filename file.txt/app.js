@@ -187,7 +187,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
           actu.related_info = data;
           date = new Date(data.date);
           actu.related_info.dateString = getJour(date)+' à '+getHour(date);
-          actu.related_info.format = Math.floor(data.nbPlayer/2)+"|"+Math.floor(data.nbPlayer/2)
+          actu.related_info.format = Math.floor(data.nb_player/2)+"|"+Math.floor(data.nb_player/2)
           if(callback)
             callback();
         });
