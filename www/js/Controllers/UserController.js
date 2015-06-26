@@ -85,7 +85,8 @@ $scope.logout = function (){
   io.socket.post('http://62.210.115.66:9000/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.user.pushToken)
-    $http.post('http://62.210.115.66:9000/push/delete',{pushId : $localStorage.user.pushToken});
+    $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.user.pushToken});
+
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');

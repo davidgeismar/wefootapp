@@ -20,7 +20,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
   $scope.sendMessage = function(message){
    if(message.length>0){
-     $http.post('http://62.210.115.66:9000/message/create',{senderId :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
+     $http.post('http://62.210.115.66:9000/message/create',{sender_id :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
       io.socket.post('http://62.210.115.66:9000/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
       $scope.messageContent=null;
       $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();

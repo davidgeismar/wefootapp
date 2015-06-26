@@ -1,4 +1,4 @@
-import { createDate, createUTCDate } from './date-from-array';
+import { createdAte, createUTCDate } from './date-from-array';
 import { daysInYear } from '../units/year';
 import { weekOfYear } from '../units/week';
 import { dayOfYearFromWeeks } from '../units/day-of-year';
@@ -69,7 +69,7 @@ export function configFromArray (config) {
         config._a[HOUR] = 0;
     }
 
-    config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
+    config._d = (config._useUTC ? createUTCDate : createdAte).apply(null, input);
     // Apply timezone offset from input. The actual utcOffset can be changed
     // with parseZone.
     if (config._tzm != null) {

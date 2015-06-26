@@ -81,8 +81,8 @@ $scope.addToFoot = function(id){
   $scope.foot.date.setHours(20,30);
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
-  $scope.foot.nbPlayer = 10;
-  $scope.foot.friendCanInvite = true;
+  $scope.foot.nb_player = 10;
+  $scope.foot.friend_can_invite = true;
   $scope.foot.priv = true;
   $scope.foot.level = 0;
   $ionicModal.fromTemplateUrl('modal.html', {
@@ -153,10 +153,10 @@ if($location.path().indexOf('user/foots')>0){
   var loadFoot = function(callback2){
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
-    $http.get('http://http://62.210.115.66:9000/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
+    $http.get('http://62.210.115.66:9000/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       async.each(data, function(foot,callback){
-        $http.get('http://http://62.210.115.66:9000/foot/getInfo/'+foot.id).success(function(elem){
+        $http.get('http://62.210.115.66:9000/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;
           foot.orgaName = elem.orgaName;
           foot.field = elem.field;
@@ -522,13 +522,13 @@ $scope.launchChat = function (footId){
   }
 
 
-  $scope.updateDate = function(){
+  $scope.updatedAte = function(){
     ind = parseInt($scope.params.dateValue);
     $scope.date = getJour(dates[ind]);
     $scope.params.date = dates[ind];
     $scope.getData($scope.params);
   }
-  $scope.updateDate();
+  $scope.updatedAte();
 
 
 

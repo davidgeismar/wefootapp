@@ -75,11 +75,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
   $ionicAppProvider.identify({
     // The App ID (from apps.ionic.io) for the server
-    app_id: '82c453c4',
+    app_id: 'b7af9bfc',
     //GOOGLE APP
     gcm_id: 'wefoot-985',
     // The public API key all services will use for this app
-    api_key: 'd39ad338ce33f0a8cca8f6facabafeebaeef3e63ae1cdd32',
+    api_key: '2003098b5fe09a127f008b601758317e99136f05329ca5c6',
     // Set the app to use development pushes
     dev_push: false
   });
@@ -123,7 +123,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:$localStorage.user.pushToken}); 
+      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+
     }
   })
 
@@ -171,18 +172,18 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $localStorage.chats[index].messages.push(message);
 
     var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
-    var lastTimeSeen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
+    var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
     console.log(lastMessage);
-    console.log(lastTimeSeen);
-    console.log(lastMessage.diff(lastTimeSeen));
-    if(lastMessage.diff(lastTimeSeen)>0){
+    console.log(last_time_seen);
+    console.log(lastMessage.diff(last_time_seen));
+    if(lastMessage.diff(last_time_seen)>0){
       $localStorage.chats[index].seen = false;
     }
 
     var indexToUpdate = getIndex(message.chat, $localStorage.chatsDisplay);
     var newDate = new Date(message.createdAt);
     var lastMessage = shrinkMessage(message.messagestr);
-    var chatPic = getStuffById(message.senderId, $localStorage.chats[index].users).picture;
+    var chatPic = getStuffById(message.sender_id, $localStorage.chats[index].users).picture;
     $localStorage.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$localStorage.chats[index].desc, seen:$localStorage.chats[index].seen, chatPic:chatPic};
 
 

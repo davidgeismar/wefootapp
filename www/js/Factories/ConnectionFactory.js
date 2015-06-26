@@ -36,7 +36,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         console.log('test');
         $localStorage.user.pushToken = data.token;
-        $http.post('http://62.210.115.66:9000/push/create',{user: userId, pushId: data.token}).success(function(){
+        $http.post('http://62.210.115.66:9000/push/create',{user: userId, push_id: data.token}).success(function(){
           callback();
         }).error(function(err){
           errors.push(err);

@@ -1,4 +1,4 @@
-export function createDate (y, m, d, h, M, s, ms) {
+export function createdAte (y, m, d, h, M, s, ms) {
     //can't just apply() to create a date:
     //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
     var date = new Date(y, m, d, h, M, s, ms);

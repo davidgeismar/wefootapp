@@ -106,7 +106,7 @@ $scope.facebookConnect = function(){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
      $localStorage.friends = [];
-     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
+     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();
