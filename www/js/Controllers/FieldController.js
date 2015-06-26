@@ -1,5 +1,5 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory){
   $scope.field = {};
   $scope.field.origin = "private";
   $scope.field.related_to = $localStorage.user.id;
@@ -57,8 +57,8 @@ angular.module('field',[])
         // constant progress updates
       });
         }
-        $location.path('/footparams');
-      })
+        $ionicHistory.goBack();
+      });
     }
 
   }

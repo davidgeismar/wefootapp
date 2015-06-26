@@ -54,9 +54,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			return 0;
 		}
 		else{
-			var lastRow = $scope.actusByDay[$scope.actusByDay.length-1];
-			$localStorage.newFriend = false;
-			return lastRow[lastRow.length-1].id;
+			return $scope.actusByDay[0][0].id;
 		}
 	}
 

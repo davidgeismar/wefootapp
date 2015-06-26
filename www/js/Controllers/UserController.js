@@ -93,17 +93,21 @@ $scope.logout = function (){
   $location.path('/');
 };
   //MODAL HANDLER
-  if($location.path().indexOf('friend')>0)
-    modalLink = 'search';
 
   $ionicModal.fromTemplateUrl('templates/search.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $rootScope.modal = modal;
+    $scope.modal = modal;
   });
 
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
 
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  }; 
 
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');

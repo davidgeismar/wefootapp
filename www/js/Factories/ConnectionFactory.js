@@ -1,4 +1,5 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser, $cordovaPush){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$cordovaPush){
+
 
   //Execute all functions asynchronously.
 
@@ -6,6 +7,7 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     $localStorage.user.lastUpdate = moment();
 
     var allFunction = [];
+    var errors = [];
 
     var pushRegister = function() {
 
@@ -24,7 +26,7 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     });
   };
 
-if(setUUID && window.device && navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry|IEMobile)/)){  // No device on testing second argument removes emulators
+if(setUUID && window.device){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
     $localStorage.user.push = $ionicUser.get();
     $localStorage.user.push.user_id = $localStorage.user.id.toString();
@@ -33,10 +35,11 @@ if(setUUID && window.device && navigator.userAgent.match(/(iPhone|iPod|iPad|Andr
       pushRegister();
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         $localStorage.user.pushToken = data.token;
+
         $http.post('http://62.210.115.66:9000/push/create',{user: userId, pushId: data.token}).success(function(){
           callback();
         }).error(function(err){
-          console.log(err);
+          errors.push(err);
         });
       });
     });
@@ -60,11 +63,14 @@ allFunction.push(function(callback){
     allFunction.push(function(callback){
       $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){
         $localStorage.friends = data[0];
-          angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-            friend.statut = data[1][index].stat; 
-            friend.friendship = data[1][index].friendship;
-            if(index == $localStorage.friends.length-1) callback();
+        if(data[0].length==0) callback();
+        angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+          friend.statut = data[1][index].stat; 
+          friend.friendship = data[1][index].friendship;
+          if(index == $localStorage.friends.length-1) callback();
           });
+        }).error(function(err){
+          errors.push(err);
         });
     });
 
@@ -73,6 +79,8 @@ allFunction.push(function(callback){
         $localStorage.chats=data;
         $rootScope.initChatsNotif();
         callback();
+      }).error(function(err){
+        errors.push(err);
       });
     });
 
@@ -80,14 +88,21 @@ allFunction.push(function(callback){
       $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         callback();
-      });         
+      }).error(function(err){
+        errors.push(err);
+      });       
     });
 
 
     async.each(allFunction, function(oneFunc,callback){
       oneFunc(function(){callback();})
     },function(){
-      generalCallback();
+      if(errors.length==0)
+        generalCallback();
+      else{
+        $ionicLoading.hide();
+        console.log(errors);
+      }
     });
   };
 
