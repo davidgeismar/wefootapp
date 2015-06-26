@@ -45,6 +45,7 @@ $scope.addToFoot = function(id){
     var options1 = {
       date: new Date(),
       minDate: new Date(),
+      minuteInterval: 30,
       mode: 'time', // or 'time'
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
@@ -54,6 +55,7 @@ $scope.addToFoot = function(id){
     $scope.showDatePicker = function(){
       $cordovaDatePicker.show(options).then(function(date){
         var jour = new Date(date);
+        console.log(jour);
         $scope.foot.date.setDate(jour.getDate());
         $scope.foot.date.setMonth(jour.getMonth());
         $scope.foot.date.setFullYear(jour.getFullYear());
@@ -63,6 +65,7 @@ $scope.addToFoot = function(id){
     $scope.showHourPicker = function(){
       $cordovaDatePicker.show(options1).then(function(hour){
         var hours = new Date(hour);
+        console.log(hour);
         $scope.foot.date.setHours(hours.getHours());
         $scope.foot.date.setMinutes(new Date(hours).getMinutes());
         $scope.hour = getHour($scope.foot.date);
@@ -70,6 +73,7 @@ $scope.addToFoot = function(id){
     }
     if($location.path().indexOf('footparams')>0){
   $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
+  $scope.foot.date.setHours(20,30);
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
   $scope.foot.nbPlayer = 10;
@@ -141,15 +145,12 @@ if($location.path().indexOf('user/foots')>0){
     animation: 'fade-out',
     showBackdrop: true
   });
-  var lastId = 0; //Update just last infos
-  $localStorage.footInvitation = [];
-  $localStorage.footTodo = [];
-
   var loadFoot = function(callback2){
-    $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id+'/'+lastId).success(function(data){ //Send status with it as an attribute
+    $localStorage.footInvitation = [];
+    $localStorage.footTodo = [];
+    $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       async.each(data, function(foot,callback){
-        if(foot.id>lastId) lastId = foot.id;
         $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;
           foot.orgaName = elem.orgaName;
