@@ -44,7 +44,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.elir = function(){
 		if($scope.homme || $scope.chevre){
-			$http.post('http://localhost:1337/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
+			$http.post('http://62.210.115.66:9000/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
 				$scope.showConfirmation();
 			}).error(function(){
 				console.log('err');
@@ -57,21 +57,21 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.init = function(){
 
-		$http.get('http://localhost:1337/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
+		$http.get('http://62.210.115.66:9000/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
 				//result (vrai == déjà voté, faux == pas encore voté)
 				console.log(result);
 				if(!result){
 					$scope.alreadyVoted = false;
 					$ionicLoading.hide();
 			//On récupère les joueurs d'un match
-			$http.get('http://localhost:1337/getVoters/'+$scope.foot.id).success(function(results){
+			$http.get('http://62.210.115.66:9000/getVoters/'+$scope.foot.id).success(function(results){
 				$scope.users = results;
 				console.log(results);
 			}).error(function(){
 				console.log('err');
 			});
 
-			$http.get('http://localhost:1337/foot/getInfo/'+$scope.foot.id).success(function(elem){
+			$http.get('http://62.210.115.66:9000/foot/getInfo/'+$scope.foot.id).success(function(elem){
 				$scope.foot.organisator = elem.orga;
 				$scope.foot.orgaName = elem.orgaName;
 				$scope.foot.field = elem.field;

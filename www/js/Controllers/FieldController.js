@@ -36,7 +36,7 @@ angular.module('field',[])
     }
     else {
 
-      $http.post('http://localhost:1337/field/create',$scope.field).success(function(data, status) {
+      $http.post('http://62.210.115.66:9000/field/create',$scope.field).success(function(data, status) {
 
         if($scope.imageUri){
           var optionsFt = {
@@ -45,7 +45,7 @@ angular.module('field',[])
             }
 
           };
-          $cordovaFileTransfer.upload('http://localhost:1337/field/uploadPic', $scope.imageUri, optionsFt)
+          $cordovaFileTransfer.upload('http://62.210.115.66:9000/field/uploadPic', $scope.imageUri, optionsFt)
           .then(function(result) {  
         // Success!
         console.log("successssss");

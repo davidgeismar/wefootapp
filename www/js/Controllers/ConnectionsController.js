@@ -6,9 +6,9 @@ $rootScope.toShow = false;
  //Prevent for loading to early
  $ionicPlatform.ready(function(){
   if(window.device){ //If user has already sat connection from this device he will be logged automatically
-    $http.post('http://localhost:1337/session/isConnected',{uuid: window.device.uuid}).success(function(response){
+    $http.post('http://62.210.115.66:9000/session/isConnected',{uuid: window.device.uuid}).success(function(response){
       if(response.userId>0){  //Connexion finded
-        $http.get('http://localhost:1337/user/'+response.userId).success(function(data){
+        $http.get('http://62.210.115.66:9000/user/'+response.userId).success(function(data){
           $localStorage.user = data;
           $localStorage.token = data.token;
           $ionicLoading.show({
@@ -47,7 +47,7 @@ $rootScope.toShow = false;
           showBackdrop: false,
           hideOnStateChange: false
         });
-        $http.post('http://localhost:1337/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
+        $http.post('http://62.210.115.66:9000/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;
           $connection(response.id,function(){
@@ -56,9 +56,9 @@ $rootScope.toShow = false;
           // $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
           //   console.log('Got token', data.token, data.platform);
           //   $localStorage.user.pushToken = data.token;
-          //   io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+          //   io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
           // });
-          // $http.get('http://localhost:1337/getAllFriends/'+response.id+'/0').success(function(data){
+          // $http.get('http://62.210.115.66:9000/getAllFriends/'+response.id+'/0').success(function(data){
           //   $localStorage.friends = data[0];
           //   angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
           //     friend.statut = data[1][index].stat; 
@@ -66,12 +66,12 @@ $rootScope.toShow = false;
           //   });
           // });
 
-          //   $http.get('http://localhost:1337/getAllChats/'+$localStorage.user.id).success(function(data){
+          //   $http.get('http://62.210.115.66:9000/getAllChats/'+$localStorage.user.id).success(function(data){
           //     $localStorage.chats=data;
           //     $rootScope.initChatsNotif();
           //   });
 
-          //   $http.post('http://localhost:1337/user/getLastNotif',response).success(function(nb){
+          //   $http.post('http://62.210.115.66:9000/user/getLastNotif',response).success(function(nb){
           //     $rootScope.nbNotif = nb.length;
           //     $location.path('/user/profil');
           //   });           
@@ -98,7 +98,7 @@ $rootScope.toShow = false;
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post('http://localhost:1337/session/login',$scope.user).success(function(data){
+    $http.post('http://62.210.115.66:9000/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
       $localStorage.user = data;
       $connection(data.id,function(){
@@ -123,14 +123,16 @@ $rootScope.toShow = false;
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://localhost:1337/user/create',$scope.user).success(function(data){
+    $http.post('http://62.210.115.66:9000/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
      $localStorage.friends = [];
-     io.socket.post('http://localhost:1337/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
+     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
      $location.path('/user/profil');
-   }).error(function(){
+   }).error(function(err){
     $ionicLoading.hide();
+    console.log(err);
+    console.log($scope.user);
     $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
   });
  }

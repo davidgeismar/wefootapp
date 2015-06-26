@@ -1,8 +1,8 @@
 <ion-view view-title="foot">
 <ion-header-bar class="actu_header">
-<a href='#/user/foots'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
-<img class="logo_wf_foot" src="img/logo_WF.svg">
-<i class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
+<div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
+<img class="logo_wf_foot" ng-src="img/logo_WF.svg">
+<i ng-if="!isInvited && !foot.priv && !isPending" class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>
 <ion-content class="has-header padding margin-content last">
 <div class="container-foot-all" ng-if="ready">
@@ -40,8 +40,8 @@
 <hr class="level-foot-separator" size=5px color=#28385B width=85%>
 <div class="niveau-foot">
 	<p class="level-foot" style="display:inline" >Niveau du foot</p>
-	<img class="level-foot" src="img/niveau_{{foot.level}}.svg"/>
-	<img class="missing-foot" src="img/icon_bonhomme_bleufonce.svg"/>
+	<img class="level-foot"  ng-src="img/niveau_{{foot.level}}.svg"/>
+	<img class="missing-foot" ng-src="img/icon_bonhomme_bleufonce.svg"/>
 	<p class="missing-foot" style="display:inline">Encore {{foot.nbPlayer-foot.confirmedPlayers}} places</p>
 </div>
 <hr class="level-foot-separator separator-bottom" size=5px color=#28385B width=85%>	
@@ -58,7 +58,7 @@
 </div>
 <hr class="field-foot-separator" size=5px color=#28385B width=85%>
 <div class="urban-foot">
-	<div class="photourban-foot" style="background-image:url('img/terrain_640x414_3.jpg');">
+	<div class="photourban-foot" style="background-image:url({{foot.field.picture}});">
 	</div>
 	<div class="nomurban-foot">
 		<h5 style="margin-bottom:0px"> {{foot.field.name}}</h5>
