@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading){
+.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,OpenFB){
 
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
@@ -62,9 +62,7 @@ if($scope.user && $scope.user.poste==null){
         },3000);
       }, function(err) {
         // Error
-        console.log("fail uploading");
       }, function (progress) {
-        console.log('onEzdoe,ozp');
         $ionicLoading.show({
           content: 'Loading Data',
           animation: 'fade-out',
@@ -115,6 +113,8 @@ $scope.logout = function (){
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
   }
+
+
   $scope.switchSearchWf = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_wf').addClass('opened_search');
@@ -220,6 +220,7 @@ $scope.displayNotes = function(){
 }
 
 
+
 $scope.computeChatNotif = function(){
   console.log($localStorage.chats);
   angular.forEach($localStorage.chats,function(chat){
@@ -233,6 +234,14 @@ $scope.computeChatNotif = function(){
 }
 
 $scope.computeChatNotif();
+
+
+
+
+//Move back side menu
+
+
+
 
 })
 

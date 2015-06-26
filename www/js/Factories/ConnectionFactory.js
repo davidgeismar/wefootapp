@@ -1,6 +1,6 @@
 app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$cordovaPush){
 
-
+  console.log(window.device);
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -26,31 +26,33 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     });
   };
 
-if(setUUID && window.device){  // No device on testing second argument removes emulators
+if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
     $localStorage.user.push = $ionicUser.get();
     $localStorage.user.push.user_id = $localStorage.user.id.toString();
     console.log($localStorage.user.push);
-    $ionicUser.identify($localStorage.user.push).then(function(){  
+    $ionicUser.identify($localStorage.user.push).then(function(){
       pushRegister();
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+        console.log('test');
         $localStorage.user.pushToken = data.token;
-
         $http.post('http://62.210.115.66:9000/push/create',{user: userId, pushId: data.token}).success(function(){
           callback();
         }).error(function(err){
           errors.push(err);
         });
       });
+    }, function(err) {
+      errors.push(err);
     });
   });
-}
+  }
 
-allFunction.push(function(callback){
-  io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: userId},function(){
-    callback();
-  }); 
-});
+  allFunction.push(function(callback){
+    io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: userId},function(){
+      callback();
+    }); 
+  });
 
     if(setUUID && window.device){  //no device on testing
       allFunction.push(function(callback){
@@ -68,10 +70,10 @@ allFunction.push(function(callback){
           friend.statut = data[1][index].stat; 
           friend.friendship = data[1][index].friendship;
           if(index == $localStorage.friends.length-1) callback();
-          });
-        }).error(function(err){
-          errors.push(err);
         });
+      }).error(function(err){
+        errors.push(err);
+      });
     });
 
     allFunction.push(function(callback){

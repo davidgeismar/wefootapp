@@ -260,7 +260,6 @@ $rootScope.updateChatDisplay = function(){
   };
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
-  $ionicConfigProvider.tabs.position("bottom"); 
 
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
@@ -442,4 +441,5 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     };
   })
   $ionicConfigProvider.views.forwardCache(true);
+  $ionicConfigProvider.tabs.position("bottom"); 
 });

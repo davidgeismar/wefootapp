@@ -2,7 +2,7 @@ angular.module('connections',[])
 
 
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory){
-$rootScope.toShow = false;
+  $rootScope.toShow = false;
  //Prevent for loading to early
  $ionicPlatform.ready(function(){
   if(window.device){ //If user has already sat connection from this device he will be logged automatically
@@ -36,51 +36,28 @@ $rootScope.toShow = false;
 });
 
 
-  $scope.facebookConnect = function(){
-    $ionicHistory.clearCache();
-    $ionicHistory.clearHistory();
-    OpenFB.login('email','public_profile','user_friends').then(function(){
-      OpenFB.get('/me').success(function(data){
-        $ionicLoading.show({
-          content: 'Loading Data',
-          animation: 'fade-out',
-          showBackdrop: false,
-          hideOnStateChange: false
-        });
-        $http.post('http://62.210.115.66:9000/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
-          $localStorage.token = response.token;
-          $localStorage.user = response;
-          $connection(response.id,function(){
-            $location.path('/user/profil');
-          },true);
-          // $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-          //   console.log('Got token', data.token, data.platform);
-          //   $localStorage.user.pushToken = data.token;
-          //   io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
-          // });
-          // $http.get('http://62.210.115.66:9000/getAllFriends/'+response.id+'/0').success(function(data){
-          //   $localStorage.friends = data[0];
-          //   angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          //     friend.statut = data[1][index].stat; 
-          //     friend.friendship = data[1][index].friendship;
-          //   });
-          // });
-
-          //   $http.get('http://62.210.115.66:9000/getAllChats/'+$localStorage.user.id).success(function(data){
-          //     $localStorage.chats=data;
-          //     $rootScope.initChatsNotif();
-          //   });
-
-          //   $http.post('http://62.210.115.66:9000/user/getLastNotif',response).success(function(nb){
-          //     $rootScope.nbNotif = nb.length;
-          //     $location.path('/user/profil');
-          //   });           
-        });
-});
-},function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
+$scope.facebookConnect = function(){
+  $ionicHistory.clearCache();
+  $ionicHistory.clearHistory();
+  OpenFB.login('email','public_profile','user_friends').then(function(){
+    OpenFB.get('/me').success(function(data){
+      $ionicLoading.show({
+        content: 'Loading Data',
+        animation: 'fade-out',
+        showBackdrop: false,
+        hideOnStateChange: false
+      });
+      $http.post('http://62.210.115.66:9000/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
+        $localStorage.token = response.token;
+        $localStorage.user = response;
+        $connection(response.id,function(){
+          $location.path('/user/profil');
+        },true);
+      });
+    });
+  },function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
 
 };
-
 })
 
 
@@ -114,6 +91,8 @@ $rootScope.toShow = false;
 })
 
 .controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading){
+  $ionicHistory.clearCache();
+  $ionicHistory.clearHistory();
   $scope.err = "";
   $scope.user={};
   $scope.launchReq = function(){
