@@ -247,6 +247,7 @@ $rootScope.updateChatDisplay = function(){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
+      $http.post('http://localhost:1337/user/update',{id: $localStorage.user.id, pending_notif: 0});
     }
   });
 
