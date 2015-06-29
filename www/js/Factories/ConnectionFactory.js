@@ -36,7 +36,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         console.log('test');
         $localStorage.user.pushToken = data.token;
-        $http.post('http://62.210.115.66:9000/push/create',{user: userId, push_id: data.token}).success(function(){
+        $http.post('http://localhost:1337/push/create',{user: userId, push_id: data.token}).success(function(){
           callback();
         }).error(function(err){
           errors.push(err);
@@ -49,21 +49,21 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
   }
 
   allFunction.push(function(callback){
-    io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: userId},function(){
+    io.socket.post('http://localhost:1337/connexion/setConnexion',{id: userId},function(){
       callback();
     }); 
   });
 
     if(setUUID && window.device){  //no device on testing
       allFunction.push(function(callback){
-        $http.post('http://62.210.115.66:9000/session/create',{user: userId, uuid: window.device.uuid}).success(function(){
+        $http.post('http://localhost:1337/session/create',{user: userId, uuid: window.device.uuid}).success(function(){
           callback();
         });
       });
     }
 
     allFunction.push(function(callback){
-      $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){
+      $http.get('http://localhost:1337/getAllFriends/'+userId+'/0').success(function(data){
         $localStorage.friends = data[0];
         if(data[0].length==0) callback();
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
@@ -77,7 +77,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     });
 
     allFunction.push(function(callback){
-      $http.get('http://62.210.115.66:9000/getAllChats/'+userId).success(function(data){
+      $http.get('http://localhost:1337/getAllChats/'+userId).success(function(data){
         $localStorage.chats=data;
         $rootScope.initChatsNotif();
         callback();
@@ -87,7 +87,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     });
 
     allFunction.push(function(callback){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         callback();
       }).error(function(err){

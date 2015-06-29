@@ -51,9 +51,9 @@ var getHour = function(date){
 
 var notify = function(notif,callback){
   if(callback)
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif,callback());
+    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
   else
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
 var shrinkMessage = function(message){
@@ -118,12 +118,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
-      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
+      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
 
     }
   })
@@ -133,7 +133,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
     if(data.typ == 'newFriend'){
-      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
+      $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
         $localStorage.newFriend = true;  //refresh on actu load his data
@@ -141,7 +141,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     }
 
     if(data.typ == 'footInvit'){
-      $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){
+      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
         data.organisator = info.orga;
         data.orgaName = info.orgaName;
         data.field = info.field;
@@ -249,7 +249,7 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
