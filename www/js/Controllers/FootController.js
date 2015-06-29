@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -186,6 +186,17 @@ if($location.path().indexOf('user/foots')>0){
   }
 
 }
+    
+     var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+        $localStorage.user.lat=lat;
+      $localStorage.user.long=long;
+    }, function(err) {
+      // error
+    });
+    
 })
 
 
@@ -472,7 +483,7 @@ $scope.launchChat = function (footId){
 
 
 
-.controller('FootFinderController', function ($scope,$http,$localStorage,$location) {
+.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$cordovaGeolocation) {
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
@@ -505,6 +516,14 @@ $scope.launchChat = function (footId){
   }
   $scope.updatedAte();
 
-
+ var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+        $localStorage.user.lat=lat;
+      $localStorage.user.long=long;
+    }, function(err) {
+      // error
+    });
 
 })
