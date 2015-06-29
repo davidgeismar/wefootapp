@@ -5,6 +5,11 @@ angular.module('foot',[]).controller('FootController', function ($scope, $cordov
 } 
 
 
+$scope.initFields = function(){
+  
+}
+
+
 $scope.foot = {};
 $scope.results = [];
 $scope.tab = "1";

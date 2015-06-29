@@ -86,6 +86,7 @@ $scope.logout = function (){
   $rootScope.toShow = true;
   if($localStorage.user.pushToken)
     $http.post('http://localhost:1337/push/delete',{push_id : $localStorage.user.pushToken});
+
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');
@@ -126,7 +127,7 @@ $scope.logout = function (){
     angular.forEach($localStorage.friends,function(friend){
       $scope.friendsId.push(friend.id);
     });
-    if(word.length>1){
+    if(word.length>2){
      $http.get('http://localhost:1337/search/'+word).success(function(data){
       $scope.results = data;
     });
@@ -236,6 +237,36 @@ $scope.computeChatNotif = function(){
 $scope.computeChatNotif();
 
 
+$scope.sendFbMessage = function() {
+  facebookConnectPlugin.showDialog({
+    method: 'send',
+    message:'Téléchargez wefoot bande de bitches',
+    link:'http://wefoot.co'
+  },
+  function (response) {
+    $ionicLoading.show({ template: 'Message sent!', noBackdrop: true, duration: 2000 });
+  },
+  function (response) {
+    console.log('error');
+  });
+};
+
+$scope.sendSmsMessage = function(){
+
+  var options = {
+            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+            android: {
+                intent: 'INTENT'  // send SMS with the native android SMS messaging
+              }
+            };
+
+
+            $cordovaSms.send('Téléchargez wefoot bande de bitches', 'SMS content', options).then(function() {
+              $ionicLoading.show({ template: 'Message sent!', noBackdrop: true, duration: 2000 });
+            }, function(error) {
+              console.log('error');
+            });
+          }
 
 
 //Move back side menu

@@ -67,18 +67,18 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
   $ionicAppProvider.identify({
     // The App ID (from apps.ionic.io) for the server
-    app_id: '82c453c4',
+    app_id: 'b7af9bfc',
     //GOOGLE APP
     gcm_id: 'wefoot-985',
     // The public API key all services will use for this app
-    api_key: 'd39ad338ce33f0a8cca8f6facabafeebaeef3e63ae1cdd32',
+    api_key: '2003098b5fe09a127f008b601758317e99136f05329ca5c6',
     // Set the app to use development pushes
     dev_push: false
   });
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush) {
   $rootScope.toShow = false;
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -121,6 +121,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
       io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+
     }
   })
 
@@ -249,8 +250,12 @@ $rootScope.updateChatDisplay = function(){
     }
   });
 
+  $rootScope.goBack = function (){
+    $ionicHistory.goBack();
+  };
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -431,4 +436,5 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     };
   })
   $ionicConfigProvider.views.forwardCache(true);
+  $ionicConfigProvider.tabs.position("bottom"); 
 });

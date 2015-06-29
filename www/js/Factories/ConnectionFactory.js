@@ -1,5 +1,5 @@
 app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
-
+  console.log(window.device);
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -18,6 +18,7 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
         canRunActionsOnWake: true, //Can run actions outside the app,
         onNotification: function(notification) {
         // Handle new push notifications here
+        console.log("NEW NOTIF PUSH");
         console.log(notification);
         return true;
       }
@@ -61,15 +62,17 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       },function(err){
         console.log(err);
       });
+    }, function(err) {
+      errors.push(err);
     });
   });
-}
+  }
 
-allFunction.push(function(callback){
-  io.socket.post('http://localhost:1337/connexion/setConnexion',{id: userId},function(){
-    callback();
-  }); 
-});
+  allFunction.push(function(callback){
+    io.socket.post('http://localhost:1337/connexion/setConnexion',{id: userId},function(){
+      callback();
+    }); 
+  });
 
     if(setUUID && window.device){  //no device on testing
       allFunction.push(function(callback){
@@ -87,10 +90,10 @@ allFunction.push(function(callback){
           friend.statut = data[1][index].stat; 
           friend.friendship = data[1][index].friendship;
           if(index == $localStorage.friends.length-1) callback();
-          });
-        }).error(function(err){
-          errors.push(err);
         });
+      }).error(function(err){
+        errors.push(err);
+      });
     });
 
     allFunction.push(function(callback){
