@@ -11,7 +11,6 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
    elem.className = elem.className + " " + icon;
 }
 };
-
 var newTime = function (oldTime){
   return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
@@ -47,13 +46,6 @@ var getHour = function(date){
   if(n<10) n= '0'+n;
   if(m<10) m= '0'+m;
   return (n+'h'+m)
-};
-
-var notify = function(notif,callback){
-  if(callback)
-    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
-  else
-    io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
 var shrinkMessage = function(message){
@@ -100,6 +92,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $ionicLoading.hide()
   })
 
+  $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
+    if(notification.alert) {
+      navigator.notification.alert(notification.alert);
+    }
+  });
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -172,9 +169,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
     var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
     var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
-    console.log(lastMessage);
-    console.log(last_time_seen);
-    console.log(lastMessage.diff(last_time_seen));
     if(lastMessage.diff(last_time_seen)>0){
       $localStorage.chats[index].seen = false;
     }

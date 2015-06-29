@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
 
   //Execute all functions asynchronously.
 
@@ -24,20 +24,42 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     });
   };
 
+// if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
+//   allFunction.push(function(callback){
+//     $localStorage.user.push = $ionicUser.get();
+//     $localStorage.user.push.user_id = $localStorage.user.id.toString();
+//     console.log($localStorage.user.push);
+//     $ionicUser.identify($localStorage.user.push).then(function(){  
+//       pushRegister();
+//       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+//         $localStorage.user.pushToken = data.token;
+//         $http.post('http://localhost:1337/push/create',{user: userId, push_id: data.token}).success(function(){
+//           callback();
+//         }).error(function(err){
+//           errors.push(err);
+//         });
+//       });
+//     });
+//   });
+// }
+
 if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
-    $localStorage.user.push = $ionicUser.get();
-    $localStorage.user.push.user_id = $localStorage.user.id.toString();
-    console.log($localStorage.user.push);
-    $ionicUser.identify($localStorage.user.push).then(function(){  
-      pushRegister();
-      $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-        $localStorage.user.pushToken = data.token;
-        $http.post('http://localhost:1337/push/create',{user: userId, push_id: data.token}).success(function(){
+    $ionicPlatform.ready(function () {
+      $cordovaPush.register({
+        badge: true,
+        sound: true,
+        alert: true
+      }).then(function (result) {
+        $localStorage.user.pushToken = result;
+        console.log(result);
+        $http.post('http://localhost:1337/push/create',{user: userId, push_id: result}).success(function(){
           callback();
         }).error(function(err){
           errors.push(err);
         });
+      },function(err){
+        console.log(err);
       });
     });
   });

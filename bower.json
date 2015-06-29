@@ -7,6 +7,7 @@
     "ionic-service-push": "~0.1.7"
   },
   "dependencies": {
-    "moment": "~2.10.3"
+    "moment": "~2.10.3",
+    "pouchdb": "~3.6.0"
   }
 }

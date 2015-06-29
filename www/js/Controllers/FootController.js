@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -93,10 +93,6 @@ $scope.addToFoot = function(id){
   $scope.closeModal1 = function() {
     $scope.modal1.hide();
   };
-  //Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
   // Execute action on hide modal
   $scope.$on('modal.hidden', function() {
     // Execute action
@@ -128,8 +124,11 @@ $scope.launchReq = function(){
 
   $scope.foot.created_by = $localStorage.user.id;
   $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(foot){
-    io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: foot.id},function(err){
-    });
+    async.each($scope.foot.toInvite,function(invited,callback){
+      $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: foot.id},function(){
+        callback();
+      },true);
+    },function(){});
     var chatters = [];
     chatters = $scope.foot.toInvite;
     chatters.push($localStorage.user.id);
@@ -194,7 +193,7 @@ if($location.path().indexOf('user/foots')>0){
 
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -278,7 +277,7 @@ var deleteFoot = function(userId){
       toNotify.splice(pos,1);
       if(toNotify.length == 0) $location.path('/user/foots');
       async.each(toNotify,function(guy,callback){
-        notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();});
+        $handleNotif.notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();},true);
       },function(){
         var plucked = _.pluck($localStorage.footTodo,'id');
         index = plucked.indexOf($scope.foot.id);
@@ -305,7 +304,7 @@ $scope.playFoot = function(player){
     $scope.foot.orgaPic = $scope.players[indexOrga].picture;
     $localStorage.footTodo.push($scope.foot);
     var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
-    notify(notif);
+    $handleNotif.notify(notif,function(){},true);
   });
 }
 
@@ -335,7 +334,11 @@ $scope.openModal2 = function() {
 $scope.closeModal2 = function(){
   if($scope.foot.toInvite.length>0){
     $http.post('http://localhost:1337/foot/sendInvits',$scope.foot).success(function(){
-      io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
+      async.each($scope.foot.toInvite,function(invited,callback){
+        $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
+          callback();
+      },true);
+      },function(){$scope.invited = $scope.invited.concat($scope.foot.toInvite);});
     });
   }
   $scope.modal2.hide();
@@ -345,38 +348,10 @@ $scope.addToFoot = function(id) {
 };
 $scope.askToPlay = function(id){
   $http.post('http://localhost:1337/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-    notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
+    $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id},function(){},true);
     $scope.isPending = true;
   });
 };
-
-    $scope.openModal2 = function() {
-      $scope.foot.toInvite = [];
-      $scope.modal2.show();
-    };
-    $scope.closeModal2 = function(){
-      if($scope.foot.toInvite.length>0){
-        $http.post('http://localhost:1337/foot/sendInvits',$scope.foot).success(function(){
-          io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
-          $scope.invited = $scope.invited.concat($scope.foot.toInvite);
-      });
-    }
-    $scope.modal2.hide();
-  };
-  $scope.addToFoot = function(id) {
-    $scope.foot.toInvite.push(id);
-  };
-  $scope.askToPlay = function(id){
-    $http.post('http://localhost:1337/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-      notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
-      $scope.isPending = true;
-    });
-  };
-
-
-
-
-
 
 //Modal edit
 
@@ -408,7 +383,7 @@ $scope.askToPlay = function(id){
           $scope.foot.field = $scope.selectedField;
           var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.user.id});
           async.each(toNotify,function(player){
-            notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id});
+            $handleNotif.notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
           });
       });
     }
@@ -492,7 +467,7 @@ $scope.launchChat = function (footId){
 
 
 
-.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$stateParams) {
+.controller('FootFinderController', function ($scope,$http,$localStorage,$location) {
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 

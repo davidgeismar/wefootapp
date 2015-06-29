@@ -1,5 +1,5 @@
 angular.module('friend',[])
-.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
+.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $handleNotif){
 
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
@@ -62,13 +62,13 @@ angular.module('friend',[])
 		if(yes){
 			$http.post('http://localhost:1337/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
 		}
 		else{
 			$http.post('http://localhost:1337/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
 			});
 		}
 		
