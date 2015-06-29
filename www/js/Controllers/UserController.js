@@ -237,6 +237,36 @@ $scope.computeChatNotif = function(){
 $scope.computeChatNotif();
 
 
+$scope.sendFbMessage = function() {
+  facebookConnectPlugin.showDialog({
+    method: 'send',
+    message:'Téléchargez wefoot bande de bitches',
+    link:'http://wefoot.co'
+  },
+  function (response) {
+    $ionicLoading.show({ template: 'Message sent!', noBackdrop: true, duration: 2000 });
+  },
+  function (response) {
+    console.log('error');
+  });
+};
+
+$scope.sendSmsMessage = function(){
+
+  var options = {
+            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+            android: {
+                intent: 'INTENT'  // send SMS with the native android SMS messaging
+              }
+            };
+
+
+            $cordovaSms.send('Téléchargez wefoot bande de bitches', 'SMS content', options).then(function() {
+              $ionicLoading.show({ template: 'Message sent!', noBackdrop: true, duration: 2000 });
+            }, function(error) {
+              console.log('error');
+            });
+          }
 
 
 //Move back side menu
