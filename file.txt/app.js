@@ -1,20 +1,7 @@
 //GLOBAL FUNCTIONS
-
-var modalLink = "";
-var switchIcon = function (icon,link) {       // Switch the icon in the header bar
-	modalLink = link;
-	elem = document.getElementsByClassName('iconHeader')[0];
-  if(elem){
-   if(elem.className.indexOf("icon_")>-1)
-    elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
-  else
-   elem.className = elem.className + " " + icon;
-}
-};
 var newTime = function (oldTime){
-  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
+	return oldTime.getHours()+":"+oldTime.getMinutes()+", le "+oldTime.getDay()+"/"+oldTime.getMonth();
 };
-
 var getStuffById = function(id,stuffArray){
 	for(var i = 0; i<stuffArray.length;i++){
 		if (id == stuffArray[i].id)
@@ -22,6 +9,7 @@ var getStuffById = function(id,stuffArray){
 	}
   return null;
 };
+
 
 var getIndex = function(id, stuffArray){
   for(var i = 0; i<stuffArray.length;i++){
@@ -32,7 +20,7 @@ var getIndex = function(id, stuffArray){
 
 var getJour = function(date){
   date = new Date(date);
-  var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  var semaine = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
@@ -49,38 +37,181 @@ var getHour = function(date){
 };
 
 
-var shrinkMessage = function(message){
-  message = message.replace(/[\n\r]/g, ' ');
-  if(message.length>80){
-    message = message.substring(0,88)+"...";
-  }
-  return message;
-
+var notify = function(notif,callback){
+  if(callback)
+    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
+  else
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
 };
 
 
-var device = window.device;
 
 
 var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+
 
 app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
   $ionicAppProvider.identify({
     // The App ID (from apps.ionic.io) for the server
-    app_id: 'b7af9bfc',
-    //GOOGLE APP
-    gcm_id: 'wefoot-985',
+    app_id: '82c453c4',
     // The public API key all services will use for this app
-    api_key: '2003098b5fe09a127f008b601758317e99136f05329ca5c6',
+    api_key: '72368d6e12d814f27c62c1c661533630011c436206637e5f',
     // Set the app to use development pushes
-    dev_push: false
+    dev_push: true
   });
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush) {
-  $rootScope.toShow = false;
+
+//Creating local Storage Function
+.factory('$localStorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
+
+
+.factory('$confirmation',['$ionicPopup',function($ionicPopup) {
+  var showConfirm = function(text,ok){
+    var confirmPopup = $ionicPopup.confirm({
+      title: text.toUpperCase(),
+      template: 'Etes vous sur de vouloir '+text
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        console.log('here');
+        ok();
+      }
+      else{
+        console.log('not');
+      }
+    });
+  };
+  return showConfirm;
+}])
+
+
+//Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
+.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
+  var handle = {};
+  handle.handleNotif = function(notif,callback){
+
+    var parseNotif = function(typ){
+      switch(typ){
+        case 'newFriend':
+        return ['vous a ajouté à ses amis.','/friend/'];
+        case 'hommeDuMatch':
+        return ['avez été élu homme du match.'];
+        case 'chevreDuMatch':
+        return['avez été élu chèvre du match.'];
+        case 'footInvit':
+        return ['vous à invité à un foot.','/foot/'];
+        case 'footConfirm':
+        return ['à confirmé sa présence à votre foot.','/foot/'];
+        case 'footAnnul':
+        return ['à annulé son foot.'];
+        case 'footDemand':
+        return['demande à participer à votre foot.','/friend/'];
+        case 'footEdit':
+        return['à modifié son foot.','/friend/'];
+        case 'endGame':
+        return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
+        case 'demandAccepted':
+        return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
+        case 'demandRefused':
+        return ['à accepté votre demande pour rejoindre son foot.'];
+        case '3hoursBefore':
+        return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
+      }
+    };
+
+
+    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+      if(user.id == $localStorage.user.id)
+       notif.userName == "Vous";
+     else{
+      if(notif.typ!="endGame")
+        notif.userName = user.first_name;
+      else
+        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
+    }
+    notif.picture = user.picture;
+    notif.texte = parseNotif(notif.typ)[0];
+    if(notif.related_stuff)
+      notif.url = parseNotif(notif.typ)[1]+notif.related_stuff;
+
+    date = new Date(notif.createdAt);
+    notif.date = getHour(date)+', le '+getJour(date).substring(getJour(date).indexOf(date.getDate()),getJour(date).length); //('20h06, le 27 Mai')
+    if(callback)
+      callback();
+
+  });
+  };
+
+  handle.handleActu = function(actu,callback){
+
+    var parseActu = function(typ){
+      switch(typ){
+        case 'newFriend':
+        return ['est amis avec','/friend/'];
+        case 'hommeDuMatch':
+        return ['a été élu homme du match','/friend/'];
+        case 'chevreDuMatch':
+        return['a été élu chèvre du match.','/friend/'];
+        case 'footConfirm':
+        return ['participe à un foot.','/foot/'];
+        case 'demandAccepted':
+        return ['participe à un foot.','/foot/'];
+      }
+    };
+    $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
+      actu.userName = user.first_name;
+      actu.userLink = '/friend/'+user.id;
+      actu.texte = parseActu(actu.typ)[0];
+      actu.picture = user.picture;
+
+      if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
+        $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
+          actu.related_info = data;
+          date = new Date(data.date);
+          actu.related_info.dateString = getJour(date)+' à '+getHour(date);
+          actu.related_info.format = Math.floor(data.nb_player/2)+"|"+Math.floor(data.nb_player/2)
+          if(callback)
+            callback();
+        });
+      }
+      else if(actu.typ == 'newFriend'){
+        $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
+          actu.userName2 = data.first_name;
+          actu.userLink2 = '/friend/'+data.id;
+          actu.picture2 = data.picture;
+          if(callback)
+            callback();
+        });
+      }
+      else if(callback){
+        callback();
+      }
+    });
+  };
+
+  return handle;
+}])
+
+
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -93,12 +224,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $ionicLoading.hide()
   })
 
-  $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
-    if(notification.alert) {
-      navigator.notification.alert(notification.alert);
-    }
-  });
-
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
       if(toState.url.indexOf('profil')>-1)                  // Menu transparent pour profil
@@ -108,9 +233,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       if(fromState.url.indexOf('profil')>-1)
         $('.actu_header').removeClass('transparent');
       if(fromState.url.indexOf('friends')>-1)
-        $rootScope.friendsOpen = false;
+        $('.iconHeader').removeClass('icon_friend');
       if(toState.url.indexOf('friends')>-1)
-        $rootScope.friendsOpen = true;
+        $('.iconHeader').addClass('icon_friend');
     },0);
   });
 
@@ -120,9 +245,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
-
+    if($localStorage.user && $localStorage.user.id){
+      $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+        console.log('Got token', data.token, data.platform);
+        io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+      });
     }
   })
 
@@ -134,7 +261,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
-        $localStorage.newFriend = true;  //refresh on actu load his data
       });
     }
 
@@ -167,31 +293,19 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   io.socket.on('newMessage',function(message){
 
     var index = getIndex(message.chat, $localStorage.chats);
-    $localStorage.chats[index].messages.push(message);
 
-    var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
-    var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
-    if(lastMessage.diff(last_time_seen)>0){
+    $localStorage.chats[index].messages.push(message);
+    var firstDate = new Date($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
+    var secondDate = new Date($localStorage.chats[index].lastTime);
+    var fiveSeconds = secondDate.getSeconds() + 5;
+    if(firstDate>secondDate+fiveSeconds){
       $localStorage.chats[index].seen = false;
     }
-
-    var indexToUpdate = getIndex(message.chat, $localStorage.chatsDisplay);
-    var newDate = new Date(message.createdAt);
-    var lastMessage = shrinkMessage(message.messagestr);
-    var chatPic = getStuffById(message.sender_id, $localStorage.chats[index].users).picture;
-    $localStorage.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$localStorage.chats[index].desc, seen:$localStorage.chats[index].seen, chatPic:chatPic};
-
 
     if(typeof $rootScope.updateMessage == 'function'){
       $rootScope.updateMessage();
     }
   });
-
-$rootScope.updateChatDisplay = function(){
-
-
-
-}
 
   //Nouvel user dans un chat existant
 
@@ -231,9 +345,6 @@ $rootScope.updateChatDisplay = function(){
   OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
 
   $ionicPlatform.ready(function() {
-    $rootScope.$broadcast('appReady');
-    console.log('here is the thing');
-    console.log($localStorage.get('token'));
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -244,22 +355,8 @@ $rootScope.updateChatDisplay = function(){
   }
 });
 
-  $ionicPlatform.on('resume',function(){
-    if($localStorage.user && $localStorage.user.id){
-      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
-        $rootScope.nbNotif = nb.length;
-        $rootScope.$digest();
-      });
-      $http.post('http://localhost:1337/user/update',{id: $localStorage.user.id, pending_notif: 0});
-    }
-  });
-
-  $rootScope.goBack = function (){
-    $ionicHistory.goBack();
-  };
 })
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
-
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -293,6 +390,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     }
   })
 
+
   $stateProvider.state('register', {
     url: '/register',
     templateUrl: 'templates/register.html',
@@ -312,7 +410,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user',{    // LAYOUT UN FOIS CONNECTE
-    cache: true,
+    cache: false,
     abstract: true,
     url: '/user',
     templateUrl: "templates/layout.html",
@@ -320,7 +418,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user.chat', {
-    cache: true,
+    cache: false,
     url: '/chat',
     views: {
       'menuContent' :{
@@ -371,6 +469,15 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
 
   })
 
+
+  $stateProvider.state('profiltaff', {
+    cache: false,
+    url: '/profiltaff',
+    templateUrl: "templates/profiltaff.html"
+
+  })
+
+
   $stateProvider.state('newField', {
     url: '/newField',
     templateUrl: 'templates/new_field.html',
@@ -378,7 +485,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user.friends', {
-    cache: true,
+    cache: false,
     url: '/friends',
     views: {
       'menuContent' :{
@@ -417,7 +524,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     return {
       'request': function (config) {
         config.headers = config.headers || {};
-        if ($localStorage.get('token')) {
+        if ($localStorage.token) {
           config.headers.Authorization = $localStorage.token;
         }
         return config;
@@ -427,18 +534,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/login');
         }
         $rootScope.$broadcast('loading:hide');
-        console.log(response.status);
         $rootScope.err = "Erreur connexion";
         return $q.reject(response);
-      },
-      'response': function(response){
-        if(response.status == 200){
-          $rootScope.err = "";
-          return response;
-        }
       }
     };
   })
-  $ionicConfigProvider.views.forwardCache(true);
-  $ionicConfigProvider.tabs.position("bottom"); 
 });

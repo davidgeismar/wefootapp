@@ -33,8 +33,9 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
     };
 
 
+
     $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
-      console.log(user);
+
       if(user.id == $localStorage.user.id)
        notif.userName = "Vous";
      else{

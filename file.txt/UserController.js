@@ -1,10 +1,12 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms){
-
+.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading){
 
   $scope.user = $localStorage.user;
   $scope.friends = $localStorage.friends;
+
+  console.log($scope.friends);
+  console.log($scope.user);
 
 
 //Handle edit inputs on left menu
@@ -58,17 +60,19 @@ if($scope.user && $scope.user.poste==null){
         console.log('hello');
         setTimeout(function(){
           $localStorage.user.picture = result.response+'#'+ new Date().getTime();
-          $scope.user.picture = $localStorage.user.picture;
+            $scope.user.picture = $localStorage.user.picture;
           $ionicLoading.hide();
         },3000);
       }, function(err) {
         // Error
+        console.log("fail uploading");
       }, function (progress) {
-        $ionicLoading.show({
-          content: 'Loading Data',
-          animation: 'fade-out',
-          showBackdrop: true
-        });
+        console.log('onEzdoe,ozp');
+      $ionicLoading.show({
+        content: 'Loading Data',
+        animation: 'fade-out',
+        showBackdrop: true
+      });
       });
 
     }, function(error) {
@@ -81,33 +85,33 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  if(window.device)
-    $localStorage.set('token') = "";
+  // $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   io.socket.post('http://localhost:1337/connexion/delete');
-  $rootScope.toShow = true;
-  if($localStorage.user.pushToken)
-    $http.post('http://localhost:1337/push/delete',{push_id : $localStorage.user.pushToken});
-
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');
 };
   //MODAL HANDLER
+  if($location.path().indexOf('friend')>0)
+    modalLink = 'search';
+
+  else if($location.path().indexOf('chat')>0)
+    modalLink = 'chat-modal';
 
   $ionicModal.fromTemplateUrl('templates/search.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
-    $scope.modal = modal;
+    $rootScope.modal = modal;
   });
 
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
+  $ionicModal.fromTemplateUrl('templates/chat-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $rootScope.modal2 = modal;
+  });
 
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  }; 
 
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
@@ -115,8 +119,6 @@ $scope.logout = function (){
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
   }
-
-
   $scope.switchSearchWf = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_wf').addClass('opened_search');
@@ -132,15 +134,14 @@ $scope.logout = function (){
      $http.get('http://localhost:1337/search/'+word).success(function(data){
       $scope.results = data;
     });
-   }
-   else
+  }
+  else
     $scope.results = [];
 }
 $scope.addFriend = function(target){
   $http.post('http://localhost:1337/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
-    $localStorage.newFriend = true; //Load actu of new friend on refresh
     var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
-    $handleNotif.notify(notif);
+    notify(notif);
     data.statut = 0;
     $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
@@ -222,56 +223,19 @@ $scope.displayNotes = function(){
 }
 
 
-
 $scope.computeChatNotif = function(){
   console.log($localStorage.chats);
   angular.forEach($localStorage.chats,function(chat){
     if(chat.messages.length>0){
-      if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
-        $rootScope.nbChatsUnseen++;
-        console.log($rootScope.nbChatsUnseen);
-      }
+    if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
+      $rootScope.nbChatsUnseen++;
+      console.log($rootScope.nbChatsUnseen);
     }
+  }
   });
 }
 
 $scope.computeChatNotif();
-
-
-$scope.sendFbMessage = function() {
-  facebookConnectPlugin.showDialog({
-    method: 'send',
-    message:'Téléchargez wefoot bande de bitches',
-    link:'http://wefoot.co'
-  },
-  function (response) {
-    $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
-  },
-  function (response) {
-    console.log('error');
-  });
-};
-
-$scope.sendSmsMessage = function(){
-
-  var options = {
-            replaceLineBreaks: false, // true to replace \n by a new line, false by default
-            android: {
-                intent: 'INTENT'  // send SMS with the native android SMS messaging
-              }
-            };
-
-            $cordovaSms.send('', 'Téléchargez wefoot bande de bitches', options).then(function() {
-              $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
-            }, function(error) {
-              console.log('error');
-            });
-          }
-
-
-
-
-
 
 })
 

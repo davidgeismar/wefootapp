@@ -2,12 +2,11 @@ angular.module('connections',[])
 
 
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q){
-  $rootScope.toShow = false;
+  $rootScope.toShow = true;
  //Prevent for loading to early
  $ionicPlatform.ready(function(){
   if($localStorage.get('token') && $localStorage.get('token').length>0){ //If user has already sat connection from this device he will be logged automatically
     $http.post('http://localhost:1337/session/isConnected',{token: $localStorage.get('token')}).success(function(data){
-      if(data.user){  //Connexion finded
           $localStorage.user = data;
           $localStorage.set('token',data.token);
           $ionicLoading.show({
@@ -19,10 +18,6 @@ angular.module('connections',[])
           $connection(data.id,function(){
             $location.path('/user/profil');
           },false);
-      }
-      else{
-        $rootScope.toShow = true;
-      }
     }).error(function(){
       $rootScope.toShow = true;
       $rootScope.err = "Veuillez vérifier votre connexion internet.";
@@ -61,7 +56,8 @@ var fbLogged = $q.defer();
 
 //This is the success callback from the login method
 var fbLoginSuccess = function(response) {
-  console.log(response);
+
+
   if (!response.authResponse){
     fbLoginError("Cannot find the authResponse");
     return;
@@ -91,12 +87,27 @@ var fbLoginSuccess = function(response) {
     facebookConnectPlugin.api('/me', "",
       function (response) {
         info.resolve(response);
+
       },
       function (response) {
         info.reject(response);
+
       }
       );
     return info.promise;
+  }
+
+  var getFacebookFriends = function () {
+    var friends = $q.defer();
+    facebookConnectPlugin.api('/me/friends?fields=picture,name', ["basic_info", "user_friends"],
+      function (result) {
+        alert("Result: " + JSON.stringify(result));
+        friends = result;
+      }, 
+      function (error) { 
+        alert("Failed: " + error);
+      });
+    return friends.promise;
   }
 
 //This method is executed when the user press the "Login with facebook" button
@@ -135,7 +146,7 @@ $scope.facebookConnect = function() {
         //ask the permissions you need
         //you can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.2
         facebookConnectPlugin.login(['email',
-          'public_profile'], fbLoginSuccess, fbLoginError);
+          'public_profile', 'user_friends'], fbLoginSuccess, fbLoginError);
 
         fbLogged.promise.then(function(authData) {
 
@@ -158,9 +169,10 @@ $scope.facebookConnect = function() {
                 $connection(response.id,function(){
                   $location.path('/user/profil');
                 },true);
+              }).error(function(err){
+                console.log(err);
               });
               $ionicLoading.hide();
-              // $state.go('app.feed');
             });
           });
 // }

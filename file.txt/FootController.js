@@ -1,13 +1,8 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
 } 
-
-
-$scope.initFields = function(){
-  
-}
 
 
 $scope.foot = {};
@@ -50,7 +45,6 @@ $scope.addToFoot = function(id){
     var options1 = {
       date: new Date(),
       minDate: new Date(),
-      minuteInterval: 30,
       mode: 'time', // or 'time'
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
@@ -60,7 +54,6 @@ $scope.addToFoot = function(id){
     $scope.showDatePicker = function(){
       $cordovaDatePicker.show(options).then(function(date){
         var jour = new Date(date);
-        console.log(jour);
         $scope.foot.date.setDate(jour.getDate());
         $scope.foot.date.setMonth(jour.getMonth());
         $scope.foot.date.setFullYear(jour.getFullYear());
@@ -70,7 +63,6 @@ $scope.addToFoot = function(id){
     $scope.showHourPicker = function(){
       $cordovaDatePicker.show(options1).then(function(hour){
         var hours = new Date(hour);
-        console.log(hour);
         $scope.foot.date.setHours(hours.getHours());
         $scope.foot.date.setMinutes(new Date(hours).getMinutes());
         $scope.hour = getHour($scope.foot.date);
@@ -78,11 +70,10 @@ $scope.addToFoot = function(id){
     }
     if($location.path().indexOf('footparams')>0){
   $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
-  $scope.foot.date.setHours(20,30);
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
   $scope.foot.nb_player = 10;
-  $scope.foot.friend_can_invite = true;
+  $scope.foot.friendCanInvite = true;
   $scope.foot.priv = true;
   $scope.foot.level = 0;
   $ionicModal.fromTemplateUrl('modal.html', {
@@ -98,6 +89,10 @@ $scope.addToFoot = function(id){
   $scope.closeModal1 = function() {
     $scope.modal1.hide();
   };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
   // Execute action on hide modal
   $scope.$on('modal.hidden', function() {
     // Execute action
@@ -128,13 +123,9 @@ $scope.chooseField = function(field){
 $scope.launchReq = function(){
 
   $scope.foot.created_by = $localStorage.user.id;
-
   $http.post('http://localhost:1337/foot/create',$scope.foot).success(function(foot){
-    async.each($scope.foot.toInvite,function(invited,callback){
-      $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: foot.id},function(){
-        callback();
-      },true);
-    },function(){});
+    io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: foot.id},function(err){
+    });
     var chatters = [];
     chatters = $scope.foot.toInvite;
     chatters.push($localStorage.user.id);
@@ -150,12 +141,15 @@ if($location.path().indexOf('user/foots')>0){
     animation: 'fade-out',
     showBackdrop: true
   });
+  var lastId = 0; //Update just last infos
+  $localStorage.footInvitation = [];
+  $localStorage.footTodo = [];
+
   var loadFoot = function(callback2){
-    $localStorage.footInvitation = [];
-    $localStorage.footTodo = [];
-    $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
+    $http.get('http://localhost:1337/getFootByUser/'+$localStorage.user.id+'/'+lastId).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       async.each(data, function(foot,callback){
+        if(foot.id>lastId) lastId = foot.id;
         $http.get('http://localhost:1337/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;
           foot.orgaName = elem.orgaName;
@@ -187,17 +181,6 @@ if($location.path().indexOf('user/foots')>0){
   }
 
 }
-    
-     var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-        $localStorage.user.lat=lat;
-      $localStorage.user.long=long;
-    }, function(err) {
-      // error
-    });
-    
 })
 
 
@@ -210,7 +193,7 @@ if($location.path().indexOf('user/foots')>0){
 
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -224,7 +207,6 @@ if($location.path().indexOf('user/foots')>0){
 
   var loadInfo = function(callback2){
     var date;
-    var finish = false;
     $http.get('http://localhost:1337/foot/get/'+$stateParams.id).success(function(data){  //Get foot attributes
       $scope.foot = data;
       date = new Date(data.date);
@@ -233,8 +215,6 @@ if($location.path().indexOf('user/foots')>0){
         $scope.foot.organisator = info.orga;
         $scope.foot.orgaName = info.orgaName;
         $scope.foot.field = info.field;
-        if(finish) $scope.ready = true;
-          finish = true;
       });
     });
 
@@ -252,9 +232,8 @@ if($location.path().indexOf('user/foots')>0){
           });
         },function(err){             //Indicate loading all players is finish
           $scope.date = date;
-          if(finish) $scope.ready = true;
           $ionicLoading.hide();
-          finish = true; // Show everything
+          $scope.ready = true; // Show everything
           if(callback2) callback2();
         });
     });
@@ -289,12 +268,12 @@ $scope.removePlayer = function(userId,Invit){
 
 var deleteFoot = function(userId){
   $http.post('http://localhost:1337/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
-    var pos = _.pluck($scope.players,'id').indexOf($localStorage.user.id);
-      var toNotify = $scope.players; //Notify all players except the organisator
+    var pos = _.pluck(players,'id').indexOf($localStorage.user.id);
+      var toNotify = players; //Notify all players except the organisator
       toNotify.splice(pos,1);
-      if(toNotify.length == 0) $location.path('/user/foots');
+      console.log(toNotify);
       async.each(toNotify,function(guy,callback){
-        $handleNotif.notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();},true);
+        notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();});
       },function(){
         var plucked = _.pluck($localStorage.footTodo,'id');
         index = plucked.indexOf($scope.foot.id);
@@ -312,16 +291,8 @@ $scope.playFoot = function(player){
   $http.post('http://localhost:1337/player/update',{foot:$scope.foot.id,user:player}).success(function(){
     $scope.isPlaying = true;
     $scope.players.push($localStorage.user);
-    var plucked = _.pluck($localStorage.footInvitation,'id');
-    index = plucked.indexOf($scope.foot.id);
-    if(index>-1) $localStorage.footInvitation.splice(index,1);
-    $scope.foot.dateString = $scope.date;
-    var indexOrga = _.pluck($scope.players,'id');
-    indexOrga = indexOrga.indexOf($scope.foot.created_by);
-    $scope.foot.orgaPic = $scope.players[indexOrga].picture;
-    $localStorage.footTodo.push($scope.foot);
     var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
-    $handleNotif.notify(notif,function(){},true);
+    notify(notif);
   });
 }
 
@@ -351,12 +322,7 @@ $scope.openModal2 = function() {
 $scope.closeModal2 = function(){
   if($scope.foot.toInvite.length>0){
     $http.post('http://localhost:1337/foot/sendInvits',$scope.foot).success(function(){
-      async.each($scope.foot.toInvite,function(invited,callback){
-        $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
-          callback();
-      },true);
-      },function(){$scope.invited = $scope.invited.concat($scope.foot.toInvite);});
-
+      io.socket.post('http://localhost:1337/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
     });
   }
   $scope.modal2.hide();
@@ -366,7 +332,7 @@ $scope.addToFoot = function(id) {
 };
 $scope.askToPlay = function(id){
   $http.post('http://localhost:1337/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-    $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id},function(){},true);
+    notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
     $scope.isPending = true;
   });
 };
@@ -398,6 +364,7 @@ $scope.askToPlay = function(id){
 
 
 
+
 //Modal edit
 
 
@@ -416,6 +383,7 @@ $scope.askToPlay = function(id){
     $scope.oldFoot = {};
     angular.copy($scope.foot.field,$scope.selectedField);
     angular.copy($scope.foot, $scope.oldFoot);
+    console.log($scope.selectedField);
     $scope.modal3.show();
   };
 
@@ -426,10 +394,9 @@ $scope.askToPlay = function(id){
       console.log($scope.foot);
       $http.post('http://localhost:1337/foot/update',$scope.foot).success(function(){
           $scope.foot.field = $scope.selectedField;
-          var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.user.id});
-          async.each(toNotify,function(player){
-            $handleNotif.notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
-          });
+          async.each($scope.players,function(player){
+            notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id});
+          })
       });
     }
     else{
@@ -500,7 +467,9 @@ $scope.askToPlay = function(id){
     }
 
 $scope.launchChat = function (footId){
+  console.log("test");
   $localStorage.chats.forEach(function(chat){
+    console.log(chat);
     if(chat.typ==2 && chat.related == footId){
       $localStorage.chat = chat;
       $location.path('/conv');
@@ -512,7 +481,7 @@ $scope.launchChat = function (footId){
 
 
 
-.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$cordovaGeolocation) {
+.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$stateParams) {
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
@@ -537,22 +506,14 @@ $scope.launchChat = function (footId){
   }
 
 
-  $scope.updatedAte = function(){
+  $scope.updateDate = function(){
     ind = parseInt($scope.params.dateValue);
     $scope.date = getJour(dates[ind]);
     $scope.params.date = dates[ind];
     $scope.getData($scope.params);
   }
-  $scope.updatedAte();
+  $scope.updateDate();
 
- var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-        $localStorage.user.lat=lat;
-      $localStorage.user.long=long;
-    }, function(err) {
-      // error
-    });
+
 
 })

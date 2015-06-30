@@ -8,41 +8,6 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     var allFunction = [];
     var errors = [];
 
-    var pushRegister = function() {
-
-    // Register with the Ionic Push service.  All parameters are optional.
-    $ionicPush.register({
-        canShowAlert: true, //Can pushes show an alert on your screen?
-        canSetBadge: true, //Can pushes update app icon badges?
-        canPlaySound: true, //Can notifications play a sound?
-        canRunActionsOnWake: true, //Can run actions outside the app,
-        onNotification: function(notification) {
-        // Handle new push notifications here
-        console.log("NEW NOTIF PUSH");
-        console.log(notification);
-        return true;
-      }
-    });
-  };
-
-// if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
-//   allFunction.push(function(callback){
-//     $localStorage.user.push = $ionicUser.get();
-//     $localStorage.user.push.user_id = $localStorage.user.id.toString();
-//     console.log($localStorage.user.push);
-//     $ionicUser.identify($localStorage.user.push).then(function(){  
-//       pushRegister();
-//       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
-//         $localStorage.user.pushToken = data.token;
-//         $http.post('http://localhost:1337/push/create',{user: userId, push_id: data.token}).success(function(){
-//           callback();
-//         }).error(function(err){
-//           errors.push(err);
-//         });
-//       });
-//     });
-//   });
-// }
 
 if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
@@ -67,6 +32,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     });
   });
   }
+
 
   allFunction.push(function(callback){
     io.socket.post('http://localhost:1337/connexion/setConnexion',{id: userId},function(){
