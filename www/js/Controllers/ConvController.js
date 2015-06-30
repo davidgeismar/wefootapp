@@ -4,7 +4,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
   $scope.user = $localStorage.user;
   $scope.messageContent;
 
-  io.socket.post('http://localhost:1337/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+  io.socket.post('http://62.210.115.66:9000/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
   $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
   $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].seen = true;
   $ionicScrollDelegate.scrollBottom();
@@ -12,7 +12,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
   $rootScope.updateMessage = function(){
     $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
-    io.socket.post('http://localhost:1337/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+    io.socket.post('http://62.210.115.66:9000/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
     $scope.$digest();
     $ionicScrollDelegate.scrollBottom();
   }
@@ -20,8 +20,8 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
   $scope.sendMessage = function(message){
    if(message.length>0){
-     $http.post('http://localhost:1337/message/create',{sender_id :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
-      io.socket.post('http://localhost:1337/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+     $http.post('http://62.210.115.66:9000/message/create',{sender_id :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
+      io.socket.post('http://62.210.115.66:9000/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
       $scope.messageContent=null;
       $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
 
@@ -41,7 +41,7 @@ $scope.showMessageButton = function(messageContent){
 $scope.init = function(){
 
   if ($scope.chat.typ==2){
-    $http.get('http://localhost:1337/foot/getInfo/'+$scope.chat.related).success(function(elem){
+    $http.get('http://62.210.115.66:9000/foot/getInfo/'+$scope.chat.related).success(function(elem){
       $scope.detail = { 
         organisator : elem.orga,
         orgaName : elem.orgaName,

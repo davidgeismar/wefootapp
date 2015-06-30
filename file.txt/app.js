@@ -39,9 +39,9 @@ var getHour = function(date){
 
 var notify = function(notif,callback){
   if(callback)
-    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
+    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif,callback());
   else
-    io.socket.post('http://localhost:1337/actu/newNotif',notif);
+    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
 };
 
 
@@ -138,7 +138,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     };
 
 
-    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+    $http.get('http://62.210.115.66:9000/user/get/'+notif.related_user).success(function(user){
       if(user.id == $localStorage.user.id)
        notif.userName == "Vous";
      else{
@@ -176,14 +176,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         return ['participe à un foot.','/foot/'];
       }
     };
-    $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
+    $http.get('http://62.210.115.66:9000/user/get/'+actu.related_user).success(function(user){
       actu.userName = user.first_name;
       actu.userLink = '/friend/'+user.id;
       actu.texte = parseActu(actu.typ)[0];
       actu.picture = user.picture;
 
       if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-        $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
+        $http.get('http://62.210.115.66:9000/foot/get/'+actu.related_stuff).success(function(data){
           actu.related_info = data;
           date = new Date(data.date);
           actu.related_info.dateString = getJour(date)+' à '+getHour(date);
@@ -193,7 +193,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         });
       }
       else if(actu.typ == 'newFriend'){
-        $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
+        $http.get('http://62.210.115.66:9000/user/get/'+actu.user).success(function(data){
           actu.userName2 = data.first_name;
           actu.userLink2 = '/friend/'+data.id;
           actu.picture2 = data.picture;
@@ -241,14 +241,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
-      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
+      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id){
       $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
         console.log('Got token', data.token, data.platform);
-        io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+        io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
       });
     }
   })
@@ -258,14 +258,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
     if(data.typ == 'newFriend'){
-      $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
+      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
       });
     }
 
     if(data.typ == 'footInvit'){
-      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
+      $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){
         data.organisator = info.orga;
         data.orgaName = info.orgaName;
         data.field = info.field;

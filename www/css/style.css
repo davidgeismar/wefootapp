@@ -2490,3 +2490,28 @@ a{
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
+
+.invite-facebook{
+	background-color:inherit;
+	border:none;
+	font-size:20px;
+	color:blue;
+	z-index:10;
+	margin:0 auto;
+}
+
+.invite-sms{
+	background-color:inherit;
+	border:none;
+	font-size:20px;
+	color:black;
+	z-index:10;
+	margin:0 auto;
+}
+
+.invite-container{
+	width:35px;
+	height:35px;
+	border: 1px solid white;
+	border-radius: 5px;
+}

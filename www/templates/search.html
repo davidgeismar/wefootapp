@@ -3,7 +3,7 @@
      <i class="ion-chevron-down icon_modal" ng-click="closeModal()"></i>
  	 <h1 class="title">Rechercher</h1>
 	</ion-header-bar>
-    <ion-content>
+    <ion-content class="has-footer">
     <div class="switcher_search">
     	<div ng-click="switchSearchWf()" class="switch switch_wf opened_search">
     		<div class="switch_wf1"></div>
@@ -33,7 +33,15 @@
 	</div>
     <!-- FACEBOOK SECTION -->
 	<div class="content_fb_search hidden" style="text-align:center;">
-	 <div ng-click="sendFbMessage()"> test message </div>
 	</div>
     </ion-content>
+    <ion-footer-bar align-title="left" class="bar-assertive">
+  <div class="buttons invite-container" ng-click="sendSmsMessage()">
+    <button class="ion-android-textsms invite-sms"></button>
+  </div>
+  <h1 class="title">Invitez vos amis</h1>
+  <div class="buttons invite-container" ng-click="sendFbMessage()">
+    <button class="ion-social-facebook invite-facebook"></button>
+  </div>
+</ion-footer-bar>
 </ion-modal-view>
