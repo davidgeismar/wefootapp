@@ -21,8 +21,8 @@ if($localStorage.fieldChosen){
   $scope.foot.field = $localStorage.fieldChosen.id;
   $scope.results[0] = $localStorage.fieldChosen;
 }
-if($localStorage.user.id){
-  $scope.foot.created_by = $localStorage.user.id;
+if($localStorage.getObject('user').id){
+  $scope.foot.created_by = $localStorage.getObject('user').id;
 }
 $scope.foot.toInvite = [];
 $scope.addToFoot = function(id){
@@ -112,7 +112,7 @@ $scope.addToFoot = function(id){
 $scope.searchQuery = function(word){
   if(word.length>2){
 
-    $http.get('http://62.210.115.66:9000/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
+    $http.get('http://62.210.115.66:9000/field/search/'+$$localStorage.getObject('user').id+'/'+word).success(function(data){
       $scope.results = data;
     });
   }
@@ -127,18 +127,18 @@ $scope.chooseField = function(field){
 }
 $scope.launchReq = function(){
 
-  $scope.foot.created_by = $localStorage.user.id;
+  $scope.foot.created_by = $localStorage.getObject('user').id;
 
   $http.post('http://62.210.115.66:9000/foot/create',$scope.foot).success(function(foot){
     async.each($scope.foot.toInvite,function(invited,callback){
-      $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: foot.id},function(){
+      $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: foot.id},function(){
         callback();
       },true);
     },function(){});
     var chatters = [];
     chatters = $scope.foot.toInvite;
-    chatters.push($localStorage.user.id);
-    $http.post('http://62.210.115.66:9000/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+$localStorage.user.first_name}).success(function(){
+    chatters.push($localStorage.getObject('user').id);
+    $http.post('http://62.210.115.66:9000/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+$localStorage.getObject('user').first_name}).success(function(){
     });
     $location.path('/foot/'+foot.id);
   });
@@ -153,7 +153,7 @@ if($location.path().indexOf('user/foots')>0){
   var loadFoot = function(callback2){
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
-    $http.get('http://62.210.115.66:9000/getFootByUser/'+$localStorage.user.id).success(function(data){ //Send status with it as an attribute
+    $http.get('http://62.210.115.66:9000/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       async.each(data, function(foot,callback){
         $http.get('http://62.210.115.66:9000/foot/getInfo/'+foot.id).success(function(elem){
@@ -192,8 +192,10 @@ if($location.path().indexOf('user/foots')>0){
   $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-        $localStorage.user.lat=lat;
-      $localStorage.user.long=long;
+        var user = $localStorage.getObject('user');
+        user.lat = lat;
+        user.long=long;
+        $localStorage.setObject('user',user);
     }, function(err) {
       // error
     });
@@ -216,7 +218,7 @@ if($location.path().indexOf('user/foots')>0){
     animation: 'fade-out',
     showBackdrop: true
   });
-  $scope.user = $localStorage.user;
+  $scope.user = $localStorage.getObject('user');
   $scope.friends = $localStorage.friends;
   $scope.players = [];
   $scope.ready = false; //Show after loading
@@ -240,11 +242,11 @@ if($location.path().indexOf('user/foots')>0){
 
     $http.get('http://62.210.115.66:9000/foot/getAllPlayers/'+$stateParams.id).success(function(allPlayers){  //Get list of playersId
       $scope.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'user');
-      $scope.isInvited = ($scope.invited.indexOf($localStorage.user.id)>-1);
-      $scope.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf($localStorage.user.id)>-1);
+      $scope.isInvited = ($scope.invited.indexOf($localStorage.getObject('user').id)>-1);
+      $scope.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf($localStorage.getObject('user').id)>-1);
       data = _.filter(allPlayers,function(player){return player.statut>1});
       data = _.pluck(data,'user'); //All confirmed players ids.
-      $scope.isPlaying = (data.indexOf($localStorage.user.id)>-1);
+      $scope.isPlaying = (data.indexOf($localStorage.getObject('user').id)>-1);
       async.each(data, function(player,callback){
           $http.get('http://62.210.115.66:9000/user/get/'+player).success(function(user){   //Get all players attributes
             $scope.players.push(user);
@@ -271,7 +273,7 @@ if($location.path().indexOf('user/foots')>0){
   }
 
 $scope.removePlayer = function(userId,Invit){
-  $http.post('http://62.210.115.66:9000/foot/removePlayer',{foot: $scope.foot.id, user: $localStorage.user.id}).success(function(){
+  $http.post('http://62.210.115.66:9000/foot/removePlayer',{foot: $scope.foot.id, user: $localStorage.getObject('user').id}).success(function(){
     if(!$scope.isPlaying){
       var plucked = _.pluck($localStorage.footInvitation,'id');
       index = plucked.indexOf($scope.foot.id);
@@ -289,12 +291,12 @@ $scope.removePlayer = function(userId,Invit){
 
 var deleteFoot = function(userId){
   $http.post('http://62.210.115.66:9000/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
-    var pos = _.pluck($scope.players,'id').indexOf($localStorage.user.id);
+    var pos = _.pluck($scope.players,'id').indexOf($localStorage.getObject('user').id);
       var toNotify = $scope.players; //Notify all players except the organisator
       toNotify.splice(pos,1);
       if(toNotify.length == 0) $location.path('/user/foots');
       async.each(toNotify,function(guy,callback){
-        $handleNotif.notify({user:guy.id,related_user:$localStorage.user.id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();},true);
+        $handleNotif.notify({user:guy.id,related_user:$localStorage.getObject('user').id,typ:'footAnnul',related_stuff:$scope.foot.id},function(){callback();},true);
       },function(){
         var plucked = _.pluck($localStorage.footTodo,'id');
         index = plucked.indexOf($scope.foot.id);
@@ -311,7 +313,7 @@ $scope.confirmDelete = function(userId){
 $scope.playFoot = function(player){
   $http.post('http://62.210.115.66:9000/player/update',{foot:$scope.foot.id,user:player}).success(function(){
     $scope.isPlaying = true;
-    $scope.players.push($localStorage.user);
+    $scope.players.push($localStorage.getObject('user'));
     var plucked = _.pluck($localStorage.footInvitation,'id');
     index = plucked.indexOf($scope.foot.id);
     if(index>-1) $localStorage.footInvitation.splice(index,1);
@@ -352,7 +354,7 @@ $scope.closeModal2 = function(){
   if($scope.foot.toInvite.length>0){
     $http.post('http://62.210.115.66:9000/foot/sendInvits',$scope.foot).success(function(){
       async.each($scope.foot.toInvite,function(invited,callback){
-        $handleNotif.notify({user:invited, related_user: $localStorage.user.id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
+        $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
           callback();
       },true);
       },function(){$scope.invited = $scope.invited.concat($scope.foot.toInvite);});
@@ -366,7 +368,7 @@ $scope.addToFoot = function(id) {
 };
 $scope.askToPlay = function(id){
   $http.post('http://62.210.115.66:9000/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-    $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id},function(){},true);
+    $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
     $scope.isPending = true;
   });
 };
@@ -378,7 +380,7 @@ $scope.askToPlay = function(id){
     $scope.closeModal2 = function(){
       if($scope.foot.toInvite.length>0){
         $http.post('http://62.210.115.66:9000/foot/sendInvits',$scope.foot).success(function(){
-          io.socket.post('http://62.210.115.66:9000/actu/footInvit',{from: $localStorage.user.id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
+          io.socket.post('http://62.210.115.66:9000/actu/footInvit',{from: $localStorage.getObject('user').id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
           $scope.invited = $scope.invited.concat($scope.foot.toInvite);
       });
     }
@@ -389,7 +391,7 @@ $scope.askToPlay = function(id){
   };
   $scope.askToPlay = function(id){
     $http.post('http://62.210.115.66:9000/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-      notify({user:$scope.foot.created_by, related_user: $localStorage.user.id, typ:'footDemand', related_stuff: $localStorage.user.id});
+      notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id});
       $scope.isPending = true;
     });
   };
@@ -426,9 +428,9 @@ $scope.askToPlay = function(id){
       console.log($scope.foot);
       $http.post('http://62.210.115.66:9000/foot/update',$scope.foot).success(function(){
           $scope.foot.field = $scope.selectedField;
-          var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.user.id});
+          var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.getObject('user').id});
           async.each(toNotify,function(player){
-            $handleNotif.notify({user:player.id,related_user: $localStorage.user.id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
+            $handleNotif.notify({user:player.id,related_user: $localStorage.getObject('user').id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
           });
       });
     }
@@ -443,7 +445,7 @@ $scope.askToPlay = function(id){
 
   $scope.searchField = function(word){
     if(word.length>1){
-      $http.get('http://62.210.115.66:9000/field/search/'+$localStorage.user.id+'/'+word).success(function(data){
+      $http.get('http://62.210.115.66:9000/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
         $scope.fields = data;
       });
     }
@@ -549,8 +551,10 @@ $scope.launchChat = function (footId){
   $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-        $localStorage.user.lat=lat;
-      $localStorage.user.long=long;
+        var user = $localStorage.getObject('user');
+        user.lat=lat;
+        user.long=long;
+        $localStorage.setObject('user',user);
     }, function(err) {
       // error
     });

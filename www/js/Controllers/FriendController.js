@@ -15,7 +15,7 @@ angular.module('friend',[])
 			$scope.setNote(Math.round(data.assiduite), 4);
 		});
 	}
-	$http.get('http://62.210.115.66:9000/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
+	$http.get('http://62.210.115.66:9000/user/toConfirm/'+$stateParams.id+'/'+$localStorage.getObject('user').id).success(function(foot){
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];
@@ -62,13 +62,13 @@ angular.module('friend',[])
 		if(yes){
 			$http.post('http://62.210.115.66:9000/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
 		}
 		else{
 			$http.post('http://62.210.115.66:9000/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandRefused'});
 			});
 		}
 		

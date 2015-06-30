@@ -3,7 +3,9 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
-    $localStorage.user.lastUpdate = moment();
+    var guy = $localStorage.getObject('user');
+    guy.lastUpdate = moment();
+    $localStorage.setObject('user',guy);
 
     var allFunction = [];
     var errors = [];
@@ -17,8 +19,9 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
         sound: true,
         alert: true
       }).then(function (result) {
-        $localStorage.user.pushToken = result;
-        console.log(result);
+        var guy = $localStorage.getObject('user');
+        guy.pushToken = result;
+        $localStorage.setObject('user',guy);
         $http.post('http://62.210.115.66:9000/push/create',{user: userId, push_id: result}).success(function(){
           callback();
         }).error(function(err){
@@ -40,13 +43,14 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     }); 
   });
 
-    // if(setUUID && window.device){  //no device on testing
-    //   allFunction.push(function(callback){
-    //     $http.post('http://62.210.115.66:9000/session/create',{user: userId, uuid: window.device.uuid}).success(function(){
-    //       callback();
-    //     });
-    //   });
-    // }
+
+
+    allFunction.push(function(callback){
+      $http.post('http://62.210.115.66:9000/user/update/',{id: userId, pending_notif: 0}).success(function(){
+        callback();
+      });
+    });
+
 
     allFunction.push(function(callback){
       $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){

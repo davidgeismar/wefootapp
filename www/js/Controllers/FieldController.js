@@ -2,7 +2,7 @@ angular.module('field',[])
 .controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory){
   $scope.field = {};
   $scope.field.origin = "private";
-  $scope.field.related_to = $localStorage.user.id;
+  $scope.field.related_to = $localStorage.getObject('user').id;
 
   $scope.imageUri;
 

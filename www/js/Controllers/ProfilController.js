@@ -1,5 +1,5 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
-  $scope.user = $localStorage.user;
+  $scope.user = $localStorage.getObject('user');
   	//SLIDER BALL
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
 	var full_screen = window.innerWidth-sizeElem;

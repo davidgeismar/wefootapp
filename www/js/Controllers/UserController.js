@@ -3,7 +3,7 @@ angular.module('user',[])
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms){
 
 
-  $scope.user = $localStorage.user;
+  $scope.user = $localStorage.getObject('user');
   $scope.friends = $localStorage.friends;
 
 
@@ -49,7 +49,7 @@ if($scope.user && $scope.user.poste==null){
 
       var optionsFt = {
         params : {
-          userId: $localStorage.user.id
+          userId: $localStorage.getObject('user').id
         }
       };
       $cordovaFileTransfer.upload('http://62.210.115.66:9000/user/uploadProfilPic', results[0], optionsFt)
@@ -57,8 +57,10 @@ if($scope.user && $scope.user.poste==null){
         // Success!
         console.log('hello');
         setTimeout(function(){
-          $localStorage.user.picture = result.response+'#'+ new Date().getTime();
-          $scope.user.picture = $localStorage.user.picture;
+          user = $localStorage.getObject('user')
+          user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
+          $localStorage.setObject('user',user); 
+          $scope.user.picture = $localStorage.getObject('user').picture;
           $ionicLoading.hide();
         },3000);
       }, function(err) {
@@ -81,15 +83,13 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
+  
   if(window.device)
-    $http.post('http://62.210.115.66:9000/session/delete',{uuid : window.device.uuid});
+    $localStorage.setObject('user','{}');
   io.socket.post('http://62.210.115.66:9000/connexion/delete');
   $rootScope.toShow = true;
-  if($localStorage.user.pushToken)
-    $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.user.pushToken});
-
-  $localStorage.user = {};
-  $localStorage.token = "";
+  if($localStorage.getObject('user').pushToken)
+    $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.getObject('user').pushToken});
   $location.path('/');
 };
   //MODAL HANDLER
@@ -137,9 +137,9 @@ $scope.logout = function (){
     $scope.results = [];
 }
 $scope.addFriend = function(target){
-  $http.post('http://62.210.115.66:9000/addFriend',{user1: $localStorage.user.id, user2: target}).success(function(data){
+  $http.post('http://62.210.115.66:9000/addFriend',{user1: $localStorage.getObject('user').id, user2: target}).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
-    var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
+    var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
     $localStorage.friends.push(data);
@@ -150,7 +150,7 @@ $scope.addFriend = function(target){
 
 $scope.createChat = function(user){
 
-  $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
+  $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
     $rootScope.closeModal();
     chat.messages = new Array();
     $localStorage.chat=chat;
@@ -273,7 +273,7 @@ $scope.sendSmsMessage = function(){
 
 
 
-})
+        })
 
 .controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
   $scope.toggleLeft = function() {

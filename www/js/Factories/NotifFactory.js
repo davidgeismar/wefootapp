@@ -36,7 +36,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
     $http.get('http://62.210.115.66:9000/user/get/'+notif.related_user).success(function(user){
 
-      if(user.id == $localStorage.user.id)
+      if(user.id == $localStorage.getObject('user').id)
        notif.userName = "Vous";
      else{
       console.log('intheelse');
@@ -108,17 +108,16 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 };
 
 handle.notify = function(notif,callback,push){
-  if(callback)
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif,callback());
-  else
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
+  io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
   if(push){
     var content = {};
     handle.handleNotif(notif,function(){
       content.user = notif.user;
-      content.texte = $localStorage.user.first_name + " " + notif.texte;
-      console.log(content);
-      io.socket.post('http://62.210.115.66:9000/push/sendPush',content);
+      content.texte = $localStorage.getObject('user').first_name + " " + notif.texte;
+      if(callback)
+        io.socket.post('http://62.210.115.66:9000/push/sendPush',content,callback());
+      else
+        io.socket.post('http://62.210.115.66:9000/push/sendPush',content);
     });
   }
 };

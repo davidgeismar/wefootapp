@@ -115,13 +115,13 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('disconnect',function(){
-    if($localStorage.user && $localStorage.user.id)
-      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id)
+      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.getObject('user').id});
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.getObject('user').pushToken){
+      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.getObject('user').id, push_id:$localStorage.getObject('user').pushToken}); 
 
     }
   })
@@ -243,12 +243,13 @@ $rootScope.updateChatDisplay = function(){
 });
 
   $ionicPlatform.on('resume',function(){
-    if($localStorage.user && $localStorage.user.id){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id){
+      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
+        console.log(nb);
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
-      $http.post('http://62.210.115.66:9000/user/update',{id: $localStorage.user.id, pending_notif: 0});
+      $http.post('http://62.210.115.66:9000/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
     }
   });
 
@@ -415,7 +416,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     return {
       'request': function (config) {
         config.headers = config.headers || {};
-        if ($localStorage.token) {
+        if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.token;
         }
         return config;
