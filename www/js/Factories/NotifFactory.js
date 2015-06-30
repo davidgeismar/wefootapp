@@ -33,15 +33,20 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
     };
 
 
-    $http.get('http://62.210.115.66:9000/user/get/'+notif.related_user).success(function(user){
+
+    $http.get('http://localhost:1337/user/get/'+notif.related_user).success(function(user){
+
       if(user.id == $localStorage.user.id)
-       notif.userName == "Vous";
+       notif.userName = "Vous";
      else{
+      console.log('intheelse');
+      console.log(notif);
       if(notif.typ!="endGame")
         notif.userName = user.first_name;
       else
         notif.userName = "Le foot de "+user.first_name+" est terminé, ";
     }
+    console.log(notif.userName);
     notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
@@ -71,14 +76,14 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         return ['participe à un foot.','/foot/'];
       }
     };
-    $http.get('http://62.210.115.66:9000/user/get/'+actu.related_user).success(function(user){
+    $http.get('http://localhost:1337/user/get/'+actu.related_user).success(function(user){
       actu.userName = user.first_name;
       actu.userLink = '/friend/'+user.id;
       actu.texte = parseActu(actu.typ)[0];
       actu.picture = user.picture;
 
       if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-        $http.get('http://62.210.115.66:9000/foot/get/'+actu.related_stuff).success(function(data){
+        $http.get('http://localhost:1337/foot/get/'+actu.related_stuff).success(function(data){
           actu.related_info = data;
           date = new Date(data.date);
           actu.related_info.dateString = getJour(date)+' à '+getHour(date);
@@ -88,7 +93,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         });
       }
       else if(actu.typ == 'newFriend'){
-        $http.get('http://62.210.115.66:9000/user/get/'+actu.user).success(function(data){
+        $http.get('http://localhost:1337/user/get/'+actu.user).success(function(data){
           actu.userName2 = data.first_name;
           actu.userLink2 = '/friend/'+data.id;
           actu.picture2 = data.picture;
@@ -100,6 +105,22 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         callback();
       }
     });
+};
+
+handle.notify = function(notif,callback,push){
+  if(callback)
+    io.socket.post('http://localhost:1337/actu/newNotif',notif,callback());
+  else
+    io.socket.post('http://localhost:1337/actu/newNotif',notif);
+  if(push){
+    var content = {};
+    handle.handleNotif(notif,function(){
+      content.user = notif.user;
+      content.texte = $localStorage.user.first_name + " " + notif.texte;
+      console.log(content);
+      io.socket.post('http://localhost:1337/push/sendPush',content);
+    });
+  }
 };
 
 return handle;

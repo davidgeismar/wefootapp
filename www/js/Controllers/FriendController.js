@@ -1,12 +1,12 @@
 angular.module('friend',[])
-.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams){
+.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $handleNotif){
 
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
 
 		//Appelle setNote pour toutes les étoiles et récupère le nb de votes
 	$scope.initNotes = function(){
-		$http.get('http://62.210.115.66:9000/getDetailledGrades/'+$scope.friend.id).success(function(data){
+		$http.get('http://localhost:1337/getDetailledGrades/'+$scope.friend.id).success(function(data){
 			$scope.friend.nbGrades = data.nbGrades;
 			$scope.setNote(Math.round(data.technique), 0);
 			$scope.setNote(Math.round(data.frappe), 1);
@@ -15,7 +15,7 @@ angular.module('friend',[])
 			$scope.setNote(Math.round(data.assiduite), 4);
 		});
 	}
-	$http.get('http://62.210.115.66:9000/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
+	$http.get('http://localhost:1337/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];
@@ -30,7 +30,7 @@ angular.module('friend',[])
 		$scope.initNotes();
 	}
 	else{
-		$http.get('http://62.210.115.66:9000/user/get/'+$stateParams.id).success(function(user){
+		$http.get('http://localhost:1337/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
 			// $scope.initNotes();
 		});
@@ -60,15 +60,15 @@ angular.module('friend',[])
 
 	$scope.acceptInvitation = function (yes){
 		if(yes){
-			$http.post('http://62.210.115.66:9000/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
+			$http.post('http://localhost:1337/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
 		}
 		else{
-			$http.post('http://62.210.115.66:9000/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
+			$http.post('http://localhost:1337/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
 			});
 		}
 		

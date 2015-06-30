@@ -11,7 +11,6 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
    elem.className = elem.className + " " + icon;
 }
 };
-
 var newTime = function (oldTime){
   return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
@@ -49,12 +48,6 @@ var getHour = function(date){
   return (n+'h'+m)
 };
 
-var notify = function(notif,callback){
-  if(callback)
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif,callback());
-  else
-    io.socket.post('http://62.210.115.66:9000/actu/newNotif',notif);
-};
 
 var shrinkMessage = function(message){
   message = message.replace(/[\n\r]/g, ' ');
@@ -100,6 +93,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $ionicLoading.hide()
   })
 
+  $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
+    if(notification.alert) {
+      navigator.notification.alert(notification.alert);
+    }
+  });
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -118,12 +116,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
-      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
+      $http.post('http://localhost:1337/connexion/delete',{id : $localStorage.user.id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+      io.socket.post('http://localhost:1337/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
 
     }
   })
@@ -133,7 +131,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
     if(data.typ == 'newFriend'){
-      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
+      $http.get('http://localhost:1337/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
         $localStorage.newFriend = true;  //refresh on actu load his data
@@ -141,7 +139,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     }
 
     if(data.typ == 'footInvit'){
-      $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){
+      $http.get('http://localhost:1337/foot/getInfo/'+data.id).success(function(info){
         data.organisator = info.orga;
         data.orgaName = info.orgaName;
         data.field = info.field;
@@ -173,9 +171,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
     var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
     var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
-    console.log(lastMessage);
-    console.log(last_time_seen);
-    console.log(lastMessage.diff(last_time_seen));
     if(lastMessage.diff(last_time_seen)>0){
       $localStorage.chats[index].seen = false;
     }
@@ -249,10 +244,11 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
+      $http.post('http://localhost:1337/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
+      $http.post('http://localhost:1337/user/update',{id: $localStorage.user.id, pending_notif: 0});
     }
   });
 
