@@ -231,6 +231,8 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
+    console.log('here is the thing');
+    console.log($localStorage.get('token'));
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -414,7 +416,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     return {
       'request': function (config) {
         config.headers = config.headers || {};
-        if ($localStorage.token) {
+        if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.token;
         }
         return config;

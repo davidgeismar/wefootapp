@@ -5,22 +5,20 @@ angular.module('connections',[])
   $rootScope.toShow = false;
  //Prevent for loading to early
  $ionicPlatform.ready(function(){
-  if(window.device){ //If user has already sat connection from this device he will be logged automatically
-    $http.post('http://localhost:1337/session/isConnected',{uuid: window.device.uuid}).success(function(response){
-      if(response.userId>0){  //Connexion finded
-        $http.get('http://localhost:1337/user/'+response.userId).success(function(data){
+  if($localStorage.get('token') && $localStorage.get('token').length>0){ //If user has already sat connection from this device he will be logged automatically
+    $http.post('http://localhost:1337/session/isConnected',{token: $localStorage.get('token')}).success(function(data){
+      if(data.user){  //Connexion finded
           $localStorage.user = data;
-          $localStorage.token = data.token;
+          $localStorage.set('token',data.token);
           $ionicLoading.show({
             content: 'Loading Data',
             animation: 'fade-out',
             showBackdrop: false,
             hideOnStateChange: false
           });
-          $connection(response.userId,function(){
+          $connection(data.id,function(){
             $location.path('/user/profil');
           },false);
-        });
       }
       else{
         $rootScope.toShow = true;

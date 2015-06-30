@@ -81,7 +81,7 @@ if($scope.user && $scope.user.poste==null){
 //END Handle Menu
 $scope.logout = function (){
   if(window.device)
-    $http.post('http://localhost:1337/session/delete',{uuid : window.device.uuid});
+    $localStorage.set('token') = "";
   io.socket.post('http://localhost:1337/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.user.pushToken)

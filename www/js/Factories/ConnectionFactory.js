@@ -74,13 +74,12 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     }); 
   });
 
-    if(setUUID && window.device){  //no device on testing
-      allFunction.push(function(callback){
-        $http.post('http://localhost:1337/session/create',{user: userId, uuid: window.device.uuid}).success(function(){
-          callback();
-        });
+
+    allFunction.push(function(callback){
+      $http.post('http://localhost:1337/user/update/',{id: userId, pending_notif: 0}).success(function(){
+        callback();
       });
-    }
+    });
 
     allFunction.push(function(callback){
       $http.get('http://localhost:1337/getAllFriends/'+userId+'/0').success(function(data){
