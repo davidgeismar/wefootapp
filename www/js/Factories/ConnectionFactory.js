@@ -21,7 +21,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
         var guy = $localStorage.getObject('user');
         guy.pushToken = result;
         $localStorage.setObject('user',guy);
-        $http.post('http://62.210.115.66:9000/push/create',{user: userId, push_id: result}).success(function(){
+        $http.post('http://'+serverAddress+'/push/create',{user: userId, push_id: result}).success(function(){
           callback();
         }).error(function(err){
           errors.push(err);
@@ -37,7 +37,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 
 
   allFunction.push(function(callback){
-    io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: userId},function(){
+    io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: userId},function(){
       callback();
     }); 
   });
@@ -45,16 +45,20 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 
 
     allFunction.push(function(callback){
-      $http.post('http://62.210.115.66:9000/user/update/',{id: userId, pending_notif: 0}).success(function(){
+      $http.post('http://'+serverAddress+'/user/update/',{id: userId, pending_notif: 0}).success(function(){
         callback();
       });
     });
 
     if(setUUID){
       allFunction.push(function(callback){
-        $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){
+        $http.get('http://'+serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
           var friends = data[0];
-          if(data[0].length==0) callback();
+          console.log(friends);
+          if(data[0].length==0) {
+            $localStorage.setObject('friends',[]);
+            callback();
+          }
           angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
             friend.statut = data[1][index].stat; 
             friend.friendship = data[1][index].friendship;
@@ -65,13 +69,15 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
           });
         }).error(function(err){
           errors.push(err);
+
         });
       });
     }
 
+
     // if(setUUID){
       allFunction.push(function(callback){
-        $http.get('http://62.210.115.66:9000/getAllChats/'+userId).success(function(data){
+        $http.get('http://'+serverAddress+'/getAllChats/'+userId).success(function(data){
           $localStorage.setObject('chats',data);
           $rootScope.initChatsNotif();
           callback();
@@ -87,7 +93,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     // }
 
     allFunction.push(function(callback){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
+      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
         console.log(nb.length);
         callback();

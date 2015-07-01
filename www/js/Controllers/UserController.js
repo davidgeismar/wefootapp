@@ -4,7 +4,7 @@ angular.module('user',[])
 
 
   $scope.user = $localStorage.getObject('user');
-  $scope.friends = $localStorage.getObject('friends');
+  $rootScope.friends = $localStorage.getObject('friends');
 
 
 //Handle edit inputs on left menu
@@ -21,7 +21,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editClub = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://62.210.115.66:9000/editUser',{favorite_club: value}).success(function(){
+      $http.post('http://'+serverAddress+'/editUser',{favorite_club: value}).success(function(){
         self.user.favorite_club = value;
         self.toEdit[0] = false;
       });
@@ -31,7 +31,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editPoste = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://62.210.115.66:9000/editUser',{poste: value}).success(function(){
+      $http.post('http://'+serverAddress+'/editUser',{poste: value}).success(function(){
         self.user.poste = value;
         self.toEdit[1] = false;
       });
@@ -52,7 +52,7 @@ if($scope.user && $scope.user.poste==null){
           userId: $localStorage.getObject('user').id
         }
       };
-      $cordovaFileTransfer.upload('http://62.210.115.66:9000/user/uploadProfilPic', results[0], optionsFt)
+      $cordovaFileTransfer.upload('http://'+serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
       .then(function(result) {  
         // Success!
         console.log('hello');
@@ -84,10 +84,11 @@ if($scope.user && $scope.user.poste==null){
 //END Handle Menu
 $scope.logout = function (){
   $localStorage.setObject('friends','{}');  
-  io.socket.post('http://62.210.115.66:9000/connexion/delete');
+  $localStorage.setObject('user','{}');
+  io.socket.post('http://'+serverAddress+'/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.getObject('user').pushToken)
-    $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.getObject('user').pushToken});
+    $http.post('http://'+serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
   $localStorage.setObject('user','{}');
   $location.path('/');
 };
@@ -123,53 +124,65 @@ $scope.logout = function (){
     $('.content_fb_search').addClass('hidden');
   }
   $scope.searchQuery = function(word){
-    $scope.friendsId = [];
-    angular.forEach($localStorage.getObject('friends'),function(friend){
-      $scope.friendsId.push(friend.id);
-    });
+    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
     if(word.length>2){
-     $http.get('http://62.210.115.66:9000/search/'+word).success(function(data){
+     $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
       $scope.results = data;
     });
    }
    else
     $scope.results = [];
 }
-$scope.addFriend = function(target){
-  $http.post('http://62.210.115.66:9000/addFriend',{user1: $localStorage.getObject('user').id, user2: target}).success(function(data){
+
+//facebookFriend = true, target = facebook_id
+//facebookFriend = false, target = user.id
+$scope.addFriend = function(target, facebookFriend){
+  var postData = {};
+  if(facebookFriend)
+    postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
+  else
+    postData = {user1: $localStorage.getObject('user').id, user2: target};
+
+  $http.post('http://'+serverAddress+'/addFriend',postData).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
+
     var friends = $localStorage.getObject('friends');
     friends.push(data);
     $localStorage.setObject('friends',friends);
-    $scope.friendsId.push(data.id);
+    $rootScope.friendsId.push(data.id);
+    $rootScope.friends.push(data);
   });
 }
 
-$scope.createChat = function(user){
+// $scope.createChat = function(user){
 
-  $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
-    $rootScope.closeModal();
-    chat.messages = new Array();
-    $localStorage.chat=chat;
-    $location.path('/conv');
-  });
-}
+// <<<<<<< HEAD
+//   $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
+// =======
+//   $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
+// >>>>>>> f12dcfe8720683b94e35d9660a6617e3b9ad5545
+//     $rootScope.closeModal();
+//     chat.messages = new Array();
+//     $localStorage.chat=chat;
+//     $location.path('/conv');
+//   });
+// }
 
-$scope.launchChat = function(user){
-  console.log($localStorage.chats);
-  angular.forEach($localStorage.chats, function(chat) {
-    if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
-      console.log('here');
-      $localStorage.chat=chat;
-      $location.path('/conv');
-      return 0;
-    }
-  });
-  $scope.createChat(user);
-}
+// $scope.launchChat = function(user){
+//   console.log($localStorage.chats);
+//   angular.forEach($localStorage.chats, function(chat) {
+//     if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
+//       console.log('here');
+//       $localStorage.chat=chat;
+//       $location.path('/conv');
+//       return 0;
+//     }
+//   });
+//   $scope.createChat(user);
+// }
 
 $scope.friend = $localStorage.friend;
 $scope.notes = new Array(5);
@@ -199,7 +212,7 @@ $scope.setNote = function(note, target){
 
 
 $scope.initNotes = function(){
-  $http.get('http://62.210.115.66:9000/getDetailledGrades/'+$scope.user.id).success(function(data){
+  $http.get('http://'+serverAddress+'/getDetailledGrades/'+$scope.user.id).success(function(data){
     $scope.user.nbGrades = data.nbGrades;
     $scope.setNote(Math.round(data.technique), 0);
     $scope.setNote(Math.round(data.frappe), 1);
@@ -253,14 +266,12 @@ $scope.sendFbMessage = function() {
 };
 
 $scope.sendSmsMessage = function(){
-
   var options = {
-            replaceLineBreaks: false, // true to replace \n by a new line, false by default
+            replaceLineBreaks: true, // true to replace \n by a new line, false by default
             android: {
                 intent: 'INTENT'  // send SMS with the native android SMS messaging
               }
             };
-
             $cordovaSms.send('', 'Téléchargez wefoot bande de bitches', options).then(function() {
               $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
             }, function(error) {
@@ -268,9 +279,11 @@ $scope.sendSmsMessage = function(){
             });
           }
 
-
-
-
+          $scope.facebookFriends = $localStorage.facebookFriends;
+          console.log($scope.facebookFriends);
+          //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
+          $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
+          console.log($scope.facebookFriendsId);
 
 
         })

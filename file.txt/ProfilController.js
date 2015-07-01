@@ -1,6 +1,6 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
-  $scope.user = $localStorage.getObject('user');
-  	//SLIDER BALL
+  $scope.user = $localStorage.user;
+
 	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
 	var full_screen = window.innerWidth-sizeElem;
 	if(!$localStorage.initialPos){
@@ -11,12 +11,15 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 
 	$scope.moveBall = function($event){
 		var targetPos = initialPos+$event.gesture.deltaX;
+		var velocity = $event.gesture.velocityX;
 		if(parseInt($('.logo-profil-container').css('left').substring(0,3))>0){
 			$('.logo-profil-container').css({'left': (targetPos)});
 		}
+
 	}
 	$scope.moveBallRight = function($event){
 		var targetPos = initialPos+$event.gesture.deltaX;
+		var velocity = $event.gesture.velocityX;
 		if(parseInt($('.logo-profil-container').css('left').substring(0,3))<full_screen){
 			$('.logo-profil-container').css({'left': (targetPos)});
 		}
@@ -25,41 +28,32 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		var currentX = parseInt($('.logo-profil-container').css('left').substring(0,3));
 		if(currentX>full_screen-50) $location.path('/footfield');
 		if(currentX<50) $location.path('/footfinder');
-		$('.logo-profil-container').css({'left': initialPos});
+		else{
+			$('.logo-profil-container').css({'left': initialPos});
+		}
 	}
+	var friends_id = _.pluck($localStorage.friends,'id');
 	$ionicLoading.show({
 	    content: 'Loading Data',
 	    animation: 'fade-out',
 	    showBackdrop: false
 	});
 
-	$scope.go = function(url){
-		$location.path(url);
-	};
-
-
-
-	//SET WIDTH CONTENT
-
-	var height = window.innerHeight - $('.main_actu').height() - $('.slider-button').height() - 90;
-	$('.container_actu').find('.scroll').height(height);
-	var setPositon = $('.main_actu').height() + $('.slider-button').height()+3; //Paddings
-	$('.container_actu').css('top',setPositon);
 
 //ACTUS SECTION
 
 	getLastId = function(){
-		if(!$scope.actusByDay || $scope.actusByDay.length==0 || $localStorage.newFriend){
-			$localStorage.newFriend = false;
+		if(!$scope.actusByDay || $scope.actusByDay.length==0)
 			return 0;
-		}
 		else{
-			return $scope.actusByDay[0][0].id;
+			console.log($scope.actusByDay);
+			var lastRow = $scope.actusByDay[$scope.actusByDay.length-1];
+
+			return lastRow[lastRow.length-1].id;
 		}
 	}
 
 	var getAllActu = function(callback3){
-	var friends_id = _.pluck($localStorage.getObject('friends'),'id');
 	$http.post('http://'+serverAddress+'/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:getLastId()}).success(function(data){
 		var actusByDay = _.values(data);
 		if(actusByDay.length==0) $ionicLoading.hide();
@@ -73,27 +67,8 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			});
 		},function(){
 			if($scope.actusByDay){ //On update
-				var indexOldDates = [];
-				var newElems = [];  //Keep new elems to replace them in the right order
-				var count = -1;
-				_.each(data,function(array,index){ //Index = a date here
-					count++;
-					if($scope.dates.indexOf(index)>-1)			//contained in $scope.dates.
-						$scope.actusByDay[$scope.dates.indexOf(index)] =array.concat($scope.actusByDay[$scope.dates.indexOf(index)]);
-					else{
-						newElems.push(array);
-					}
-					if(count == _.allKeys(data).length-1){
-						console.log('here');
-						for(i = newElems.length-1; i>-1; i--){ //Concatenate 2 2D Arrays
-							console.log(newElems[i]);
-							$scope.actusByDay.unshift(newElems[i]);
-						}
-						console.log($scope.actusByDay);
-					}
-				});
-				$scope.dates = _.union(_.allKeys(data),$scope.dates);
-
+				$scope.dates = _.allKeys(data).concat($scope.dates);
+				$scope.actusByDay = actusByDay.concat($scope.actusByDay);
 			}
 			else{
 				$scope.actusByDay = actusByDay;

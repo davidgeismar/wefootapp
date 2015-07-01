@@ -1,6 +1,6 @@
 angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location){
 	$scope.user = $localStorage.getObject('user');
-	$scope.friends = $localStorage.getObject('friends');
+	$rootScope.friends = $localStorage.getObject('friends');
 	//Tableau contenant les chats
 	$scope.chats = $localStorage.chats;
 
@@ -9,8 +9,6 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		$scope.$digest();
 
 	}
-
-
 
 	//Affiche les chats qui comportent des messages dans leur liste
 	$scope.initDisplayer = function(){
@@ -58,8 +56,12 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		$rootScope.modal2.hide();
 	}
 
-	if($localStorage.refreshChat){
-		$scope.displayer();
-	}
+	$scope.deleteChat = function(chatId){
+		$http.post('http://'+serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:$localStorage.user.id}).success(function(data){
+			$localSto
+	}).error(function(err){
+		console.log(err);
+	});
+}
 
 })

@@ -1,7 +1,7 @@
 angular.module('connections',[])
 
 
-.controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q){
+.controller('HomeCtrl', function($scope,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q){
   $rootScope.toShow = false;
  //Prevent for loading to early
 
@@ -24,6 +24,7 @@ angular.module('connections',[])
     $rootScope.toShow = true;
   }
 });
+
 
 // $scope.facebookConnect = function(){
 //   $ionicHistory.clearCache();
@@ -48,6 +49,9 @@ angular.module('connections',[])
 
 // };
 
+
+
+//FACEBOOK CONNECT BEGINS
 
 var FACEBOOK_APP_ID = 1133277800032088;
 var fbLogged = $q.defer();
@@ -99,11 +103,11 @@ var fbLoginSuccess = function(response) {
     var friends = $q.defer();
     facebookConnectPlugin.api('/me/friends?fields=picture,name', ["basic_info", "user_friends"],
       function (result) {
-        alert("Result: " + JSON.stringify(result));
-        friends = result;
+        friends.resolve(result);
       }, 
       function (error) { 
         alert("Failed: " + error);
+        friends.reject(error);
       });
     return friends.promise;
   }
@@ -135,10 +139,10 @@ $scope.facebookConnect = function() {
         //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
 
         $ionicLoading.show({
-            content: 'Loading Data',
-            animation: 'fade-out',
-            showBackdrop: false,
-            hideOnStateChange: false
+          content: 'Loading Data',
+          animation: 'fade-out',
+          showBackdrop: false,
+          hideOnStateChange: false
         });
         $rootScope.toShow = false;
         //ask the permissions you need
@@ -161,17 +165,25 @@ $scope.facebookConnect = function() {
               //save the user data
               //for the purpose of this example I will store it on ionic local storage but you should save it on a database
 
-              $http.post('http://62.210.115.66:9000/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+              $http.post('http://'+serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
                 $localStorage.set('token',response.token);
                 $localStorage.setObject('user',response);
                 $connection(response.id,function(){
-                  $location.path('/user/profil');
+                  getFacebookFriends().then(function(data){
+                    $localStorage.facebookFriends = data.data;
+                    $location.path('/user/profil');
+                  });
+                  // }).error(function(err){
+                  //   $location.path('/user/profil');
+                  // });
+
+
                 },true);
               }).error(function(err){
                 console.log(err);
               });
             });
-          });
+});
 // }
 });
 }
@@ -195,7 +207,7 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post('http://62.210.115.66:9000/session/login',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/session/login',$scope.user).success(function(data){
       $localStorage.set('token',data.token);
       $localStorage.setObject('user',data);
       $connection(data.id,function(){
@@ -221,11 +233,11 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://62.210.115.66:9000/user/create',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.setObject('user',data[0]);
      $localStorage.setObject('friends',[]);
-     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
+     io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();

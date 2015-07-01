@@ -46,7 +46,7 @@ gulp.task('install', ['git-check'], function() {
 
 // gulp.task('product', function(){
 //   return gulp.src('www/js/app.js')
-//     .pipe(replace({regex:'62.210.115.66:9000',replace:'62.210.115.66:9000'}));
+//     .pipe(replace({regex:''+serverAddress+'',replace:''+serverAddress+''}));
 // })
 // gulp.task('launch',function(){
 //   return gulp.src(['www/js/global.js','www/js/declare.js','www/js/routes.js','www/js/provider.js'])

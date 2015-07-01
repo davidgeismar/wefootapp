@@ -1,20 +1,15 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
 } 
 
 
-$scope.initFields = function(){
-  
-}
-
-
 $scope.foot = {};
 $scope.results = [];
 $scope.tab = "1";
 if($localStorage.getObject('friends')){
-  $scope.friends = $localStorage.getObject('friends');
+  $rootScope.friends = $localStorage.getObject('friends');
 
 }
 if($localStorage.fieldChosen){
@@ -65,7 +60,7 @@ $scope.addToFoot = function(id){
         $scope.foot.date.setMonth(jour.getMonth());
         $scope.foot.date.setFullYear(jour.getFullYear());
         $scope.date = getJour($scope.foot.date);
-        });
+      });
     }
     $scope.showHourPicker = function(){
       $cordovaDatePicker.show(options1).then(function(hour){
@@ -111,15 +106,25 @@ $scope.addToFoot = function(id){
 
 $scope.searchQuery = function(word){
   if(word.length>2){
-
-    $http.get('http://62.210.115.66:9000/field/search/'+$$localStorage.getObject('user').id+'/'+word).success(function(data){
+    $http.get('http://'+serverAddress+'/field/search/'+$$localStorage.getObject('user').id+'/'+word).success(function(data){
       $scope.results = data;
     });
   }
-  else
-    $scope.results = [];
+  else {
+    var posOptions = {timeout: 10000, enableHighAccuracy: false};
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+      var lat  = position.coords.latitude
+      var long = position.coords.longitude
+      $http.get('http://localhost:1337/field/near/'+lat+'/'+long).success(function(data){
+       $scope.results = data;})
+    }, function(err) {
+      // error
+    });
+    
+  }
 }
-
+//QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
+$scope.searchQuery(0);
 
 $scope.chooseField = function(field){
   $localStorage.fieldChosen = field;
@@ -129,7 +134,7 @@ $scope.launchReq = function(){
 
   $scope.foot.created_by = $localStorage.getObject('user').id;
 
-  $http.post('http://62.210.115.66:9000/foot/create',$scope.foot).success(function(foot){
+  $http.post('http://'+serverAddress+'/foot/create',$scope.foot).success(function(foot){
     async.each($scope.foot.toInvite,function(invited,callback){
       $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: foot.id},function(){
         callback();
@@ -138,7 +143,7 @@ $scope.launchReq = function(){
     var chatters = [];
     chatters = $scope.foot.toInvite;
     chatters.push($localStorage.getObject('user').id);
-    $http.post('http://62.210.115.66:9000/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+$localStorage.getObject('user').first_name}).success(function(){
+    $http.post('http://'+serverAddress+'/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+$localStorage.getObject('user').first_name}).success(function(){
     });
     $location.path('/foot/'+foot.id);
   });
@@ -150,13 +155,14 @@ if($location.path().indexOf('user/foots')>0){
     animation: 'fade-out',
     showBackdrop: true
   });
+  
   var loadFoot = function(callback2){
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
-    $http.get('http://62.210.115.66:9000/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
+    $http.get('http://'+serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       async.each(data, function(foot,callback){
-        $http.get('http://62.210.115.66:9000/foot/getInfo/'+foot.id).success(function(elem){
+        $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;
           foot.orgaName = elem.orgaName;
           foot.field = elem.field;
@@ -169,11 +175,11 @@ if($location.path().indexOf('user/foots')>0){
         else if(foot.statut>1)
           $localStorage.footTodo.push(foot);
       },function(){
-          $scope.footInvitation = $localStorage.footInvitation;
-          $scope.footTodo = $localStorage.footTodo;
-          $ionicLoading.hide();
-          if(callback2)
-            callback2();
+        $scope.footInvitation = $localStorage.footInvitation;
+        $scope.footTodo = $localStorage.footTodo;
+        $ionicLoading.hide();
+        if(callback2)
+          callback2();
       });
     });
   }
@@ -187,19 +193,19 @@ if($location.path().indexOf('user/foots')>0){
   }
 
 }
-    
-     var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-        var user = $localStorage.getObject('user');
-        user.lat = lat;
-        user.long=long;
-        $localStorage.setObject('user',user);
-    }, function(err) {
+
+var posOptions = {timeout: 10000, enableHighAccuracy: false};
+$cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+  var lat  = position.coords.latitude
+  var long = position.coords.longitude
+  var user = $localStorage.getObject('user');
+  user.lat = lat;
+  user.long=long;
+  $localStorage.setObject('user',user);
+}, function(err) {
       // error
     });
-    
+
 })
 
 
@@ -212,14 +218,14 @@ if($location.path().indexOf('user/foots')>0){
 
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
     showBackdrop: true
   });
   $scope.user = $localStorage.getObject('user');
-  $scope.friends = $localStorage.getObject('friends');
+  $rootScope.friends = $localStorage.getObject('friends');
   $scope.players = [];
   $scope.ready = false; //Show after loading
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
@@ -227,20 +233,20 @@ if($location.path().indexOf('user/foots')>0){
   var loadInfo = function(callback2){
     var date;
     var finish = false;
-    $http.get('http://62.210.115.66:9000/foot/get/'+$stateParams.id).success(function(data){  //Get foot attributes
+    $http.get('http://'+serverAddress+'/foot/get/'+$stateParams.id).success(function(data){  //Get foot attributes
       $scope.foot = data;
       date = new Date(data.date);
       date = getJour(date)+' '+getHour(date);
-      $http.get('http://62.210.115.66:9000/foot/getInfo/'+$stateParams.id).success(function(info){  //Get foot info
+      $http.get('http://'+serverAddress+'/foot/getInfo/'+$stateParams.id).success(function(info){  //Get foot info
         $scope.foot.organisator = info.orga;
         $scope.foot.orgaName = info.orgaName;
         $scope.foot.field = info.field;
         if(finish) $scope.ready = true;
-          finish = true;
+        finish = true;
       });
     });
 
-    $http.get('http://62.210.115.66:9000/foot/getAllPlayers/'+$stateParams.id).success(function(allPlayers){  //Get list of playersId
+    $http.get('http://'+serverAddress+'/foot/getAllPlayers/'+$stateParams.id).success(function(allPlayers){  //Get list of playersId
       $scope.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'user');
       $scope.isInvited = ($scope.invited.indexOf($localStorage.getObject('user').id)>-1);
       $scope.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf($localStorage.getObject('user').id)>-1);
@@ -248,7 +254,7 @@ if($location.path().indexOf('user/foots')>0){
       data = _.pluck(data,'user'); //All confirmed players ids.
       $scope.isPlaying = (data.indexOf($localStorage.getObject('user').id)>-1);
       async.each(data, function(player,callback){
-          $http.get('http://62.210.115.66:9000/user/get/'+player).success(function(user){   //Get all players attributes
+          $http.get('http://'+serverAddress+'/user/get/'+player).success(function(user){   //Get all players attributes
             $scope.players.push(user);
             callback();
           });
@@ -260,10 +266,10 @@ if($location.path().indexOf('user/foots')>0){
           if(callback2) callback2();
         });
     });
-  }
-  loadInfo();
+}
+loadInfo();
 
-  $scope.refresh = function(){
+$scope.refresh = function(){
     $scope.ready = false; //Hide everything
     $scope.foot = {};
     $scope.players = [];
@@ -272,26 +278,26 @@ if($location.path().indexOf('user/foots')>0){
     });
   }
 
-$scope.removePlayer = function(userId,Invit){
-  $http.post('http://62.210.115.66:9000/foot/removePlayer',{foot: $scope.foot.id, user: $localStorage.getObject('user').id}).success(function(){
-    if(!$scope.isPlaying){
-      var plucked = _.pluck($localStorage.footInvitation,'id');
-      index = plucked.indexOf($scope.foot.id);
-      if(index>-1) $localStorage.footInvitation.splice(index,1);
-    }
-    else{
-      var plucked = _.pluck($localStorage.footTodo,'id');
-      index = plucked.indexOf($scope.foot.id);
-      console.log(index);
-      if(index>-1) $localStorage.footTodo.splice(index,1);
-    }
-    $location.path('/user/foots');
-  });
-}
+  $scope.removePlayer = function(userId,Invit){
+    $http.post('http://'+serverAddress+'/foot/removePlayer',{foot: $scope.foot.id, user: $localStorage.getObject('user').id}).success(function(){
+      if(!$scope.isPlaying){
+        var plucked = _.pluck($localStorage.footInvitation,'id');
+        index = plucked.indexOf($scope.foot.id);
+        if(index>-1) $localStorage.footInvitation.splice(index,1);
+      }
+      else{
+        var plucked = _.pluck($localStorage.footTodo,'id');
+        index = plucked.indexOf($scope.foot.id);
+        console.log(index);
+        if(index>-1) $localStorage.footTodo.splice(index,1);
+      }
+      $location.path('/user/foots');
+    });
+  }
 
-var deleteFoot = function(userId){
-  $http.post('http://62.210.115.66:9000/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
-    var pos = _.pluck($scope.players,'id').indexOf($localStorage.getObject('user').id);
+  var deleteFoot = function(userId){
+    $http.post('http://'+serverAddress+'/foot/deleteFoot',{foot: $scope.foot.id, user: $scope.foot.user}).success(function(){
+      var pos = _.pluck($scope.players,'id').indexOf($localStorage.getObject('user').id);
       var toNotify = $scope.players; //Notify all players except the organisator
       toNotify.splice(pos,1);
       if(toNotify.length == 0) $location.path('/user/foots');
@@ -304,84 +310,61 @@ var deleteFoot = function(userId){
         $location.path('/user/foots');
       });
     });
-}
+  }
 
-$scope.confirmDelete = function(userId){
-  $confirmation('annuler ce foot?',function(){deleteFoot(userId)});
-}
+  $scope.confirmDelete = function(userId){
+    $confirmation('annuler ce foot?',function(){deleteFoot(userId)});
+  }
 
-$scope.playFoot = function(player){
-  $http.post('http://62.210.115.66:9000/player/update',{foot:$scope.foot.id,user:player}).success(function(){
-    $scope.isPlaying = true;
-    $scope.players.push($localStorage.getObject('user'));
-    var plucked = _.pluck($localStorage.footInvitation,'id');
-    index = plucked.indexOf($scope.foot.id);
-    if(index>-1) $localStorage.footInvitation.splice(index,1);
-    $scope.foot.dateString = $scope.date;
-    var indexOrga = _.pluck($scope.players,'id');
-    indexOrga = indexOrga.indexOf($scope.foot.created_by);
-    $scope.foot.orgaPic = $scope.players[indexOrga].picture;
-    $localStorage.footTodo.push($scope.foot);
-    var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
-    $handleNotif.notify(notif,function(){},true);
-  });
-}
-
-$scope.openPublic = function(){
-  $http.post('http://62.210.115.66:9000/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
-    $scope.foot.priv = false;
-  });
-}
-
-$scope.closePublic = function(){
-  $http.post('http://62.210.115.66:9000/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
-    $scope.foot.priv = true;
-  });
-}
-
-$ionicModal.fromTemplateUrl('templates/modalInvit.html', {
-  scope: $scope,
-  animation: 'slide-in-up'
-}).then(function(modal) {
-  $scope.modal2 = modal;
-});
-
-$scope.openModal2 = function() {
-  $scope.foot.toInvite = [];
-  $scope.modal2.show();
-};
-$scope.closeModal2 = function(){
-  if($scope.foot.toInvite.length>0){
-    $http.post('http://62.210.115.66:9000/foot/sendInvits',$scope.foot).success(function(){
-      async.each($scope.foot.toInvite,function(invited,callback){
-        $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
-          callback();
-      },true);
-      },function(){$scope.invited = $scope.invited.concat($scope.foot.toInvite);});
-
+  $scope.playFoot = function(player){
+    $http.post('http://'+serverAddress+'/player/update',{foot:$scope.foot.id,user:player}).success(function(){
+      $scope.isPlaying = true;
+      $scope.players.push($localStorage.getObject('user'));
+      var plucked = _.pluck($localStorage.footInvitation,'id');
+      index = plucked.indexOf($scope.foot.id);
+      if(index>-1) $localStorage.footInvitation.splice(index,1);
+      $scope.foot.dateString = $scope.date;
+      var indexOrga = _.pluck($scope.players,'id');
+      indexOrga = indexOrga.indexOf($scope.foot.created_by);
+      $scope.foot.orgaPic = $scope.players[indexOrga].picture;
+      $localStorage.footTodo.push($scope.foot);
+      var notif = {user:$scope.foot.organisator, related_user: $scope.user.id, typ:'footConfirm', related_stuff:$scope.foot.id};
+      $handleNotif.notify(notif,function(){},true);
     });
   }
-  $scope.modal2.hide();
-};
-$scope.addToFoot = function(id) {
-  $scope.foot.toInvite.push(id);
-};
-$scope.askToPlay = function(id){
-  $http.post('http://62.210.115.66:9000/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-    $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
-    $scope.isPending = true;
-  });
-};
 
-    $scope.openModal2 = function() {
-      $scope.foot.toInvite = [];
-      $scope.modal2.show();
-    };
-    $scope.closeModal2 = function(){
-      if($scope.foot.toInvite.length>0){
-        $http.post('http://62.210.115.66:9000/foot/sendInvits',$scope.foot).success(function(){
-          io.socket.post('http://62.210.115.66:9000/actu/footInvit',{from: $localStorage.getObject('user').id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
-          $scope.invited = $scope.invited.concat($scope.foot.toInvite);
+  $scope.openPublic = function(){
+    $http.post('http://'+serverAddress+'/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
+      $scope.foot.priv = false;
+    });
+  }
+
+  $scope.closePublic = function(){
+    $http.post('http://'+serverAddress+'/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
+      $scope.foot.priv = true;
+    });
+  }
+
+  $ionicModal.fromTemplateUrl('templates/modalInvit.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal2 = modal;
+  });
+
+  $scope.openModal2 = function() {
+    $scope.foot.toInvite = [];
+    $scope.modal2.show();
+  };
+  $scope.closeModal2 = function(){
+    if($scope.foot.toInvite.length>0){
+      $http.post('http://'+serverAddress+'/foot/sendInvits',$scope.foot).success(function(){
+        async.each($scope.foot.toInvite,function(invited,callback){
+          $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
+            callback();
+          },true);
+        },function(){$scope.invited = $scope.invited.concat($scope.foot.toInvite);});
+
       });
     }
     $scope.modal2.hide();
@@ -390,11 +373,34 @@ $scope.askToPlay = function(id){
     $scope.foot.toInvite.push(id);
   };
   $scope.askToPlay = function(id){
-    $http.post('http://62.210.115.66:9000/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-      notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id});
-      $scope.isPending = true;
-    });
-  };
+      $http.post('http://'+serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+        $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
+        $scope.isPending = true;
+      });
+    };
+
+    $scope.openModal2 = function() {
+      $scope.foot.toInvite = [];
+      $scope.modal2.show();
+    };
+    $scope.closeModal2 = function(){
+      if($scope.foot.toInvite.length>0){
+          $http.post('http://'+serverAddress+'/foot/sendInvits',$scope.foot).success(function(){
+            io.socket.post('http://'+serverAddress+'/actu/footInvit',{from: $localStorage.getObject('user').id, toInvite: $scope.foot.toInvite, id: $scope.foot.id});
+            $scope.invited = $scope.invited.concat($scope.foot.toInvite);
+          });
+        }
+        $scope.modal2.hide();
+      };
+      $scope.addToFoot = function(id) {
+        $scope.foot.toInvite.push(id);
+      };
+      $scope.askToPlay = function(id){
+          $http.post('http://'+serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+            notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id});
+            $scope.isPending = true;
+          });
+        };
 
 
 
@@ -403,35 +409,35 @@ $scope.askToPlay = function(id){
 //Modal edit
 
 
-  $ionicModal.fromTemplateUrl('templates/modalEdit.html', {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal3 = modal;
-    });
+$ionicModal.fromTemplateUrl('templates/modalEdit.html', {
+  scope: $scope,
+  animation: 'slide-in-up'
+}).then(function(modal) {
+  $scope.modal3 = modal;
+});
 
-  $scope.openModal3 = function() {
-    $scope.hour = getHour($scope.foot.date);
-    $scope.date = getJour($scope.foot.date);
-    $scope.foot.date = new Date($scope.foot.date);
-    $scope.selectedField = {};
-    $scope.oldFoot = {};
-    angular.copy($scope.foot.field,$scope.selectedField);
-    angular.copy($scope.foot, $scope.oldFoot);
-    $scope.modal3.show();
-  };
+$scope.openModal3 = function() {
+  $scope.hour = getHour($scope.foot.date);
+  $scope.date = getJour($scope.foot.date);
+  $scope.foot.date = new Date($scope.foot.date);
+  $scope.selectedField = {};
+  $scope.oldFoot = {};
+  angular.copy($scope.foot.field,$scope.selectedField);
+  angular.copy($scope.foot, $scope.oldFoot);
+  $scope.modal3.show();
+};
 
-  $scope.closeModal3 = function(launch){
-    $scope.modal3.hide();
-    if(launch){
+$scope.closeModal3 = function(launch){
+  $scope.modal3.hide();
+  if(launch){
       $scope.foot.field = $scope.selectedField.id; //Just send the id
       console.log($scope.foot);
-      $http.post('http://62.210.115.66:9000/foot/update',$scope.foot).success(function(){
-          $scope.foot.field = $scope.selectedField;
-          var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.getObject('user').id});
-          async.each(toNotify,function(player){
-            $handleNotif.notify({user:player.id,related_user: $localStorage.getObject('user').id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
-          });
+      $http.post('http://'+serverAddress+'/foot/update',$scope.foot).success(function(){
+        $scope.foot.field = $scope.selectedField;
+        var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.getObject('user').id});
+        async.each(toNotify,function(player){
+          $handleNotif.notify({user:player.id,related_user: $localStorage.getObject('user').id,typ:'footEdit',related_stuff:$scope.foot.id},function(){},true);
+        });
       });
     }
     else{
@@ -445,23 +451,23 @@ $scope.askToPlay = function(id){
 
   $scope.searchField = function(word){
     if(word.length>1){
-      $http.get('http://62.210.115.66:9000/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
-        $scope.fields = data;
-      });
-    }
-    else
+        $http.get('http://'+serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
+          $scope.fields = data;
+        });
+      }
+      else
+        $scope.fields = [];
+    };
+
+    $scope.updateField = function(field){
+      $scope.selectedField = field;
       $scope.fields = [];
-  };
+    };
 
-  $scope.updateField = function(field){
-    $scope.selectedField = field;
-    $scope.fields = [];
-  };
-
-  var options = {
-    date: new Date(),
-    mode: 'date',
-    minDate:  new Date(),
+    var options = {
+      date: new Date(),
+      mode: 'date',
+      minDate:  new Date(),
       // allowOldDates: false,
       // allowFutureDates: true,
       doneButtonLabel: 'OK',
@@ -489,7 +495,7 @@ $scope.askToPlay = function(id){
         $scope.foot.date.setFullYear(jour.getFullYear());
         $scope.date = getJour($scope.foot.date);
         console.log($scope.date);
-        });
+      });
     }
     $scope.showHourPicker = function(){
       $cordovaDatePicker.show(options1).then(function(hour){
@@ -501,16 +507,16 @@ $scope.askToPlay = function(id){
       });
     }
 
-$scope.launchChat = function (footId){
-  $localStorage.chats.forEach(function(chat){
-    if(chat.typ==2 && chat.related == footId){
-      $localStorage.chat = chat;
-      $location.path('/conv');
-    }
-  });
-};
+    $scope.launchChat = function (footId){
+      $localStorage.chats.forEach(function(chat){
+        if(chat.typ==2 && chat.related == footId){
+          $localStorage.chat = chat;
+          $location.path('/conv');
+        }
+      });
+    };
 
-})
+  })
 
 
 
@@ -522,11 +528,11 @@ $scope.launchChat = function (footId){
   var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
   new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
   $scope.getData = function(params){
-    $http.post('http://62.210.115.66:9000/foot/query',$scope.params).success(function(data){
+    $http.post('http://'+serverAddress+'/foot/query',$scope.params).success(function(data){
       $scope.results =[];
       async.each(data,function(foot,callback){
         var finish = false;
-        $http.get('http://62.210.115.66:9000/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
+        $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
           foot.organisator = info.orga;
           foot.orgaName = info.orgaName;
           foot.field = info.field;
@@ -547,15 +553,15 @@ $scope.launchChat = function (footId){
   }
   $scope.updatedAte();
 
- var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
   $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var lat  = position.coords.latitude
-      var long = position.coords.longitude
-        var user = $localStorage.getObject('user');
-        user.lat=lat;
-        user.long=long;
-        $localStorage.setObject('user',user);
-    }, function(err) {
+    var lat  = position.coords.latitude
+    var long = position.coords.longitude
+    var user = $localStorage.getObject('user');
+    user.lat=lat;
+    user.long=long;
+    $localStorage.setObject('user',user);
+  }, function(err) {
       // error
     });
 

@@ -1,9 +1,11 @@
 <ion-view view-title="Chat">
 <ion-content class="has-header has-footer">
-<!--<div class="padding">-->
-<div ng-repeat="chatDisplay in chatsDisplay | orderBy: '-lastTime'">
-<div class="chat_box" ng-click="launchChat(chatDisplay.id)">
-        <div class="chat_box_content">
+
+
+
+
+<ion-list can-swipe="true">
+    <ion-item ng-repeat="chatDisplay in chatsDisplay | orderBy: '-lastTime'" class="chat_box_content" ng-click="launchChat(chatDisplay.id)">
             <div class="img_chat">
                 <img ng-src="{{chatDisplay.chatPic}}">
             </div>
@@ -14,9 +16,9 @@
                 {{chatDisplay.lastTime}}
             </h3>
             <p class="chat_box_preview" ng-class="{'not_read_short_message': chatDisplay.seen == false}">
-                {{chatDisplay.lastMessage}}</p>
-            </div>
-        </div>
-    </div>
+<ion-option-button class="button-assertive" ng-click="deleteChat(chatDisplay.id)">Effacer</ion-option-button>
+    </ion-item>
+</ion-list>
+
 </ion-content>
 </ion-view>
