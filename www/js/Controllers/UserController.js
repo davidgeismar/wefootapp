@@ -83,13 +83,12 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  
-  if(window.device)
-    $localStorage.setObject('user','{}');
+  $localStorage.setObject('friends','{}');  
   io.socket.post('http://62.210.115.66:9000/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.getObject('user').pushToken)
     $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.getObject('user').pushToken});
+  $localStorage.setObject('user','{}');
   $location.path('/');
 };
   //MODAL HANDLER
