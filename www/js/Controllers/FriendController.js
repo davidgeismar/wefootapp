@@ -23,7 +23,7 @@ angular.module('friend',[])
 		 	else $scope.isInvitationConfirmation = false;		 	
 	});
 
-	if(getStuffById($stateParams.id, $localStorage.friends)){
+	if(getStuffById($stateParams.id, $localStorage.getObject('friends'))){
 		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;

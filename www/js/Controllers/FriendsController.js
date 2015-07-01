@@ -1,11 +1,11 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
 $scope.user = $localStorage.getObject('user');
-$scope.friends = $localStorage.friends;
+$scope.friends = $localStorage.getObject('friends');
 
 $scope.addFavorite = function(target){
   var targetPosition = -1;
-  angular.forEach($localStorage.friends,function(friend,index){
+  angular.forEach($localStorage.getObject('friends'),function(friend,index){
     if(friend.id == target){
       targetPosition = index;
     }
@@ -24,14 +24,9 @@ else if($scope.friends[targetPosition].statut==1){
 }
 
 $scope.refresh = function(){
-  if($localStorage.friends.length == 0)
-    var maxId = 0;
-  else
-    var maxId = _.max($localStorage.friends, function(friend){return friend.friendship}).friendship;
-
-  $http.get('http://62.210.115.66:9000/getAllFriends/'+$localStorage.getObject('user').id+'/'+maxId).success(function(data){
+  $http.get('http://62.210.115.66:9000/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
     if(data.length>0) $localStorage.newFriend = true; //Load his data on refresh actu
-    $localStorage.friends.concat(data);
+    $localStorage.setObject('friends',data);
     $scope.$broadcast('scroll.refreshComplete');
   });
 }

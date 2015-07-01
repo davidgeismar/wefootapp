@@ -130,13 +130,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
-    if(data.typ == 'newFriend'){
-      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
-        user.statut = 0;
-        $localStorage.friends.push(user);
+    if(data.typ == 'newFriend')
         $localStorage.newFriend = true;  //refresh on actu load his data
-      });
-    }
 
     if(data.typ == 'footInvit'){
       $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){

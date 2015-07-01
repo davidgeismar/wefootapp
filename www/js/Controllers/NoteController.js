@@ -15,7 +15,7 @@ angular.module('note',[])
 
 	$scope.initBypass = true;
 
-	$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
+	$scope.friend = getStuffById($stateParams.id,$localStorage.getObject('friends'));
 
 	$scope.init = function(){
 		$scope.initBypass = true;

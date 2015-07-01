@@ -59,7 +59,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	}
 
 	var getAllActu = function(callback3){
-	var friends_id = _.pluck($localStorage.friends,'id');
+	var friends_id = _.pluck($localStorage.getObject('friends'),'id');
 	$http.post('http://62.210.115.66:9000/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:getLastId()}).success(function(data){
 		var actusByDay = _.values(data);
 		if(actusByDay.length==0) $ionicLoading.hide();

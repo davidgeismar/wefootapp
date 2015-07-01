@@ -4,7 +4,7 @@ angular.module('user',[])
 
 
   $scope.user = $localStorage.getObject('user');
-  $scope.friends = $localStorage.friends;
+  $scope.friends = $localStorage.getObject('friends');
 
 
 //Handle edit inputs on left menu
@@ -125,7 +125,7 @@ $scope.logout = function (){
   }
   $scope.searchQuery = function(word){
     $scope.friendsId = [];
-    angular.forEach($localStorage.friends,function(friend){
+    angular.forEach($localStorage.getObject('friends'),function(friend){
       $scope.friendsId.push(friend.id);
     });
     if(word.length>2){
@@ -142,8 +142,9 @@ $scope.addFriend = function(target){
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
-    $localStorage.friends.push(data);
-    $localStorage.friends[$localStorage.friends.length-1].statut = 0;
+    var friends = $localStorage.getObject('friends');
+    friends.push(data);
+    $localStorage.setObject('friends',friends);
     $scope.friendsId.push(data.id);
   });
 }

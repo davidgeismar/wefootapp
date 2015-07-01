@@ -224,7 +224,7 @@ $scope.facebookConnect = function() {
     $http.post('http://62.210.115.66:9000/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.setObject('user',data[0]);
-     $localStorage.friends = [];
+     $localStorage.setObject('friends',[]);
      io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){

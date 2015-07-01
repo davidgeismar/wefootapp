@@ -1,5 +1,4 @@
 app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
-  console.log(window.device);
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -51,30 +50,41 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       });
     });
 
-
-    allFunction.push(function(callback){
-      $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){
-        $localStorage.friends = data[0];
-        if(data[0].length==0) callback();
-        angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index].stat; 
-          friend.friendship = data[1][index].friendship;
-          if(index == $localStorage.friends.length-1) callback();
+    if(setUUID){
+      allFunction.push(function(callback){
+        $http.get('http://62.210.115.66:9000/getAllFriends/'+userId+'/0').success(function(data){
+          var friends = data[0];
+          if(data[0].length==0) callback();
+          angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+            friend.statut = data[1][index].stat; 
+            friend.friendship = data[1][index].friendship;
+            if(index == friends.length-1){
+             $localStorage.setObject('friends',friends);
+             callback();
+            }
+          });
+        }).error(function(err){
+          errors.push(err);
         });
-      }).error(function(err){
-        errors.push(err);
       });
-    });
+    }
 
-    allFunction.push(function(callback){
-      $http.get('http://62.210.115.66:9000/getAllChats/'+userId).success(function(data){
-        $localStorage.chats=data;
+    // if(setUUID){
+      allFunction.push(function(callback){
+        $http.get('http://62.210.115.66:9000/getAllChats/'+userId).success(function(data){
+          $localStorage.setObject('chats',data);
+          $rootScope.initChatsNotif();
+          callback();
+        }).error(function(err){
+          errors.push(err);
+        });
+      });
+    // } else{
+      allFunction.push(function(callback){
         $rootScope.initChatsNotif();
         callback();
-      }).error(function(err){
-        errors.push(err);
       });
-    });
+    // }
 
     allFunction.push(function(callback){
       $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
