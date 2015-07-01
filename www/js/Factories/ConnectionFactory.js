@@ -1,9 +1,10 @@
 app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
-  console.log(window.device);
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
-    $localStorage.user.lastUpdate = moment();
+    var guy = $localStorage.getObject('user');
+    guy.lastUpdate = moment();
+    $localStorage.setObject('user',guy);
 
     var allFunction = [];
     var errors = [];
@@ -17,8 +18,9 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
         sound: true,
         alert: true
       }).then(function (result) {
-        $localStorage.user.pushToken = result;
-        console.log(result);
+        var guy = $localStorage.getObject('user');
+        guy.pushToken = result;
+        $localStorage.setObject('user',guy);
         $http.post('http://'+serverAddress+'/push/create',{user: userId, push_id: result}).success(function(){
           callback();
         }).error(function(err){
@@ -48,30 +50,47 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       });
     });
 
+    if(setUUID){
+      allFunction.push(function(callback){
+        $http.get('http://'+serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
+          var friends = data[0];
+          console.log(friends);
+          if(data[0].length==0) {
+            $localStorage.setObject('friends',[]);
+            callback();
+          }
+          angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+            friend.statut = data[1][index].stat; 
+            friend.friendship = data[1][index].friendship;
+            if(index == friends.length-1){
+             $localStorage.setObject('friends',friends);
+             callback();
+            }
+          });
+        }).error(function(err){
+          errors.push(err);
 
-    allFunction.push(function(callback){
-      $http.get('http://'+serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
-        $localStorage.friends = data[0];
-        if(data[0].length==0) callback();
-        angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-          friend.statut = data[1][index].stat; 
-          friend.friendship = data[1][index].friendship;
-          if(index == $localStorage.friends.length-1) callback();
         });
-      }).error(function(err){
-        errors.push(err);
       });
-    });
+    }
 
-    allFunction.push(function(callback){
-      $http.get('http://'+serverAddress+'/getAllChats/'+userId).success(function(data){
-        $localStorage.chats=data;
+
+    // if(setUUID){
+      allFunction.push(function(callback){
+        $http.get('http://'+serverAddress+'/getAllChats/'+userId).success(function(data){
+          $localStorage.setObject('chats',data);
+          $rootScope.initChatsNotif();
+          callback();
+        }).error(function(err){
+          errors.push(err);
+        });
+      });
+    // } else{
+      allFunction.push(function(callback){
         $rootScope.initChatsNotif();
         callback();
-      }).error(function(err){
-        errors.push(err);
       });
-    });
+    // }
 
     allFunction.push(function(callback){
       $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.user).success(function(nb){

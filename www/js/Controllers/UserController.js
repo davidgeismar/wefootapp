@@ -3,8 +3,8 @@ angular.module('user',[])
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms){
 
 
-  $scope.user = $localStorage.user;
-  $scope.friends = $localStorage.friends;
+  $scope.user = $localStorage.getObject('user');
+  $rootScope.friends = $localStorage.getObject('friends');
 
 
 //Handle edit inputs on left menu
@@ -49,7 +49,7 @@ if($scope.user && $scope.user.poste==null){
 
       var optionsFt = {
         params : {
-          userId: $localStorage.user.id
+          userId: $localStorage.getObject('user').id
         }
       };
       $cordovaFileTransfer.upload('http://'+serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
@@ -57,8 +57,10 @@ if($scope.user && $scope.user.poste==null){
         // Success!
         console.log('hello');
         setTimeout(function(){
-          $localStorage.user.picture = result.response+'#'+ new Date().getTime();
-          $scope.user.picture = $localStorage.user.picture;
+          user = $localStorage.getObject('user')
+          user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
+          $localStorage.setObject('user',user); 
+          $scope.user.picture = $localStorage.getObject('user').picture;
           $ionicLoading.hide();
         },3000);
       }, function(err) {
@@ -81,17 +83,12 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  if(window.device)
 
-    $localStorage.set('token') = "";
-  io.socket.post('http://'+serverAddress+'/connexion/delete');
-
+  $localStorage.setObject('user','{}');
+  io.socket.post('http://62.210.115.66:9000/connexion/delete');
   $rootScope.toShow = true;
-  if($localStorage.user.pushToken)
-    $http.post('http://'+serverAddress+'/push/delete',{push_id : $localStorage.user.pushToken});
-
-  $localStorage.user = {};
-  $localStorage.token = "";
+  if($localStorage.getObject('user').pushToken)
+    $http.post('http://62.210.115.66:9000/push/delete',{push_id : $localStorage.getObject('user').pushToken});
   $location.path('/');
 };
   //MODAL HANDLER
@@ -126,7 +123,7 @@ $scope.logout = function (){
     $('.content_fb_search').addClass('hidden');
   }
   $scope.searchQuery = function(word){
-    $scope.friendsId = _.pluck($localStorage.friends,'id');
+    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
     if(word.length>2){
      $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
       $scope.results = data;
@@ -135,48 +132,56 @@ $scope.logout = function (){
    else
     $scope.results = [];
 }
+
 //facebookFriend = true, target = facebook_id
 //facebookFriend = false, target = user.id
 $scope.addFriend = function(target, facebookFriend){
-var postData = {};
-if(facebookFriend)
-  postData = {user1: $localStorage.user.id, facebook_id: target};
-else
-  postData = {user1: $localStorage.user.id, user2: target};
+  var postData = {};
+  if(facebookFriend)
+    postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
+  else
+    postData = {user1: $localStorage.getObject('user').id, user2: target};
 
   $http.post('http://'+serverAddress+'/addFriend',postData).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
-    var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
+    var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
-    $localStorage.friends.push(data);
-    $localStorage.friends[$localStorage.friends.length-1].statut = 0;
-    $scope.friendsId.push(data.id);
+
+    var friends = $localStorage.getObject('friends');
+    friends.push(data);
+    $localStorage.setObject('friends',friends);
+    $rootScope.friendsId.push(data.id);
+    $rootScope.friends.push(data);
   });
 }
 
-$scope.createChat = function(user){
+// $scope.createChat = function(user){
 
-  $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
-    $rootScope.closeModal();
-    chat.messages = new Array();
-    $localStorage.chat=chat;
-    $location.path('/conv');
-  });
-}
+// <<<<<<< HEAD
+//   $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
+// =======
+//   $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
+// >>>>>>> f12dcfe8720683b94e35d9660a6617e3b9ad5545
+//     $rootScope.closeModal();
+//     chat.messages = new Array();
+//     $localStorage.chat=chat;
+//     $location.path('/conv');
+//   });
+// }
 
-$scope.launchChat = function(user){
-  console.log($localStorage.chats);
-  angular.forEach($localStorage.chats, function(chat) {
-    if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
-      console.log('here');
-      $localStorage.chat=chat;
-      $location.path('/conv');
-      return 0;
-    }
-  });
-  $scope.createChat(user);
-}
+// $scope.launchChat = function(user){
+//   console.log($localStorage.chats);
+//   angular.forEach($localStorage.chats, function(chat) {
+//     if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
+//       console.log('here');
+//       $localStorage.chat=chat;
+//       $location.path('/conv');
+//       return 0;
+//     }
+//   });
+//   $scope.createChat(user);
+// }
 
 $scope.friend = $localStorage.friend;
 $scope.notes = new Array(5);
@@ -272,11 +277,14 @@ $scope.sendSmsMessage = function(){
               console.log('error');
             });
           }
+
           $scope.facebookFriends = $localStorage.facebookFriends;
           console.log($scope.facebookFriends);
           //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
           $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
           console.log($scope.facebookFriendsId);
+
+
         })
 
 .controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 

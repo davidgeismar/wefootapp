@@ -3,9 +3,9 @@ angular.module('user',[])
 .controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading){
 
   $scope.user = $localStorage.user;
-  $scope.friends = $localStorage.friends;
+  $rootScope.friends = $localStorage.friends;
 
-  console.log($scope.friends);
+  console.log($rootScope.friends);
   console.log($scope.user);
 
 
@@ -126,9 +126,9 @@ $scope.logout = function (){
     $('.content_fb_search').addClass('hidden');
   }
   $scope.searchQuery = function(word){
-    $scope.friendsId = [];
+    $rootScope.friendsId = [];
     angular.forEach($localStorage.friends,function(friend){
-      $scope.friendsId.push(friend.id);
+      $rootScope.friendsId.push(friend.id);
     });
     if(word.length>2){
      $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
@@ -152,7 +152,7 @@ $scope.addFriend = function(target, facebook){
     data.statut = 0;
     $localStorage.friends.push(data);
     $localStorage.friends[$localStorage.friends.length-1].statut = 0;
-    $scope.friendsId.push(data.id);
+    $rootScope.friendsId.push(data.id);
   });
 }
 

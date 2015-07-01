@@ -1,6 +1,6 @@
 angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location){
-	$scope.user = $localStorage.user;
-	$scope.friends = $localStorage.friends;
+	$scope.user = $localStorage.getObject('user');
+	$rootScope.friends = $localStorage.getObject('friends');
 	//Tableau contenant les chats
 	$scope.chats = $localStorage.chats;
 

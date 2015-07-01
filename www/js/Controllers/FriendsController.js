@@ -1,37 +1,32 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
-$scope.user = $localStorage.user;
-$scope.friends = $localStorage.friends;
-
+$scope.user = $localStorage.getObject('user');
+$rootScope.friends = $localStorage.getObject('friends');
+console.log($rootScope.friends);
 $scope.addFavorite = function(target){
   var targetPosition = -1;
-  angular.forEach($localStorage.friends,function(friend,index){
+  angular.forEach($localStorage.getObject('friends'),function(friend,index){
     if(friend.id == target){
       targetPosition = index;
     }
   });
-  if($scope.friends[targetPosition].statut==0){
-   $http.post('http://'+serverAddress+'/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
-    $scope.friends[targetPosition].statut = 1;
+  if($rootScope.friends[targetPosition].statut==0){
+   $http.post('http://'+serverAddress+'/addFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
+    $rootScope.friends[targetPosition].statut = 1;
     console.log('here1');
   });
 }
-else if($scope.friends[targetPosition].statut==1){
-  $http.post('http://'+serverAddress+'/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
-    $scope.friends[targetPosition].statut = 0;
+else if($rootScope.friends[targetPosition].statut==1){
+  $http.post('http://'+serverAddress+'/removeFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
+    $rootScope.friends[targetPosition].statut = 0;
   });
 }
 }
 
 $scope.refresh = function(){
-  if($localStorage.friends.length == 0)
-    var maxId = 0;
-  else
-    var maxId = _.max($localStorage.friends, function(friend){return friend.friendship}).friendship;
-
-  $http.get('http://'+serverAddress+'/getAllFriends/'+$localStorage.user.id+'/'+maxId).success(function(data){
+  $http.get('http://'+serverAddress+':9000/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
     if(data.length>0) $localStorage.newFriend = true; //Load his data on refresh actu
-    $localStorage.friends.concat(data);
+    $localStorage.setObject('friends',data);
     $scope.$broadcast('scroll.refreshComplete');
   });
 }

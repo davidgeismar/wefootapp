@@ -4,8 +4,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	$scope.chevre;
 	$scope.foot = $localStorage.footSelected;
 	$scope.usersSelected = new Array();
-	$scope.user = $localStorage.user;
-
+	$scope.user = $localStorage.getObject('user');
 	$scope.alreadyVoted = true;
 
 	$scope.users;
@@ -44,7 +43,8 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.elir = function(){
 		if($scope.homme || $scope.chevre){
-			$http.post('http://'+serverAddress+'/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
+			$http.post('http://'+serverAddress+'/vote/create',{electeur:$scope.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
+
 				$scope.showConfirmation();
 			}).error(function(){
 				console.log('err');
@@ -56,8 +56,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	}
 
 	$scope.init = function(){
-
-		$http.get('http://'+serverAddress+'/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
+		$http.get('http://'+serverAddress+'/getVotedStatus/'+$scope.user.id+'/'+$scope.foot.id).success(function(result){
 				//result (vrai == déjà voté, faux == pas encore voté)
 				console.log(result);
 				if(!result){

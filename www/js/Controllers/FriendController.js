@@ -15,7 +15,9 @@ angular.module('friend',[])
 			$scope.setNote(Math.round(data.assiduite), 4);
 		});
 	}
-	$http.get('http://'+serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
+
+	$http.get('http://'+serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.getObject('user').id).success(function(foot){
+
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];
@@ -23,7 +25,7 @@ angular.module('friend',[])
 		 	else $scope.isInvitationConfirmation = false;		 	
 	});
 
-	if(getStuffById($stateParams.id, $localStorage.friends)){
+	if(getStuffById($stateParams.id, $localStorage.getObject('friends'))){
 		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;
@@ -62,13 +64,13 @@ angular.module('friend',[])
 		if(yes){
 			$http.post('http://'+serverAddress+'/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandAccepted',related_stuff:$scope.foot.id});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
 		}
 		else{
 			$http.post('http://'+serverAddress+'/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
-				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.user.id, typ:'demandRefused'});
+				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandRefused'});
 			});
 		}
 		

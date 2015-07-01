@@ -1,4 +1,5 @@
 //GLOBAL FUNCTIONS
+// var serverAddress = "62.210.115.66:9000";
 var serverAddress = "localhost:1337";
 console.log("Connected to "+serverAddress);
 
@@ -66,7 +67,7 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','openfb','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
 app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
@@ -83,7 +84,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush) {
   $rootScope.toShow = false;
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -119,28 +120,22 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('disconnect',function(){
-    if($localStorage.user && $localStorage.user.id)
-      $http.post('http://'+serverAddress+'/connexion/delete',{id : $localStorage.user.id});
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id)
+      $http.post('http://'+serverAddress+':9000/connexion/delete',{id : $localStorage.getObject('user').id});
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
-
-    }
-  })
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.getObject('user').pushToken)
+      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.getObject('user').id, push_id:$localStorage.getObject('user').pushToken}); 
+  });
 
   // Notification event handler
   io.socket.on('notif',function(data){
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
-    if(data.typ == 'newFriend'){
-      $http.get('http://'+serverAddress+'/user/get/'+data.related_stuff).success(function(user){
-        user.statut = 0;
-        $localStorage.friends.push(user);
+
+    if(data.typ == 'newFriend')
         $localStorage.newFriend = true;  //refresh on actu load his data
-      });
-    }
 
     if(data.typ == 'footInvit'){
       $http.get('http://'+serverAddress+'/foot/getInfo/'+data.id).success(function(info){
@@ -230,12 +225,8 @@ $rootScope.updateChatDisplay = function(){
   };
 
 
-  OpenFB.init('491593424324577','http://localhost:8100/oauthcallback.html',window.localStorage);
-
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
-    console.log('here is the thing');
-    console.log($localStorage.get('token'));
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -247,12 +238,14 @@ $rootScope.updateChatDisplay = function(){
 });
 
   $ionicPlatform.on('resume',function(){
-    if($localStorage.user && $localStorage.user.id){
-      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.user).success(function(nb){
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id){
+      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
+        console.log(nb);
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
-      $http.post('http://'+serverAddress+'/user/update',{id: $localStorage.user.id, pending_notif: 0});
+      $http.post('http://'+serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
+
     }
   });
 

@@ -9,7 +9,7 @@ $scope.foot = {};
 $scope.results = [];
 $scope.tab = "1";
 if($localStorage.friends){
-  $scope.friends = $localStorage.friends;
+  $rootScope.friends = $localStorage.friends;
 
 }
 if($localStorage.fieldChosen){
@@ -200,7 +200,7 @@ if($location.path().indexOf('user/foots')>0){
     showBackdrop: true
   });
   $scope.user = $localStorage.user;
-  $scope.friends = $localStorage.friends;
+  $rootScope.friends = $localStorage.friends;
   $scope.players = [];
   $scope.ready = false; //Show after loading
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables

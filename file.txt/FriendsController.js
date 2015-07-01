@@ -1,7 +1,7 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
 $scope.user = $localStorage.user;
-$scope.friends = $localStorage.friends;
+$rootScope.friends = $localStorage.friends;
 
 $scope.addFavorite = function(target){
   var targetPosition = -1;
@@ -10,15 +10,15 @@ $scope.addFavorite = function(target){
       targetPosition = index;
     }
   });
-  if($scope.friends[targetPosition].statut==0){
+  if($rootScope.friends[targetPosition].statut==0){
    $http.post('http://'+serverAddress+'/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
-    $scope.friends[targetPosition].statut = 1;
+    $rootScope.friends[targetPosition].statut = 1;
     console.log('here1');
   });
 }
-else if($scope.friends[targetPosition].statut==1){
+else if($rootScope.friends[targetPosition].statut==1){
   $http.post('http://'+serverAddress+'/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
-    $scope.friends[targetPosition].statut = 0;
+    $rootScope.friends[targetPosition].statut = 0;
   });
 }
 }
