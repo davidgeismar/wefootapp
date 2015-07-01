@@ -226,7 +226,13 @@ $rootScope.updateChatDisplay = function(){
 
 
   $ionicPlatform.ready(function() {
+    
     $rootScope.$broadcast('appReady');
+
+    // $ionicPlatform.on('offline',function(){
+    //   console.log('offline');
+    //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
+    // });
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -436,4 +442,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
   $ionicConfigProvider.views.forwardCache(true);
   $ionicConfigProvider.tabs.position("bottom"); 
+});
+
+
+app.directive('searchloader', function(){
+  return {
+    templateUrl: 'templates/searchLoader.html'
+  };
 });

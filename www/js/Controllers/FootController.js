@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope) {
+angular.module('foot',[]).controller('FootController', function ($scope, $cordovaDatePicker,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -105,18 +105,23 @@ $scope.addToFoot = function(id){
 
 
 $scope.searchQuery = function(word){
-  if(word.length>2){
-    $http.get('http://'+serverAddress+'/field/search/'+$$localStorage.getObject('user').id+'/'+word).success(function(data){
+  if(word.length>1){
+    $searchLoader.show();
+    $http.get('http://'+serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
       $scope.results = data;
+      $searchLoader.hide();
     });
   }
-  else {
+  else if(word.length==0) {
+    $searchLoader.show();
     var posOptions = {timeout: 10000, enableHighAccuracy: false};
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
       var lat  = position.coords.latitude
       var long = position.coords.longitude
-      $http.get('http://localhost:1337/field/near/'+lat+'/'+long).success(function(data){
-       $scope.results = data;})
+      $http.get('http://'+serverAddress+'/field/near/'+lat+'/'+long).success(function(data){
+        $searchLoader.hide();
+        $scope.results = data;
+     });
     }, function(err) {
       // error
     });
@@ -124,7 +129,7 @@ $scope.searchQuery = function(word){
   }
 }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
-$scope.searchQuery(0);
+$scope.searchQuery('');
 
 $scope.chooseField = function(field){
   $localStorage.fieldChosen = field;
