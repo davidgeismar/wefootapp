@@ -2,12 +2,11 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$scope.user = $localStorage.getObject('user');
 	$rootScope.friends = $localStorage.getObject('friends');
 	//Tableau contenant les chats
-	$scope.chats = $localStorage.chats;
+	$rootScope.chats = $localStorage.getObject('friends');
 
 
 	$rootScope.updateMessage = function(){
 		$scope.$digest();
-
 	}
 
 	//Affiche les chats qui comportent des messages dans leur liste
@@ -37,31 +36,35 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		});
 
 
+}
+
+
+$scope.initDisplayer();
+
+
+$scope.launchChat = function(chatId){
+	$localStorage.chat = getStuffById(chatId, $scope.chats);
+	$location.path('/conv');
+}
+
+$rootScope.openModal = function() {
+	$rootScope.modal2.show();
+}
+
+$rootScope.closeModal = function() {
+	$rootScope.modal2.hide();
+}
+
+$scope.deleteChat = function(chatId){
+	var index = _.pluck($rootScope.chats, 'id').indexOf(chatId);
+	if(index>-1){
+		$http.post('http://'+serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:$scope.user.id}).success(function(data){
+			$rootScope.chats.splice(index, 1);
+			$localStorage.setObject('chats',$rootScope.chats);
+		}).error(function(err){
+			console.log(err);
+		});
 	}
-
-
-	$scope.initDisplayer();
-
-
-	$scope.launchChat = function(chatId){
-		$localStorage.chat = getStuffById(chatId, $scope.chats);
-		$location.path('/conv');
-	}
-
-	$rootScope.openModal = function() {
-		$rootScope.modal2.show();
-	}
-
-	$rootScope.closeModal = function() {
-		$rootScope.modal2.hide();
-	}
-
-	$scope.deleteChat = function(chatId){
-		$http.post('http://'+serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:$localStorage.user.id}).success(function(data){
-			$localSto
-	}).error(function(err){
-		console.log(err);
-	});
 }
 
 })

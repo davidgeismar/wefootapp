@@ -24,10 +24,10 @@
 			<div class="img_chat img_search">
 				<img ng-src="{{guy.picture}}">
 			</div>
-			<div ng-class="{disabled: friendsId.indexOf(guy.id)>-1}" class="name_search">
+			<div ng-class="{disabled: isFriend(guy.id) == true}" class="name_search">
 				<p> {{guy.first_name}} {{guy.last_name}}</p>
 			</div>
-			<div ng-click="addFriend({{guy.id}}, false)" ng-class="{'ion-checkmark-round': friendsId.indexOf(guy.id)>-1, 'icon_friend_search': friendsId.indexOf(guy.id)==-1 }" class="icon_search">
+			<div ng-click="addFriend({{guy.id}}, false)" ng-class="{'ion-checkmark-round': isFriend(guy.id) == true, 'icon_friend_search': isFriend(guy.id) == false}" class="icon_search">
 			</div>
 		</div>
 	</div>

@@ -8,7 +8,25 @@
 </ion-refresher>
 <div class="container_friends last">	
 	<div class="container_list_friends">
-		<div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
+
+        <ion-list can-swipe="true">
+        <ion-item ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
+        <div class="img_chat img_friends" ng-click="goFriend(friend)">
+            <img ng-src="{{friend.picture}}">
+
+        </div>
+        <div class="name_friends" ng-click="goFriend(friend)">
+            <p> {{friend.first_name}} {{friend.last_name}} </p>
+        </div>
+        <div ng-click="addFavorite({{friend.id}})" ng-class="{grey: friend.statut==0}" class="star_friends">
+            <i class="ion-android-star"></i>
+        </div>
+        
+        <ion-option-button class="button-assertive" ng-click="deleteFriend(friend.id)">Effacer</ion-option-button>
+    </ion-item>
+</ion-list>
+
+<!-- 		<div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
 			<div class="img_chat img_friends" ng-click="goFriend(friend)">
             	<img ng-src="{{friend.picture}}">
 
@@ -19,7 +37,7 @@
         	<div ng-click="addFavorite({{friend.id}})" ng-class="{grey: friend.statut==0}" class="star_friends">
         		<i class="ion-android-star"></i>
         	</div>
-        </div>
+        </div> -->
 <!--         <div class="one_friends">
 			<div class="img_chat img_friends">
             	<img src="../img/default_pic.jpg">
@@ -31,8 +49,8 @@
         		<i class="ion-android-star"></i>
         	</div>
         </div> 
-	</div> -->
-    </div>
+    </div> -->
+</div>
 </div>
 </ion-content>
 </ion-view>

@@ -123,7 +123,6 @@ $scope.logout = function (){
     $('.content_fb_search').addClass('hidden');
   }
   $scope.searchQuery = function(word){
-    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
     if(word.length>2){
      $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
       $scope.results = data;
@@ -147,13 +146,20 @@ $scope.addFriend = function(target, facebookFriend){
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
-
     var friends = $localStorage.getObject('friends');
     friends.push(data);
     $localStorage.setObject('friends',friends);
-    $rootScope.friendsId.push(data.id);
     $rootScope.friends.push(data);
+    $scope.word ="";
   });
+}
+
+$scope.isFriend = function(userId){
+  if (_.pluck($rootScope.friends, 'id').indexOf(userId)>-1)
+    return true;
+  else
+    return false;
+    
 }
 
 // $scope.createChat = function(user){
