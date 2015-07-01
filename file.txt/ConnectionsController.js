@@ -33,7 +33,7 @@ angular.module('connections',[])
           showBackdrop: false,
           hideOnStateChange: true
         });
-        $http.post('http://62.210.115.66:9000/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
+        $http.post('http://'+serverAddress+'/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
           $localStorage.token = response.token;
           $localStorage.user = response;
           $localStorage.user.push = $ionicUser.get();
@@ -46,21 +46,21 @@ angular.module('connections',[])
           });
           $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
             console.log('Got token', data.token, data.platform);
-            io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
+            io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: $localStorage.user.id, pushId:data.token}); 
           });
-          $http.get('http://62.210.115.66:9000/getAllFriends/'+response.id+'/0').success(function(data){
+          $http.get('http://'+serverAddress+'/getAllFriends/'+response.id+'/0').success(function(data){
             $localStorage.friends = data[0];
             angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
               friend.statut = data[1][index].stat; 
               friend.friendship = data[1][index].friendship;
             });
 
-            $http.get('http://62.210.115.66:9000/getAllChats/'+$localStorage.user.id).success(function(data){
+            $http.get('http://'+serverAddress+'/getAllChats/'+$localStorage.user.id).success(function(data){
               $localStorage.chats=data;
               $rootScope.initChatsNotif();
             });
 
-            $http.post('http://62.210.115.66:9000/user/getLastNotif',response).success(function(nb){
+            $http.post('http://'+serverAddress+'/user/getLastNotif',response).success(function(nb){
               $rootScope.nbNotif = nb.length;
               $location.path('/user/profil');
             });           
@@ -86,11 +86,11 @@ angular.module('connections',[])
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://62.210.115.66:9000/session/login',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
       $localStorage.user = data;
-      io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data.id}); //Link socketId with the user.
-      $http.get('http://62.210.115.66:9000/getAllFriends/'+data.id+'/0').success(function(data){
+      io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: data.id}); //Link socketId with the user.
+      $http.get('http://'+serverAddress+'/getAllFriends/'+data.id+'/0').success(function(data){
         $localStorage.friends = data[0];
         angular.forEach($localStorage.friends,function(friend,index){   // Add attribute statut to friends to keep favorite
             friend.statut = data[1][index].stat; 
@@ -98,12 +98,12 @@ angular.module('connections',[])
         });
       });
 
-      $http.get('http://62.210.115.66:9000/getAllChats/'+$localStorage.user.id).success(function(data){
+      $http.get('http://'+serverAddress+'/getAllChats/'+$localStorage.user.id).success(function(data){
         $localStorage.chats=data;
         $rootScope.initChatsNotif();      
       });
 
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',data).success(function(nb){
+      $http.post('http://'+serverAddress+'/user/getLastNotif',data).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $location.path('/user/profil');
       });                 
@@ -126,11 +126,11 @@ angular.module('connections',[])
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://62.210.115.66:9000/user/create',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
      $localStorage.friends = [];
-     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
+     io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socketId with the user.
      $location.path('/user/profil');
    }).error(function(){
     $ionicLoading.hide();

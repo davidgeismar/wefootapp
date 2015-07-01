@@ -4,59 +4,33 @@ angular.module('connections',[])
 .controller('HomeCtrl', function($scope,OpenFB,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q){
   $rootScope.toShow = true;
  //Prevent for loading to early
-//  $ionicPlatform.ready(function(){
-//   if(window.device){ //If user has already sat connection from this device he will be logged automatically
-//     $http.post('http://62.210.115.66:9000/session/isConnected',{uuid: window.device.uuid}).success(function(response){
-//       if(response.userId>0){  //Connexion finded
-//         $http.get('http://62.210.115.66:9000/user/'+response.userId).success(function(data){
-//           $localStorage.user = data;
-//           $localStorage.token = data.token;
-//           $ionicLoading.show({
-//             content: 'Loading Data',
-//             animation: 'fade-out',
-//             showBackdrop: false,
-//             hideOnStateChange: false
-//           });
-//           $connection(response.userId,function(){
-//             $location.path('/user/profil');
-//           },false);
-//         });
-//       }
-//       else{
-//         $rootScope.toShow = true;
-//       }
-//     }).error(function(){
-//       $rootScope.toShow = true;
-//       $rootScope.err = "Veuillez vérifier votre connexion internet.";
-//     });
-//   }
-//   else{
-//     $rootScope.toShow = true;
-//   }
-// });
-// $scope.facebookConnect = function(){
-//   $ionicHistory.clearCache();
-//   $ionicHistory.clearHistory();
-//   OpenFB.login('email','public_profile','user_friends').then(function(){
-//     OpenFB.get('/me').success(function(data){
-//       $ionicLoading.show({
-//         content: 'Loading Data',
-//         animation: 'fade-out',
-//         showBackdrop: false,
-//         hideOnStateChange: false
-//       });
-//       $http.post('http://62.210.115.66:9000/facebookConnect',{email: data.email,first_name: data.first_name,last_name: data.last_name,facebook_id: data.id,fbtoken:window.localStorage.fbtoken}).success(function(response){
-//         $localStorage.token = response.token;
-//         $localStorage.user = response;
-//         $connection(response.id,function(){
-//           $location.path('/user/profil');
-//         },true);
-//       });
-//     });
-//   },function(){$ionicLoading.hide(); $scope.err = "Erreur lors de la connexion via facebook"});
 
-// };
+ $ionicPlatform.ready(function(){
+  if($localStorage.get('token') && $localStorage.get('token').length>0){ //If user has already sat connection from this device he will be logged automatically
+    $http.post('http://'+serverAddress+'/session/isConnected',{token: $localStorage.get('token')}).success(function(data){
+      $localStorage.user = data;
+      $localStorage.set('token',data.token);
+      $ionicLoading.show({
+        content: 'Loading Data',
+        animation: 'fade-out',
+        showBackdrop: false,
+        hideOnStateChange: false
+      });
+      $connection(data.id,function(){
+        $location.path('/user/profil');
+      },false);
+    }).error(function(){
+      $rootScope.toShow = true;
+      $rootScope.err = "Veuillez vérifier votre connexion internet.";
+    });
+  }
+  else{
+    $rootScope.toShow = true;
+  }
+});
 
+
+//FACEBOOK CONNECT BEGINS
 
 var FACEBOOK_APP_ID = 1133277800032088;
 var fbLogged = $q.defer();
@@ -108,11 +82,11 @@ var fbLoginSuccess = function(response) {
     var friends = $q.defer();
     facebookConnectPlugin.api('/me/friends?fields=picture,name', ["basic_info", "user_friends"],
       function (result) {
-        alert("Result: " + JSON.stringify(result));
-        friends = result;
+        friends.resolve(result);
       }, 
       function (error) { 
         alert("Failed: " + error);
+        friends.reject(error);
       });
     return friends.promise;
   }
@@ -144,10 +118,10 @@ $scope.facebookConnect = function() {
         //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
 
         $ionicLoading.show({
-            content: 'Loading Data',
-            animation: 'fade-out',
-            showBackdrop: false,
-            hideOnStateChange: false
+          content: 'Loading Data',
+          animation: 'fade-out',
+          showBackdrop: false,
+          hideOnStateChange: false
         });
 
         //ask the permissions you need
@@ -170,18 +144,27 @@ $scope.facebookConnect = function() {
               //save the user data
               //for the purpose of this example I will store it on ionic local storage but you should save it on a database
 
-              $http.post('http://62.210.115.66:9000/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+              $http.post('http://'+serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
                 $localStorage.token = response.token;
                 $localStorage.user = response;
                 $connection(response.id,function(){
-                  $location.path('/user/profil');
+
+                  getFacebookFriends().then(function(data){
+                    $localStorage.facebookFriends = data.data;
+                    $location.path('/user/profil');
+                  });
+                  // }).error(function(err){
+                  //   $location.path('/user/profil');
+                  // });
+
+
                 },true);
               }).error(function(err){
                 console.log(err);
               });
               $ionicLoading.hide();
             });
-          });
+});
 // }
 });
 }
@@ -206,7 +189,7 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post('http://62.210.115.66:9000/session/login',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/session/login',$scope.user).success(function(data){
       $localStorage.token = data.token;
       $localStorage.user = data;
       $connection(data.id,function(){
@@ -233,11 +216,11 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://62.210.115.66:9000/user/create',$scope.user).success(function(data){
+    $http.post('http://'+serverAddress+'/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.user = data[0];
      $localStorage.friends = [];
-     io.socket.post('http://62.210.115.66:9000/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
+     io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();

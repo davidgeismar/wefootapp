@@ -1,4 +1,8 @@
 //GLOBAL FUNCTIONS
+var serverAddress = "localhost:1337";
+console.log("Connected to "+serverAddress);
+
+
 
 var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
@@ -116,12 +120,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('disconnect',function(){
     if($localStorage.user && $localStorage.user.id)
-      $http.post('http://62.210.115.66:9000/connexion/delete',{id : $localStorage.user.id});
+      $http.post('http://'+serverAddress+'/connexion/delete',{id : $localStorage.user.id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.user && $localStorage.user.id && $localStorage.user.pushToken){
-      io.socket.post('http://62.210.115.66:9000/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
+      io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: $localStorage.user.id, push_id:$localStorage.user.pushToken}); 
 
     }
   })
@@ -131,7 +135,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
     if(data.typ == 'newFriend'){
-      $http.get('http://62.210.115.66:9000/user/get/'+data.related_stuff).success(function(user){
+      $http.get('http://'+serverAddress+'/user/get/'+data.related_stuff).success(function(user){
         user.statut = 0;
         $localStorage.friends.push(user);
         $localStorage.newFriend = true;  //refresh on actu load his data
@@ -139,7 +143,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     }
 
     if(data.typ == 'footInvit'){
-      $http.get('http://62.210.115.66:9000/foot/getInfo/'+data.id).success(function(info){
+      $http.get('http://'+serverAddress+'/foot/getInfo/'+data.id).success(function(info){
         data.organisator = info.orga;
         data.orgaName = info.orgaName;
         data.field = info.field;
@@ -167,24 +171,22 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   io.socket.on('newMessage',function(message){
 
     var index = getIndex(message.chat, $localStorage.chats);
+    if(index){
     $localStorage.chats[index].messages.push(message);
-
     var lastMessage = moment($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
     var last_time_seen = moment($localStorage.chats[index].lastTime).add(5, 'seconds');
     if(lastMessage.diff(last_time_seen)>0){
       $localStorage.chats[index].seen = false;
     }
-
     var indexToUpdate = getIndex(message.chat, $localStorage.chatsDisplay);
     var newDate = new Date(message.createdAt);
     var lastMessage = shrinkMessage(message.messagestr);
     var chatPic = getStuffById(message.sender_id, $localStorage.chats[index].users).picture;
     $localStorage.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$localStorage.chats[index].desc, seen:$localStorage.chats[index].seen, chatPic:chatPic};
-
-
     if(typeof $rootScope.updateMessage == 'function'){
       $rootScope.updateMessage();
     }
+  }
   });
 
 $rootScope.updateChatDisplay = function(){
@@ -232,6 +234,8 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
+    console.log('here is the thing');
+    console.log($localStorage.get('token'));
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -244,11 +248,11 @@ $rootScope.updateChatDisplay = function(){
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.user && $localStorage.user.id){
-      $http.post('http://62.210.115.66:9000/user/getLastNotif',$localStorage.user).success(function(nb){
+      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.user).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
-      $http.post('http://62.210.115.66:9000/user/update',{id: $localStorage.user.id, pending_notif: 0});
+      $http.post('http://'+serverAddress+'/user/update',{id: $localStorage.user.id, pending_notif: 0});
     }
   });
 
@@ -415,7 +419,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     return {
       'request': function (config) {
         config.headers = config.headers || {};
-        if ($localStorage.token) {
+        if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.token;
         }
         return config;

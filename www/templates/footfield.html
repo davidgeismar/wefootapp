@@ -1,35 +1,36 @@
 <ion-header-bar  class="actu_header">
-  <h1 class="title">Où</h1>
-  <div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
+<div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
+<h1 class="title">Où</h1>
 </ion-header-bar>
 <ion-view view-title="footparams">
-  <ion-content>
-    <div class="header-footfield">
-      <div class="select-place">
-      <input ng-model="word" ng-keyup="searchQuery(word)" placeholder="Saisir un lieu"/>
-      <i class="ion-ios-location-outline"></i>
-      </div>
-      <a href="#/newField">
-      <div class="subtitle-footfield">
-        <p>
-          Ou rajouter votre propre terrain
-        </p>
-        <img class="icon-field" ng-src="img/icon_nouveau_terrain.svg"/>
-      </div>
-      </a>
+<ion-content>
+<div class="header-footfield">
+  <div class="select-place">
+    <input ng-model="word" ng-keyup="searchQuery(word)" placeholder="Saisir un lieu"/>
+    <i class="ion-ios-location-outline"></i>
+  </div>
+  <a href="#/newField">
+    <div class="subtitle-footfield">
+      <p>
+        Ou rajouter votre propre terrain
+      </p>
+      <img class="icon-field" ng-src="img/icon_nouveau_terrain.svg"/>
     </div>
-    <div class="content-footfield">
-      <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
-        <div class="row">
-          <div class="col col-25">
-            <img class="field_img" ng-src="{{field.picture}}"/>
-          </div>
-          <div class="col col-60">
-            <p class="name-field">{{field.name}}</p>
-            <p class="desc-field">{{field.address}}</p>
-            <p class="desc-field">{{field.zip_code}} {{field.city}}  </p>
-          </div>
-          <div class="col col-10">
+  </a>
+</div>
+<div class="content-footfield">
+  <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
+    <div class="row">
+      <div class="col col-25">
+        <img class="field_img" ng-src="{{field.picture}}"/>
+      </div>
+      <div class="col col-60">
+       <p class="name-field">{{field.name}} </p>
+       <p class="desc-field">à {{field.distance}} km</p>
+       <p class="desc-field">{{field.address}}</p>
+       <p class="desc-field">{{field.zip_code}} {{field.city}}</p>
+     </div>
+     <div class="col col-10">
 <!--             <div ng-class="{grey: field.statut==0}" class="star_field">
               <i class="ion-android-star"></i>
             </div> -->

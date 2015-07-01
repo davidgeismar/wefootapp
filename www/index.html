@@ -31,16 +31,6 @@
 <script src="lib/ionic/js/ionic.bundle.js"></script>
 <script src="lib/jquery/dist/jquery.min.js"></script>
 
-
-<!-- socket.io shit -->
-<script src="lib/socketIoClient/socket.io.js"></script>
-<script src="lib/angularSocketIo/socket.min.js"></script>
-<script src="lib/sailsIo/sails.io.js"></script>
-<script type="text/javascript">
-    io.sails.useCORSRouteToGetCookie = false;
-    io.sails.url = 'http://62.210.115.66:9000/';
-</script>
-
 <script src="lib/move/index.js"></script>
 <script src="lib/underscore/underscore-min.js"></script>
 <script src="lib/async/lib/async.js"></script>
@@ -74,8 +64,17 @@
 <script src="js/Controllers/ResetPasswordController.js"></script>
 <script src="js/Controllers/NotifController.js"></script>
 <script src="js/Controllers/ElectionController.js"></script>
-
+<!-- Facebook Connect -->
 <div id="fb-root"></div>
 <script src="lib/facebookConnectPlugin.js"></script>
+
+<!-- socket.io shit -->
+<script src="lib/socketIoClient/socket.io.js"></script>
+<script src="lib/angularSocketIo/socket.min.js"></script>
+<script src="lib/sailsIo/sails.io.js"></script>
+<script type="text/javascript">
+    io.sails.useCORSRouteToGetCookie = false;
+    io.sails.url = 'http://'+serverAddress+'/';
+</script>
 
 </html>

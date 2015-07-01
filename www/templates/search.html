@@ -27,20 +27,33 @@
 			<div ng-class="{disabled: friendsId.indexOf(guy.id)>-1}" class="name_search">
 				<p> {{guy.first_name}} {{guy.last_name}}</p>
 			</div>
-			<div ng-click="addFriend({{guy.id}})" ng-class="{'ion-checkmark-round': friendsId.indexOf(guy.id)>-1, 'icon_friend_search': friendsId.indexOf(guy.id)==-1 }" class="icon_search">
+			<div ng-click="addFriend({{guy.id}}, false)" ng-class="{'ion-checkmark-round': friendsId.indexOf(guy.id)>-1, 'icon_friend_search': friendsId.indexOf(guy.id)==-1 }" class="icon_search">
 			</div>
 		</div>
 	</div>
     <!-- FACEBOOK SECTION -->
-	<div class="content_fb_search hidden" style="text-align:center;">
+	<div class="content_fb_search hidden">
+      <div ng-repeat="guy in facebookFriends" class="one_search">
+      <div class="img_chat img_search">
+        <img ng-src="{{guy.picture.data.url}}">
+      </div>
+      <div ng-class="{disabled: facebookFriendsId.indexOf(guy.id)>-1}" class="name_search">
+        <p> {{guy.name}} </p>
+      </div>
+      <div ng-click="addFriend({{guy.id}}, true)" ng-class="{'ion-checkmark-round': facebookFriendsId.indexOf(guy.id)>-1, 'icon_friend_search': facebookFriendsId.indexOf(guy.id)==-1 }" class="icon_search">
+      </div>
+    </div>
 	</div>
     </ion-content>
+    
+
+
     <ion-footer-bar align-title="left" class="bar-assertive">
-  <div class="buttons invite-container" ng-click="sendSmsMessage()">
-    <button class="ion-android-textsms invite-sms"></button>
+  <div class="buttons invite-container-sms" ng-click="sendSmsMessage()">
+    <button class="ion-chatbubble invite-sms"></button>
   </div>
-  <h1 class="title">Invitez vos amis</h1>
-  <div class="buttons invite-container" ng-click="sendFbMessage()">
+  <h1 class="title">Invitez vos amis sur l'app</h1>
+  <div class="buttons invite-container-facebook" ng-click="sendFbMessage()">
     <button class="ion-social-facebook invite-facebook"></button>
   </div>
 </ion-footer-bar>
