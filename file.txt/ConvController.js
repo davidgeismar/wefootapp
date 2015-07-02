@@ -5,13 +5,13 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
   $scope.messageContent;
 
   io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
-  $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
-  $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].seen = true;
+  $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
+  $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].seen = true;
   $ionicScrollDelegate.scrollBottom();
 
 
   $rootScope.updateMessage = function(){
-    $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
+    $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
     io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
     $scope.$digest();
     $ionicScrollDelegate.scrollBottom();
@@ -23,7 +23,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
      $http.post('http://'+serverAddress+'/message/create',{senderId :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
       io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
       $scope.messageContent=null;
-      $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
+      $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
 
       document.getElementById("footerChat").style.height=44+"px";
       document.getElementById("messageArea").style.height=44+"px";

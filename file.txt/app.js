@@ -218,7 +218,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
   $rootScope.nbChatsUnseen = 0;
-  $localStorage.chats = [];
+  $rootScope.chats = [];
 
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
@@ -286,20 +286,20 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   //Nouveau chat 
   io.socket.on('newChat',function(chat){
-    $localStorage.chats.push(chat);
+    $rootScope.chats.push(chat);
   });
 
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
 
-    var index = getIndex(message.chat, $localStorage.chats);
+    var index = getIndex(message.chat, $rootScope.chats);
 
-    $localStorage.chats[index].messages.push(message);
-    var firstDate = new Date($localStorage.chats[index].messages[$localStorage.chats[index].messages.length-1].createdAt);
-    var secondDate = new Date($localStorage.chats[index].lastTime);
+    $rootScope.chats[index].messages.push(message);
+    var firstDate = new Date($rootScope.chats[index].messages[$rootScope.chats[index].messages.length-1].createdAt);
+    var secondDate = new Date($rootScope.chats[index].lastTime);
     var fiveSeconds = secondDate.getSeconds() + 5;
     if(firstDate>secondDate+fiveSeconds){
-      $localStorage.chats[index].seen = false;
+      $rootScope.chats[index].seen = false;
     }
 
     if(typeof $rootScope.updateMessage == 'function'){
@@ -310,31 +310,31 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   //Nouvel user dans un chat existant
 
   io.socket.on('newChatter', function(chatter){
-    var index = getIndex(chatter.chat, $localStorage.chats);
-    $localStorage.chats[index].users.push(chatter);
+    var index = getIndex(chatter.chat, $rootScope.chats);
+    $rootScope.chats[index].users.push(chatter);
   })
 
 
   $rootScope.initChatsNotif = function (){
-    $localStorage.chats.forEach(function(chat, i) {
+    $rootScope.chats.forEach(function(chat, i) {
       if(chat.messages.length>0){
         var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
         var lastTime = new Date (chat.lastTime);
         if(lastMessage>lastTime){
-          $localStorage.chats[i].seen = false;
+          $rootScope.chats[i].seen = false;
         }
         else
-          $localStorage.chats[i].seen = true;
+          $rootScope.chats[i].seen = true;
       }
       else
-        $localStorage.chats[i].seen = true;
+        $rootScope.chats[i].seen = true;
     });
   };
 
   $rootScope.getNbChatsNotif = function (){
     var cpt = 0;
-    for (var i = 0; i<$localStorage.chats.length; i++){
-      if(!$localStorage.chats[i].seen){
+    for (var i = 0; i<$rootScope.chats.length; i++){
+      if(!$rootScope.chats[i].seen){
         cpt++;
       }
     }

@@ -964,7 +964,7 @@ a{
 	margin-top: 15px;
 	position: absolute;
 	margin-bottom: 0px;
-	margin-left: 50%;
+	right:15px;
 }
 .chat_box_preview{
 	font-size: 8px;
@@ -1146,9 +1146,14 @@ a{
 	height: 100%;
 }
 .one_friends{
-	margin: 0px 20px;
 	border-bottom: 1px solid #DBDAE3;
-	height: 65px
+	height: 65px;
+	background-color:rgb( 242, 243, 249 );
+	border-radius:0px;
+	margin-bottom:0px;
+}
+.one_friends .item{
+
 }
 .name_friends{
 	display: inline-block;
@@ -1159,9 +1164,11 @@ a{
 	margin-left: 5px;
 	font-size: 17px;
 	color: #28385c;
+	margin-left: 20px;
 }
 .img_friends img{
 	width: 48px;
+	margin-left: 20px;
 }
 .star_friends{
 	display: inline-block;
@@ -1173,6 +1180,7 @@ a{
 	margin-top: 14px;
 	padding-left: 7px;
 	padding-top: 3px;
+	margin-right: 20px;
 }
 .star_friends i{
 	color: #fffc00;
@@ -1990,7 +1998,7 @@ a{
   			font-size: 12px;
   		}
   		.name-player-foot{
-  			margin-left: 7px;
+  			margin-left: 25px;
   		}
   		.header-foot h4{
   			font-size: 15px;
@@ -2529,6 +2537,12 @@ a{
 
 .chat_box_content .item-content{
 	background-color: rgb( 242, 243, 249 );
+	padding:3px;
+	padding-left:15px;
+}
+.one_friends .item-content{
+	background-color: rgb( 242, 243, 249 );
+	padding:0;
 }
 
 
