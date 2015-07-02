@@ -1,30 +1,33 @@
 angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate){
 
   $scope.chat = $localStorage.chat;
-  $scope.user = $localStorage.getObject('user').id;
+  $scope.user = $localStorage.getObject('user');
   $scope.messageContent;
 
   io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
 
-  $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
-  $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].seen = true;
+  $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
+  $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].seen = true;
+  $localStorage.setObject('chats',$rootScope.chats);
   $ionicScrollDelegate.scrollBottom();
 
 
   $rootScope.updateMessage = function(){
-    $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
+    $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
+    $localStorage.setObject('chats',$rootScope.chats);
     io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
     $scope.$digest();
     $ionicScrollDelegate.scrollBottom();
   }
 
 
-  $scope.sendMessage = function(message){
-   if(message.length>0){
-     $http.post('http://'+serverAddress+'/message/create',{sender_id :$scope.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
+  $scope.sendMessage = function(){
+   if($scope.messageContent.length>0){
+     $http.post('http://'+serverAddress+'/message/create',{sender_id :$scope.user.id, messagestr:$scope.messageContent, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
       io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
       $scope.messageContent=null;
-      $localStorage.chats[getIndex($scope.chat.id, $localStorage.chats)].lastTime = new Date();
+      $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
+      $localStorage.setObject('chats',$rootScope.chats);
       document.getElementById("footerChat").style.height=44+"px";
       document.getElementById("messageArea").style.height=44+"px";
     }).error(function(err){

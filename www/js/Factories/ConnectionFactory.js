@@ -93,8 +93,9 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
     // }
 
     allFunction.push(function(callback){
-      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.user).success(function(nb){
+      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
+        console.log(nb.length);
         callback();
       }).error(function(err){
         errors.push(err);

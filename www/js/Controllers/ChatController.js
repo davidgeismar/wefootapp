@@ -2,7 +2,7 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$scope.user = $localStorage.getObject('user');
 	$rootScope.friends = $localStorage.getObject('friends');
 	//Tableau contenant les chats
-	$rootScope.chats = $localStorage.getObject('friends');
+	$rootScope.chats = $localStorage.getObject('chats');
 
 
 	$rootScope.updateMessage = function(){
@@ -12,8 +12,8 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	//Affiche les chats qui comportent des messages dans leur liste
 	$scope.initDisplayer = function(){
 		$localStorage.chatsDisplay = new Array();
-		$scope.chatsDisplay = $localStorage.chatsDisplay;
-		angular.forEach($localStorage.chats, function(chat) {
+		$rootScope.chatsDisplay = $localStorage.chatsDisplay;
+		angular.forEach($rootScope.chats, function(chat) {
 			if(chat.messages.length>0){
 				var newDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 				var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);

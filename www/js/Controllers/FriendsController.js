@@ -1,5 +1,6 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
+
   $scope.user = $localStorage.getObject('user');
   $rootScope.friends = $localStorage.getObject('friends');
 
@@ -22,9 +23,19 @@ angular.module('friends',[])
 
 $scope.refresh = function(){
   $http.get('http://'+serverAddress+'/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
-    if(data.length>0) $localStorage.newFriend = true; //Load his data on refresh actu
-    $localStorage.setObject('friends',data);
-    $scope.$broadcast('scroll.refreshComplete');
+    var friends = data[0];
+    if(data[0].length==0) return;
+    angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
+      friend.statut = data[1][index].stat; 
+      friend.friendship = data[1][index].friendship;
+      if(index == friends.length-1){
+        $localStorage.setObject('friends',friends);
+        $rootScope.friends = friends;
+        $localStorage.newFriend = true; //Load his data on refresh actu
+        $localStorage.setObject('friends',friends);
+        $scope.$broadcast('scroll.refreshComplete');
+      }
+    });
   });
 }
 
