@@ -129,7 +129,8 @@ $scope.searchQuery = function(word){
   }
 }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
-$scope.searchQuery('');
+if($location.path().indexOf('footfield')>-1)
+  $scope.searchQuery('');
 
 $scope.chooseField = function(field){
   $localStorage.fieldChosen = field;
@@ -154,7 +155,7 @@ $scope.launchReq = function(){
   });
 }
 
-if($location.path().indexOf('user/foots')>0){
+if($location.path().indexOf('user/foots')>-1){
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
