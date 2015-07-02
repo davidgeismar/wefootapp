@@ -1678,6 +1678,7 @@ a{
   		margin-top: 14px;
   		color: #006ddf;
   		margin-bottom: 0;
+  		margin-left: 20px;
   	}
   	.row.player-foot{
   		border-top: 2px solid #c4c4c4;
@@ -1997,7 +1998,7 @@ a{
   		.nomurban-foot p{
   			font-size: 12px;
   		}
-  		.name-player-foot{
+  		.name-player-foot p{
   			margin-left: 25px;
   		}
   		.header-foot h4{
