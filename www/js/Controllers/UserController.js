@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms){
+.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -124,13 +124,18 @@ $scope.logout = function (){
     $('.content_fb_search').addClass('hidden');
   }
   $scope.searchQuery = function(word){
-    if(word.length>2){
+    $searchLoader.show();
+    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
+    if(word.length>1){
      $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
+      $searchLoader.hide();
       $scope.results = data;
     });
    }
-   else
+   else{
     $scope.results = [];
+    $searchLoader.hide();
+  }
 }
 
 //facebookFriend = true, target = facebook_id

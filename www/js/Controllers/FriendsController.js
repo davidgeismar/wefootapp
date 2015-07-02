@@ -49,6 +49,7 @@ $scope.deleteFriend = function(friendId){
     $http.post('http://'+serverAddress+'/friendship/deleteFriend',{user1: $localStorage.getObject('user').id, user2: friendId}).success(function(){
       $rootScope.friends.splice(index, 1);
       $localStorage.setObject('friends',$rootScope.friends);
+      $localStorage.newFriend = true;
     });
   }
 }

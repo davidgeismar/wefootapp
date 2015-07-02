@@ -24,13 +24,13 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
         $http.post('http://'+serverAddress+'/push/create',{user: userId, push_id: result}).success(function(){
           callback();
         }).error(function(err){
-          errors.push(err);
+          errors.push("Error push");
         });
       },function(err){
         console.log(err);
       });
     }, function(err) {
-      errors.push(err);
+      errors.push("Error push");
     });
   });
   }
@@ -68,7 +68,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
             }
           });
         }).error(function(err){
-          errors.push(err);
+          errors.push("Error friends");
 
         });
       });
@@ -82,7 +82,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
           $rootScope.initChatsNotif();
           callback();
         }).error(function(err){
-          errors.push(err);
+          errors.push("Error chats");
         });
       });
     // } else{
@@ -97,8 +97,8 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
         $rootScope.nbNotif = nb.length;
         console.log(nb.length);
         callback();
-      }).error(function(err){
-        errors.push(err);
+      }).error(function(){
+        errors.push("Error notif");
       });       
     });
 
@@ -111,6 +111,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       else{
         $ionicLoading.hide();
         console.log(errors);
+        $rootScope.toShow = true;
       }
     });
   };

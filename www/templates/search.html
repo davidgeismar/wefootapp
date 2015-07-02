@@ -20,6 +20,7 @@
     		<i class="icon ion-search placeholder-icon"></i>
     		<input ng-model="word" ng-keyup="searchQuery(word)" type="text" placeholder="Rechercher un nom">
   		</label>
+      <div searchloader></div>
 		<div ng-if="user.id != guy.id" ng-repeat="guy in results" class="one_search">
 			<div class="img_chat img_search">
 				<img ng-src="{{guy.picture}}">

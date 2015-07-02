@@ -19,7 +19,8 @@
   </a>
 </div>
 <div class="content-footfield">
-  <div ng-click="chooseField(field)" class="one-field" ng-repeat="field in results">
+<div searchloader></div>
+  <div ng-click="chooseField(field)" class="one-field" collection-repeat="field in results">
     <div class="row">
       <div class="col col-25">
         <img class="field_img" ng-src="{{field.picture}}"/>

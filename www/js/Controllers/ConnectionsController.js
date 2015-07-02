@@ -2,13 +2,11 @@ angular.module('connections',[])
 
 
 .controller('HomeCtrl', function($scope,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q){
+
   $rootScope.toShow = false;
  //Prevent for loading to early
 
  $ionicPlatform.ready(function(){
-
-  //Check internet connection
-
   if($localStorage.getObject('user') && $localStorage.getObject('user').id){ //If user has already sat connection from this device he will be logged automatically
           $ionicLoading.show({
             content: 'Loading Data',
