@@ -211,6 +211,7 @@ a{
 .ion_invite_friends {
 	position: relative;
 	top: 15px;
+  margin-left: 40px;
 }
 .invite_one_friend{
 	display: inline-block;
@@ -422,7 +423,7 @@ a{
 
 }
 
-.login-mdpo p{ 
+.login-mdpo p{
 	display:inline;
 }
 
@@ -573,7 +574,7 @@ a{
 	0% {opacity: 0.8}
 	33% {opacity: 0.3}
 	66% {opacity: 0.5}
-	100% {opacity: 0.8}	
+	100% {opacity: 0.8}
 }
 @-webkit-keyframes pulsateTwo{
 	0% {opacity: 0.5}
@@ -594,11 +595,11 @@ a{
 .pulsate2{
 	animation: pulsateTwo 1s linear infinite;
 	-webkit-animation: pulsateTwo 1s linear infinite;
-}  
+}
 .pulsate3{
 	animation: pulsateThree 1s linear infinite;
 	-webkit-animation: pulsateThree 1s linear infinite;
-}           
+}
 .tab_bottom{
 	position: absolute;
 	bottom: 10px;
@@ -1767,7 +1768,7 @@ a{
   	}
 
 
-  	.photourban-foot{ 
+  	.photourban-foot{
   		vertical-align:top;
   		width: 100px;
   		height: 100px;
@@ -2115,7 +2116,7 @@ a{
   		width:100%;
   		padding-left:1%;
   		position:relative;
-  	}	
+  	}
 
   	.trophe_container img{
   		width:40%;
@@ -2148,7 +2149,7 @@ a{
  	.icon-assiduB{
  		background-image: url('../img/clock46B.svg');
  	}
- 	
+
  	.icon-shoesB {
  		background-image: url('../img/nav_mes_foots_noirB.svg');
  		-ms-transform: rotate(20deg); /* IE 9 */
@@ -2238,11 +2239,19 @@ a{
  		width: 30px;
  		display: inline-block;
  		margin-left : -25px;
+    /*added by dave*/
+
+    border-radius: 50%;
 
  	}
+.align_creer_foot {
+    margin-left: 8px;
+  margin-right: 8px;
+}
 
  	p.number_players_profil {
  		font-size: 9px;
+    margin-left: -10px
  	}
  	.indic-profil{
  		float: right;
@@ -2253,12 +2262,15 @@ a{
  	}
  	.img_friends_profil {
  		width: 30px;
+    border-radius: 50%;
  		display: inline;
  		white-space: nowrap
+
  	}
  	.level_foot_profil {
  		margin-top: 35px;
  		float: right;
+    margin-right: -5px;
  	}
 
  	.bonhomme_profil {
@@ -2369,7 +2381,7 @@ a{
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-name: blink;
-	-moz-animation-timing-function: ease-in-out;    
+	-moz-animation-timing-function: ease-in-out;
 }
 
 
@@ -2446,7 +2458,7 @@ a{
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-name: blink;
-	-moz-animation-timing-function: ease-in-out;    
+	-moz-animation-timing-function: ease-in-out;
 }
 
 
