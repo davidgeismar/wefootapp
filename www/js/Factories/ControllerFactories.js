@@ -1,4 +1,5 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
+app
+.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -117,5 +118,57 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
   };
 
   return connect;
+
+}])
+
+
+
+.factory('$paiement',['$http','$ionicLoading','$searchLoader','$confirmation',function($http,$ionicLoading,$searchLoader,$confirmation){
+  var paiement = {};
+
+  paiement.getAllCards = function(user,callback){
+    $searchLoader.show();
+    $http.post('http://'+serverAddress+'/pay/getCards',{user: user}).success(function(result){
+      console.log(result);
+      $searchLoader.hide();
+      callback(result[0],result[1]);
+    });
+  }
+
+  paiement.registerCard = function(user,card,callback){
+    $ionicLoading.show({
+      content: 'Loading Data',
+      animation: 'fade-out',
+      showBackdrop: false
+    });
+    $http.post('http://'+serverAddress+'/pay/registerCard',{user: user, info: card}).success(function(newCard){
+      newCard.Alias = card.number;
+      newCard.Id = newCard.CardId;
+      console.log(newCard);
+      callback(newCard);
+      $ionicLoading.hide();
+    }).error(function(){
+      $ionicLoading.hide();
+      callback(0);
+    });
+  }
+
+  paiement.proceed = function(mangoId,cardId,price,foot,callback){
+    $confirmation('Nous allons procéder à une préauthorisation de paiement de '+price+'€.',function(){
+      $ionicLoading.show({
+        content: 'Loading Data',
+        animation: 'fade-out',
+        showBackdrop: false
+      });
+      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId, cardId, price: price, footId: foot}).success(function(){
+        callback();
+        $ionicLoading.hide();
+      }).error(function(){
+        callback(0);
+      });
+    });
+    
+  }
+  return paiement;
 
 }])

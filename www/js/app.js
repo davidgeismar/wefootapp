@@ -1,6 +1,6 @@
 //GLOBAL FUNCTIONS
 // var serverAddress = "62.210.115.66:9000";
-var serverAddress = "62.210.115.66:9000";
+var serverAddress = "localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -255,7 +255,9 @@ $rootScope.updateChatDisplay = function(){
     }
   });
 
-  $rootScope.goBack = function (){
+  $rootScope.goBack = function (value){
+    if(value)
+      $ionicHistory.goBack(value);
     $ionicHistory.goBack();
   };
 })
@@ -412,6 +414,67 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     url: '/footfinder',
     templateUrl: 'templates/footfinder.html',
     controller: 'FootFinderController'
+  })
+
+  $stateProvider.state('reservation',{
+    abstract: true,
+    cache: false,
+    url: '/resa',
+    templateUrl: "templates/resa.html"
+  })
+
+  $stateProvider.state('reservation.recap',{
+    cache: false,
+    url: '/recap',
+    views: {
+    'resaContent' :{
+        templateUrl: "templates/recapreservation.html",
+        controller: 'ReservationController'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.field',{
+    cache: false,
+    url: '/field',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/autrescentres.html'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.edit',{
+    cache: false,
+    url: '/edit',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/editResa.html'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.dispo',{
+    cache: false,
+    url: '/dispo',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/dispo.html',
+        controller: 'ResaDispoController'
+      }
+    }
+  })
+
+
+  $stateProvider.state('reservation.pay',{
+    cache: false,
+    url: '/pay',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/pay.html',
+        controller: 'PaiementController'
+      }
+    }
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {

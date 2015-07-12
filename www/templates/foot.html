@@ -14,7 +14,8 @@
 </div>
 <div id="imagehead-foot" style="background:url({{foot.field.picture}}) no-repeat center;  background-size: cover; ">
 </div>
-<a href="tel:{{foot.field.telephone}}" ng-if="user.id == foot.organisator && !foot.booked" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</a>
+<a href="tel: {{foot.field.telephone}}" ng-if="user.id == foot.organisator && !foot.booked && !foot.field.partner" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</a>
+<a ng-click="book()" ng-if="user.id == foot.organisator && !foot.booked && foot.field.partner" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-calendar"></i>Réserver le terrain</a>
 <button ng-if="user.id != foot.organisator && friend_can_invite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-ios-email"></i>Inviter vos amis</button>
 <button ng-if="!isPlaying && isInvited" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>
 <button ng-if="!isPlaying && isInvited" ng-click="removePlayer(user.id,true)" class="button button-book-foot" style="background-color: #E2334C"> <i class="ion-close-circled"></i>Je ne peux pas</button>

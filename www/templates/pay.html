@@ -1,0 +1,29 @@
+<ion-view view-title="recapreservation">
+<ion-header-bar  class="actu_header">
+<h1 class="title">Paiement </h1>
+<a ng-show="valid < 0" href='#/dispo'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="img/logo_WF.svg">
+</ion-header-bar>
+
+  <ion-content class="padding">
+
+  <p class="pay-infos">
+  Nous devons prendre votre emprunte bancaire pour garantir la réservation. Vous ne serez debité que si vous ne vous présentez pas sur le centre.</p>
+  <div class="list">
+  <div searchloader></div>
+    <div ng-click="pay(card.Id)" class="item item-icon-left" ng-repeat="card in cards">
+      <i class="icon ion-card"></i>
+      {{card.Alias}}
+    </div>
+    <div class="err_container">{{err}}</div>
+    <div ng-click="showModal2()" class="item item-icon-left pay-add-card">
+      <i class="icon ion-plus-round"></i>
+      Ajouter une carte
+    </div>
+  </div>
+
+  <p class="pay-infos2" style="font-style: italic;">Wefoot n'enregistre pas vos numéros de cartes, pour plus d'informations voir les mentions légales.</p>
+
+
+  </ion-content>
+</ion-view>

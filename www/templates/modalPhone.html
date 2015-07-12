@@ -1,0 +1,21 @@
+ <div class="modal">
+      <ion-header-bar  class="actu_header">
+      <h1 class="title">Nouvelles Infos</h1>
+      <div class="button button-clear" ng-click="cancel()"><span class="icon ion-chevron-down"></span></div>
+    </ion-header-bar>
+    <ion-content  class="padding_header modalPhone">
+    <h4> Nous avons besoin de plus d'information pour pouvoir continuer</h4>
+    <label class="item item-input">
+      <span class="input-label"><i class="ion-ios-telephone"></i> </span>
+      <input type="tel" ng-model="infos.telephone" placeholder="Entrez votre numero de mobile"/>
+    </label>
+    <label class="item item-input">
+      <span class="input-label"><i class="ion-ios-calendar"></i></span>
+      <input type="date" ng-model="infos.birthday" placeholder="Entrez votre date de naissance">
+    </label>
+    <p class="err_container" ng-if="err">{{err}}</p>
+    <button ng-click="hideModal()" class="button homepage_button icon-right ">
+      Valider
+  </button>
+  </ion-content>
+</div>
