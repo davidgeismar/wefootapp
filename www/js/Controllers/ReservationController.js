@@ -180,7 +180,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
      }
 
 })  
-.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading) {
+.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location) {
   var user = $localStorage.getObject('user');
   if(!user.birthday || !user.telephone){
 
@@ -250,6 +250,8 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $paiement.proceed(user.mangoId,cardId,$localStorage.reservationClient.prix,$localStorage.reservationClient.foot,function(result){
         if(result == 0)
           $scope.err = 'Erreur une carte à surement déjà été enregistrée pour ce foot';
+        else
+          $location.path('/foot/'+$localStorage.reservationClient.foot);  //TODO POPUP CONFIRM RESA
       });
     }
 })
