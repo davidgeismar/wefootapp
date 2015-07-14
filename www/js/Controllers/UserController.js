@@ -6,7 +6,6 @@ angular.module('user',[])
   $scope.user = $localStorage.getObject('user');
   $rootScope.friends = $localStorage.getObject('friends');
 
-
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
 if($scope.user && $scope.user.favorite_club==null){
@@ -102,11 +101,14 @@ $scope.logout = function (){
   });
 
   $scope.openModal = function() {
+    $scope.word ="";
     $scope.modal.show();
+    $searchLoader.hide();
   };
 
   $scope.closeModal = function() {
     $scope.modal.hide();
+    $searchLoader.hide();
   }; 
 
   $scope.switchSearchFb = function(){
@@ -114,6 +116,7 @@ $scope.logout = function (){
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
+    $searchLoader.hide();
   }
 
 
@@ -122,6 +125,7 @@ $scope.logout = function (){
     $('.switch_wf').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_fb_search').addClass('hidden');
+    $searchLoader.hide();
   }
   $scope.searchQuery = function(word){
     $searchLoader.show();
@@ -161,11 +165,13 @@ $scope.addFriend = function(target, facebookFriend){
 }
 
 $scope.isFriend = function(userId){
-  if (_.pluck($rootScope.friends, 'id').indexOf(userId)>-1)
+  if (_.pluck($rootScope.friends, 'id').indexOf(userId)>-1){
     return true;
-  else
+  }
+  else{
     return false;
-    
+  }
+  
 }
 
 // $scope.createChat = function(user){

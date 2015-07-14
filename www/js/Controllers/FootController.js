@@ -513,13 +513,8 @@ $scope.closeModal3 = function(launch){
     }
 
     $scope.launchChat = function (footId){
-      $localStorage.chats.forEach(function(chat){
-        if(chat.typ==2 && chat.related == footId){
-          $localStorage.chat = chat;
-          $location.path('/conv');
+          $location.path('/conv/'+_.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
         }
-      });
-    };
 
   })
 

@@ -39,5 +39,7 @@
     "cordova-plugin-contacts",
     "cordova-sqlite-storage"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }

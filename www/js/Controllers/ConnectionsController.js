@@ -8,15 +8,15 @@ angular.module('connections',[])
 
  $ionicPlatform.ready(function(){
   if($localStorage.getObject('user') && $localStorage.getObject('user').id){ //If user has already sat connection from this device he will be logged automatically
-          $ionicLoading.show({
-            content: 'Loading Data',
-            animation: 'fade-out',
-            showBackdrop: false,
-            hideOnStateChange: false
-          });
-          $connection($localStorage.getObject('user').id,function(){
-            $location.path('/user/profil');
-          },false);
+    $ionicLoading.show({
+      content: 'Loading Data',
+      animation: 'fade-out',
+      showBackdrop: false,
+      hideOnStateChange: false
+    });
+    $connection($localStorage.getObject('user').id,function(){
+      $location.path('/user/profil');
+    },false);
   }
   else{
     $rootScope.toShow = true;
@@ -149,13 +149,13 @@ $scope.facebookConnect = function() {
           'public_profile', 'user_friends'], fbLoginSuccess, fbLoginError);
 
         fbLogged.promise.then(function(authData) {
-
+          console.log(authData);
           var fb_uid = authData.id,
           fb_access_token = authData.access_token;
 
             //get user info from FB
             getFacebookProfileInfo().then(function(data) {
-
+              console.log(data);
               var user = data;
               user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?type=large";
               user.access_token = fb_access_token;
@@ -167,8 +167,12 @@ $scope.facebookConnect = function() {
                 $localStorage.set('token',response.token);
                 $localStorage.setObject('user',response);
                 $connection(response.id,function(){
+                  console.log("here");
                   getFacebookFriends().then(function(data){
-                    $localStorage.facebookFriends = data.data;
+                    $localStorage.set('fb',data.data);
+                    console.log(data);
+                     // = data.data;
+                     // facebookFriends
                     $location.path('/user/profil');
                   });
                   // }).error(function(err){
@@ -176,7 +180,7 @@ $scope.facebookConnect = function() {
                   // });
 
 
-                },true);
+              },true);
               }).error(function(err){
                 console.log(err);
               });

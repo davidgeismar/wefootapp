@@ -14,8 +14,7 @@ angular.module('note',[])
 	}
 
 	$scope.initBypass = true;
-
-	$scope.friend = getStuffById($stateParams.id,$localStorage.getObject('friends'));
+	$scope.friend = _.find($localStorage.getObject('friends'), function(friend){ return friend.id == $stateParams.id; });
 
 	$scope.init = function(){
 		$scope.initBypass = true;
@@ -70,14 +69,11 @@ angular.module('note',[])
 		}
 		else
 		{
-
 			$http.post('http://'+serverAddress+'/Notation/grade',{noteur: $localStorage.getObject('user').id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
-
 				for(var i=0; i<5; i++) {
 					$scope.activate[i] = false;
 				}
 				$scope.showAlert();
-
 			});
 
 		}

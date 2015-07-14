@@ -211,7 +211,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading) {
+.run(function($ionicPlatform,OpenFB,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, chat, chats) {
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -286,7 +286,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   //Nouveau chat 
   io.socket.on('newChat',function(chat){
-    $rootScope.chats.push(chat);
+    chat.addChat(chat);
   });
 
   //Nouveau message dans un chat

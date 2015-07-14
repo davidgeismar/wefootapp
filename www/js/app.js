@@ -1,5 +1,5 @@
 //GLOBAL FUNCTIONS
-// var serverAddress = "62.210.115.66:9000";
+// var serverAddress = "localhost:1337";
 var serverAddress = "62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
 
@@ -57,7 +57,7 @@ var getHour = function(date){
 var shrinkMessage = function(message){
   message = message.replace(/[\n\r]/g, ' ');
   if(message.length>80){
-    message = message.substring(0,88)+"...";
+    message = message.substring(0,50)+"...";
   }
   return message;
 
@@ -84,7 +84,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush, chat, chats) {
   $rootScope.toShow = false;
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -125,8 +125,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.getObject('user').pushToken)
-      io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: $localStorage.getObject('user').id, push_id:$localStorage.getObject('user').pushToken}); 
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id){
+      io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
+      chats.getNewChats().then(function(){
+        chats.getNewChatters().then(function(){
+          chats.getNewMessages();
+        });
+      });
+    }
   });
 
   // Notification event handler
@@ -137,96 +143,50 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     if(data.typ == 'newFriend')
         $localStorage.newFriend = true;  //refresh on actu load his data
 
-    if(data.typ == 'footInvit'){
-      $http.get('http://'+serverAddress+'/foot/getInfo/'+data.id).success(function(info){
-        data.organisator = info.orga;
-        data.orgaName = info.orgaName;
-        data.field = info.field;
-        $localStorage.footInvitation.push(data);
-      });
-    }
-    
-    if(data.typ == 'footAnnul'){
-      if($localStorage.footTodo){
-        var plucked = _.pluck($localStorage.footTodo,'id');
-        index = plucked.indexOf(data.related_stuff);
-        if(index>-1) $localStorage.footTodo.splice(index,1);
+      if(data.typ == 'footInvit'){
+        $http.get('http://'+serverAddress+'/foot/getInfo/'+data.id).success(function(info){
+          data.organisator = info.orga;
+          data.orgaName = info.orgaName;
+          data.field = info.field;
+          $localStorage.footInvitation.push(data);
+        });
       }
-    }
-  });
 
-
-
+      if(data.typ == 'footAnnul'){
+        if($localStorage.footTodo){
+          var plucked = _.pluck($localStorage.footTodo,'id');
+          index = plucked.indexOf(data.related_stuff);
+          if(index>-1) $localStorage.footTodo.splice(index,1);
+        }
+      }
+    });
   //Nouveau chat 
   io.socket.on('newChat',function(chat){
-    $rootScope.chats.push(chat);
+    console.log(chat);
+    $localStorage.set('lastTimeUpdated', moment().format());
+    chats.addChat(chat);
   });
-
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-
-    var index = getIndex(message.chat, $rootScope.chats);
-    if(index){
-    $rootScope.chats[index].messages.push(message);
-    var lastMessage = moment($rootScope.chats[index].messages[$rootScope.chats[index].messages.length-1].createdAt);
-    var last_time_seen = moment($rootScope.chats[index].lastTime).add(5, 'seconds');
-    if(lastMessage.diff(last_time_seen)>0){
-      $rootScope.chats[index].seen = false;
-    }
-    var indexToUpdate = getIndex(message.chat, $rootScope.chatsDisplay);
-    var newDate = new Date(message.createdAt);
-    var lastMessage = shrinkMessage(message.messagestr);
-    var chatPic = getStuffById(message.sender_id, $rootScope.chats[index].users).picture;
-    $rootScope.chatsDisplay[indexToUpdate] = {id:message.chat, lastTime:newTime(newDate), lastMessage:lastMessage, titre:$rootScope.chats[index].desc, seen:$rootScope.chats[index].seen, chatPic:chatPic};
-    if(typeof $rootScope.updateMessage == 'function'){
-      $rootScope.updateMessage();
-    }
-  }
+    console.log(message);
+    $localStorage.set('lastTimeUpdated', moment().format());
+    chat.addMessage(message);
   });
-
-$rootScope.updateChatDisplay = function(){
-
-
-
-}
-
   //Nouvel user dans un chat existant
-
   io.socket.on('newChatter', function(chatter){
-    var index = getIndex(chatter.chat, $rootScope.chats);
-    $rootScope.chats[index].users.push(chatter);
+    $localStorage.set('lastTimeUpdated', moment().format());
+    chat.addChatter(chatter);
   })
 
 
-  $rootScope.initChatsNotif = function (){
-    $rootScope.chats.forEach(function(chat, i) {
-      if(chat.messages.length>0){
-        var lastMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
-        var lastTime = new Date (chat.lastTime);
-        if(lastMessage>lastTime){
-          $rootScope.chats[i].seen = false;
-        }
-        else
-          $rootScope.chats[i].seen = true;
-      }
-      else
-        $rootScope.chats[i].seen = true;
-    });
-  };
-
   $rootScope.getNbChatsNotif = function (){
-    var cpt = 0;
-    for (var i = 0; i<$rootScope.chats.length; i++){
-      if(!$rootScope.chats[i].seen){
-        cpt++;
-      }
-    }
-    return cpt;
+    console.log(chats.getNbNotif());
+    return chats.getNbNotif();
   };
 
 
   $ionicPlatform.ready(function() {
-    
+
     $rootScope.$broadcast('appReady');
 
     // $ionicPlatform.on('offline',function(){
@@ -333,7 +293,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
 
   $stateProvider.state('conv', {
     cache: false,
-    url: '/conv',
+    url: '/conv/:id',
     templateUrl: "templates/conv.html",
     controller: 'ConvCtrl'
   })
@@ -419,7 +379,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       'request': function (config) {
         config.headers = config.headers || {};
         if ($localStorage.get('token')) {
-          config.headers.Authorization = $localStorage.token;
+          config.headers.Authorization = $localStorage.get('token');
         }
         return config;
       },

@@ -15,7 +15,7 @@
             <h3 class="chat_box_time" ng-class="{'not_read_chat_desc_time': chatDisplay.seen == false}">
                 {{chatDisplay.lastTime}}
             </h3>
-            <p class="chat_box_preview" ng-class="{'not_read_short_message': chatDisplay.seen == false}">
+            <p class="chat_box_preview" ng-class="{'not_read_short_message': chatDisplay.seen == false}"> {{chatDisplay.lastMessage}}</p>
 <ion-option-button class="button-assertive" ng-click="deleteChat(chatDisplay.id)">Effacer</ion-option-button>
     </ion-item>
 </ion-list>

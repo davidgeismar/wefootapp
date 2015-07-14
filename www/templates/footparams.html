@@ -42,7 +42,7 @@
           <div class="col col-50">
             <p class="dispo">Inviter vos amis </p>
           </div>
-          <div class="col col-25">
+          <div class="col col-25" style="margin-left: 20px;">
             <i class="ion-chevron-right ion_invite_friends"></i>
           </div>
         </div>
@@ -55,7 +55,7 @@
           <div class="col col-50 venue">
             <p>Vos amis peuvent <br> inviter leurs amis</p>
           </div>
-            <ion-toggle ng-model="foot.friend_can_invite" id="invite_friend_toggle">
+            <ion-toggle ng-model="foot.friend_can_invite" id="invite_friends_toggle">
             </ion-toggle>
         </div>
       </div>
@@ -104,7 +104,7 @@
     <ion-content  class="padding_header">
     <label class="item-input">
       <i class="icon ion-search placeholder-icon"></i>
-      <input ng-model="searchFriends" type="text" placeholder="Rechercher un foot">
+      <input ng-model="searchFriends" type="text" placeholder="Rechercher des amis">
     </label>
     <div id="container_foot_friends" class="container_list_friends">
       <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">

@@ -25,12 +25,12 @@ angular.module('friend',[])
 		 	else $scope.isInvitationConfirmation = false;		 	
 	});
 
-	if(getStuffById($stateParams.id, $localStorage.getObject('friends'))){
-		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
+	$scope.friend = _.find($localStorage.getObject('friends'), function(friend){ return friend.id == $stateParams.id; });
+	if($scope.friend){
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;
 		$scope.initNotes();
-	}
+	} 
 	else{
 		$http.get('http://'+serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;

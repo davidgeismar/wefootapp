@@ -3,7 +3,7 @@ angular.module('friend',[])
 
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
-
+   
 		//Appelle setNote pour toutes les étoiles et récupère le nb de votes
 	$scope.initNotes = function(){
 		$http.get('http://'+serverAddress+'/getDetailledGrades/'+$scope.friend.id).success(function(data){
@@ -15,20 +15,21 @@ angular.module('friend',[])
 			$scope.setNote(Math.round(data.assiduite), 4);
 		});
 	}
+
 	$http.get('http://'+serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.user.id).success(function(foot){
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 		 		$scope.foot = foot[foot.length-1];
-		 	}
+		 	}   
 		 	else $scope.isInvitationConfirmation = false;		 	
 	});
 
-	if(getStuffById($stateParams.id, $localStorage.friends)){
-		$scope.friend = getStuffById($stateParams.id,$localStorage.friends);
+	$scope.friend = _.find($localStorage.getObject('friends'), function(friend){ return friend.id == $stateParams.id; });
+	if($scope.friend){
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;
 		$scope.initNotes();
-	}
+	} 
 	else{
 		$http.get('http://'+serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
