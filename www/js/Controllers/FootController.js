@@ -73,7 +73,7 @@ $scope.addToFoot = function(id){
     }
     if($location.path().indexOf('footparams')>0){
   $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
-  $scope.foot.date.setHours(20,30);
+  $scope.foot.date.setHours(20,30,00);
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
   $scope.foot.nb_player = 10;
@@ -129,7 +129,8 @@ $scope.searchQuery = function(word){
   }
 }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
-$scope.searchQuery('');
+if($location.path().indexOf('footfield')>-1)
+  $scope.searchQuery('');
 
 $scope.chooseField = function(field){
   $localStorage.fieldChosen = field;
@@ -154,7 +155,7 @@ $scope.launchReq = function(){
   });
 }
 
-if($location.path().indexOf('user/foots')>0){
+if($location.path().indexOf('user/foots')>-1){
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -283,6 +284,13 @@ $scope.refresh = function(){
     });
   }
 
+  $scope.book = function(){
+    $localStorage.reservationClient = {foot: $scope.foot.id, field: $scope.foot.field.id, date: $scope.foot.date};
+    $localStorage.found = 0;
+    $localStorage.foot = $scope.foot;
+    $location.path('/resa/recap');
+  }
+
   $scope.removePlayer = function(userId,Invit){
     $http.post('http://'+serverAddress+'/foot/removePlayer',{foot: $scope.foot.id, user: $localStorage.getObject('user').id}).success(function(){
       if(!$scope.isPlaying){
@@ -318,7 +326,7 @@ $scope.refresh = function(){
   }
 
   $scope.confirmDelete = function(userId){
-    $confirmation('annuler ce foot?',function(){deleteFoot(userId)});
+    $confirmation('Etes vous sur de vouloir annuler ce foot?',function(){deleteFoot(userId)});
   }
 
   $scope.playFoot = function(player){

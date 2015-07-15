@@ -215,6 +215,7 @@ a{
 .ion_invite_friends {
 	position: relative;
 	top: 15px;
+  margin-left: 40px;
 }
 .invite_one_friend{
 	display: inline-block;
@@ -426,7 +427,7 @@ a{
 
 }
 
-.login-mdpo p{ 
+.login-mdpo p{
 	display:inline;
 }
 
@@ -577,7 +578,7 @@ a{
 	0% {opacity: 0.8}
 	33% {opacity: 0.3}
 	66% {opacity: 0.5}
-	100% {opacity: 0.8}	
+	100% {opacity: 0.8}
 }
 @-webkit-keyframes pulsateTwo{
 	0% {opacity: 0.5}
@@ -598,11 +599,11 @@ a{
 .pulsate2{
 	animation: pulsateTwo 1s linear infinite;
 	-webkit-animation: pulsateTwo 1s linear infinite;
-}  
+}
 .pulsate3{
 	animation: pulsateThree 1s linear infinite;
 	-webkit-animation: pulsateThree 1s linear infinite;
-}           
+}
 .tab_bottom{
 	position: absolute;
 	bottom: 10px;
@@ -1513,7 +1514,7 @@ a{
   		width: 70px;
   		height: 70px;
   		border-radius: 50%;
-  		margin-top: 5px;
+  		margin-top: 15px;
   	}
   	.one-field{
   		padding:15px;
@@ -1697,6 +1698,7 @@ a{
   		margin-top: 14px;
   		color: #006ddf;
   		margin-bottom: 0;
+  		margin-left: 20px;
   	}
   	.row.player-foot{
   		border-top: 2px solid #c4c4c4;
@@ -1785,7 +1787,7 @@ a{
   	}
 
 
-  	.photourban-foot{ 
+  	.photourban-foot{
   		vertical-align:top;
   		width: 100px;
   		height: 100px;
@@ -2016,7 +2018,7 @@ a{
   		.nomurban-foot p{
   			font-size: 12px;
   		}
-  		.name-player-foot{
+  		.name-player-foot p{
   			margin-left: 25px;
   		}
   		.header-foot h4{
@@ -2133,7 +2135,7 @@ a{
   		width:100%;
   		padding-left:1%;
   		position:relative;
-  	}	
+  	}
 
   	.trophe_container img{
   		width:40%;
@@ -2166,7 +2168,7 @@ a{
  	.icon-assiduB{
  		background-image: url('../img/clock46B.svg');
  	}
- 	
+
  	.icon-shoesB {
  		background-image: url('../img/nav_mes_foots_noirB.svg');
  		-ms-transform: rotate(20deg); /* IE 9 */
@@ -2256,11 +2258,19 @@ a{
  		width: 30px;
  		display: inline-block;
  		margin-left : -25px;
+    /*added by dave*/
+
+    border-radius: 50%;
 
  	}
+.align_creer_foot {
+    margin-left: 8px;
+  margin-right: 8px;
+}
 
  	p.number_players_profil {
  		font-size: 9px;
+    margin-left: -10px
  	}
  	.indic-profil{
  		float: right;
@@ -2271,12 +2281,15 @@ a{
  	}
  	.img_friends_profil {
  		width: 30px;
+    border-radius: 50%;
  		display: inline;
  		white-space: nowrap
+
  	}
  	.level_foot_profil {
  		margin-top: 35px;
  		float: right;
+    margin-right: -5px;
  	}
 
  	.bonhomme_profil {
@@ -2387,7 +2400,7 @@ a{
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-name: blink;
-	-moz-animation-timing-function: ease-in-out;    
+	-moz-animation-timing-function: ease-in-out;
 }
 
 
@@ -2464,7 +2477,7 @@ a{
 	-moz-animation-duration: 1s;
 	-moz-animation-iteration-count: infinite;
 	-moz-animation-name: blink;
-	-moz-animation-timing-function: ease-in-out;    
+	-moz-animation-timing-function: ease-in-out;
 }
 .button-clear{
 	width: 45px;
@@ -2569,6 +2582,201 @@ a{
 
 
 
+
+.homepage_titleL2{
+	text-align: center;
+	font-size: 20px;
+	margin-top: 20px;
+	color:#273A59;
+}
+
+.homepage_titleL{
+	text-align: center;
+	font-size: 14px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	color:#273A59;
+}
+
+.footL-tab{
+	display: inline-block;
+	width: 24%;
+	text-align: center;
+	list-style: none;
+	padding: 10px;
+	margin-left: 4%;
+	margin-right: 4%;
+}
+
+.foot4L-tab{
+	display: inline-block;
+	width: 25%;
+	text-align: left;
+	list-style: none;
+	padding: 7px;
+	margin-left: 7%;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+	margin-right: -5%;
+
+}
+
+.icon_failed {
+	font-size: 100px;
+	margin-left: 35%;
+	margin-right: 37%;
+	color:#273A59;
+}
+
+.sad_failed {
+	font-size: 250px;
+	margin-left: 37%;
+	margin-right: 37%;
+	color:#273A59;
+	position: relative;
+	top:17px;
+	left: -60px;
+}
+
+.dispo_failed{
+	margin-top:  10%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.blue{
+	color: #28385B;
+}
+
+.buttonpetit {
+	padding:6px 0 6px 0;
+	font:bold 13px Arial;
+	background:#3b5998;
+	color:#fff;
+	border-radius:2px;
+	width:100px;
+	border:none;
+}
+
+.toggle-background{
+  background-color: inherit;
+  border: none;
+  height: 70px;
+}
+
+.toggle-content{
+	background-color: #F2F3F9;
+	width: 100px;
+	margin-left: 20px;
+	bottom: 3px;
+}
+
+
+.icon_check {
+	font-size: 100px;
+	margin-left: 40%;
+	margin-right: 35%;
+	color:#273A59;
+}
+
+.icon_smallcheck {
+	font-size: 10px;
+	margin-left: 60%;
+	margin-right: 60%;
+	color:#273A59;
+}
+
+.homepage_buttonD{
+	width: 90%;
+	height: 60px;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 7%;
+	color:#fff;
+	font-weight: bold;
+	border-radius: 5px;
+	font-size: 17px;
+	background-color:#273A59;
+}
+
+
+.homepage_onglet{
+	width: 50%;
+	height: 25px;
+	margin-left: 55%;
+	margin-right: 5%;
+	margin-top: -2%;
+	font-weight: bold;
+	border-radius: 5px;
+	color:#fff;
+	background-color:#006ddf;
+}
+
+
+.success_button{
+	width: 90%;
+	height: 60px;
+	padding-top: 8px;
+	margin-left: 5%;
+	margin-right: 5%;
+	color:#fff;
+	font-weight: bold;
+	font-size: 17px;
+	background-color: #006ddf;
+}
+.price-recapResa{
+	text-align: center;
+	font-family: 'Ubuntu';
+	color: #28385c;
+}
+
+.modalPhone h4{
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+.modalPhone .item-input{
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.modalPhone .input-label{
+	width: 40px;
+}
+
+.pay-infos{
+	font-size: 16px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+.pay-infos2{
+	position: absolute;
+	bottom: 0;
+}
+.pay-add-card{
+	margin-top: 50px;
+}
+.card-expire{
+	width: 150px;
+	display: inline-block;
+}
+.card-expire .input-label{
+	width: 40px;
+	font-size: 12px;
+}
+.input-wrapper-card{
+	width: 310px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.content-card{
+	margin-top: 50px;
+}
+.card-number{
+	 width: 90%;
+	 margin-left: 5%;
+}
 /* LOADER */
 
 
@@ -2691,6 +2899,7 @@ a{
 																														40% {
 																															-webkit-transform: scale(1);
 																															transform: scale(1); } }
+
 
 
 /*

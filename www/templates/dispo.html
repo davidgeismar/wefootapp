@@ -1,0 +1,53 @@
+<ion-view view-title="dispo">
+<ion-header-bar  class="actu_header">
+<h1 class="title">Disponibilités </h1>
+<a href='#/recapreservation'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="img/logo_WF.svg">
+</ion-header-bar>
+
+<ion-content class="padding">
+<div class="register_title">
+<body >
+
+<h1 class="title"><strong>Désolé, cet horaire n'est plus disponible.</strong></h1>
+    <HR align=center color='#28385B' size=8 width="90%">
+	<h1 class="title">Voulez-vous jouer aux horaires suivants ? </h1>
+        <ul>
+            <li class="foot4L-tab">
+                <span class="gris" > HEURE </span>
+            <li class="foot4L-tab">
+                <span class="gris" >PRIX </span>
+            </li>
+            </li>
+        </ul>
+    <ul>
+    <li type="text"  ng-repeat="result in results | orderBy:'date'">
+        <span class="foot4L-tab">
+            <span style="color: #28385B" >  
+        
+            {{(result.hour)}}
+
+            </span>
+        </span>
+        <span class="foot4L-tab">
+            <span style="color: #28385B" > {{result.prix}} € </span>
+        </span>
+        <span class="foot4L-tab">
+           <button ng-click="setNewHour(result)" class="buttonpetit"> Réserver </button>
+        </span>
+    </li>
+    </ul>
+
+</body>
+</div>
+
+
+<a href="#/autreshoraires"><button class="button homepage_connect homepage_buttonD icon-right ion-chevron-right">
+  		Choisir un autre horaire
+	</button></a>
+
+<a href="#/autrescentres"><button class="button homepage_buttonD icon-right ion-chevron-right">
+        Regarder les autres centres
+ </button></a>
+ </ion-content>
+ </ion-view>

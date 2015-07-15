@@ -1,6 +1,5 @@
 angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location, chat){
 	$scope.user = $localStorage.getObject('user');
-	$rootScope.friends = $localStorage.getObject('friends');
 	//Tableau contenant les chats
 	$rootScope.chats = $localStorage.getObject('chats');
 	$scope.chatsDisplay = $localStorage.getObject('chatsDisplay');
@@ -16,7 +15,9 @@ $scope.launchChat = function(chatId){
 
 $rootScope.$on('updateChatDisplayer', function(event){
   $scope.chatsDisplay = $localStorage.getObject('chatsDisplay');
+  if(!$scope.$$phase) {
   $scope.$digest();
+}
 });
 
 // $rootScope.openModal = function() {

@@ -1,0 +1,60 @@
+<ion-view view-title="autrescentres">
+<ion-header-bar  class="actu_header">
+<h1 class="title">Autres centres</h1>
+<a href='#/dispo'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<img class="logo_wf" src="img/logo_WF.svg">
+</ion-header-bar>
+<ion-content class="padding">
+<ul>
+<a href="#/changementresa"><button class="homepage_onglet" >Changer de jour
+    </button></a>
+</ul>
+
+    <li class="foot4L-tab">
+        <span class="blue" ><strong> HEURE : {{hour}}h </strong></span>
+    </li>
+
+<ul>
+    <li class="foot4L-tab">
+        <span class="gris" > CENTRE </span>
+    <li class="foot4L-tab">
+        <span class="gris" > PRIX </span>
+    </li>
+    </li>
+</ul>
+<HR align=center color='#28385B' size=1 width="30%">
+
+<div ng-app="">
+    <div ng-show=" valrep < 0 " >
+        <div class="dispo_failed">
+        <i class=" sad_failed ion-android-sad">
+        </i>
+        </div>
+        <div class="homepage_titleL2">
+        <strong>Désolé, cet horaire n'est plus disponible.</strong>
+     </div>
+    </div>
+</div>
+
+<ul>
+<li type="text"  ng-repeat="terrainfreefield in listeterrainFreeField">
+
+        <span class="foot4L-tab">
+            <span style="color: #28385B" >{{listeterrainFreeField[$index]}}</span> 
+        </span>
+        <span class="foot4L-tab">
+            <span style="color: #28385B" > {{param[$index].prix}} € </span>
+        </span>
+        <span class="foot4L-tab">
+            <a href="#/pay"> <button  ng-click = "setpandt($index)" class="buttonpetit"> réserver </button></a>
+        </span>
+</li>
+
+</ul>
+
+</body>
+</div>
+
+
+ </ion-content>
+ </ion-view>

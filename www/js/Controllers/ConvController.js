@@ -1,20 +1,28 @@
-angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, chat, chats){
+angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, chat, chats){
 
   $scope.chat = _.find($localStorage.getObject('chats'), function(chat){return chat.id==$stateParams.id});
   $scope.user = $localStorage.getObject('user');
   $scope.messageContent;
 
   chat.updateLts($scope.chat.id);
+  chat.setSeenStatus($scope.chat.id);
 
-    ionic.DomUtil.ready(function(){
-        $ionicScrollDelegate.scrollBottom();
-    });
+
+  ionic.DomUtil.ready(function(){
+    $ionicScrollDelegate.scrollBottom();
+  });
   
 
 //REFRESH THE CONVERSATION
 $rootScope.$on('newMessage', function(event){
+  if(_.last($location.url().split('/'))==$scope.chat.id){
+    chat.updateLts($scope.chat.id);
+    chat.setSeenStatus($scope.chat.id);
+  }
   $scope.chat = _.find($localStorage.getObject('chats'), function(chat){return chat.id==$stateParams.id});
+  if(!$scope.$$phase) {
   $scope.$digest();
+}
   $ionicScrollDelegate.scrollBottom();
 });
 
@@ -30,19 +38,10 @@ $rootScope.$on('newMessage', function(event){
   $scope.sendMessage = function(){
    if($scope.messageContent.length>0){
     chat.sendMessage($scope.messageContent, $scope.chat);
-    //  $http.post('http://'+serverAddress+'/message/create',{sender_id :$scope.user.id, messagestr:$scope.messageContent, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
-    //   io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
     $scope.messageContent=null;
-    //   $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
-    //   $localStorage.setObject('chats',$rootScope.chats);
     document.getElementById("footerChat").style.height=44+"px";
     document.getElementById("messageArea").style.height=44+"px";
-    // }).error(function(err){
-    //   console.log(err);
-    // });
-// console.log('here');
-
-}
+  }
 }
 
 $scope.showMessageButton = function(messageContent){
@@ -80,9 +79,9 @@ $scope.autoExpand = function() {
   var footer = document.getElementById("footerChat");
   var element = document.getElementById("messageArea");
   var convcontent = document.getElementById("convcontent");
-        var scrollHeight = element.scrollHeight;
-        element.style.height =  scrollHeight + "px";
-        footer.style.height = scrollHeight +  "px";
+  var scrollHeight = element.scrollHeight;
+  element.style.height =  scrollHeight + "px";
+  footer.style.height = scrollHeight +  "px";
         // console.log(convcontent.style);
         // console.log(parseInt(convcontent.style.paddingBottom.substring(0, convcontent.style.paddingBottom.length - 2)) + scrollHeight + "px");
         if(scrollHeight>0)

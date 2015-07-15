@@ -1,4 +1,5 @@
 //GLOBAL FUNCTIONS
+
 // var serverAddress = "localhost:1337";
 var serverAddress = "62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
@@ -57,7 +58,7 @@ var getHour = function(date){
 var shrinkMessage = function(message){
   message = message.replace(/[\n\r]/g, ' ');
   if(message.length>80){
-    message = message.substring(0,50)+"...";
+    message = message.substring(0,40)+"...";
   }
   return message;
 
@@ -171,6 +172,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     console.log(message);
     $localStorage.set('lastTimeUpdated', moment().format());
     chat.addMessage(message);
+    chat.setSeenStatus(message.chat);
   });
   //Nouvel user dans un chat existant
   io.socket.on('newChatter', function(chatter){
@@ -215,7 +217,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     }
   });
 
-  $rootScope.goBack = function (){
+  $rootScope.goBack = function (value){
+    if(value)
+      $ionicHistory.goBack(value);
     $ionicHistory.goBack();
   };
 })
@@ -372,6 +376,67 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     url: '/footfinder',
     templateUrl: 'templates/footfinder.html',
     controller: 'FootFinderController'
+  })
+
+  $stateProvider.state('reservation',{
+    abstract: true,
+    cache: false,
+    url: '/resa',
+    templateUrl: "templates/resa.html"
+  })
+
+  $stateProvider.state('reservation.recap',{
+    cache: false,
+    url: '/recap',
+    views: {
+    'resaContent' :{
+        templateUrl: "templates/recapreservation.html",
+        controller: 'ReservationController'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.field',{
+    cache: false,
+    url: '/field',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/autrescentres.html'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.edit',{
+    cache: false,
+    url: '/edit',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/editResa.html'
+      }
+    }
+  })
+
+  $stateProvider.state('reservation.dispo',{
+    cache: false,
+    url: '/dispo',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/dispo.html',
+        controller: 'ResaDispoController'
+      }
+    }
+  })
+
+
+  $stateProvider.state('reservation.pay',{
+    cache: false,
+    url: '/pay',
+    views: {
+    'resaContent' :{
+        templateUrl: 'templates/pay.html',
+        controller: 'PaiementController'
+      }
+    }
   })
 
   $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {

@@ -4,6 +4,12 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 
 	var obj = {};
 
+	obj.addChatToDisplayer = function(chat){
+		var chatsDisplay = $localStorage.getObject('chatsDisplay');
+		chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"Lancer la discussion avec vos coéquipiers !", titre:chat.desc, chatPic:"img/logo.jpg"});
+		$localStorage.setObject('chatsDisplay', chatsDisplay);
+		$rootScope.$emit('updateChatDisplayer');
+	}
 	obj.addChat = function (newChat) {
 		var chats = $localStorage.getObject('chats');
 		chats.push(newChat);
@@ -56,25 +62,19 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			}
 			//Chat vide
 			else{
-				chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"Lancer la discussion avec vos coéquipiers !", titre:chat.desc, chatPic:"img/logo.jpg"});
+				chatsDisplay.push({id:chat.id, lastTime:"", seen:chat.seen, lastMessage:"Lancer la discussion avec vos coéquipiers !", titre:chat.desc, chatPic:"img/logo.jpg"});
 			}
 		});	
 		$localStorage.setObject('chatsDisplay', chatsDisplay);
 		console.log($localStorage.getObject('chatsDisplay'));
 	}
-	obj.addChatToDisplayer = function(chat){
-		var chatsDisplay = $localStorage.getObject('chatsDisplay');
-		chatsDisplay.push({id:chat.id, lastTime:"", lastMessage:"Lancer la discussion avec vos coéquipiers !", titre:chat.desc, chatPic:"img/logo.jpg"});
-		$localStorage.setObject('chatsDisplay', chatsDisplay);
-		$rootScope.$emit('updateChatDisplayer');
-	}
 	obj.initNotif = function(){
 		var chats = $localStorage.getObject('chats');
 		angular.forEach(chats, function(chat, index) {
 			if(chat.messages.length>0){
-				var lastTimeMessage = new Date(chat.messages[chat.messages.length-1].createdAt);
-				var lastTimeSeen = new Date (chat.lastTime);
-				if(lastTimeMessage>lastTimeSeen){
+				var lastTimeMessage = moment(chat.messages[chat.messages.length-1].createdAt);
+				var lastTimeSeen = moment(chat.lastTime);
+				if(lastTimeMessage.diff(lastTimeSeen)>0){
 					chats[index].seen = false;
 				}
 				else
@@ -83,13 +83,12 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			else
 				chats[index].seen = true;
 		});
+		console.log(chats);
 		$localStorage.setObject('chats', chats);	
 	}
 	obj.getNbNotif = function(){
-		return _.filter($localStorage.getObject('chats'), function(chat){return chat.seen = false}).length;
+		return _.filter($localStorage.getObject('chats'), function(chat){return !chat.seen}).length;
 	}
-
-
 
 	return obj;
 

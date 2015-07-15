@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <a class="item item-icon-left" href="#">
+      <a class="item item-icon-left align_creer_foot" href="#">
         <div class="row">
           <div class="col col-25">
             <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
@@ -34,7 +34,7 @@
           </div>
         </div>
       </a>
-      <div ng-click="openModal1()" class="item item-icon-left">
+      <div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
         <div class="row">
           <div class="col col-25 invit_params">
             <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg"/>
@@ -47,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="item item-icon-left" href="#">
+      <div class="item item-icon-left align_creer_foot  " href="#">
         <div class="row">
           <div class="col col-25">
             <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
@@ -78,7 +78,7 @@
         <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
       </div>
       <div class="public_foot" ng-if="!foot.priv">
-        <p class="type-foot">Votre Foot est publique. </p>
+        <p class="type-foot">Votre Foot est public. </p>
         <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
       </div>
       <a class="item item-icon-left level_foot" href="#">
@@ -111,7 +111,7 @@
       <label class="checkbox checkbox_foot_friends">
        <input ng-click="addToFoot(friend.id)" type="checkbox">
       </label>
-        
+
         <div class="img_chat img_friends">
           <img ng-src="{{friend.picture}}">
         </div>
