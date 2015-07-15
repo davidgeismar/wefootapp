@@ -182,8 +182,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
 
   $rootScope.getNbChatsNotif = function (){
-    console.log(chats.getNbNotif());
-    return chats.getNbNotif();
+      return chats.getNbNotif();
   };
 
 

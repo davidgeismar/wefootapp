@@ -252,22 +252,6 @@ $scope.displayNotes = function(){
 }
 
 
-
-$scope.computeChatNotif = function(){
-  console.log($localStorage.chats);
-  angular.forEach($localStorage.chats,function(chat){
-    if(chat.messages.length>0){
-      if(chat.lastTime>chat.messages[chat.messages.length-1].createdAt || !chat.lastTime){
-        $rootScope.nbChatsUnseen++;
-        console.log($rootScope.nbChatsUnseen);
-      }
-    }
-  });
-}
-
-$scope.computeChatNotif();
-
-
 $scope.sendFbMessage = function() {
   facebookConnectPlugin.showDialog({
     method: 'send',
@@ -296,11 +280,11 @@ $scope.sendSmsMessage = function(){
             });
           }
 
-          $scope.facebookFriends = $localStorage.facebookFriends;
-          console.log($scope.facebookFriends);
-          //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
-          $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
-          console.log($scope.facebookFriendsId);
+          // $scope.facebookFriends = $localStorage.facebookFriends;
+          // console.log($scope.facebookFriends);
+          // //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
+          // $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
+          // console.log($scope.facebookFriendsId);
 
 
         })
