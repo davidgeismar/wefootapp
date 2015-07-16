@@ -12,6 +12,12 @@ app.factory('$localStorage', ['$window', function($window) {
     },
     getObject: function(key) {
       return JSON.parse($window.localStorage[key] || '{}');
+    },
+    clearAll:function(){
+      $window.localStorage.clear();
+    },
+    getArray: function(key) {
+      return JSON.parse($window.localStorage[key] || '[]');
     }
   }
 }])

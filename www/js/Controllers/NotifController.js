@@ -20,6 +20,7 @@ angular.module('notif',[])
 				});
 				},function(){ 
 					$ionicLoading.hide(); $rootScope.notifs = data;
+					$localStorage.setObject('notifs',$rootScope.notifs);
 			});
 		});
 	}
@@ -33,6 +34,7 @@ angular.module('notif',[])
 				});
 				},function(){ 
 					$ionicLoading.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
+					$localStorage.setObject('notifs',$rootScope.notifs);
 			});
 		});
 	}

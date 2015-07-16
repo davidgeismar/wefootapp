@@ -82,13 +82,11 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  $localStorage.setObject('friends','{}');  
-  $localStorage.setObject('user','{}');
   io.socket.post('http://'+serverAddress+'/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.getObject('user').pushToken)
     $http.post('http://'+serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
-  $localStorage.setObject('user','{}');
+  $localStorage.clearAll();
   $location.path('/');
 };
   //MODAL HANDLER
@@ -173,33 +171,6 @@ $scope.isFriend = function(userId){
   }
   
 }
-
-// $scope.createChat = function(user){
-
-// <<<<<<< HEAD
-//   $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
-// =======
-//   $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
-// >>>>>>> f12dcfe8720683b94e35d9660a6617e3b9ad5545
-//     $rootScope.closeModal();
-//     chat.messages = new Array();
-//     $localStorage.chat=chat;
-//     $location.path('/conv');
-//   });
-// }
-
-// $scope.launchChat = function(user){
-//   console.log($localStorage.chats);
-//   angular.forEach($localStorage.chats, function(chat) {
-//     if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
-//       console.log('here');
-//       $localStorage.chat=chat;
-//       $location.path('/conv');
-//       return 0;
-//     }
-//   });
-//   $scope.createChat(user);
-// }
 
 $scope.friend = $localStorage.friend;
 $scope.notes = new Array(5);
