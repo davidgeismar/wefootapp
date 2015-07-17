@@ -1,7 +1,7 @@
 //GLOBAL FUNCTIONS
 
 // var serverAddress = "62.210.115.66:9000";
-var serverAddress = "62.210.115.66:9000";
+var serverAddress = "localhost:1337";
 console.log("Connected to "+serverAddress);
 
 

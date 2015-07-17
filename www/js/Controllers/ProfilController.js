@@ -56,6 +56,4 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		});
 	}
 
-
-
 })

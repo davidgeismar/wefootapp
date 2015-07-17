@@ -25,3 +25,36 @@ app.factory('$searchLoader',[function(){
   }
   return loader;
 }])
+
+app.factory('$validated',[function(){
+  var validated = {};
+  validated.show = function(obj,callback){
+    var elem = $(document).find('.validated-container');
+    if(elem.length==0){
+    var html = 
+        "<div class='validated-container'>"+
+          "<div class='validated-content'>"+
+            "<div class='validated-text'>"+
+              obj.texte
+            "</div>"+
+            "<div class='validated-icon'>"+
+              "<i class="+obj.icon+"></i>"+
+            "</div>"+
+          "</div>"+
+        "</div>";
+
+      $('ion-view').append(html);
+      $('.validated-container').fadeIn();
+      setTimeout(function(){
+        $('.validated-container').fadeOut();
+        callback();},1000);
+    }
+    else{
+      elem.fadeIn();
+      setTimeout(function(){
+        $('.validated-container').fadeOut()
+        callback();},1000);
+    }
+  }
+  return validated;
+}])

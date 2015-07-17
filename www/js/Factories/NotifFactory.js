@@ -39,14 +39,11 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
       if(user.id == $localStorage.getObject('user').id)
        notif.userName = "Vous";
      else{
-      console.log('intheelse');
-      console.log(notif);
       if(notif.typ!="endGame")
         notif.userName = user.first_name;
       else
         notif.userName = "Le foot de "+user.first_name+" est terminé, ";
     }
-    console.log(notif.userName);
     notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)

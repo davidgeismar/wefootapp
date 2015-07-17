@@ -138,7 +138,6 @@ $foot.loadInfo($stateParams.id,function(result){
 });
 
 $scope.refresh = function(){
-    $scope.ready = false; //Hide everything
     $scope.players = [];
     $foot.loadInfo($stateParams.id,function(result){
       $scope.foot = result.foot;
@@ -147,7 +146,6 @@ $scope.refresh = function(){
       $scope.isPending = result.isPending;
       $scope.isPlaying = result.isPlaying;
       $scope.date = result.date;
-      $scope.ready = true;
       $scope.$broadcast('scroll.refreshComplete');
     });
 }
@@ -266,7 +264,6 @@ $scope.closeModal3 = function(launch){
     }
     else{
       angular.copy($scope.oldFoot,$scope.foot);
-      console.log($scope.foot);
       date = new Date($scope.foot.date);
       $scope.date = getJour(date)+' '+getHour(date);
     }

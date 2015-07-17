@@ -2899,7 +2899,31 @@ a{
 																														40% {
 																															-webkit-transform: scale(1);
 																															transform: scale(1); } }
-
+.validated-container{
+	display: none;
+	position: absolute;
+	width: 60%;
+	left: 20%;
+	height: 40%;
+	bottom: 30%;
+	background-color: rgba(0, 0, 0, 0.7);
+	border-radius: 5%;
+}
+.validated-content{
+	color: #fff;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	width: 80%;
+	margin-left: 10%;
+	line-height: 30px;
+	margin-top: 20%;
+	font-family: 'Ubuntu';
+}
+.validated-icon{
+	font-size: 50px;
+	margin-top: 20%;
+}
 
 
 /*

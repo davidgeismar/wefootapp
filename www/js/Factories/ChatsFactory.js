@@ -66,7 +66,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			}
 		});	
 		$localStorage.setObject('chatsDisplay', chatsDisplay);
-		console.log($localStorage.getObject('chatsDisplay'));
 	}
 	obj.initNotif = function(){
 		var chats = $localStorage.getObject('chats');
@@ -83,7 +82,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			else
 				chats[index].seen = true;
 		});
-		console.log(chats);
 		$localStorage.setObject('chats', chats);	
 	}
 	obj.getNbNotif = function(){

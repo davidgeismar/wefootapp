@@ -64,7 +64,6 @@ if(setUUID){
   allFunction.push(function(callback){
     $http.get('http://'+serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
       var friends = data[0];
-      console.log(friends);
       if(data[0].length==0) {
         $localStorage.setObject('friends',[]);
         callback();
@@ -100,7 +99,6 @@ allFunction.push(function(callback){
 allFunction.push(function(callback){
   $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
     $rootScope.nbNotif = nb.length;
-    console.log(nb.length);
     callback();
   }).error(function(){
     errors.push("Error notif");
@@ -133,7 +131,6 @@ return connect;
   paiement.getAllCards = function(user,callback){
     $searchLoader.show();
     $http.post('http://'+serverAddress+'/pay/getCards',{user: user}).success(function(result){
-      console.log(result);
       $searchLoader.hide();
       callback(result[0],result[1]);
     });
@@ -149,7 +146,6 @@ return connect;
     $http.post('http://'+serverAddress+'/pay/registerCard',{user: user, info: card}).success(function(newCard){
       newCard.Alias = card.number;
       newCard.Id = newCard.CardId;
-      console.log(newCard);
       callback(newCard);
       $ionicLoading.hide();
     }).error(function(){
@@ -158,14 +154,14 @@ return connect;
     });
   }
 
-  paiement.proceed = function(mangoId,cardId,price,foot,callback){
+  paiement.proceed = function(mangoId,cardId,resa,foot,callback){
     $confirmation('Nous allons procéder à une préauthorisation de paiement de '+price+'€.',function(){
       $ionicLoading.show({
         content: 'Loading Data',
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: price, footId: foot}).success(function(){
+      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.price, footId: foot}).success(function(){
         callback();
         $ionicLoading.hide();
       }).error(function(){
