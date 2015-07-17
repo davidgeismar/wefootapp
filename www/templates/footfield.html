@@ -28,7 +28,7 @@
       </div>
       <div class="col col-60">
        <p class="name-field">{{field.name}} </p>
-       <p class="desc-field">à {{field.distance}} km</p>
+       <p class="desc-field" ng-if="getCoord">à {{field.distance}} km</p>
        <p class="desc-field">{{field.address}}</p>
        <p class="desc-field">{{field.zip_code}} {{field.city}}</p>
      </div>

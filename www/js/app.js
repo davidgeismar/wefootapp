@@ -85,7 +85,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush, chat, chats) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats) {
   $rootScope.toShow = false;
   $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -126,11 +126,13 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('connect', function(){
-    if($localStorage.getObject('user') && $localStorage.getObject('user').id){
+    if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
       io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
-          chats.getNewMessages();
+          chats.getNewMessages().then(function(){
+            console.log('last chats loaded');
+          });
         });
       });
     }
@@ -204,6 +206,23 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   }
 });
 
+$rootScope.getCoord = false;
+
+var getCoord = function(){
+$ionicPlatform.ready(function () {
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+    var user = $localStorage.getObject('user');
+    user.lat  = position.coords.latitude;
+    user.lng = position.coords.longitude;
+    $localStorage.setObject('user', user);
+    $rootScope.getCoord = true;
+  });
+});
+}
+
+getCoord();
+
   $ionicPlatform.on('resume',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
@@ -212,11 +231,13 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         $rootScope.$digest();
       });
       $http.post('http://'+serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
-
+      $rootScope.getCoord = false;
+      getCoord();
     }
   });
 
   $rootScope.goBack = function (value){
+    $rootScope.nbGoBack = -1;
     if(value)
       $ionicHistory.goBack(value);
     $ionicHistory.goBack();

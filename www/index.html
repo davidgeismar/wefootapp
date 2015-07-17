@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-<!--     <meta http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;"> -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;"> -->
     <title></title>
     <!-- Latest compiled and minified CSS -->
 
@@ -44,6 +44,11 @@
 <script type="text/javascript" src="lib/pouchdb.js"></script>
 <!-- your app's js -->
 <script src="js/app.js"></script>
+
+<!-- Facebook Connect -->
+<div id="fb-root"></div>
+<script src="lib/facebookConnectPlugin.js"></script>
+
 <!-- Controllers -->
 <script src="js/Controllers/ConnectionsController.js"></script>
 <script src="js/Controllers/FieldController.js"></script>
@@ -65,11 +70,9 @@
 <script src="js/Factories/LocalStorageFactory.js"></script>
 <!-- <script src="js/Factories/ConnectionFactory.js"></script> -->
 <script src="js/Factories/ChatFactory.js"></script>
-<script src="js/Factories/ChatsFactory.js"></script>
 <script src="js/Factories/ControllerFactories.js"></script>
-<!-- Facebook Connect -->
-<div id="fb-root"></div>
-<script src="lib/facebookConnectPlugin.js"></script>
+<script src="js/Factories/FBConnectFactory.js"></script>
+
 
 <!-- socket.io shit -->
 <script src="lib/socketIoClient/socket.io.js"></script>
@@ -78,6 +81,10 @@
 <script type="text/javascript">
     io.sails.useCORSRouteToGetCookie = false;
     io.sails.url = 'http://'+serverAddress+'/';
+    console.log("fuck");
 </script>
+
+<!-- <script src="http://jsconsole.com/remote.js?2B43F4D9-33B4-4084-8E3E-F2B53EAC775A"></script> -->
+
 
 </html>

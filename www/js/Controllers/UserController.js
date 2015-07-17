@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -82,13 +82,11 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  $localStorage.setObject('friends','{}');  
-  $localStorage.setObject('user','{}');
   io.socket.post('http://'+serverAddress+'/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.getObject('user').pushToken)
     $http.post('http://'+serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
-  $localStorage.setObject('user','{}');
+  $localStorage.clearAll();
   $location.path('/');
 };
   //MODAL HANDLER
@@ -116,7 +114,12 @@ $scope.logout = function (){
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-    $searchLoader.hide();
+    fbConnect.getFacebookFriends().then(function(data){
+      $scope.facebookFriends = data.data;
+      console.log(data);
+      $searchLoader.hide();
+    });
+
   }
 
 
@@ -173,33 +176,6 @@ $scope.isFriend = function(userId){
   }
   
 }
-
-// $scope.createChat = function(user){
-
-// <<<<<<< HEAD
-//   $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
-// =======
-//   $http.post('http://62.210.115.66:9000/chat/create',{users :[$localStorage.getObject('user').id, user.id], typ:1}).success(function(chat){
-// >>>>>>> f12dcfe8720683b94e35d9660a6617e3b9ad5545
-//     $rootScope.closeModal();
-//     chat.messages = new Array();
-//     $localStorage.chat=chat;
-//     $location.path('/conv');
-//   });
-// }
-
-// $scope.launchChat = function(user){
-//   console.log($localStorage.chats);
-//   angular.forEach($localStorage.chats, function(chat) {
-//     if(chat.typ==1 && chat.users.indexOf(user.id)>-1){
-//       console.log('here');
-//       $localStorage.chat=chat;
-//       $location.path('/conv');
-//       return 0;
-//     }
-//   });
-//   $scope.createChat(user);
-// }
 
 $scope.friend = $localStorage.friend;
 $scope.notes = new Array(5);
@@ -278,14 +254,7 @@ $scope.sendSmsMessage = function(){
             }, function(error) {
               console.log('error');
             });
-          }
-
-          // $scope.facebookFriends = $localStorage.facebookFriends;
-          // console.log($scope.facebookFriends);
-          // //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
-          // $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
-          // console.log($scope.facebookFriendsId);
-
+          };
 
         })
 

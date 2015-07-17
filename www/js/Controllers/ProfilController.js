@@ -1,10 +1,10 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading){
-  $scope.user = $localStorage.getObject('user');
+	$scope.user = $localStorage.getObject('user');
   	//SLIDER BALL
-	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
-	var full_screen = window.innerWidth-sizeElem;
-	if(!$localStorage.initialPos){
-		$localStorage.initialPos = $('.logo-profil-container').css('left');
+  	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
+  	var full_screen = window.innerWidth-sizeElem;
+  	if(!$localStorage.initialPos){
+  		$localStorage.initialPos = $('.logo-profil-container').css('left');
 		$localStorage.initialPos = parseInt($localStorage.initialPos.substring(0,3)); //Get the position in integer without px;
 	}
 	var initialPos = $localStorage.initialPos;
@@ -28,9 +28,9 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		$('.logo-profil-container').css({'left': initialPos});
 	}
 	$ionicLoading.show({
-	    content: 'Loading Data',
-	    animation: 'fade-out',
-	    showBackdrop: false
+		content: 'Loading Data',
+		animation: 'fade-out',
+		showBackdrop: false
 	});
 
 	$scope.go = function(url){
@@ -48,17 +48,17 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 
 //ACTUS SECTION
 
-	getLastId = function(){
-		if(!$scope.actusByDay || $scope.actusByDay.length==0 || $localStorage.newFriend){
-			$localStorage.newFriend = false;
-			return 0;
-		}
-		else{
-			return $scope.actusByDay[0][0].id;
-		}
+getLastId = function(){
+	if(!$scope.actusByDay || $scope.actusByDay.length==0 || $localStorage.newFriend){
+		$localStorage.newFriend = false;
+		return 0;
 	}
+	else{
+		return $scope.actusByDay[0][0].id;
+	}
+}
 
-	var getAllActu = function(callback3){
+var getAllActu = function(callback3){
 	var friends_id = _.pluck($localStorage.getObject('friends'),'id');
 	$http.post('http://'+serverAddress+'/actu/getActu/',{user:$scope.user.id, friends: friends_id, skip:getLastId()}).success(function(data){
 		var actusByDay = _.values(data);
@@ -69,7 +69,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 					callback();
 				});
 			},function(){
-					callback2();
+				callback2();
 			});
 		},function(){
 			if($scope.actusByDay){ //On update
@@ -102,17 +102,15 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			$ionicLoading.hide();
 			if(callback3) callback3();
 		});
+});
+}
+
+getAllActu();
+
+$scope.refresh = function(){
+	getAllActu(function(){
+		$scope.$broadcast('scroll.refreshComplete');
 	});
-	}
-
-	getAllActu();
-
-	$scope.refresh = function(){
-		getAllActu(function(){
-			$scope.$broadcast('scroll.refreshComplete');
-		});
-	}
-
-
+}
 
 })

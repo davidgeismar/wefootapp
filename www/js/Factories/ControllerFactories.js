@@ -164,7 +164,7 @@ return connect;
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId, cardId, price: price, footId: foot}).success(function(){
+      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: price, footId: foot}).success(function(){
         callback();
         $ionicLoading.hide();
       }).error(function(){
