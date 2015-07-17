@@ -78,8 +78,6 @@ $scope.facebookConnect = function() {
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();
-    console.log(err);
-    console.log($scope.user);
     $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
   });
  }

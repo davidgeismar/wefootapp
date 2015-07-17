@@ -30,6 +30,9 @@ app.factory('$localStorage', ['$window', function($window) {
       var object = JSON.parse($window.localStorage[key] || '{}');
       object.splice(key,1);
       $window.localStorage[key] = object;
+    },
+    getArray: function(key) {
+      return JSON.parse($window.localStorage[key] || '[]');
     }
   }
 }])

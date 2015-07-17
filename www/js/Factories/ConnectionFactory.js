@@ -118,8 +118,10 @@ if(setUUID){
     async.each(allFunction, function(oneFunc,callback){
       oneFunc(function(){callback();})
     },function(){
-      if(errors.length==0)
+      if(errors.length==0){
+        $ionicLoading.hide();
         generalCallback();
+      }
       else{
         $ionicLoading.hide();
         console.log(errors);

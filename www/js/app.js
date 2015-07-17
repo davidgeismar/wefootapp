@@ -1,6 +1,6 @@
 //GLOBAL FUNCTIONS
 
-// var serverAddress = "localhost:1337";
+// var serverAddress = "62.210.115.66:9000";
 var serverAddress = "62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
 
@@ -87,7 +87,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
 .run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats) {
   $rootScope.toShow = false;
-  $rootScope.notifs = []; //Prevent for bug if notif received before the notif page is opened
+  $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
@@ -136,6 +136,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         });
       });
     }
+
   });
 
   // Notification event handler
