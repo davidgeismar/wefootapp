@@ -299,10 +299,17 @@ $scope.closeModal3 = function(launch){
       });
     }
 
-    $scope.launchChat = function (footId){
-          $location.path('/conv/'+_.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
+      $scope.launchChat = function (footId){
+      var chat = _.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
+      if(chat){
+          $location.path('/conv/'+chat.id);
         }
-  })
+        else
+          chats.getChat(footId).then(function(){
+            $location.path('/conv/'+_.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
+          });
+      }  
+   })
 
 
 

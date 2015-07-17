@@ -16,6 +16,21 @@ app.factory('$localStorage', ['$window', function($window) {
     clearAll:function(){
       $window.localStorage.clear();
     },
+    setAttribute: function(key, property, attribute){
+      var object = JSON.parse($window.localStorage[key] || '{}');
+      object[property] = attribute;
+      $window.localStorage[key] = object;
+    },
+    addElement: function(key, element){
+      var object = JSON.parse($window.localStorage[key] || '{}');
+      object.push(element);
+      $window.localStorage[key] = object;
+    },
+    removeElement: function(key, element){
+      var object = JSON.parse($window.localStorage[key] || '{}');
+      object.splice(key,1);
+      $window.localStorage[key] = object;
+    },
     getArray: function(key) {
       return JSON.parse($window.localStorage[key] || '[]');
     }

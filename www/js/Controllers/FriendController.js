@@ -34,7 +34,7 @@ angular.module('friend',[])
 	else{
 		$http.get('http://'+serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
-			// $scope.initNotes();
+			$scope.initNotes();
 		});
 	}
 
@@ -73,8 +73,19 @@ angular.module('friend',[])
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandRefused'});
 			});
 		}
-		
-
 	}
+
+	$scope.getNbTrophes = function(){
+		$http.get('http://'+serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
+			if(data.nbHommes){
+				$scope.friend.nbHommes = data.nbHommes;
+			}
+			if(data.nbChevres){
+				$scope.friend.nbChevres = data.nbChevres;
+			}
+		});
+	}
+
+
 
 })

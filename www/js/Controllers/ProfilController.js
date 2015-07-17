@@ -1,10 +1,11 @@
 angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParams, $location, $http, $localStorage,$rootScope,$handleNotif,$ionicLoading,$profil){
   $scope.user = $localStorage.getObject('user');
+
   	//SLIDER BALL
-	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
-	var full_screen = window.innerWidth-sizeElem;
-	if(!$localStorage.initialPos){
-		$localStorage.initialPos = $('.logo-profil-container').css('left');
+  	var sizeElem = parseInt($('.logo-profil-container').css('width').substring(0,2));
+  	var full_screen = window.innerWidth-sizeElem;
+  	if(!$localStorage.initialPos){
+  		$localStorage.initialPos = $('.logo-profil-container').css('left');
 		$localStorage.initialPos = parseInt($localStorage.initialPos.substring(0,3)); //Get the position in integer without px;
 	}
 	var initialPos = $localStorage.initialPos;
@@ -43,6 +44,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	$scope.actusByDay = $localStorage.getObject('actus');	
 	$scope.dates = $localStorage.getObject('dates');
 
+
 	$profil.getAllActu(function(){
 		$scope.actusByDay = $localStorage.getObject('actus');
 		$scope.dates = $localStorage.getObject('dates');
@@ -55,5 +57,4 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	}
-
 })

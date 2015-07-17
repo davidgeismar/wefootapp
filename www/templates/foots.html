@@ -2,10 +2,10 @@
   <ion-content class="has-header">
   <section class="tab">
    <ul class="tab-container">
-      <li ng-class="{active: tab==1}" class="foot-tab">
+      <li ng-class="{activeliseret: tab==1}" class="foot-tab">
         <span ng-class="{active: tab==1}" ng-click="tab = 1" class="gris">FOOTS <strong><br>A VENIR</strong></span>
       </li>
-      <li ng-class="{active:tab==2}" class="foot-tab">
+      <li ng-class="{activeliseret:tab==2}" class="foot-tab">
         <span ng-class="{active: tab==2}" ng-click="tab = 2" class="gris" >INVITATION <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
     <ion-scroll direction="y" class= "carte_foots background_foots last">

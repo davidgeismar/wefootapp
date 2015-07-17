@@ -233,9 +233,9 @@ return connect;
             }
           }
         });
-       dates = _.union(_.allKeys(data),dates);
-       $localStorage.setObject('actus', oldActu);
-       $localStorage.setObject('dates',dates);
+        dates = _.union(_.allKeys(data),dates);
+        $localStorage.setObject('actus', oldActu);
+        $localStorage.setObject('dates',dates);
       }
       else{
         $localStorage.setObject('actus',actusByDay);
@@ -252,22 +252,22 @@ return profil;
 
 
 .factory('$foot',['$http','$ionicLoading','$handleNotif','$localStorage','$cordovaDatePicker','$searchLoader','$cordovaGeolocation',function($http,$ionicLoading,$handleNotif,$localStorage,$cordovaDatePicker, $searchLoader, $cordovaGeolocation){
-  
+
   var foot = {};
 
   var ionicLoading =  function(){
-      $ionicLoading.show({
-        content: 'Loading Data',
-        animation: 'fade-out',
-        showBackdrop: false
-      });
+    $ionicLoading.show({
+      content: 'Loading Data',
+      animation: 'fade-out',
+      showBackdrop: false
+    });
   }
 
   foot.getOptionsDatepicker = function(){
     return [{
-    date: new Date(),
-    mode: 'date',
-    minDate:  new Date(),
+      date: new Date(),
+      mode: 'date',
+      minDate:  new Date(),
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
@@ -318,25 +318,20 @@ return profil;
   }
 
   foot.searchFields = function(word,callback){
+    var user = $localStorage.getObject('user');
     if(word.length>0){
       $searchLoader.show();
-      $http.get('http://'+serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
-        callback(data);
+      $http.get('http://'+serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
         $searchLoader.hide();
+        callback(data);
       });
     }
     else if(word.length==0) {
       $searchLoader.show();
-      var posOptions = {timeout: 10000, enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        var lat  = position.coords.latitude
-        var long = position.coords.longitude
-        $http.get('http://'+serverAddress+'/field/near/'+$localStorage.getObject('user').id+'/'+lat+'/'+long).success(function(data){
-          $searchLoader.hide();
-          callback(data);
-        });
-      }, function(err) {
-      }); 
+      $http.get('http://'+serverAddress+'/field/getFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng).success(function(data){
+        $searchLoader.hide();
+        callback(data);
+      });
     }
   }
 
@@ -353,7 +348,7 @@ return profil;
           callback();
         },true);
       },function(){});
-        callback2(foot);
+      callback2(foot);
     });
   }
 
@@ -421,28 +416,28 @@ return profil;
           finish = true; // Show everything
         });
     });
-  }
+}
 
-  foot.removePlayer = function(userId,footId,isPlaying,callback){
-    $http.post('http://'+serverAddress+'/foot/removePlayer',{foot: footId, user: userId}).success(function(){
-      if(!isPlaying){
-        var plucked = _.pluck($localStorage.footInvitation,'id');
-        index = plucked.indexOf(footId);
-        if(index>-1) $localStorage.footInvitation.splice(index,1);
-      }
-      else{
-        var plucked = _.pluck($localStorage.footTodo,'id');
-        index = plucked.indexOf(footId);
-        if(index>-1) $localStorage.footTodo.splice(index,1);
-      }
-      callback();
-    });
-  }
+foot.removePlayer = function(userId,footId,isPlaying,callback){
+  $http.post('http://'+serverAddress+'/foot/removePlayer',{foot: footId, user: userId}).success(function(){
+    if(!isPlaying){
+      var plucked = _.pluck($localStorage.footInvitation,'id');
+      index = plucked.indexOf(footId);
+      if(index>-1) $localStorage.footInvitation.splice(index,1);
+    }
+    else{
+      var plucked = _.pluck($localStorage.footTodo,'id');
+      index = plucked.indexOf(footId);
+      if(index>-1) $localStorage.footTodo.splice(index,1);
+    }
+    callback();
+  });
+}
 
-  foot.deleteFoot = function(footId, players,callback2){
-    var userId = $localStorage.getObject('user').id;
-    $http.post('http://'+serverAddress+'/foot/deleteFoot',{foot: footId}).success(function(){
-      var pos = _.pluck(players,'id').indexOf(userId);
+foot.deleteFoot = function(footId, players,callback2){
+  var userId = $localStorage.getObject('user').id;
+  $http.post('http://'+serverAddress+'/foot/deleteFoot',{foot: footId}).success(function(){
+    var pos = _.pluck(players,'id').indexOf(userId);
       var toNotify = players; //Notify all players except the organisator
       toNotify.splice(pos,1);
       if(toNotify.length == 0) callback2();
@@ -455,30 +450,30 @@ return profil;
         callback2();
       });
     });
-  }
+}
 
-  foot.playFoot = function(player,foot,players){
-      var user = $localStorage.getObject('user');
-      $http.post('http://'+serverAddress+'/player/update',{foot:foot.id,user:player}).success(function(){
-      players.push($localStorage.getObject('user'));
-      var plucked = _.pluck($localStorage.footInvitation,'id');
-      index = plucked.indexOf(foot.id);
-      if(index>-1) $localStorage.footInvitation.splice(index,1);
-      foot.dateString = date;
-      var indexOrga = _.pluck(players,'id');
-      indexOrga = indexOrga.indexOf(foot.created_by);
-      foot.orgaPic = players[indexOrga].picture;
-      $localStorage.footTodo.push(foot);
-      var notif = {user:foot.organisator, related_user: user.id, typ:'footConfirm', related_stuff:foot.id};
-      $handleNotif.notify(notif,function(){},true);
-    });
-  }
+foot.playFoot = function(player,foot,players){
+  var user = $localStorage.getObject('user');
+  $http.post('http://'+serverAddress+'/player/update',{foot:foot.id,user:player}).success(function(){
+    players.push($localStorage.getObject('user'));
+    var plucked = _.pluck($localStorage.footInvitation,'id');
+    index = plucked.indexOf(foot.id);
+    if(index>-1) $localStorage.footInvitation.splice(index,1);
+    foot.dateString = date;
+    var indexOrga = _.pluck(players,'id');
+    indexOrga = indexOrga.indexOf(foot.created_by);
+    foot.orgaPic = players[indexOrga].picture;
+    $localStorage.footTodo.push(foot);
+    var notif = {user:foot.organisator, related_user: user.id, typ:'footConfirm', related_stuff:foot.id};
+    $handleNotif.notify(notif,function(){},true);
+  });
+}
 
-  foot.searchFoot = function(params,callback2){
-    $http.post('http://'+serverAddress+'/foot/query',params).success(function(data){
-      results =[];
-      async.each(data,function(foot,callback){
-        var finish = false;
+foot.searchFoot = function(params,callback2){
+  $http.post('http://'+serverAddress+'/foot/query',params).success(function(data){
+    results =[];
+    async.each(data,function(foot,callback){
+      var finish = false;
         $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
           foot.organisator = info.orga;
           foot.orgaName = info.orgaName;
@@ -489,8 +484,8 @@ return profil;
         });
       },function(){ callback2(results);
       });
-    });
-  }
-  return foot;
+  });
+}
+return foot;
 }])
 

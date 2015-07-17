@@ -1,131 +1,144 @@
 <ion-header-bar  class="actu_header">
-  <h1 class="title">Créer un foot</h1>
-  <a href='#/footfield'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
+<h1 class="title">Paramètres</h1>
+<a href='#/footfield'><div class="button button-clear"><span class="white ion-chevron-left"></span></div></a>
 </ion-header-bar>
 <ion-view view-title="footparams">
-  <ion-content class="padding">
-    <div class="list text-center fond bottom-marged">
-      <div class="row text-center">
-        <div class="col">
-          <div ng-click="showDatePicker()" class="item nativedatepicker">
-            <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
-            <p class="time_date"> {{date}} </p>
-            <i class="ion-chevron-down arrow_cal"></i>
-          </div>
-        </div>
-        <div class="col">
-          <div ng-click="showHourPicker()" class="item">
-            <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
-            <p class="time_date">{{hour}}</p>
-            <i class="ion-chevron-down arrow_cal"></i>
-          </div>
-        </div>
-      </div>
-      <a class="item item-icon-left align_creer_foot" href="#">
-        <div class="row">
-          <div class="col col-25">
-            <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
-          </div>
-          <div class="col col-50 venue1">
-           <p>Nombre de joueurs</p>
-          </div>
-          <div class="col col-25 venue1">
-             <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/>
-          </div>
-        </div>
-      </a>
-      <div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
-        <div class="row">
-          <div class="col col-25 invit_params">
-            <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg"/>
-          </div>
-          <div class="col col-50">
-            <p class="dispo">Inviter vos amis </p>
-          </div>
-          <div class="col col-25" style="margin-left: 20px;">
-            <i class="ion-chevron-right ion_invite_friends"></i>
-          </div>
-        </div>
-      </div>
-      <div class="item item-icon-left align_creer_foot  " href="#">
-        <div class="row">
-          <div class="col col-25">
-            <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
-          </div>
-          <div class="col col-50 venue">
-            <p>Vos amis peuvent <br> inviter leurs amis</p>
-          </div>
-            <ion-toggle ng-model="foot.friend_can_invite" id="invite_friends_toggle">
-            </ion-toggle>
-        </div>
-      </div>
-      <div class="row text-center">
-        <div class="col col-50">
-          <a ng-click="foot.priv = true" ng-class="{active: foot.priv == true}" class="icon-private item item-icon-left item-icon-right" href="#">
-            <i class= "ion-locked"></i>
-            <p class=""> Foot Privé</p>
-          </a>
-        </div>
-        <div class="col col-50">
-          <a ng-click="foot.priv = false" ng-class="{active: foot.priv == false}" class="icon-private item item-icon-left item-icon-right" href="#">
-            <i class= "ion-ios-world-outline"></i>
-            <p class=""> Foot Public</p>
-          </a>
-        </div>
-      </div>
-      <div class="private_foot" ng-if="foot.priv">
-        <p class="type-foot">Votre Foot est privé. </p>
-        <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
-      </div>
-      <div class="public_foot" ng-if="!foot.priv">
-        <p class="type-foot">Votre Foot est public. </p>
-        <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
-      </div>
-      <a class="item item-icon-left level_foot" href="#">
-       <div class="text-center"> <p>Niveau du Foot</p></div>
-       <div class="row">
-          <div class="size_level col align" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
-          <div class="size_level col align" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img ng-src="img/niveau_2.svg"/><p>Moyen</p></div>
-          <div class="size_level col align" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img ng-src="img/niveau_3.svg"/><p>Expert</p></div>
-          <div class="size_level col align" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img ng-src="img/niveau_0.svg"/><p>Tous</p></div>
-       </div>
-      </a>
-
-    <button ng-click="launchReq()" class="button button-block button_launch_foot">
-      Valider
-    </button>
-  </div>
-  <script id="modal.html" type="text/ng-template">
-    <div class="modal">
-      <ion-header-bar  class="actu_header">
-      <h1 class="title">Inviter des amis</h1>
-      <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-checkmark-round"></span></div>
-    </ion-header-bar>
-    <ion-content  class="padding_header">
-    <label class="item-input">
-      <i class="icon ion-search placeholder-icon"></i>
-      <input ng-model="searchFriends" type="text" placeholder="Rechercher des amis">
-    </label>
-    <div id="container_foot_friends" class="container_list_friends">
-      <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">
-      <label class="checkbox checkbox_foot_friends">
-       <input ng-click="addToFoot(friend.id)" type="checkbox">
-      </label>
-
-        <div class="img_chat img_friends">
-          <img ng-src="{{friend.picture}}">
-        </div>
-        <div class="name_friends name_foot_friends">
-          <p> {{friend.first_name}} {{friend.last_name}}  </p>
-        </div>
-        <div ng-class="{grey: friend.statut==0}" class="star_friends">
-          <i class="ion-android-star"></i>
-        </div>
+<ion-content class="padding">
+<div class="list text-center fond bottom-marged">
+  <div class="row text-center">
+    <div class="col">
+      <div ng-click="showDatePicker()" class="item nativedatepicker">
+        <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
+        <p class="time_date"> {{date}} </p>
+        <i class="ion-chevron-down arrow_cal"></i>
       </div>
     </div>
-  </ion-content>
+    <div class="col">
+      <div ng-click="showHourPicker()" class="item">
+        <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
+        <p class="time_date">{{hour}}</p>
+        <i class="ion-chevron-down arrow_cal"></i>
+      </div>
+    </div>
+  </div>
+  <a class="item item-icon-left align_creer_foot" href="#">
+    <div class="row">
+      <div class="col col-25">
+        <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
+      </div>
+      <div class="col col-50 venue1">
+       <p>Nombre de joueurs</p>
+     </div>
+     <div class="col col-25 venue1">
+       <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
+       <label class="item item-input item-select" style="border-style:none;bottom:4px;">
+       <select ng-model="foot.nb_player" style="position:relative; padding:0;">
+           <option>6</option>
+           <option>7</option>
+           <option>8</option>          
+           <option>9</option>
+           <option selected>10</option>
+           <option>11</option>
+           <option>12</option>
+           <option>13</option>
+           <option>14</option>
+         </select>
+       </label>
+     </div>
+   </div>
+ </a>
+ <div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
+  <div class="row">
+    <div class="col col-25 invit_params">
+      <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg"/>
+    </div>
+    <div class="col col-50">
+      <p class="dispo">Inviter vos amis </p>
+    </div>
+    <div class="col col-25" style="margin-left: 20px;">
+      <i class="ion-chevron-right ion_invite_friends"></i>
+    </div>
+  </div>
+</div>
+<div class="item item-icon-left align_creer_foot  " href="#">
+  <div class="row">
+    <div class="col col-25">
+      <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
+    </div>
+    <div class="col col-50 venue">
+      <p>Vos amis peuvent <br> inviter leurs amis</p>
+    </div>
+    <ion-toggle ng-model="foot.friend_can_invite" id="invite_friends_toggle">
+  </ion-toggle>
+</div>
+</div>
+<div class="row text-center">
+  <div class="col col-50">
+    <a ng-click="foot.priv = true" ng-class="{active: foot.priv == true}" class="icon-private item item-icon-left item-icon-right" href="#">
+      <i class= "ion-locked"></i>
+      <p class=""> Foot Privé</p>
+    </a>
+  </div>
+  <div class="col col-50">
+    <a ng-click="foot.priv = false" ng-class="{active: foot.priv == false}" class="icon-private item item-icon-left item-icon-right" href="#">
+      <i class= "ion-ios-world-outline"></i>
+      <p class=""> Foot Public</p>
+    </a>
+  </div>
+</div>
+<div class="private_foot" ng-if="foot.priv">
+  <p class="type-foot">Votre Foot est privé. </p>
+  <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
+</div>
+<div class="public_foot" ng-if="!foot.priv">
+  <p class="type-foot">Votre Foot est public. </p>
+  <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
+</div>
+<a class="item item-icon-left level_foot" href="#">
+ <div class="text-center"> <p>Niveau du Foot</p></div>
+ <div class="row">
+  <div class="size_level col align" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
+  <div class="size_level col align" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img ng-src="img/niveau_2.svg"/><p>Moyen</p></div>
+  <div class="size_level col align" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img ng-src="img/niveau_3.svg"/><p>Expert</p></div>
+  <div class="size_level col align" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img ng-src="img/niveau_0.svg"/><p>Tous</p></div>
+</div>
+</a>
+
+<button ng-click="launchReq()" class="button button-block button_launch_foot">
+  Valider
+</button>
+</div>
+<script id="modal.html" type="text/ng-template">
+  <div class="modal">
+    <ion-header-bar  class="actu_header">
+    <h1 class="title">Inviter des amis</h1>
+    <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-checkmark-round"></span></div>
+  </ion-header-bar>
+  <ion-content  class="padding_header">
+  <label class="item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input ng-model="searchFriends" type="text" placeholder="Rechercher des amis">
+  </label>
+  <div id="container_foot_friends" class="container_list_friends">
+    <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">
+      <label class="checkbox checkbox_foot_friends">
+       <input ng-click="addToFoot(friend.id)" type="checkbox">
+     </label>
+
+     <div class="img_chat img_friends">
+      <img ng-src="{{friend.picture}}">
+    </div>
+    <div class="name_friends name_foot_friends">
+      <p> {{friend.first_name}} {{friend.last_name}}  </p>
+    </div>
+    <div ng-class="{grey: friend.statut==0}" class="star_friends">
+      <i class="ion-android-star"></i>
+    </div>
+  </div>
+</div>
+</ion-content>
 </div>
 </script>
 
-  </ion-content>
+</ion-content>
 </ion-view>

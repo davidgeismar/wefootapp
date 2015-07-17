@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -114,7 +114,12 @@ $scope.logout = function (){
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-    $searchLoader.hide();
+    fbConnect.getFacebookFriends().then(function(data){
+      $scope.facebookFriends = data.data;
+      console.log(data);
+      $searchLoader.hide();
+    });
+
   }
 
 
@@ -249,14 +254,7 @@ $scope.sendSmsMessage = function(){
             }, function(error) {
               console.log('error');
             });
-          }
-
-          // $scope.facebookFriends = $localStorage.facebookFriends;
-          // console.log($scope.facebookFriends);
-          // //GET ALL FACEBOOK ID FOR ALL FRIENDS IN  FRIENDS LIST
-          // $scope.facebookFriendsId = _.pluck($localStorage.friends,'facebook_id');
-          // console.log($scope.facebookFriendsId);
-
+          };
 
         })
 

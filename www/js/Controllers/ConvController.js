@@ -17,7 +17,6 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
 $rootScope.$on('newMessage', function(event){
   if(_.last($location.url().split('/'))==$scope.chat.id){
     chat.updateLts($scope.chat.id);
-    chat.setSeenStatus($scope.chat.id);
   }
   $scope.chat = _.find($localStorage.getObject('chats'), function(chat){return chat.id==$stateParams.id});
   if(!$scope.$$phase) {
