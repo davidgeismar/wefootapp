@@ -12,21 +12,21 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         case 'chevreDuMatch':
         return['avez été élu chèvre du match.'];
         case 'footInvit':
-        return ['vous à invité à un foot.','/foot/'];
+        return ['vous a invité à un foot.','/foot/'];
         case 'footConfirm':
-        return ['à confirmé sa présence à votre foot.','/foot/'];
+        return ['a confirmé sa présence à votre foot.','/foot/'];
         case 'footAnnul':
-        return ['à annulé son foot.'];
+        return ['a annulé son foot.'];
         case 'footDemand':
         return['demande à participer à votre foot.','/friend/'];
         case 'footEdit':
-        return['à modifié son foot.','/foot/'];
+        return['a modifié son foot.','/foot/'];
         case 'endGame':
         return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
-        return ['à accepté votre demande pour rejoindre son foot.','/foot/'];
+        return ['a accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
-        return ['à accepté votre demande pour rejoindre son foot.'];
+        return ['a accepté votre demande pour rejoindre son foot.'];
         case '3hoursBefore':
         return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
       }
@@ -65,7 +65,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
     var parseActu = function(typ){
       switch(typ){
         case 'newFriend':
-        return ['est amis avec','/friend/'];
+        return ['est ami avec','/friend/'];
         case 'hommeDuMatch':
         return ['a été élu homme du match','/friend/'];
         case 'chevreDuMatch':

@@ -114,12 +114,19 @@ $scope.logout = function (){
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-    fbConnect.getFacebookFriends().then(function(data){
-      $scope.facebookFriends = data.data;
-      console.log(data);
-      $searchLoader.hide();
+    if (!window.cordova) {
+      //this is for browser only
+      facebookConnectPlugin.browserInit(1133277800032088);
+    }
+    facebookConnectPlugin.getLoginStatus(function(success){
+      fbConnect.getFacebookFriends().then(function(data){
+        $scope.facebookFriends = data.data;
+        //IDs of my facebookFriends list
+        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getObject('friends'), function(friend){if(friend.facebook_id) return true}), 'id');
+        console.log(data);
+        $searchLoader.hide();
+      });
     });
-
   }
 
 

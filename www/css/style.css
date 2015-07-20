@@ -1343,7 +1343,7 @@ a{
 
 .foot-tab{
 	display: inline-block;
-	width: 49%;
+	width: 49.4%;
 	text-align: center;
 	list-style: none;
 	padding: 10px;
@@ -1521,11 +1521,10 @@ a{
   		margin-top: 15px;
   	}
   	.one-field{
-  		padding:15px;
   		padding-right: 10px;
   		border-bottom: 3px solid #28385c;
   		padding-bottom: 0px;
-  		padding-top: 20px;
+
   	}
   	.content-footfield{
   		text-align: left;
@@ -1983,6 +1982,7 @@ a{
   		}
   		.name-field{
   			font-size: 14px;
+  			line-height: 14px;
   		}
   		.desc-field{
   			font-size: 12px;
@@ -2933,8 +2933,28 @@ a{
 
 
 
-				.chevron-left-accueil{
-					float: left;
-					left: 10px;
-					position: absolute;
-				}
+.chevron-left-accueil{
+	float: left;
+	left: 10px;
+	position: absolute;
+}
+.container-friend{
+	margin: 0 auto;
+	text-align:center;
+	margin-top:-60px;
+}
+.trophe-friend{
+	display: inline-block;
+  	margin: 0 auto;
+  	margin-bottom:15px;
+}
+
+.homme-friend{
+	display:inline-block;
+}
+.chevre-friend{
+	display:inline-block;
+}
+.partner-field{
+	margin-top:30px;
+}

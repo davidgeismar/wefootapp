@@ -204,7 +204,8 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			$localStorage.setObject('chats', chats);	
 		}
 		obj.getNbNotif = function(){
-			return _.filter($localStorage.getObject('chats'), function(chat){return !chat.seen}).length;
+			var chats = $localStorage.getObject('chats');
+			return _.filter(chats, function(chat){return !chat.seen}).length;
 		}
 		obj.getChat = function(related){
 			var user = $localStorage.getObject('user');
@@ -216,15 +217,3 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		return obj;
 
 	}])
-
-
-	    // $scope.launchChat = function (footId){
-     //  var chat = _.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
-     //  if(chat){
-     //      $location.path('/conv/'+chat.id);
-     //    }
-     //    else
-     //      chats.getChat(footId).then(function(){
-     //        $location.path('/conv/'+_.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
-     //      });
-     //  }

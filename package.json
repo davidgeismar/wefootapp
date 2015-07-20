@@ -37,7 +37,8 @@
       "id": "com.phonegap.plugins.PushPlugin"
     },
     "cordova-plugin-contacts",
-    "cordova-sqlite-storage"
+    "cordova-sqlite-storage",
+    "cordova-plugin-geolocation"
   ],
   "cordovaPlatforms": [
     "android"

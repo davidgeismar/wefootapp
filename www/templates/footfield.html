@@ -24,7 +24,7 @@
   <div ng-click="chooseField(field)" class="one-field" collection-repeat="field in results">
     <div class="row">
       <div class="col col-25">
-        <img class="field_img" ng-src="{{field.picture}}"/>
+        <div><img class="field_img" ng-src="{{field.picture}}"/></div>
       </div>
       <div class="col col-60">
        <p class="name-field">{{field.name}} </p>
@@ -37,8 +37,10 @@
               <i class="ion-android-star"></i>
             </div> -->
             <div class="chevron-right">
-              <i class="ion-chevron-right"></i>
+              <i class="ion-chevron-right"></i>        
             </div>
+            
+            <img class="partner-field" ng-src="{{field.picture}}" width="20" ng-class="{'hide-icon':field.partner==false}">
           </div>
         </div>
       </div>

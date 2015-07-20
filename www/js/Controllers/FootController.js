@@ -82,6 +82,7 @@ $scope.chooseField = function(field){
 
 $scope.launchReq = function(){
   $foot.create($scope.foot, function(foot){
+    $rootScope.nbGoBack = -3;
     $location.path('/foot/'+foot.id);
   });
 }

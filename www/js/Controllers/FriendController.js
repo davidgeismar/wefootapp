@@ -16,6 +16,17 @@ angular.module('friend',[])
 		});
 	}
 
+		$scope.getNbTrophes = function(){
+		$http.get('http://'+serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
+			if(data.nbHommes){
+				$scope.friend.nbHommes = data.nbHommes;
+			}
+			if(data.nbChevres){
+				$scope.friend.nbChevres = data.nbChevres;
+			}
+		});
+	}
+
 	$http.get('http://'+serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.getObject('user').id).success(function(foot){
 
 		 	if(foot.length>0){
@@ -30,11 +41,13 @@ angular.module('friend',[])
 		$scope.isInvitationConfirmation = false;
 		$scope.isFriend = true;
 		$scope.initNotes();
+		$scope.getNbTrophes();
 	} 
 	else{
 		$http.get('http://'+serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
 			$scope.initNotes();
+			$scope.getNbTrophes();
 		});
 	}
 
@@ -73,17 +86,6 @@ angular.module('friend',[])
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandRefused'});
 			});
 		}
-	}
-
-	$scope.getNbTrophes = function(){
-		$http.get('http://'+serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
-			if(data.nbHommes){
-				$scope.friend.nbHommes = data.nbHommes;
-			}
-			if(data.nbChevres){
-				$scope.friend.nbChevres = data.nbChevres;
-			}
-		});
 	}
 
 
