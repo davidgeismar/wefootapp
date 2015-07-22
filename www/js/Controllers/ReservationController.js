@@ -10,7 +10,7 @@
 
 
 angular.module('foot').controller('ReservationController', function ($scope, $localStorage, $location, $http, $ionicLoading) {
-
+  var user = $localStorage.getObject('user');
     //RECAP RESA To Clean 
     if(!$localStorage.reservationClient.indoor){
       $scope.indoor = { text: "INDOOR", checked: 1 };
@@ -39,6 +39,8 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
           $scope.found = 1;
           $localStorage.reservationClient.terrain = field.id;
           $localStorage.reservationClient.prix = field.prix;
+          $localStorage.reservationClient.userName = user.first_name+" "+user.last_name;
+          $localStorage.reservationClient.userPhone = user.telephone;
           $scope.prix = field.prix
         }
         else

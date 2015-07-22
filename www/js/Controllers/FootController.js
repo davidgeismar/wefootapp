@@ -102,12 +102,12 @@ if($location.path().indexOf('user/foots')>-1){
   });
 
   $scope.refresh = function(){
-  $foot.loadFoot(function(){
+    $foot.loadFoot(function(){
         $scope.footInvitation = $localStorage.footInvitation;
         $scope.footTodo = $localStorage.footTodo;
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
-  });
+    });
   }
 }
 })
@@ -175,6 +175,7 @@ $scope.refresh = function(){
 
   $scope.playFoot = function(player){
     $scope.isPlaying = true;
+    $scope.foot.date = $scope.date;
     $foot.playFoot(player,$scope.foot,$scope.players);
   }
 
@@ -317,7 +318,7 @@ $scope.closeModal3 = function(launch){
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
-  $scope.params = {dateValue: '0', field: '', date: new Date() };
+  $scope.params = {dateValue: 0, field: '', date: new Date() };
   var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
   new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
   
@@ -328,12 +329,15 @@ $scope.closeModal3 = function(launch){
   }
 
 
-  $scope.updatedAte = function(){
-    ind = parseInt($scope.params.dateValue);
-    $scope.date = getJour(dates[ind]);
-    $scope.params.date = dates[ind];
-    $scope.getData($scope.params);
+  $scope.updateDate = function(val){
+    value = $scope.params.dateValue + val||0;
+    if(value > -1 && value < 5){
+      $scope.params.dateValue = value;
+      $scope.date = getJour(dates[value]);
+      $scope.params.date = dates[value];
+      $scope.getData($scope.params);
+    }
   }
-  $scope.updatedAte();
+  $scope.updateDate();
 
 })

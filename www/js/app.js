@@ -1,7 +1,7 @@
 //GLOBAL FUNCTIONS
 
 // var serverAddress = "62.210.115.66:9000";
-var serverAddress = "localhost:1337";
+var serverAddress = "62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
 
 
@@ -92,7 +92,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
-  $rootScope.nbChatsUnseen = 0;
   $rootScope.chats = [];
 
   $rootScope.$on('loading:hide', function() {
@@ -227,7 +226,6 @@ getCoord();
   $ionicPlatform.on('resume',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
-        console.log(nb);
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });

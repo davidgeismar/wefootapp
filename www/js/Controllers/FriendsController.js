@@ -3,6 +3,7 @@ angular.module('friends',[])
 
   $scope.user = $localStorage.getObject('user');
   $rootScope.friends = $localStorage.getObject('friends');
+  $scope.results = $rootScope.friends;
 
   $scope.addFavorite = function(target){
 
@@ -54,5 +55,14 @@ $scope.deleteFriend = function(friendId){
   }
 }
 
+$scope.filterFriend = function(word) {
+  var results = [];
+  _.each($rootScope.friends, function(friend,index){
+    if(friend.full_name.indexOf(word)>-1)
+      results.push(friend)
+    if(index == $rootScope.friends.length-1)
+      $scope.results = results;
+  });
+}
 
 })

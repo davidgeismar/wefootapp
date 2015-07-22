@@ -1,7 +1,7 @@
-<ion-view view-title="Profil">
+<ion-view view-title="Friends">
 <label class="item-input has-header">
     <i class="icon ion-search placeholder-icon"></i>
-    <input type="text" ng-model="searchFriends" placeholder="Rechercher un nom">
+    <input type="text" ng-model="searchFriends" ng-keyup="filterFriend(searchFriends)" placeholder="Rechercher un nom">
 </label>
 <ion-content class="has-header has-subheader">
 <ion-refresher on-refresh="refresh()">                 
@@ -10,7 +10,7 @@
 	<div class="container_list_friends">
 
         <ion-list can-swipe="true">
-        <ion-item ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends">
+        <ion-item ng-repeat="friend in results | orderBy:'-statut'" class="one_friends">
         <div class="img_chat img_friends" ng-click="goFriend(friend)">
             <img ng-src="{{friend.picture}}">
 
@@ -18,7 +18,7 @@
         <div class="name_friends" ng-click="goFriend(friend)">
             <p> {{friend.first_name}} {{friend.last_name}} </p>
         </div>
-        <div ng-click="addFavorite({{friend.id}})" ng-class="{grey: friend.statut==0}" class="star_friends">
+        <div ng-click="addFavorite(friend.id)" ng-class="{grey: friend.statut==0}" class="star_friends">
             <i class="ion-android-star"></i>
         </div>
         

@@ -155,15 +155,19 @@ return connect;
   }
 
   paiement.proceed = function(mangoId,cardId,resa,foot,callback){
-    $confirmation('Nous allons procéder à une préauthorisation de paiement de '+price+'€.',function(){
+    $confirmation('Nous allons procéder à une préauthorisation de paiement de '+resa.prix+'€.',function(){
       $ionicLoading.show({
         content: 'Loading Data',
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.price, footId: foot}).success(function(){
-        callback();
-        $ionicLoading.hide();
+      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot}).success(function(){
+        $http.post('http://'+serverAddress+'/reservation/create',resa).success(function(){
+          callback();
+          $ionicLoading.hide();
+        }).error(function(){
+          callback(0);
+        });
       }).error(function(){
         callback(0);
       });
@@ -231,11 +235,12 @@ return connect;
             for(i = newElems.length-1; i>-1; i--){ //Concatenate 2 2D Arrays
               oldActu.unshift(newElems[i]);
             }
+            dates = _.union(_.allKeys(data),dates);
+            $localStorage.setObject('actus', oldActu);
+            $localStorage.setObject('dates',dates);
+            $ionicLoading.hide();
           }
         });
-        dates = _.union(_.allKeys(data),dates);
-        $localStorage.setObject('actus', oldActu);
-        $localStorage.setObject('dates',dates);
       }
       else{
         $localStorage.setObject('actus',actusByDay);
@@ -254,6 +259,7 @@ return profil;
 .factory('$foot',['$http','$ionicLoading','$handleNotif','$localStorage','$cordovaDatePicker','$searchLoader','$cordovaGeolocation',function($http,$ionicLoading,$handleNotif,$localStorage,$cordovaDatePicker, $searchLoader, $cordovaGeolocation){
 
   var foot = {};
+
 
   var ionicLoading =  function(){
     $ionicLoading.show({
@@ -275,7 +281,6 @@ return profil;
     },
     {
       date: new Date(),
-      minDate: new Date(),
       minuteInterval: 30,
       mode: 'time', // or 'time'
       doneButtonLabel: 'OK',
@@ -286,7 +291,7 @@ return profil;
   }
 
   foot.pickDate = function(date,callback){
-    $cordovaDatePicker.show(getOptionsDatepicker[0]).then(function(dateChosen){
+    $cordovaDatePicker.show(foot.getOptionsDatepicker()[0]).then(function(dateChosen){
       var jour = new Date(dateChosen);
       date.setDate(jour.getDate());
       date.setMonth(jour.getMonth());
@@ -296,8 +301,8 @@ return profil;
     });
   }
 
-  foot.pickDate = function(date,callback){
-    $cordovaDatePicker.show(getOptionsDatepicker[1]).then(function(dateChosen){
+  foot.pickHour = function(date,callback){
+    $cordovaDatePicker.show(foot.getOptionsDatepicker()[1]).then(function(dateChosen){
       var jour = new Date(dateChosen);
       date.setHours(jour.getHours());
       date.setMinutes(jour.getMinutes());
@@ -328,7 +333,7 @@ return profil;
     }
     else if(word.length==0) {
       $searchLoader.show();
-      $http.get('http://'+serverAddress+'/field/getFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng).success(function(data){
+      $http.get('http://'+serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+"").success(function(data){
         $searchLoader.hide();
         callback(data);
       });
@@ -339,7 +344,8 @@ return profil;
     ionicLoading();
     var user = $localStorage.getObject('user');
     $http.post('http://'+serverAddress+'/foot/create',params).success(function(foot){
-      chatters = params.toInvite;
+      var chatters = [];
+      angular.copy(params.toInvite, chatters);
       chatters.push($localStorage.getObject('user').id);
       $http.post('http://'+serverAddress+'/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+ user.first_name}).success(function(){
       });
@@ -470,6 +476,7 @@ foot.playFoot = function(player,foot,players){
 }
 
 foot.searchFoot = function(params,callback2){
+  $searchLoader.show();
   $http.post('http://'+serverAddress+'/foot/query',params).success(function(data){
     results =[];
     async.each(data,function(foot,callback){
@@ -482,7 +489,9 @@ foot.searchFoot = function(params,callback2){
           results.push(foot);
           callback();
         });
-      },function(){ callback2(results);
+      },function(){
+        $searchLoader.hide();
+        callback2(results);
       });
   });
 }
