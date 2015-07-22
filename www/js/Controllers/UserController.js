@@ -122,8 +122,8 @@ $scope.logout = function (){
       fbConnect.getFacebookFriends().then(function(data){
         $scope.facebookFriends = data.data;
         //IDs of my facebookFriends list
-        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getObject('friends'), function(friend){if(friend.facebook_id) return true}), 'id');
-        console.log(data);
+        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getObject('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+        console.log($scope.facebookFriendsId);
         $searchLoader.hide();
       });
     });
@@ -152,14 +152,23 @@ $scope.logout = function (){
   }
 }
 
+//Lock addFriend
+$scope.lockFriend;
+
 //facebookFriend = true, target = facebook_id
 //facebookFriend = false, target = user.id
 $scope.addFriend = function(target, facebookFriend){
   var postData = {};
-  if(facebookFriend)
+  if(facebookFriend){
     postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
-  else
+    $scope.lockFriend = target;
+    $scope.facebookFriendsId.push(target);
+    console.log($scope.facebookFriendsId);
+  }
+  else{
     postData = {user1: $localStorage.getObject('user').id, user2: target};
+    $scope.lockFriend = target;
+  }
 
   $http.post('http://'+serverAddress+'/addFriend',postData).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
@@ -171,11 +180,20 @@ $scope.addFriend = function(target, facebookFriend){
     $localStorage.setObject('friends',friends);
     $rootScope.friends.push(data);
     $scope.word ="";
+    $scope.lockFriend ="";
   });
 }
 
-$scope.isFriend = function(userId){
-  if (_.pluck($rootScope.friends, 'id').indexOf(userId)>-1){
+
+$scope.isFriend = function(userId, facebookFriend){
+  if(facebookFriend){
+    if($scope.facebookFriendsId.indexOf(userId.toString())>-1 || $scope.lockFriend == userId){
+      return true;
+    }
+    else
+      return false;
+  }
+  if (_.pluck($rootScope.friends, 'id').indexOf(userId)>-1 || $scope.lockFriend == userId){
     return true;
   }
   else{

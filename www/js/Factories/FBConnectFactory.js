@@ -40,12 +40,11 @@ obj.getFacebookProfileInfo = function () {
     var info = $q.defer();
     facebookConnectPlugin.api('/me', "",
       function (response) {
+        alert("Result: " + JSON.stringify(response));
         info.resolve(response);
-
       },
       function (response) {
         info.reject(response);
-
       });
     return info.promise;
   }
@@ -82,6 +81,7 @@ obj.connect = function(){
           showBackdrop: false,
           hideOnStateChange: false
         });
+        
         $rootScope.toShow = false;
         //ask the permissions you need
         //you can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.2
@@ -95,7 +95,8 @@ obj.connect = function(){
             //get user info from FB
             obj.getFacebookProfileInfo().then(function(data) {
               var user = data;
-              user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?type=large";
+
+              user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
               user.access_token = fb_access_token;
 
               //save the user data

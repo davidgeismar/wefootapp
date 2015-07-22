@@ -114,7 +114,7 @@ if($location.path().indexOf('user/foots')>-1){
 })
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',

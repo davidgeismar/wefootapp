@@ -41,7 +41,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		var chats = $localStorage.getObject('chats');
 		var index = _.pluck(chats, 'id').indexOf(chatter.chat);
 		if(index>-1){
-			chats[index].users.push(chatter);
+			chats[index].users.push(chatter.user);
 			$localStorage.setObject('chats', chats);
 		}
 	}
@@ -96,6 +96,9 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 			return false;	
 	}
 
+	obj.postNewChatter = function(footId, userId){
+		$http.post('http://'+serverAddress+'/chatter/addToChat',{user :userId, related:footId });
+	}
 	return obj;
 
 }])
@@ -213,6 +216,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				obj.addChat(chat);
 			});	
 		}
+
 
 		return obj;
 

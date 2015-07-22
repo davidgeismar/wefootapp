@@ -185,10 +185,21 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
 
   $rootScope.getNbChatsNotif = function (){
-      return chats.getNbNotif();
+    return chats.getNbNotif();
   };
 
-
+  var getCoord = function(){
+    $ionicPlatform.ready(function () {
+      var posOptions = {timeout: 10000, enableHighAccuracy: false};
+      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        var user = $localStorage.getObject('user');
+        user.lat  = position.coords.latitude;
+        user.lng = position.coords.longitude;
+        $localStorage.setObject('user', user);
+        $rootScope.getCoord = true;
+      });
+    });
+  }
   $ionicPlatform.ready(function() {
 
     $rootScope.$broadcast('appReady');
@@ -205,24 +216,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   if(window.StatusBar) {
     StatusBar.styleDefault();
   }
+  getCoord();
 });
 
-$rootScope.getCoord = false;
+  $rootScope.getCoord = false;
 
-var getCoord = function(){
-$ionicPlatform.ready(function () {
-  var posOptions = {timeout: 10000, enableHighAccuracy: false};
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-    var user = $localStorage.getObject('user');
-    user.lat  = position.coords.latitude;
-    user.lng = position.coords.longitude;
-    $localStorage.setObject('user', user);
-    $rootScope.getCoord = true;
-  });
-});
-}
 
-getCoord();
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
@@ -410,7 +409,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     cache: false,
     url: '/recap',
     views: {
-    'resaContent' :{
+      'resaContent' :{
         templateUrl: "templates/recapreservation.html",
         controller: 'ReservationController'
       }
@@ -421,7 +420,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     cache: false,
     url: '/field',
     views: {
-    'resaContent' :{
+      'resaContent' :{
         templateUrl: 'templates/autrescentres.html'
       }
     }
@@ -431,7 +430,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     cache: false,
     url: '/edit',
     views: {
-    'resaContent' :{
+      'resaContent' :{
         templateUrl: 'templates/editResa.html'
       }
     }
@@ -441,7 +440,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     cache: false,
     url: '/dispo',
     views: {
-    'resaContent' :{
+      'resaContent' :{
         templateUrl: 'templates/dispo.html',
         controller: 'ResaDispoController'
       }
@@ -453,7 +452,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     cache: false,
     url: '/pay',
     views: {
-    'resaContent' :{
+      'resaContent' :{
         templateUrl: 'templates/pay.html',
         controller: 'PaiementController'
       }

@@ -46,10 +46,10 @@ angular.module('field',[])
 
           };
           $cordovaFileTransfer.upload('http://'+serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
-          .then(function(result) {  
-        // Success!
-        console.log("successssss");
-      }, function(err) {
+          .then(function(result) {
+            $confirmation.showConfirm("Votre terrain a bien été inséré, recherchez le dans la liste !");  
+            $ionicHistory.goBack();
+          }, function(err) {
         // Error
         console.log("fail");
       }, function (progress) {
@@ -57,7 +57,10 @@ angular.module('field',[])
         // constant progress updates
       });
         }
-        $ionicHistory.goBack();
+        else{
+          $confirmation.showConfirm("Votre terrain a bien été inséré, recherchez le dans la liste !");  
+          $ionicHistory.goBack();
+        }
       });
     }
 

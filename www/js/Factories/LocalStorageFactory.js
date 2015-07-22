@@ -22,9 +22,9 @@ app.factory('$localStorage', ['$window', function($window) {
       $window.localStorage[key] = object;
     },
     addElement: function(key, element){
-      var object = JSON.parse($window.localStorage[key] || '{}');
+      var object = JSON.parse($window.localStorage[key] || '[]');
       object.push(element);
-      $window.localStorage[key] = object;
+      $window.localStorage[key] = JSON.stringify(object);
     },
     removeElement: function(key, element){
       var object = JSON.parse($window.localStorage[key] || '{}');
