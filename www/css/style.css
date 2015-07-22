@@ -1531,11 +1531,10 @@ ion-scroll[direction=y] {
   		margin-top: 15px;
   	}
   	.one-field{
-  		padding:15px;
   		padding-right: 10px;
   		border-bottom: 3px solid #28385c;
   		padding-bottom: 0px;
-  		padding-top: 20px;
+
   	}
   	.content-footfield{
   		text-align: left;
@@ -2005,6 +2004,7 @@ ion-scroll[direction=y] {
   		}
   		.name-field{
   			font-size: 14px;
+  			line-height: 14px;
   		}
   		.desc-field{
   			font-size: 12px;
@@ -2960,11 +2960,31 @@ ion-scroll[direction=y] {
     -webkit-transform: scale(1);
             transform: scale(1); } }
 
-
-
-
 .chevron-left-accueil{
 	float: left;
 	left: 10px;
 	position: absolute;
+}
+.container-friend{
+	margin: 0 auto;
+	text-align:center;
+	margin-top:-60px;
+}
+.trophe-friend{
+	display: inline-block;
+  	margin: 0 auto;
+  	margin-bottom:15px;
+}
+
+.homme-friend{
+	display:inline-block;
+}
+.chevre-friend{
+	display:inline-block;
+}
+.partner-field{
+	margin-top: 45px;
+	font-size: 20px;
+	color: #28385c;
+	display: block;
 }

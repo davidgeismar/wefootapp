@@ -324,20 +324,11 @@ return profil;
 
   foot.searchFields = function(word,callback){
     var user = $localStorage.getObject('user');
-    if(word.length>0){
       $searchLoader.show();
       $http.get('http://'+serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
         $searchLoader.hide();
         callback(data);
       });
-    }
-    else if(word.length==0) {
-      $searchLoader.show();
-      $http.get('http://'+serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+"").success(function(data){
-        $searchLoader.hide();
-        callback(data);
-      });
-    }
   }
 
   foot.create = function(params,callback2){
