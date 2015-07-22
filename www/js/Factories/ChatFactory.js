@@ -72,7 +72,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 			if(chats[indexC].messages.length>0){
 				var lastTimeMessage = moment(chats[indexC].messages[chats[indexC].messages.length-1].createdAt);
 				var lastTimeSeen = moment(chats[indexC].lastTime).add(5, 'seconds');
-				if(lastTimeMessage.diff(lastTimeSeen)>0){
+				if(lastTimeMessage.diff(lastTimeSeen)>0 || !chats[indexC].lastTime){
 					chats[indexC].seen = false;
 					chatsDisplay[indexCD].seen = false;
 				}
@@ -133,6 +133,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		}
 
 		obj.addChat = function (newChat) {
+			newChat.seen = true;
 			$localStorage.addElement('chats', newChat);
 			obj.addChatToDisplayer(newChat);
 		}
@@ -186,7 +187,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			}
 		});	
 			$localStorage.setObject('chatsDisplay', chatsDisplay);
-			console.log($localStorage.getObject('chatsDisplay'));
 		}
 		obj.initNotif = function(){
 			var chats = $localStorage.getObject('chats');
@@ -203,7 +203,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				else
 					chats[index].seen = true;
 			});
-			console.log(chats);
 			$localStorage.setObject('chats', chats);	
 		}
 		obj.getNbNotif = function(){

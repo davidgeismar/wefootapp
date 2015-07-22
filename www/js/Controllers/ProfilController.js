@@ -57,11 +57,4 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 			$scope.$broadcast('scroll.refreshComplete');
 		});
 	}
-
-$scope.refresh = function(){
-	getAllActu(function(){
-		$scope.$broadcast('scroll.refreshComplete');
-	});
-}
-
 })

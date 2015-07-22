@@ -10,7 +10,7 @@
 
 
 angular.module('foot').controller('ReservationController', function ($scope, $localStorage, $location, $http, $ionicLoading) {
-
+  var user = $localStorage.getObject('user');
     //RECAP RESA To Clean 
     if(!$localStorage.reservationClient.indoor){
       $scope.indoor = { text: "INDOOR", checked: 1 };
@@ -39,6 +39,8 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
           $scope.found = 1;
           $localStorage.reservationClient.terrain = field.id;
           $localStorage.reservationClient.prix = field.prix;
+          $localStorage.reservationClient.userName = user.first_name+" "+user.last_name;
+          $localStorage.reservationClient.userPhone = user.telephone;
           $scope.prix = field.prix
         }
         else
@@ -59,66 +61,6 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
     }
 
 
-
-
-//Changement de terrain
-
-
-// $scope.date = $localStorage.reservationClient.date;
-// $scope.reservationClient =$localStorage.reservationClient ; 
-// $scope.hour = $scope.date.getHours();
-// $scope.valrep = 0 ;
-
-//    $scope.listeterrainFreeField = [];
-//    var getTerrainsFreeField = function(){
-//             $http.post('http://'+serverAddress+'/reservation/getTerrainsFreeField',$localStorage.reservationClient).success(function(reservationClient){
-//                 $scope.listeterrainFreeField = reservationClient[0];
-//                 $scope.param = reservationClient[1];
-//                 $localStorage.listeterrainFreeField = $scope.listeterrainFreeField ;;
-//                 if($scope.listeterrainFreeField)
-//                     $scope.valrep = 1;
-//                 else
-//                     $scope.valrep = -1;
-//             });
-//     }
-
-//     // getTerrainsFreeField();
-
-//     $scope.setpandt = function($index){ 
-//         $localStorage.prix = $scope.param[$index].prix;
-//         $localStorage.reservationClient.numTerrain = $scope.param[$index].id;
-
-//     } 
-
-
-// Changement d'heure
-   // $scope.getOtherHours = function(reservationClient){
-   //          $http.post('http://'+serverAddress+'/reservation/getTerrainsFree',$scope.reservationClient).success(function(listTerrLibre){
-   //              $scope.terrainNewFree =listTerrLibre[1]
-
-   //              console.log(' terrain libre');
-   //              console.log($scope.terrainNewFree);
-   //              $localStorage.terrainNewFree = $scope.terrainNewFree ;
-   //              console.log('longueur');
-   //              console.log($scope.listeterrainNewFree.length); 
-   //              if($scope.terrainNewFree != null){
-   //              $scope.valeur = 1;
-   //              $localStorage.prix = $localStorage.terrainNewFree.prix;
-   //              $localStorage.reservationClient.numTerrain = $localStorage.terrainNewFree.id;
-   //              $scope.prix = $localStorage.prix;
-   //              }else
-   //                $scope.valeur = -1;
-   //          });
-   //  }
-
-
-    //   $scope.create = function(reservationClient){
-    //           $http.post('http://'+serverAddress+'/reservation/create',
-    //             $scope.reservationClient).success(function(reservationClient){
-    //                 console.log(reservationClient);
-    //               $scope.conf = 1;
-    //           });
-    // }
 })
 
 //Disponibilité
@@ -180,7 +122,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
      }
 
 })  
-.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location) {
+.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location,$validated) {
   var user = $localStorage.getObject('user');
   if(!user.birthday || !user.telephone){
 
@@ -247,11 +189,13 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       });
     }
     $scope.pay = function(cardId){
-      $paiement.proceed(user.mangoId,cardId,$localStorage.reservationClient.prix,$localStorage.reservationClient.foot,function(result){
+      $paiement.proceed(user.mangoId,cardId,$localStorage.reservationClient,$localStorage.reservationClient.foot,function(result){
         if(result == 0)
           $scope.err = 'Erreur une carte à surement déjà été enregistrée pour ce foot';
         else
+          $validated.show({texte: "Votre réservation à bien été enregistrée", icon: "ion-checkmark-round"},function(){
           $location.path('/foot/'+$localStorage.reservationClient.foot);  //TODO POPUP CONFIRM RESA
+        }); 
       });
     }
 })

@@ -3,18 +3,20 @@
      <div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
  	 <h1 class="title" style="text-align: center;">Rechercher un foot</h1>
 	</ion-header-bar>
-    <ion-content class="last">
+    <ion-content>
     	<div class="header-footfinder">
     		<div class="select-place">
        			<input ng-model="params.field" ng-keyup="getData(params)" placeholder="Saisir un lieu"/>
       			<i class="ion-ios-location-outline"></i>
       		</div>
       		<div class="range-footfinder range range-positive">
-      			<input type="range" ng-change="updatedAte()" ng-model="params.dateValue" min="0" max="4"><p class="date-footfinder">{{date}}</p>
+            <i class="ion-arrow-left-a" ng-class="{'grey': params.dateValue==0}" ng-click="updateDate(-1)"></i><p class="date-footfinder">{{date}}</p><i class="ion-arrow-right-a" ng-class="{'grey': params.dateValue==4}" ng-click="updateDate(1)"></i>
       		</div>
-      	</div>	
+      	</div>
+        <div class="container_results_footfinder">
         <ion-scroll direction="y" class= "carte_foots background_footfinder">
-      	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results">
+        <searchLoader></searchLoader> 
+      	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results" ng-class="{'last-margin': $index==results.length-1}">
             <div class="row">
               <div class="col col-25">
                 <div class="img_chat"><img ng-src="{{foot.orgaPic}}" alt=""></div>
@@ -40,5 +42,6 @@
               </div>
         </div>
     	</ion-scroll>
+      </div>
     </ion-content>
 </ion-view>

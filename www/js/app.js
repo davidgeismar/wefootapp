@@ -92,7 +92,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
-  $rootScope.nbChatsUnseen = 0;
   $rootScope.chats = [];
 
   $rootScope.$on('loading:hide', function() {
@@ -226,7 +225,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $ionicPlatform.on('resume',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
-        console.log(nb);
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
