@@ -181,13 +181,13 @@ $scope.refresh = function(){
   }
 
   $scope.openPublic = function(){
-    $http.post('http://'+serverAddress+'/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
+    $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
       $scope.foot.priv = false;
     });
   }
 
   $scope.closePublic = function(){
-    $http.post('http://'+serverAddress+'/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
+    $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
       $scope.foot.priv = true;
     });
   }
@@ -205,7 +205,7 @@ $scope.refresh = function(){
   };
   $scope.closeModal2 = function(){
     if($scope.foot.toInvite.length>0){
-      $http.post('http://'+serverAddress+'/foot/sendInvits',$scope.foot).success(function(){
+      $http.post(serverAddress+'/foot/sendInvits',$scope.foot).success(function(){
         async.each($scope.foot.toInvite,function(invited,callback){
           $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
             callback();
@@ -220,7 +220,7 @@ $scope.refresh = function(){
     $scope.foot.toInvite.push(id);
   };
   $scope.askToPlay = function(id){
-      $http.post('http://'+serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+      $http.post(serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
         $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
         $scope.isPending = true;
       });
@@ -256,7 +256,7 @@ $scope.closeModal3 = function(launch){
   if(launch){
       $scope.foot.field = $scope.selectedField.id; //Just send the id
       console.log($scope.foot);
-      $http.post('http://'+serverAddress+'/foot/update',$scope.foot).success(function(){
+      $http.post(serverAddress+'/foot/update',$scope.foot).success(function(){
         $scope.foot.field = $scope.selectedField;
         var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.getObject('user').id});
         async.each(toNotify,function(player){
@@ -274,7 +274,7 @@ $scope.closeModal3 = function(launch){
 
   $scope.searchField = function(word){
     if(word.length>1){
-        $http.get('http://'+serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
+        $http.get(serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
           $scope.fields = data;
         });
       }

@@ -19,7 +19,7 @@ angular.module('note',[])
 
 	$scope.init = function(){
 	$scope.initBypass = true;
-					$http.get('http://'+serverAddress+'/getGrade/'+$localStorage.user.id+'/'+$scope.friend.id).success(function(response){
+					$http.get(serverAddress+'/getGrade/'+$localStorage.user.id+'/'+$scope.friend.id).success(function(response){
 						console.log(response);
 						if(response.length==0){
 							console.log("here");
@@ -71,7 +71,7 @@ angular.module('note',[])
 		else
 		{
 
-			$http.post('http://'+serverAddress+'/Notation/grade',{noteur: $localStorage.user.id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
+			$http.post(serverAddress+'/Notation/grade',{noteur: $localStorage.user.id, note: $scope.friend.id, technique:$scope.notes[0],frappe:$scope.notes[1],physique:$scope.notes[2],fair_play:$scope.notes[3],assiduite:$scope.notes[4] }).success(function(){
 
 			});
 

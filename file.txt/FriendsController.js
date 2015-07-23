@@ -11,13 +11,13 @@ $scope.addFavorite = function(target){
     }
   });
   if($rootScope.friends[targetPosition].statut==0){
-   $http.post('http://'+serverAddress+'/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+   $http.post(serverAddress+'/addFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $rootScope.friends[targetPosition].statut = 1;
     console.log('here1');
   });
 }
 else if($rootScope.friends[targetPosition].statut==1){
-  $http.post('http://'+serverAddress+'/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
+  $http.post(serverAddress+'/removeFavorite',{id1: $localStorage.user.id, id2: target}).success(function(){
     $rootScope.friends[targetPosition].statut = 0;
   });
 }
@@ -29,7 +29,7 @@ $scope.refresh = function(){
   else
     var maxId = _.max($localStorage.friends, function(friend){return friend.friendship}).friendship;
 
-  $http.get('http://'+serverAddress+'/getAllFriends/'+$localStorage.user.id+'/'+maxId).success(function(data){
+  $http.get(serverAddress+'/getAllFriends/'+$localStorage.user.id+'/'+maxId).success(function(data){
     $localStorage.friends.concat(data);
     $scope.$broadcast('scroll.refreshComplete');
   });

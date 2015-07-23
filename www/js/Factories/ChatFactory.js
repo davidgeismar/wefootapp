@@ -6,7 +6,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		var chats = $localStorage.getObject('chats');
 		var user = $localStorage.getObject('user');
 		var index = _.pluck(chats, 'id').indexOf(chatId);
-		io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: user.id, chat: chatId});
+		io.socket.post(serverAddress+'/chatter/updateLts',{user: user.id, chat: chatId});
 		chats[index].lastTime = moment();
 		$localStorage.setObject('chats', chats);
 	}
@@ -34,7 +34,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 	obj.sendMessage = function (message, chat) {
 		var user = $localStorage.getObject('user');
 		obj.updateLts(chat.id);
-		$http.post('http://'+serverAddress+'/message/create',{sender_id :user.id, messagestr:message, chat:chat.id, receivers:chat.users}).success(function(message){
+		$http.post(serverAddress+'/message/create',{sender_id :user.id, messagestr:message, chat:chat.id, receivers:chat.users}).success(function(message){
 		});
 	}
 	obj.addChatter =  function (chatter){
@@ -57,7 +57,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 			$localStorage.setObject('chats',chats);
 			$localStorage.setObject('chatsDisplay',chatsDisplay);
 			$rootScope.$emit('updateChatDisplayer');
-			$http.post('http://'+serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:user.id}).success(function(){
+			$http.post(serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:user.id}).success(function(){
 			}).error(function(err){
 				console.log(err);
 			});
@@ -97,7 +97,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 	}
 
 	obj.postNewChatter = function(footId, userId){
-		$http.post('http://'+serverAddress+'/chatter/addToChat',{user :userId, related:footId });
+		$http.post(serverAddress+'/chatter/addToChat',{user :userId, related:footId });
 	}
 	return obj;
 
@@ -140,7 +140,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		obj.getNewChats = function(){
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
-			return $http.get('http://'+serverAddress+'/chat/getNewChats/'+user.id+'/'+ltu).success(function(chats){
+			return $http.get(serverAddress+'/chat/getNewChats/'+user.id+'/'+ltu).success(function(chats){
 				angular.forEach(chats, function(chat){
 					obj.addChat(chat);
 				});	
@@ -149,7 +149,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		obj.getNewChatters = function(){
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
-			return $http.get('http://'+serverAddress+'/chat/getNewChatters/'+user.id+'/'+ltu).success(function(chatters){
+			return $http.get(serverAddress+'/chat/getNewChatters/'+user.id+'/'+ltu).success(function(chatters){
 				angular.forEach(chatters, function(chatter){
 					chat.addChatter(chatter);
 				});	
@@ -158,7 +158,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		obj.getNewMessages = function(){
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
-			return $http.get('http://'+serverAddress+'/chat/getUnseenMessages/'+user.id+'/'+ltu).success(function(messages){
+			return $http.get(serverAddress+'/chat/getUnseenMessages/'+user.id+'/'+ltu).success(function(messages){
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
 				});	
@@ -211,7 +211,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		}
 		obj.getChat = function(related){
 			var user = $localStorage.getObject('user');
-			return $http.get('http://'+serverAddress+'/chat/getChat/'+user.id+'/'+related).success(function(chat){
+			return $http.get(serverAddress+'/chat/getChat/'+user.id+'/'+related).success(function(chat){
 				obj.addChat(chat);
 			});	
 		}

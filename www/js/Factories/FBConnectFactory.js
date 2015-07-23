@@ -102,7 +102,7 @@ obj.connect = function(){
               //save the user data
               //for the purpose of this example I will store it on ionic local storage but you should save it on a database
 
-              $http.post('http://'+serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+              $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
                 $localStorage.set('token',response.token);
                 $localStorage.setObject('user',response);
                 $connection(response.id,function(){

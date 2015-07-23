@@ -6,7 +6,7 @@ angular.module('friend',[])
 
 		//Appelle setNote pour toutes les étoiles et récupère le nb de votes
 	$scope.initNotes = function(){
-		$http.get('http://'+serverAddress+'/getDetailledGrades/'+$scope.friend.id).success(function(data){
+		$http.get(serverAddress+'/getDetailledGrades/'+$scope.friend.id).success(function(data){
 			$scope.friend.nbGrades = data.nbGrades;
 			$scope.setNote(Math.round(data.technique), 0);
 			$scope.setNote(Math.round(data.frappe), 1);
@@ -17,7 +17,7 @@ angular.module('friend',[])
 	}
 
 		$scope.getNbTrophes = function(){
-		$http.get('http://'+serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
+		$http.get(serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
 			if(data.nbHommes){
 				$scope.friend.nbHommes = data.nbHommes;
 			}
@@ -27,7 +27,7 @@ angular.module('friend',[])
 		});
 	}
 
-	$http.get('http://'+serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.getObject('user').id).success(function(foot){
+	$http.get(serverAddress+'/user/toConfirm/'+$stateParams.id+'/'+$localStorage.getObject('user').id).success(function(foot){
 
 		 	if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
@@ -44,7 +44,7 @@ angular.module('friend',[])
 		$scope.getNbTrophes();
 	} 
 	else{
-		$http.get('http://'+serverAddress+'/user/get/'+$stateParams.id).success(function(user){
+		$http.get(serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 			$scope.friend = user;
 			$scope.initNotes();
 			$scope.getNbTrophes();
@@ -76,14 +76,14 @@ angular.module('friend',[])
 	$scope.acceptInvitation = function (yes){
 		if(yes){
 			chat.postNewChatter($scope.foot.id,$scope.friend.id);
-			$http.post('http://'+serverAddress+'/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
+			$http.post(serverAddress+'/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
 			chat.post
 		}
 		else{
-			$http.post('http://'+serverAddress+'/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
+			$http.post(serverAddress+'/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandRefused'});
 			});

@@ -1,7 +1,7 @@
 //GLOBAL FUNCTIONS
 
 // var serverAddress = "62.210.115.66:9000";
-var serverAddress = "62.210.115.66:9000";
+var serverAddress = "http://62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
 
 
@@ -121,12 +121,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('disconnect',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id)
-      $http.post('http://'+serverAddress+'/connexion/delete',{id : $localStorage.getObject('user').id});
+      $http.post(serverAddress+'/connexion/delete',{id : $localStorage.getObject('user').id});
   });
 
   io.socket.on('connect', function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
-      io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
+      io.socket.post(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
@@ -147,7 +147,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         $localStorage.newFriend = true;  //refresh on actu load his data
 
       if(data.typ == 'footInvit'){
-        $http.get('http://'+serverAddress+'/foot/getInfo/'+data.id).success(function(info){
+        $http.get(serverAddress+'/foot/getInfo/'+data.id).success(function(info){
           data.organisator = info.orga;
           data.orgaName = info.orgaName;
           data.field = info.field;
@@ -224,11 +224,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   $ionicPlatform.on('resume',function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
-      $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
+      $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
         $rootScope.$digest();
       });
-      $http.post('http://'+serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
+      $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
       getCoord();
     }

@@ -2,7 +2,7 @@ angular.module('resetPassword',[]).controller('ResetPasswordCtrl', function($htt
 
 	$scope.sendResetMail = function(email){
 
-		$http.post('http://'+serverAddress+'/user/resetPassword',{email:email}).success(function(data){
+		$http.post(serverAddress+'/user/resetPassword',{email:email}).success(function(data){
 			console.log(data);
 			$scope.erreur ="";
 		}).error(function(err){

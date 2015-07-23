@@ -44,7 +44,7 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post('http://'+serverAddress+'/session/login',$scope.user).success(function(data){
+    $http.post(serverAddress+'/session/login',$scope.user).success(function(data){
       $localStorage.set('token',data.token);
       $localStorage.setObject('user',data);
       $connection(data.id,function(){
@@ -70,11 +70,11 @@ $scope.facebookConnect = function() {
       showBackdrop: false,
       hideOnStateChange: true
     });
-    $http.post('http://'+serverAddress+'/user/create',$scope.user).success(function(data){
+    $http.post(serverAddress+'/user/create',$scope.user).success(function(data){
      $localStorage.token = data[0].token;
      $localStorage.setObject('user',data[0]);
      $localStorage.setObject('friends',[]);
-     io.socket.post('http://'+serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
+     io.socket.post(serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();

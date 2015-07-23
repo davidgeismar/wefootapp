@@ -36,7 +36,7 @@ angular.module('field',[])
     }
     else {
 
-      $http.post('http://'+serverAddress+'/field/create',$scope.field).success(function(data, status) {
+      $http.post(serverAddress+'/field/create',$scope.field).success(function(data, status) {
 
         if($scope.imageUri){
           var optionsFt = {
@@ -45,7 +45,7 @@ angular.module('field',[])
             }
 
           };
-          $cordovaFileTransfer.upload('http://'+serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
+          $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
           .then(function(result) {
             $confirmation.showConfirm("Votre terrain a bien été inséré, recherchez le dans la liste !");  
             $ionicHistory.goBack();

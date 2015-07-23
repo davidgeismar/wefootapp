@@ -10,12 +10,12 @@ angular.module('friends',[])
     var targetPosition = _.pluck($rootScope.friends, 'id').indexOf(target);
     if(targetPosition>-1){
       if($rootScope.friends[targetPosition].statut==0){
-       $http.post('http://'+serverAddress+'/addFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
+       $http.post(serverAddress+'/addFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
         $rootScope.friends[targetPosition].statut = 1;
       });
      }
      else if($rootScope.friends[targetPosition].statut==1){
-      $http.post('http://'+serverAddress+'/removeFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
+      $http.post(serverAddress+'/removeFavorite',{id1: $localStorage.getObject('user').id, id2: target}).success(function(){
         $rootScope.friends[targetPosition].statut = 0;
       });
     }
@@ -23,7 +23,7 @@ angular.module('friends',[])
 }
 
 $scope.refresh = function(){
-  $http.get('http://'+serverAddress+'/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
+  $http.get(serverAddress+'/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
     var friends = data[0];
     if(data[0].length==0) return;
     angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
@@ -47,7 +47,7 @@ $scope.goFriend = function(friend){
 $scope.deleteFriend = function(friendId){
   var index = _.pluck($rootScope.friends, 'id').indexOf(friendId);
   if(index>-1){
-    $http.post('http://'+serverAddress+'/friendship/deleteFriend',{user1: $localStorage.getObject('user').id, user2: friendId}).success(function(){
+    $http.post(serverAddress+'/friendship/deleteFriend',{user1: $localStorage.getObject('user').id, user2: friendId}).success(function(){
       $rootScope.friends.splice(index, 1);
       $localStorage.setObject('friends',$rootScope.friends);
       $localStorage.newFriend = true;

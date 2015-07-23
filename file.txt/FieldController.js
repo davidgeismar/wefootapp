@@ -31,7 +31,7 @@ angular.module('field',[])
   if($scope.imageUri){
     $scope.field.related_to = $localStorage.user.id;
   }
-    $http.post('http://'+serverAddress+'/field/create',$scope.field).success(function(data, status) {
+    $http.post(serverAddress+'/field/create',$scope.field).success(function(data, status) {
       console.log('CALLEEDDDD');
 
       if($scope.imageUri){
@@ -41,7 +41,7 @@ angular.module('field',[])
           }
 
         };
-        $cordovaFileTransfer.upload('http://'+serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
+        $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
         .then(function(result) {  
         // Success!
         console.log("successssss");
