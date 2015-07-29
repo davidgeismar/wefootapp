@@ -1997,7 +1997,7 @@ GMaps.geocode = function(options) {
 
 //==========================
 // Polygon containsLatLng
-// https://github.com/tparkin/Google-Maps-Point-in-Polygon
+// http://github.com/tparkin/Google-Maps-Point-in-Polygon
 // Poygon getBounds extension - google-maps-extensions
 // http://code.google.com/p/google-maps-extensions/source/browse/google.maps.Polygon.getBounds.js
 if (!google.maps.Polygon.prototype.getBounds) {
@@ -2072,7 +2072,7 @@ google.maps.Marker.prototype.getId = function() {
 
 //==========================
 // Array indexOf
-// https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/indexOf
+// http://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/indexOf
 if (!Array.prototype.indexOf) {
   Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
       "use strict";

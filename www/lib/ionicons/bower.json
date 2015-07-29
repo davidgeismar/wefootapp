@@ -26,6 +26,6 @@
         "css/ionicons.css",
         "fonts/*"
     ],
-    "homepage": "https://github.com/driftyco/ionicons",
+    "homepage": "http://github.com/driftyco/ionicons",
     "description": "Ionicons - free and beautiful icons from the creators of Ionic Framework"
 }

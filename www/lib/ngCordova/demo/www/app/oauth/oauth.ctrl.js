@@ -30,7 +30,7 @@ angular.module('demo.oauth.ctrl', [])
     };
 
     $scope.googleLogin = function () {
-      $cordovaOauth.google("CLIENT_ID_HERE", ["https://www.googleapis.com/auth/urlshortener", "https://www.googleapis.com/auth/userinfo.email"]).then(function (result) {
+      $cordovaOauth.google("CLIENT_ID_HERE", ["http://www.googleapis.com/auth/urlshortener", "http://www.googleapis.com/auth/userinfo.email"]).then(function (result) {
         $scope.oauthResult = result;
       }, function (error) {
         $scope.oauthResult = "OAUTH ERROR (see console)";

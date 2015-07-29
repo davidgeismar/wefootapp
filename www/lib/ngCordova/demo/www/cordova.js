@@ -1061,7 +1061,7 @@
         iOSExec.setJsToNativeBridgeMode = function(mode) {
             // Remove the iFrame since it may be no longer required, and its existence
             // can trigger browser bugs.
-            // https://issues.apache.org/jira/browse/CB-593
+            // http://issues.apache.org/jira/browse/CB-593
             if (execIframe) {
                 execIframe.parentNode.removeChild(execIframe);
                 execIframe = null;

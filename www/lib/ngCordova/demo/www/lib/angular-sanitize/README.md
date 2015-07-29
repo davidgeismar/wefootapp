@@ -1,7 +1,7 @@
 # packaged angular-sanitize
 
 This repo is for distribution on `npm` and `bower`. The source for this module is in the
-[main AngularJS repo](https://github.com/angular/angular.js/tree/master/src/ngSanitize).
+[main AngularJS repo](http://github.com/angular/angular.js/tree/master/src/ngSanitize).
 Please file issues and pull requests against that repo.
 
 ## Install

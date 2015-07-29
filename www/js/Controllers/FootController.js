@@ -152,7 +152,8 @@ $scope.refresh = function(){
 }
 
   $scope.book = function(){
-    $localStorage.reservationClient = {foot: $scope.foot.id, field: $scope.foot.field.id, date: $scope.foot.date};
+    var user = $localStorage.getObject('user');
+    $localStorage.reservationClient = {foot: $scope.foot.id, field: $scope.foot.field.id, date: $scope.foot.date, user: user.id, userName: user.first_name+" "+user.last_name, userPhone: user.telephone};
     $localStorage.found = 0;
     $localStorage.foot = $scope.foot;
     $location.path('/resa/recap');

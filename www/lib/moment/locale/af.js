@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : afrikaans (af)
-//! author : Werner Mollentze : https://github.com/wernerm
+//! author : Werner Mollentze : http://github.com/wernerm
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :
@@ -59,7 +59,7 @@
         },
         ordinalParse: /\d{1,2}(ste|de)/,
         ordinal : function (number) {
-            return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de'); // Thanks to Joris Röling : https://github.com/jjupiter
+            return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de'); // Thanks to Joris Röling : http://github.com/jjupiter
         },
         week : {
             dow : 1, // Maandag is die eerste dag van die week.

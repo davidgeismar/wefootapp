@@ -1,6 +1,7 @@
 //GLOBAL FUNCTIONS
 
 // var serverAddress = "62.210.115.66:9000";
+                      //"wefoot.herokuapp.com:80";
 var serverAddress = "62.210.115.66:9000";
 console.log("Connected to "+serverAddress);
 
@@ -130,7 +131,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
-            console.log('last chats loaded');
           });
         });
       });
@@ -194,6 +194,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         var user = $localStorage.getObject('user');
         user.lat  = position.coords.latitude;
         user.lng = position.coords.longitude;
+        $http.post('http://'+serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
         $localStorage.setObject('user', user);
         $rootScope.getCoord = true;
       });
@@ -471,7 +472,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/login');
         }
         $rootScope.$broadcast('loading:hide');
-        console.log(response.status);
+        console.log(response);
         $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       },

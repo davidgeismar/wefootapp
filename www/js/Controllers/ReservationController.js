@@ -20,6 +20,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $scope.indoor = {};
       $scope.indoor.checked = $localStorage.reservationClient.indoor;
       $scope.indoor.text = $localStorage.reservationClient.indoor ? "INDOOR" : "OUTDOOR";
+      $scope.prix = $localStorage.reservationClient.prix;
     }
     $localStorage.reservationClient.date = new Date($localStorage.reservationClient.date);
     $scope.date = getJour($localStorage.reservationClient.date);
@@ -39,8 +40,6 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
           $scope.found = 1;
           $localStorage.reservationClient.terrain = field.id;
           $localStorage.reservationClient.prix = field.prix;
-          $localStorage.reservationClient.userName = user.first_name+" "+user.last_name;
-          $localStorage.reservationClient.userPhone = user.telephone;
           $scope.prix = field.prix
         }
         else
@@ -139,10 +138,10 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $scope.hideModal = function(){
         if($scope.infos.telephone.length>9 && $scope.infos.birthday){
           $http.post('http://'+serverAddress+'/user/update',$scope.infos).success(function(newUser){
-            user = newUser;
             $paiement.getAllCards(newUser,function(card,newUser){
-              $scope.cards = [];
               $localStorage.setObject('user',newUser);
+              user = newUser;
+              $scope.cards = [];
               $scope.modal.hide();
             });
           });
@@ -160,6 +159,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $scope.cards = cards;
       if(!user.mangoId)
         $localStorage.setObject('user',newUser);
+        user = newUser;
     });
   }
 
@@ -179,7 +179,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
     }
     $scope.registerCard = function(){
       $scope.card.expirationDate = $scope.card.expirationDate.replace("/","");
-      $paiement.registerCard(user,$scope.card,function(card){
+      $paiement.registerCard($localStorage.getObject('user'),$scope.card,function(card){
         if(card === 0)
           $scope.err= 'Erreur les informations sont invalides';
         else{
@@ -189,7 +189,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       });
     }
     $scope.pay = function(cardId){
-      $paiement.proceed(user.mangoId,cardId,$localStorage.reservationClient,$localStorage.reservationClient.foot,function(result){
+      $paiement.proceed($localStorage.getObject('user').mangoId,cardId,$localStorage.reservationClient,$localStorage.reservationClient.foot,function(result){
         if(result == 0)
           $scope.err = 'Erreur une carte à surement déjà été enregistrée pour ce foot';
         else

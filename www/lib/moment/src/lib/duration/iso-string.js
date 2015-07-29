@@ -1,7 +1,7 @@
 var abs = Math.abs;
 
 export function toISOString() {
-    // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
+    // inspired by http://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
     var Y = abs(this.years());
     var M = abs(this.months());
     var D = abs(this.days());

@@ -484,6 +484,10 @@ ion-scroll[direction=y] {
 	font-size: 26px;
 	font-weight: 300
 }
+.actu_wf{
+	color: #28385c;
+	font-weight: bold;
+}
 .img_container{
 	margin-top:50px;
 	border-radius: 20px;

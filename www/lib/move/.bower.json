@@ -4,8 +4,8 @@
     "Content-Type": "text/html; charset=utf-8"
   },
   "main": "index.js",
-  "_source": "https://github.com/fettay/move.js",
+  "_source": "http://github.com/fettay/move.js",
   "_target": "*",
-  "_originalSource": "https://github.com/fettay/move.js",
+  "_originalSource": "http://github.com/fettay/move.js",
   "_direct": true
 }

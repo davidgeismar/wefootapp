@@ -46,11 +46,11 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 }
 
 
-allFunction.push(function(callback){
-  io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: userId},function(){
-    callback();
-  }); 
-});
+// allFunction.push(function(callback){
+//   io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: userId},function(){
+//     callback();
+//   }); 
+// });
 
 
 
@@ -161,7 +161,7 @@ return connect;
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot}).success(function(){
+      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot, field: resa.field}).success(function(){
         $http.post('http://'+serverAddress+'/reservation/create',resa).success(function(){
           callback();
           $ionicLoading.hide();
@@ -312,8 +312,8 @@ return profil;
   }
 
   foot.setDefaultOptions = function(values){
-    values.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
-    values.date.setHours(20,30,00);
+    values.date = new Date(new Date().getTime() + 96 * 60 * 60 * 1000); //DEFAULT TOMMOROW
+    values.date.setHours(22,00,00);
     values.nb_player = 10;
     values.friend_can_invite = true;
     values.priv = true;
@@ -354,6 +354,7 @@ return profil;
     $localStorage.footTodo = [];
     $http.get('http://'+serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
+      console.log(data);
       async.each(data, function(foot,callback){
         $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;

@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : ukrainian (uk)
-//! author : zemlanin : https://github.com/zemlanin
-//! Author : Menelion Elensúle : https://github.com/Oire
+//! author : zemlanin : http://github.com/zemlanin
+//! Author : Menelion Elensúle : http://github.com/Oire
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

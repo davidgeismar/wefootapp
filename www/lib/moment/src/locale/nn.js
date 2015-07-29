@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : norwegian nynorsk (nn)
-//! author : https://github.com/mechuwind
+//! author : http://github.com/mechuwind
 
 import moment from '../moment';
 

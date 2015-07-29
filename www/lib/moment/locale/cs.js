@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : czech (cs)
-//! author : petrbela : https://github.com/petrbela
+//! author : petrbela : http://github.com/petrbela
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

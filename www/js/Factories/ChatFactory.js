@@ -171,7 +171,9 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				if(chat.messages.length>0){
 					var lastDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 					var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);
-					var chatPic = getStuffById(chat.messages[chat.messages.length-1].sender_id, chat.users).picture;
+					var stuff = getStuffById(chat.messages[chat.messages.length-1].sender_id, chat.users);
+					if(stuff)
+						var chatPic = stuff.picture;
 				//1VS1
 				if(chat.typ==1){
 					chatsDisplay.push({id:chat.id, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:"test", seen:chat.seen, chatPic:chatPic });

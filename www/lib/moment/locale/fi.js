@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : finnish (fi)
-//! author : Tarmo Aidantausta : https://github.com/bleadof
+//! author : Tarmo Aidantausta : http://github.com/bleadof
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

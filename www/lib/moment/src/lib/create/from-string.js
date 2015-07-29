@@ -76,7 +76,7 @@ hooks.createFromInputFallback = deprecate(
     'moment construction falls back to js Date. This is ' +
     'discouraged and will be removed in upcoming major ' +
     'release. Please refer to ' +
-    'https://github.com/moment/moment/issues/1407 for more info.',
+    'http://github.com/moment/moment/issues/1407 for more info.',
     function (config) {
         config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
     }

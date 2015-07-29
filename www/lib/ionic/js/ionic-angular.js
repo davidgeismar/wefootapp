@@ -2425,7 +2425,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
-     *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
+     *    on Android, please use the [Ionic keyboard plugin](http://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
      *    Default: false.
      *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
      *    Default: true.
@@ -2872,8 +2872,8 @@ IonicModule
          * @description
          * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
          * `offline`, etc. More information about available event types can be found in
-         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
-         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * [Cordova's event documentation](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
          * @param {function} callback Called when the Cordova event is fired.
          * @returns {function} Returns a deregistration function to remove the event listener.
          */
@@ -3632,8 +3632,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
  * It is meant to be used where we need to absolute-position DOM elements in
  * relation to other, existing elements (this is the case for tooltips, popovers, etc.).
  *
- * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
- * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
+ * Adapted from [AngularUI Bootstrap](http://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
+ * ([license](http://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
 IonicModule
 .factory('$ionicPosition', ['$document', '$window', function($document, $window) {
@@ -6775,7 +6775,7 @@ IonicModule
 
     function scrollTo(Y, duration, callback) {
       // scroll animation loop w/ easing
-      // credit https://gist.github.com/dezinezync/5487119
+      // credit http://gist.github.com/dezinezync/5487119
       var start = Date.now(),
           from = lastOverscroll;
 
@@ -8375,7 +8375,7 @@ IonicModule
  *
  * - The iOS webview has a performance bottleneck when switching out `<img src>` attributes.
  *   To increase performance of images on iOS, cache your images in advance and,
- *   if possible, lower the number of unique images. We're working on [a solution](https://github.com/driftyco/ionic/issues/3194).
+ *   if possible, lower the number of unique images. We're working on [a solution](http://github.com/driftyco/ionic/issues/3194).
  *
  * @usage
  * #### Basic Item List ([codepen](http://codepen.io/ionic/pen/0c2c35a34a8b18ad4d793fef0b081693))
@@ -9364,7 +9364,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
  * after the content has been added.
  *
  * Be aware that this directive gets its own child scope. If you do not understand why this
- * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
+ * is important, you can read [http://docs.angularjs.org/guide/scope](http://docs.angularjs.org/guide/scope).
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
@@ -10511,7 +10511,7 @@ IonicModule
  *
  * ### Notes
  * - This directive requires the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [Ionic Keyboard Plugin](http://github.com/driftyco/ionic-plugins-keyboard).
  * - On Android not in fullscreen mode, i.e. you have
  *   `<preference name="Fullscreen" value="false" />` or no preference in your `config.xml` file,
  *   this directive is unnecessary since it is the default behavior.
@@ -11345,7 +11345,7 @@ IonicModule
  *
  * The ionNavView directive is used to render templates in your application. Each template
  * is part of a state. States are usually mapped to a url, and are defined programatically
- * using angular-ui-router (see [their docs](https://github.com/angular-ui/ui-router/wiki),
+ * using angular-ui-router (see [their docs](http://github.com/angular-ui/ui-router/wiki),
  * and remember to replace ui-view with ion-nav-view in examples).
  *
  * @usage
@@ -11450,7 +11450,7 @@ IonicModule
  *
  * ## AngularUI Router
  *
- * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
+ * Please visit [AngularUI Router's docs](http://github.com/angular-ui/ui-router/wiki) for
  * more info. Below is a great video by the AngularUI Router team that may help to explain
  * how it all works:
  *
@@ -11821,7 +11821,7 @@ IonicModule
  *
  * ```html
  * <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
- *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+ *   <div style="width: 5000px; height: 5000px; background: url('http://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
  *  </ion-scroll>
  * ```
  *

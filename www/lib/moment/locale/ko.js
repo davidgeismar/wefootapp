@@ -3,7 +3,7 @@
 //!
 //! authors
 //!
-//! - Kyungwook, Park : https://github.com/kyungw00k
+//! - Kyungwook, Park : http://github.com/kyungw00k
 //! - Jeeeyul Lee <jeeeyul@gmail.com>
 
 (function (global, factory) {

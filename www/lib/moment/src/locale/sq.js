@@ -1,8 +1,8 @@
 //! moment.js locale configuration
 //! locale : Albanian (sq)
-//! author : Flakërim Ismani : https://github.com/flakerimi
-//! author: Menelion Elensúle: https://github.com/Oire (tests)
-//! author : Oerd Cukalla : https://github.com/oerd (fixes)
+//! author : Flakërim Ismani : http://github.com/flakerimi
+//! author: Menelion Elensúle: http://github.com/Oire (tests)
+//! author : Oerd Cukalla : http://github.com/oerd (fixes)
 
 import moment from '../moment';
 

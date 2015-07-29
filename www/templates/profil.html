@@ -29,7 +29,7 @@
             <img class= "img_profil" ng-src="{{actu.picture}}" alt="">
           </div>
           <div class="col-80 main_content_profil">
-             <p class="nowrap_foot"> <a href="#{{actu.userLink}}" class="bleuciel">{{actu.userName}}</a> {{actu.texte}} <a class="bleuciel" ng-if="actu.userName2" href="#{{actu.userLink2}}"> {{actu.userName2}}</a></p>
+             <p class="nowrap_foot"> <a href="#{{actu.userLink}}" class="bleuciel">{{actu.userName}}</a> <span ng-class="{actu_wf: actu.typ == 'WF'}"> {{actu.texte}} </span><a class="bleuciel" ng-if="actu.userName2" href="#{{actu.userLink2}}"> {{actu.userName2}}</a></p>
              <i ng-if="actu.related_info" class= "ion-ios-football" style="font-size:21px;"></i>
              <img ng-if="actu.userName2" class="img_friends_profil" ng-src="{{actu.picture2}}" alt="">
              <p class="nowrap_foot" ng-if="actu.related_info"> {{actu.related_info.dateString}} <br></p>

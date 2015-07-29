@@ -15,7 +15,7 @@
 (function() {
 /*
  * deprecated.js
- * https://github.com/wearefractal/deprecated/
+ * http://github.com/wearefractal/deprecated/
  * Copyright (c) 2014 Fractal <contact@wearefractal.com>
  * License MIT
  */
@@ -3306,8 +3306,8 @@ IonicModule
          * @description
          * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
          * `offline`, etc. More information about available event types can be found in
-         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
-         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * [Cordova's event documentation](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
          * @param {function} callback Called when the Cordova event is fired.
          * @returns {function} Returns a deregistration function to remove the event listener.
          */
@@ -4069,8 +4069,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
  * It is meant to be used where we need to absolute-position DOM elements in
  * relation to other, existing elements (this is the case for tooltips, popovers, etc.).
  *
- * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
- * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
+ * Adapted from [AngularUI Bootstrap](http://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
+ * ([license](http://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
 IonicModule
 .factory('$ionicPosition', ['$document', '$window', function($document, $window) {
@@ -7826,7 +7826,7 @@ function collectionRepeatSrcDirective(ngAttrName, attrName) {
  * directive.
  *
  * Be aware that this directive gets its own child scope. If you do not understand why this
- * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
+ * is important, you can read [http://docs.angularjs.org/guide/scope](http://docs.angularjs.org/guide/scope).
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
@@ -8928,7 +8928,7 @@ IonicModule
  *
  * ### Notes
  * - This directive requires the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [Ionic Keyboard Plugin](http://github.com/driftyco/ionic-plugins-keyboard).
  * - On Android not in fullscreen mode, i.e. you have
  *   `<preference name="Fullscreen" value="false" />` or no preference in your `config.xml` file,
  *   this directive is unnecessary since it is the default behavior.
@@ -9765,7 +9765,7 @@ IonicModule
  *
  * The ionNavView directive is used to render templates in your application. Each template
  * is part of a state. States are usually mapped to a url, and are defined programatically
- * using angular-ui-router (see [their docs](https://github.com/angular-ui/ui-router/wiki),
+ * using angular-ui-router (see [their docs](http://github.com/angular-ui/ui-router/wiki),
  * and remember to replace ui-view with ion-nav-view in examples).
  *
  * @usage
@@ -9861,7 +9861,7 @@ IonicModule
  *
  * ## AngularUI Router
  *
- * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
+ * Please visit [AngularUI Router's docs](http://github.com/angular-ui/ui-router/wiki) for
  * more info. Below is a great video by the AngularUI Router team that may help to explain
  * how it all works:
  *
@@ -10223,7 +10223,7 @@ IonicModule
  *
  * ```html
  * <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
- *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+ *   <div style="width: 5000px; height: 5000px; background: url('http://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
  *  </ion-scroll>
  * ```
  *

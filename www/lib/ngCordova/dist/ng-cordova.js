@@ -10,8 +10,8 @@ angular.module('ngCordova', [
   'ngCordova.plugins'
 ]);
 
-// install  :     cordova plugin add https://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git
-// link     :     https://github.com/EddyVerbruggen/cordova-plugin-actionsheet
+// install  :     cordova plugin add http://github.com/EddyVerbruggen/cordova-plugin-actionsheet.git
+// link     :     http://github.com/EddyVerbruggen/cordova-plugin-actionsheet
 
 angular.module('ngCordova.plugins.actionSheet', [])
 
@@ -34,8 +34,8 @@ angular.module('ngCordova.plugins.actionSheet', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-admob.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-admob
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-admob.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-admob
 
 angular.module('ngCordova.plugins.adMob', [])
 
@@ -104,8 +104,8 @@ angular.module('ngCordova.plugins.adMob', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/ohh2ahh/AppAvailability.git
-// link     :     https://github.com/ohh2ahh/AppAvailability
+// install  :     cordova plugin add http://github.com/ohh2ahh/AppAvailability.git
+// link     :     http://github.com/ohh2ahh/AppAvailability
 
 angular.module('ngCordova.plugins.appAvailability', [])
 
@@ -126,8 +126,8 @@ angular.module('ngCordova.plugins.appAvailability', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/pushandplay/cordova-plugin-apprate.git
-// link     :     https://github.com/pushandplay/cordova-plugin-apprate
+// install  :     cordova plugin add http://github.com/pushandplay/cordova-plugin-apprate.git
+// link     :     http://github.com/pushandplay/cordova-plugin-apprate
 
 angular.module('ngCordova.plugins.appRate', [])
 
@@ -197,8 +197,8 @@ angular.module('ngCordova.plugins.appRate', [])
     }];
   }]);
 
-// install   :     cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git
-// link      :     https://github.com/whiteoctober/cordova-plugin-app-version
+// install   :     cordova plugin add http://github.com/whiteoctober/cordova-plugin-app-version.git
+// link      :     http://github.com/whiteoctober/cordova-plugin-app-version
 
 angular.module('ngCordova.plugins.appVersion', [])
 
@@ -216,8 +216,8 @@ angular.module('ngCordova.plugins.appVersion', [])
     };
   }]);
 
-// install   :     cordova plugin add https://github.com/christocracy/cordova-plugin-background-geolocation.git
-// link      :     https://github.com/christocracy/cordova-plugin-background-geolocation
+// install   :     cordova plugin add http://github.com/christocracy/cordova-plugin-background-geolocation.git
+// link      :     http://github.com/christocracy/cordova-plugin-background-geolocation
 
 angular.module('ngCordova.plugins.backgroundGeolocation', [])
 
@@ -282,7 +282,7 @@ angular.module('ngCordova.plugins.backgroundGeolocation', [])
   ]);
 
 // install  :     cordova plugin add de.appplant.cordova.plugin.badge
-// link     :     https://github.com/katzer/cordova-plugin-badge
+// link     :     http://github.com/katzer/cordova-plugin-badge
 
 angular.module('ngCordova.plugins.badge', [])
 
@@ -356,8 +356,8 @@ angular.module('ngCordova.plugins.badge', [])
     };
   }]);
 
-// install  :    cordova plugin add https://github.com/wildabeast/BarcodeScanner.git
-// link     :    https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+// install  :    cordova plugin add http://github.com/wildabeast/BarcodeScanner.git
+// link     :    http://github.com/wildabeast/BarcodeScanner/#using-the-plugin
 
 angular.module('ngCordova.plugins.barcodeScanner', [])
 
@@ -392,7 +392,7 @@ angular.module('ngCordova.plugins.barcodeScanner', [])
   }]);
 
 //  install   :   cordova plugin add org.apache.cordova.battery-status
-//  link      :   https://github.com/apache/cordova-plugin-battery-status/blob/master/doc/index.md
+//  link      :   http://github.com/apache/cordova-plugin-battery-status/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.batteryStatus', [])
 
@@ -429,8 +429,8 @@ angular.module('ngCordova.plugins.batteryStatus', [])
   .run(['$cordovaBatteryStatus', function ($cordovaBatteryStatus) {
   }]);
 
-//  install   :   cordova plugin add https://github.com/don/cordova-plugin-ble-central#:/plugin
-//  link      :   https://github.com/don/cordova-plugin-ble-central
+//  install   :   cordova plugin add http://github.com/don/cordova-plugin-ble-central#:/plugin
+//  link      :   http://github.com/don/cordova-plugin-ble-central
 
 angular.module('ngCordova.plugins.ble', [])
 
@@ -540,7 +540,7 @@ angular.module('ngCordova.plugins.ble', [])
   }]);
 
 // install   :     cordova plugin add com.megster.cordova.bluetoothserial
-// link      :     https://github.com/don/BluetoothSerial
+// link      :     http://github.com/don/BluetoothSerial
 
 angular.module('ngCordova.plugins.bluetoothSerial', [])
 
@@ -720,8 +720,8 @@ angular.module('ngCordova.plugins.bluetoothSerial', [])
     };
   }]);
 
-// install  :    cordova plugin add https://github.com/fiscal-cliff/phonegap-plugin-brightness.git
-// link     :    https://github.com/fiscal-cliff/phonegap-plugin-brightness
+// install  :    cordova plugin add http://github.com/fiscal-cliff/phonegap-plugin-brightness.git
+// link     :    http://github.com/fiscal-cliff/phonegap-plugin-brightness
 
 angular.module('ngCordova.plugins.brightness', [])
 
@@ -769,8 +769,8 @@ angular.module('ngCordova.plugins.brightness', [])
 
 
 
-// install  :     cordova plugin add https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git
-// link     :     https://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin
+// install  :     cordova plugin add http://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin.git
+// link     :     http://github.com/EddyVerbruggen/Calendar-PhoneGap-Plugin
 
 angular.module('ngCordova.plugins.calendar', [])
 
@@ -1065,7 +1065,7 @@ angular.module('ngCordova.plugins.calendar', [])
   }]);
 
 // install   :   cordova plugin add org.apache.cordova.camera
-// link      :   https://github.com/apache/cordova-plugin-camera/blob/master/doc/index.md#orgapachecordovacamera
+// link      :   http://github.com/apache/cordova-plugin-camera/blob/master/doc/index.md#orgapachecordovacamera
 
 angular.module('ngCordova.plugins.camera', [])
 
@@ -1104,7 +1104,7 @@ angular.module('ngCordova.plugins.camera', [])
   }]);
 
 // install   :    cordova plugin add org.apache.cordova.media-capture
-// link      :    https://github.com/apache/cordova-plugin-media-capture/blob/master/doc/index.md
+// link      :    http://github.com/apache/cordova-plugin-media-capture/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.capture', [])
 
@@ -1162,8 +1162,8 @@ angular.module('ngCordova.plugins.capture', [])
     };
   }]);
 
-// install   :     cordova plugin add https://github.com/VersoSolutions/CordovaClipboard
-// link      :     https://github.com/VersoSolutions/CordovaClipboard
+// install   :     cordova plugin add http://github.com/VersoSolutions/CordovaClipboard
+// link      :     http://github.com/VersoSolutions/CordovaClipboard
 
 angular.module('ngCordova.plugins.clipboard', [])
 
@@ -1198,7 +1198,7 @@ angular.module('ngCordova.plugins.clipboard', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.contacts
-// link      :     https://github.com/apache/cordova-plugin-contacts/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-contacts/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.contacts', [])
 
@@ -1268,8 +1268,8 @@ angular.module('ngCordova.plugins.contacts', [])
     };
   }]);
 
-// install   :      cordova plugin add https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git
-// link      :      https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
+// install   :      cordova plugin add http://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git
+// link      :      http://github.com/VitaliiBlagodir/cordova-plugin-datepicker
 
 angular.module('ngCordova.plugins.datePicker', [])
   .factory('$cordovaDatePicker', ['$window', '$q', function ($window, $q) {
@@ -1286,7 +1286,7 @@ angular.module('ngCordova.plugins.datePicker', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.device
-// link      :     https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.device', [])
 
@@ -1295,7 +1295,7 @@ angular.module('ngCordova.plugins.device', [])
     return {
       /**
        * Returns the whole device object.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
        * @returns {Object} The device object.
        */
       getDevice: function () {
@@ -1304,7 +1304,7 @@ angular.module('ngCordova.plugins.device', [])
 
       /**
        * Returns the Cordova version.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#devicecordova
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#devicecordova
        * @returns {String} The Cordova version.
        */
       getCordova: function () {
@@ -1313,7 +1313,7 @@ angular.module('ngCordova.plugins.device', [])
 
       /**
        * Returns the name of the device's model or product.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#devicemodel
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#devicemodel
        * @returns {String} The name of the device's model or product.
        */
       getModel: function () {
@@ -1330,7 +1330,7 @@ angular.module('ngCordova.plugins.device', [])
 
       /**
        * Returns the device's operating system name.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceplatform
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceplatform
        * @returns {String} The device's operating system name.
        */
       getPlatform: function () {
@@ -1339,7 +1339,7 @@ angular.module('ngCordova.plugins.device', [])
 
       /**
        * Returns the device's Universally Unique Identifier.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceuuid
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceuuid
        * @returns {String} The device's Universally Unique Identifier
        */
       getUUID: function () {
@@ -1348,7 +1348,7 @@ angular.module('ngCordova.plugins.device', [])
 
       /**
        * Returns the operating system version.
-       * @see https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceversion
+       * @see http://github.com/apache/cordova-plugin-device/blob/master/doc/index.md#deviceversion
        * @returns {String}
        */
       getVersion: function () {
@@ -1358,7 +1358,7 @@ angular.module('ngCordova.plugins.device', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.device-motion
-// link      :     https://github.com/apache/cordova-plugin-device-motion/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-device-motion/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.deviceMotion', [])
 
@@ -1406,7 +1406,7 @@ angular.module('ngCordova.plugins.deviceMotion', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.device-orientation
-// link      :     https://github.com/apache/cordova-plugin-device-orientation/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-device-orientation/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.deviceOrientation', [])
 
@@ -1454,7 +1454,7 @@ angular.module('ngCordova.plugins.deviceOrientation', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.dialogs
-// link      :     https://github.com/apache/cordova-plugin-dialogs/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-dialogs/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.dialogs', [])
 
@@ -1523,8 +1523,8 @@ angular.module('ngCordova.plugins.dialogs', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/katzer/cordova-plugin-email-composer.git@0.8.2
-// link     :     https://github.com/katzer/cordova-plugin-email-composer
+// install  :     cordova plugin add http://github.com/katzer/cordova-plugin-email-composer.git@0.8.2
+// link     :     http://github.com/katzer/cordova-plugin-email-composer
 
 angular.module('ngCordova.plugins.emailComposer', [])
 
@@ -1558,7 +1558,7 @@ angular.module('ngCordova.plugins.emailComposer', [])
   }]);
 
 // install   :   cordova -d plugin add /Users/your/path/here/phonegap-facebook-plugin --variable APP_ID="123456789" --variable APP_NAME="myApplication"
-// link      :   https://github.com/Wizcorp/phonegap-facebook-plugin
+// link      :   http://github.com/Wizcorp/phonegap-facebook-plugin
 
 angular.module('ngCordova.plugins.facebook', [])
 
@@ -1636,8 +1636,8 @@ angular.module('ngCordova.plugins.facebook', [])
     }];
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-facebookads.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-facebookads
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-facebookads.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-facebookads
 
 angular.module('ngCordova.plugins.facebookAds', [])
   .factory('$cordovaFacebookAds', ['$q', '$window', function ($q, $window) {
@@ -1742,7 +1742,7 @@ angular.module('ngCordova.plugins.facebookAds', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.file
-// link      :     https://github.com/apache/cordova-plugin-file/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-file/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.file', [])
 
@@ -2451,8 +2451,8 @@ angular.module('ngCordova.plugins.file', [])
     }];
   }]);
 
-// install   :      cordova plugin add https://github.com/pwlin/cordova-plugin-file-opener2
-// link      :      https://github.com/pwlin/cordova-plugin-file-opener2
+// install   :      cordova plugin add http://github.com/pwlin/cordova-plugin-file-opener2
+// link      :      http://github.com/pwlin/cordova-plugin-file-opener2
 
 angular.module('ngCordova.plugins.fileOpener2', [])
 
@@ -2496,7 +2496,7 @@ angular.module('ngCordova.plugins.fileOpener2', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.file-transfer
-// link      :     https://github.com/apache/cordova-plugin-file-transfer/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-file-transfer/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.fileTransfer', [])
 
@@ -2552,8 +2552,8 @@ angular.module('ngCordova.plugins.fileTransfer', [])
     };
   }]);
 
-// install   :     cordova plugin add https://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin.git
-// link      :     https://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin
+// install   :     cordova plugin add http://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin.git
+// link      :     http://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin
 
 angular.module('ngCordova.plugins.flashlight', [])
 
@@ -2600,8 +2600,8 @@ angular.module('ngCordova.plugins.flashlight', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-flurry.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-flurry
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-flurry.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-flurry
 
 angular.module('ngCordova.plugins.flurryAds', [])
   .factory('$cordovaFlurryAds', ['$q', '$window', function ($q, $window) {
@@ -2705,8 +2705,8 @@ angular.module('ngCordova.plugins.flurryAds', [])
     };
   }]);
 
-// install   :     cordova plugin add https://github.com/phonegap-build/GAPlugin.git
-// link      :     https://github.com/phonegap-build/GAPlugin
+// install   :     cordova plugin add http://github.com/phonegap-build/GAPlugin.git
+// link      :     http://github.com/phonegap-build/GAPlugin
 
 angular.module('ngCordova.plugins.ga', [])
 
@@ -2776,7 +2776,7 @@ angular.module('ngCordova.plugins.ga', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.geolocation
-// link      :     https://github.com/apache/cordova-plugin-geolocation/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-geolocation/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.geolocation', [])
 
@@ -2824,7 +2824,7 @@ angular.module('ngCordova.plugins.geolocation', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.globalization
-// link      :      https://github.com/apache/cordova-plugin-globalization/blob/master/doc/index.md
+// link      :      http://github.com/apache/cordova-plugin-globalization/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.globalization', [])
 
@@ -3002,8 +3002,8 @@ angular.module('ngCordova.plugins.globalization', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-admob-pro.git
-// link     :     https://github.com/floatinghotpot/cordova-admob-pro
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-admob-pro.git
+// link     :     http://github.com/floatinghotpot/cordova-admob-pro
 
 angular.module('ngCordova.plugins.googleAds', [])
   .factory('$cordovaGoogleAds', ['$q', '$window', function ($q, $window) {
@@ -3107,8 +3107,8 @@ angular.module('ngCordova.plugins.googleAds', [])
     };
   }]);
 
-// install   :     cordova plugin add https://github.com/danwilson/google-analytics-plugin.git
-// link      :     https://github.com/danwilson/google-analytics-plugin
+// install   :     cordova plugin add http://github.com/danwilson/google-analytics-plugin.git
+// link      :     http://github.com/danwilson/google-analytics-plugin
 
 angular.module('ngCordova.plugins.googleAnalytics', [])
 
@@ -3270,7 +3270,7 @@ angular.module('ngCordova.plugins.googleMap', [])
   }]);
 
 // install  :     cordova plugin add nl.x-services.plugins.googleplus
-// link     :     https://github.com/EddyVerbruggen/cordova-plugin-googleplus
+// link     :     http://github.com/EddyVerbruggen/cordova-plugin-googleplus
 
   angular.module('ngCordova.plugins.googleplus', [])
 
@@ -3343,8 +3343,8 @@ angular.module('ngCordova.plugins.googleMap', [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/Telerik-Verified-Plugins/HealthKit
-// link      :      https://github.com/Telerik-Verified-Plugins/HealthKit
+// install   :      cordova plugin add http://github.com/Telerik-Verified-Plugins/HealthKit
+// link      :      http://github.com/Telerik-Verified-Plugins/HealthKit
 
 angular.module('ngCordova.plugins.healthKit', [])
 
@@ -3366,7 +3366,7 @@ angular.module('ngCordova.plugins.healthKit', [])
       /**
        * Request authorization to access HealthKit data. See the full HealthKit constants
        * reference for possible read and write types:
-       * https://developer.apple.com/library/ios/documentation/HealthKit/Reference/HealthKit_Constants/
+       * http://developer.apple.com/library/ios/documentation/HealthKit/Reference/HealthKit_Constants/
        */
       requestAuthorization: function (readTypes, writeTypes) {
         var q = $q.defer();
@@ -3500,7 +3500,7 @@ angular.module('ngCordova.plugins.healthKit', [])
        *
        * Workout param should be of the format:
        {
-         'activityType': 'HKWorkoutActivityTypeCycling', // HKWorkoutActivityType constant (https://developer.apple.com/library/ios/documentation/HealthKit/Reference/HKWorkout_Class/#//apple_ref/c/tdef/HKWorkoutActivityType)
+         'activityType': 'HKWorkoutActivityTypeCycling', // HKWorkoutActivityType constant (http://developer.apple.com/library/ios/documentation/HealthKit/Reference/HKWorkout_Class/#//apple_ref/c/tdef/HKWorkoutActivityType)
          'quantityType': 'HKQuantityTypeIdentifierDistanceCycling',
          'startDate': new Date(), // mandatory
          'endDate': null, // optional, use either this or duration
@@ -3550,8 +3550,8 @@ angular.module('ngCordova.plugins.healthKit', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-httpd.git
-// link     :     https://github.com/floatinghotpot/cordova-httpd
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-httpd.git
+// link     :     http://github.com/floatinghotpot/cordova-httpd
 
 angular.module('ngCordova.plugins.httpd', [])
   .factory('$cordovaHttpd', ['$q', function ($q) {
@@ -3608,8 +3608,8 @@ angular.module('ngCordova.plugins.httpd', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-iad.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-iad
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-iad.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-iad
 
 angular.module('ngCordova.plugins.iAd', [])
   .factory('$cordovaiAd', ['$q', '$window', function ($q, $window) {
@@ -3713,8 +3713,8 @@ angular.module('ngCordova.plugins.iAd', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/wymsee/cordova-imagePicker.git
-// link     :     https://github.com/wymsee/cordova-imagePicker
+// install  :     cordova plugin add http://github.com/wymsee/cordova-imagePicker.git
+// link     :     http://github.com/wymsee/cordova-imagePicker
 
 angular.module('ngCordova.plugins.imagePicker', [])
 
@@ -3736,7 +3736,7 @@ angular.module('ngCordova.plugins.imagePicker', [])
   }]);
 
 // install   :     cordova plugin add org.apache.cordova.inappbrowser
-// link      :     https://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md
+// link      :     http://github.com/apache/cordova-plugin-inappbrowser/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.inAppBrowser', [])
 
@@ -3830,8 +3830,8 @@ angular.module('ngCordova.plugins.inAppBrowser', [])
     }];
   }]);
 
-// install  :     cordova plugin add https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
-// link     :     https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin
+// install  :     cordova plugin add http://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git
+// link     :     http://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin
 angular.module('ngCordova.plugins.insomnia', [])
 
   .factory('$cordovaInsomnia', ['$window', function ($window) {
@@ -3846,8 +3846,8 @@ angular.module('ngCordova.plugins.insomnia', [])
     }
 
   }]);
-// install   :   cordova plugins add https://github.com/vstirbu/InstagramPlugin
-// link      :   https://github.com/vstirbu/InstagramPlugin
+// install   :   cordova plugins add http://github.com/vstirbu/InstagramPlugin
+// link      :   http://github.com/vstirbu/InstagramPlugin
 
 angular.module('ngCordova.plugins.instagram', [])
 
@@ -3875,8 +3875,8 @@ angular.module('ngCordova.plugins.instagram', [])
   };
 }]);
 
-// install   :      cordova plugin add https://github.com/driftyco/ionic-plugins-keyboard.git
-// link      :      https://github.com/driftyco/ionic-plugins-keyboard
+// install   :      cordova plugin add http://github.com/driftyco/ionic-plugins-keyboard.git
+// link      :      http://github.com/driftyco/ionic-plugins-keyboard
 
 //TODO: add support for native.keyboardshow + native.keyboardhide
 
@@ -3903,8 +3903,8 @@ angular.module('ngCordova.plugins.keyboard', [])
     };
   }]);
 
-// install   :      cordova plugin add https://github.com/shazron/KeychainPlugin.git
-// link      :      https://github.com/shazron/KeychainPlugin
+// install   :      cordova plugin add http://github.com/shazron/KeychainPlugin.git
+// link      :      http://github.com/shazron/KeychainPlugin
 
 angular.module('ngCordova.plugins.keychain', [])
 
@@ -3942,7 +3942,7 @@ angular.module('ngCordova.plugins.keychain', [])
   }]);
 
 // install   :  cordova plugin add de.appplant.cordova.plugin.local-notification
-// link      :  https://github.com/katzer/cordova-plugin-local-notifications/
+// link      :  http://github.com/katzer/cordova-plugin-local-notifications/
 
 angular.module('ngCordova.plugins.localNotification', [])
 
@@ -4090,8 +4090,8 @@ angular.module('ngCordova.plugins.localNotification', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-mmedia.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-mmedia
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-mmedia.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-mmedia
 
 angular.module('ngCordova.plugins.mMediaAds', [])
   .factory('$cordovaMMediaAds', ['$q', '$window', function ($q, $window) {
@@ -4196,7 +4196,7 @@ angular.module('ngCordova.plugins.mMediaAds', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.media
-// link      :      https://github.com/apache/cordova-plugin-media
+// link      :      http://github.com/apache/cordova-plugin-media
 
 angular.module('ngCordova.plugins.media', [])
 
@@ -4273,8 +4273,8 @@ angular.module('ngCordova.plugins.media', [])
     };
   }]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-mobfox-pro.git
-// link     :     https://github.com/floatinghotpot/cordova-mobfox-pro
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-mobfox-pro.git
+// link     :     http://github.com/floatinghotpot/cordova-mobfox-pro
 
 angular.module('ngCordova.plugins.mobfoxAds', [])
   .factory('$cordovaMobFoxAds', ['$q', '$window', function ($q, $window) {
@@ -4450,8 +4450,8 @@ angular.module('ngCordova.plugins', [
   'ngCordova.plugins.insomnia'
 ]);
 
-// install  :     cordova plugin add https://github.com/floatinghotpot/cordova-plugin-mopub.git
-// link     :     https://github.com/floatinghotpot/cordova-plugin-mopub
+// install  :     cordova plugin add http://github.com/floatinghotpot/cordova-plugin-mopub.git
+// link     :     http://github.com/floatinghotpot/cordova-plugin-mopub
 
 angular.module('ngCordova.plugins.mopubAds', [])
   .factory('$cordovaMoPubAds', ['$q', '$window', function ($q, $window) {
@@ -4555,8 +4555,8 @@ angular.module('ngCordova.plugins.mopubAds', [])
     };
   }]);
 
-// install   : cordova plugin add https://github.com/sidneys/cordova-plugin-nativeaudio.git
-// link      : https://github.com/sidneys/cordova-plugin-nativeaudio
+// install   : cordova plugin add http://github.com/sidneys/cordova-plugin-nativeaudio.git
+// link      : http://github.com/sidneys/cordova-plugin-nativeaudio
 
 angular.module('ngCordova.plugins.nativeAudio', [])
 
@@ -4642,7 +4642,7 @@ angular.module('ngCordova.plugins.nativeAudio', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.network-information
-// link      :      https://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md
+// link      :      http://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.network', [])
 
@@ -4788,7 +4788,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open("https://www.dropbox.com/1/oauth2/authorize?client_id=" + appKey + "&redirect_uri=http://localhost/callback" + "&response_type=token", "_blank", "location=no,clearsessioncache=yes,clearcache=yes");
+                    var browserRef = window.open("http://www.dropbox.com/1/oauth2/authorize?client_id=" + appKey + "&redirect_uri=http://localhost/callback" + "&response_type=token", "_blank", "location=no,clearsessioncache=yes,clearcache=yes");
                     browserRef.addEventListener("loadstart", function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var callbackResponse = (event.url).split("#")[1];
@@ -4831,12 +4831,12 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open("https://cloud.digitalocean.com/v1/oauth/authorize?client_id=" + clientId + "&redirect_uri=http://localhost/callback&response_type=code&scope=read%20write", "_blank", "location=no,clearsessioncache=yes,clearcache=yes");
+                    var browserRef = window.open("http://cloud.digitalocean.com/v1/oauth/authorize?client_id=" + clientId + "&redirect_uri=http://localhost/callback&response_type=code&scope=read%20write", "_blank", "location=no,clearsessioncache=yes,clearcache=yes");
                     browserRef.addEventListener("loadstart", function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var requestToken = (event.url).split("code=")[1];
                             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-                            $http({method: "post", url: "https://cloud.digitalocean.com/v1/oauth/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
+                            $http({method: "post", url: "http://cloud.digitalocean.com/v1/oauth/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
                             .success(function(data) {
                                 deferred.resolve(data);
                             })
@@ -4874,7 +4874,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://accounts.google.com/o/oauth2/auth?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&approval_prompt=force&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://accounts.google.com/o/oauth2/auth?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&approval_prompt=force&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener("loadstart", function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var callbackResponse = (event.url).split("#")[1];
@@ -4918,13 +4918,13 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://github.com/login/oauth/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(","), '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://github.com/login/oauth/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(","), '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             requestToken = (event.url).split("code=")[1];
                             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
                             $http.defaults.headers.post.accept = 'application/json';
-                            $http({method: "post", url: "https://github.com/login/oauth/access_token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&code=" + requestToken })
+                            $http({method: "post", url: "http://github.com/login/oauth/access_token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&code=" + requestToken })
                             .success(function(data) {
                                 deferred.resolve(data);
                             })
@@ -4962,7 +4962,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://www.facebook.com/dialog/oauth?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token&scope=' + appScope.join(","), '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://www.facebook.com/dialog/oauth?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token&scope=' + appScope.join(","), '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var callbackResponse = (event.url).split("#")[1];
@@ -5007,12 +5007,12 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://www.linkedin.com/uas/oauth2/authorization?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&response_type=code&state=' + state, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://www.linkedin.com/uas/oauth2/authorization?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&response_type=code&state=' + state, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             requestToken = (event.url).split("code=")[1];
                             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-                            $http({method: "post", url: "https://www.linkedin.com/uas/oauth2/accessToken", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
+                            $http({method: "post", url: "http://www.linkedin.com/uas/oauth2/accessToken", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
                             .success(function(data) {
                                 deferred.resolve(data);
                             })
@@ -5050,7 +5050,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://api.instagram.com/oauth/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://api.instagram.com/oauth/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(" ") + '&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var callbackResponse = (event.url).split("#")[1];
@@ -5094,12 +5094,12 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://app.box.com/api/oauth2/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&state=' + appState + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://app.box.com/api/oauth2/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&state=' + appState + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             requestToken = (event.url).split("code=")[1];
                             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-                            $http({method: "post", url: "https://app.box.com/api/oauth2/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
+                            $http({method: "post", url: "http://app.box.com/api/oauth2/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
                             .success(function(data) {
                                 deferred.resolve(data);
                             })
@@ -5138,13 +5138,13 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://ssl.reddit.com/api/v1/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&duration=permanent&state=ngcordovaoauth&scope=' + appScope.join(",") + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://ssl.reddit.com/api/v1/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&duration=permanent&state=ngcordovaoauth&scope=' + appScope.join(",") + '&response_type=code', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             requestToken = (event.url).split("code=")[1];
                             $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
                             $http.defaults.headers.post.Authorization = 'Basic ' + btoa(clientId + ":" + clientSecret);
-                            $http({method: "post", url: "https://ssl.reddit.com/api/v1/access_token", data: "redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
+                            $http({method: "post", url: "http://ssl.reddit.com/api/v1/access_token", data: "redirect_uri=http://localhost/callback" + "&grant_type=authorization_code" + "&code=" + requestToken })
                             .success(function(data) {
                                 deferred.resolve(data);
                             })
@@ -5191,10 +5191,10 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                             oauth_timestamp: Math.round((new Date()).getTime() / 1000.0),
                             oauth_version: "1.0"
                         };
-                        var signatureObj = $cordovaOauthUtility.createSignature("POST", "https://api.twitter.com/oauth/request_token", oauthObject,  { oauth_callback: "http://localhost/callback" }, clientSecret);
+                        var signatureObj = $cordovaOauthUtility.createSignature("POST", "http://api.twitter.com/oauth/request_token", oauthObject,  { oauth_callback: "http://localhost/callback" }, clientSecret);
                         $http({
                             method: "post",
-                            url: "https://api.twitter.com/oauth/request_token",
+                            url: "http://api.twitter.com/oauth/request_token",
                             headers: {
                                 "Authorization": signatureObj.authorization_header,
                                 "Content-Type": "application/x-www-form-urlencoded"
@@ -5210,7 +5210,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                                 if(parameterMap.hasOwnProperty("oauth_token") === false) {
                                     deferred.reject("Oauth request token was not received");
                                 }
-                                var browserRef = window.open('https://api.twitter.com/oauth/authenticate?oauth_token=' + parameterMap.oauth_token, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                                var browserRef = window.open('http://api.twitter.com/oauth/authenticate?oauth_token=' + parameterMap.oauth_token, '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                                 browserRef.addEventListener('loadstart', function(event) {
                                     if((event.url).indexOf("http://localhost/callback") === 0) {
                                         var callbackResponse = (event.url).split("?")[1];
@@ -5224,10 +5224,10 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                                         }
                                         delete oauthObject.oauth_signature;
                                         oauthObject.oauth_token = parameterMap.oauth_token;
-                                        var signatureObj = $cordovaOauthUtility.createSignature("POST", "https://api.twitter.com/oauth/access_token", oauthObject,  { oauth_verifier: parameterMap.oauth_verifier }, clientSecret);
+                                        var signatureObj = $cordovaOauthUtility.createSignature("POST", "http://api.twitter.com/oauth/access_token", oauthObject,  { oauth_verifier: parameterMap.oauth_verifier }, clientSecret);
                                         $http({
                                             method: "post",
-                                            url: "https://api.twitter.com/oauth/access_token",
+                                            url: "http://api.twitter.com/oauth/access_token",
                                             headers: {
                                                 "Authorization": signatureObj.authorization_header
                                             },
@@ -5286,7 +5286,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
             if(window.cordova) {
                 var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                 if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                    var browserRef = window.open('https://secure.meetup.com/oauth2/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                    var browserRef = window.open('http://secure.meetup.com/oauth2/authorize/?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                     browserRef.addEventListener('loadstart', function(event) {
                         if((event.url).indexOf("http://localhost/callback") === 0) {
                             var callbackResponse = (event.url).split("#")[1];
@@ -5322,7 +5322,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
         *
         * Suggestion: use salesforce oauth with forcetk.js(as SDK)
         *
-        * @param    string loginUrl (such as: https://login.salesforce.com ; please notice community login)
+        * @param    string loginUrl (such as: http://login.salesforce.com ; please notice community login)
         * @param    string clientId (copy from connection app info)
         * @param    string redirectUri (callback url in connection app info)
         * @return   promise
@@ -5392,12 +5392,12 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                 if(window.cordova) {
                     var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                     if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                        var browserRef = window.open('https://www.strava.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(",") + '&response_type=code&approval_prompt=force', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                        var browserRef = window.open('http://www.strava.com/oauth/authorize?client_id=' + clientId + '&redirect_uri=http://localhost/callback&scope=' + appScope.join(",") + '&response_type=code&approval_prompt=force', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                         browserRef.addEventListener('loadstart', function(event) {
                             if((event.url).indexOf("http://localhost/callback") === 0) {
                                 requestToken = (event.url).split("code=")[1];
                                 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-                                $http({method: "post", url: "https://www.strava.com/oauth/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&code=" + requestToken })
+                                $http({method: "post", url: "http://www.strava.com/oauth/token", data: "client_id=" + clientId + "&client_secret=" + clientSecret + "&code=" + requestToken })
                                 .success(function(data) {
                                     deferred.resolve(data);
                                 })
@@ -5434,7 +5434,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                 if (window.cordova) {
                     var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                     if (cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                        var browserRef = window.open('https://foursquare.com/oauth2/authenticate?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                        var browserRef = window.open('http://foursquare.com/oauth2/authenticate?client_id=' + clientId + '&redirect_uri=http://localhost/callback&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                         browserRef.addEventListener('loadstart', function (event) {
                             if ((event.url).indexOf("http://localhost/callback") === 0) {
                                 var callbackResponse = (event.url).split("#")[1];
@@ -5579,10 +5579,10 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                 if(window.cordova) {
                     var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                     if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                        var browserRef = window.open('https://oauth.vk.com/authorize?client_id=' + clientId + '&redirect_uri=http://oauth.vk.com/blank.html&response_type=token&scope=' + appScope.join(",") + '&display=touch&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                        var browserRef = window.open('http://oauth.vk.com/authorize?client_id=' + clientId + '&redirect_uri=http://oauth.vk.com/blank.html&response_type=token&scope=' + appScope.join(",") + '&display=touch&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                         browserRef.addEventListener('loadstart', function(event) {
                             var tmp = (event.url).split("#");
-                            if (tmp[0] == 'https://oauth.vk.com/blank.html' || tmp[0] == 'http://oauth.vk.com/blank.html') {
+                            if (tmp[0] == 'http://oauth.vk.com/blank.html' || tmp[0] == 'http://oauth.vk.com/blank.html') {
                                 var callbackResponse = (event.url).split("#")[1];
                                 var responseParameters = (callbackResponse).split("&");
                                 var parameterMap = [];
@@ -5622,7 +5622,7 @@ angular.module("ngCordova.plugins.oauth", ["ngCordova.plugins.oauthUtility"])
                 if(window.cordova) {
                     var cordovaMetadata = cordova.require("cordova/plugin_list").metadata;
                     if(cordovaMetadata.hasOwnProperty("org.apache.cordova.inappbrowser") === true) {
-                        var browserRef = window.open('https://api.imgur.com/oauth2/authorize?client_id=' + clientId + '&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
+                        var browserRef = window.open('http://api.imgur.com/oauth2/authorize?client_id=' + clientId + '&response_type=token', '_blank', 'location=no,clearsessioncache=yes,clearcache=yes');
                         browserRef.addEventListener('loadstart', function(event) {
                             if((event.url).indexOf("http://localhost/callback") === 0) {
                             	browserRef.removeEventListener("exit",function(event){});
@@ -5729,8 +5729,8 @@ angular.module("ngCordova.plugins.oauthUtility", [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/Paldom/PinDialog.git
-// link      :      https://github.com/Paldom/PinDialog
+// install   :      cordova plugin add http://github.com/Paldom/PinDialog.git
+// link      :      http://github.com/Paldom/PinDialog
 
 angular.module('ngCordova.plugins.pinDialog', [])
 
@@ -5785,7 +5785,7 @@ angular.module('ngCordova.plugins.prefs', [])
   }]);
 
 // install   : cordova plugin add de.appplant.cordova.plugin.printer
-// link      : https://github.com/katzer/cordova-plugin-printer
+// link      : http://github.com/katzer/cordova-plugin-printer
 
 angular.module('ngCordova.plugins.printer', [])
 
@@ -5903,8 +5903,8 @@ angular.module('ngCordova.plugins.progressIndicator', [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/phonegap-build/PushPlugin.git
-// link      :      https://github.com/phonegap-build/PushPlugin
+// install   :      cordova plugin add http://github.com/phonegap-build/PushPlugin.git
+// link      :      http://github.com/phonegap-build/PushPlugin
 
 angular.module('ngCordova.plugins.push', [])
 
@@ -5962,8 +5962,8 @@ angular.module('ngCordova.plugins.push', [])
     };
   }]);
 
-// install   :      cordova plugin add https://github.com/aharris88/phonegap-sms-plugin.git
-// link      :      https://github.com/aharris88/phonegap-sms-plugin
+// install   :      cordova plugin add http://github.com/aharris88/phonegap-sms-plugin.git
+// link      :      http://github.com/aharris88/phonegap-sms-plugin
 
 angular.module('ngCordova.plugins.sms', [])
 
@@ -5983,8 +5983,8 @@ angular.module('ngCordova.plugins.sms', [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
-// link      :      https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
+// install   :      cordova plugin add http://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git
+// link      :      http://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin
 
 // NOTE: shareViaEmail -> if user cancels sharing email, success is still called
 // TODO: add support for iPad
@@ -6128,8 +6128,8 @@ angular.module('ngCordova.plugins.socialSharing', [])
     };
   }]);
 
-// install   :       cordova plugin add https://github.com/Paldom/SpinnerDialog.git
-// link      :       https://github.com/Paldom/SpinnerDialog
+// install   :       cordova plugin add http://github.com/Paldom/SpinnerDialog.git
+// link      :       http://github.com/Paldom/SpinnerDialog
 
 angular.module('ngCordova.plugins.spinnerDialog', [])
 
@@ -6148,7 +6148,7 @@ angular.module('ngCordova.plugins.spinnerDialog', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.splashscreen
-// link      :      https://github.com/apache/cordova-plugin-splashscreen/blob/master/doc/index.md
+// link      :      http://github.com/apache/cordova-plugin-splashscreen/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.splashscreen', [])
 
@@ -6166,8 +6166,8 @@ angular.module('ngCordova.plugins.splashscreen', [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/brodysoft/Cordova-SQLitePlugin.git
-// link      :      https://github.com/brodysoft/Cordova-SQLitePlugin/blob/master/README.md
+// install   :      cordova plugin add http://github.com/brodysoft/Cordova-SQLitePlugin.git
+// link      :      http://github.com/brodysoft/Cordova-SQLitePlugin/blob/master/README.md
 
 angular.module('ngCordova.plugins.sqlite', [])
 
@@ -6258,7 +6258,7 @@ angular.module('ngCordova.plugins.sqlite', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.statusbar
-// link      :      https://github.com/apache/cordova-plugin-statusbar/blob/master/doc/index.md
+// link      :      http://github.com/apache/cordova-plugin-statusbar/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.statusbar', [])
 
@@ -6317,8 +6317,8 @@ angular.module('ngCordova.plugins.statusbar', [])
     };
   }]);
 
-// install   :      cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
-// link      :      https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
+// install   :      cordova plugin add http://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+// link      :      http://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin
 
 angular.module('ngCordova.plugins.toast', [])
 
@@ -6399,8 +6399,8 @@ angular.module('ngCordova.plugins.toast', [])
 
   }]);
 
-// install   :      cordova plugin add https://github.com/leecrossley/cordova-plugin-touchid.git
-// link      :      https://github.com/leecrossley/cordova-plugin-touchid
+// install   :      cordova plugin add http://github.com/leecrossley/cordova-plugin-touchid.git
+// link      :      http://github.com/leecrossley/cordova-plugin-touchid
 
 angular.module('ngCordova.plugins.touchid', [])
 
@@ -6440,7 +6440,7 @@ angular.module('ngCordova.plugins.touchid', [])
   }]);
 
 // install   :      cordova plugin add org.apache.cordova.vibration
-// link      :      https://github.com/apache/cordova-plugin-vibration/blob/master/doc/index.md
+// link      :      http://github.com/apache/cordova-plugin-vibration/blob/master/doc/index.md
 
 angular.module('ngCordova.plugins.vibration', [])
 
@@ -6459,8 +6459,8 @@ angular.module('ngCordova.plugins.vibration', [])
     };
   }]);
 
-// install   :    cordova plugin add https://github.com/EddyVerbruggen/VideoCapturePlus-PhoneGap-Plugin.git
-// link      :    https://github.com/EddyVerbruggen/VideoCapturePlus-PhoneGap-Plugin
+// install   :    cordova plugin add http://github.com/EddyVerbruggen/VideoCapturePlus-PhoneGap-Plugin.git
+// link      :    http://github.com/EddyVerbruggen/VideoCapturePlus-PhoneGap-Plugin
 
 angular.module('ngCordova.plugins.videoCapturePlus', [])
 
@@ -6557,8 +6557,8 @@ angular.module('ngCordova.plugins.videoCapturePlus', [])
     }];
   }]);
 
-// install  :     cordova plugin add https://github.com/MobileChromeApps/zip.git
-// link     :     https://github.com/MobileChromeApps/zip
+// install  :     cordova plugin add http://github.com/MobileChromeApps/zip.git
+// link     :     http://github.com/MobileChromeApps/zip
 
 angular.module('ngCordova.plugins.zip', [])
 

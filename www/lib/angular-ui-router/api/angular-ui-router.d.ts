@@ -1,7 +1,7 @@
 // Type definitions for Angular JS 1.1.5+ (ui.router module)
-// Project: https://github.com/angular-ui/ui-router
-// Definitions by: Michel Salib <https://github.com/michelsalib>
-// Definitions: https://github.com/borisyankov/DefinitelyTyped
+// Project: http://github.com/angular-ui/ui-router
+// Definitions by: Michel Salib <http://github.com/michelsalib>
+// Definitions: http://github.com/borisyankov/DefinitelyTyped
 
 declare module ng.ui {
 

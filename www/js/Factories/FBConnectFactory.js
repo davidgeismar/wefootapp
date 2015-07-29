@@ -40,7 +40,6 @@ obj.getFacebookProfileInfo = function () {
     var info = $q.defer();
     facebookConnectPlugin.api('/me', "",
       function (response) {
-        alert("Result: " + JSON.stringify(response));
         info.resolve(response);
       },
       function (response) {
@@ -84,7 +83,7 @@ obj.connect = function(){
         
         $rootScope.toShow = false;
         //ask the permissions you need
-        //you can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.2
+        //you can learn more about FB permissions here: http://developers.facebook.com/docs/facebook-login/permissions/v2.2
         facebookConnectPlugin.login(['email',
           'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
 

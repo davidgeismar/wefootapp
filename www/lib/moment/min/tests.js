@@ -31567,7 +31567,7 @@
         assert.equal(moment('gibberish', ['YY-MM-DD', 'YY-DD-MM']).format('MM DD YYYY'), 'Invalid date', 'doest throw for invalid strings');
         assert.equal(moment('gibberish', []).format('MM DD YYYY'), 'Invalid date', 'doest throw for an empty array');
 
-        //https://github.com/moment/moment/issues/1143
+        //http://github.com/moment/moment/issues/1143
         assert.equal(moment(
             'System Administrator and Database Assistant (7/1/2011), System Administrator and Database Assistant (7/1/2011), Database Coordinator (7/1/2011), Vice President (7/1/2011), System Administrator and Database Assistant (5/31/2012), Database Coordinator (7/1/2012), System Administrator and Database Assistant (7/1/2013)',
             ['MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD', 'YYYY-MM-DDTHH:mm:ssZ'])
@@ -33790,7 +33790,7 @@
         assert.equal(a.seconds(), 8, 'second');
         assert.equal(a.milliseconds(), 9, 'milliseconds');
 
-        // Test month() behavior. See https://github.com/timrwood/moment/pull/822
+        // Test month() behavior. See http://github.com/timrwood/moment/pull/822
         a = moment('20130531', 'YYYYMMDD');
         a.month(3);
         assert.equal(a.month(), 3, 'month edge case');
@@ -33814,14 +33814,14 @@
         assert.equal(a.seconds(), 8, 'second');
         assert.equal(a.milliseconds(), 9, 'milliseconds');
 
-        // Test month() behavior. See https://github.com/timrwood/moment/pull/822
+        // Test month() behavior. See http://github.com/timrwood/moment/pull/822
         a = moment('20130531', 'YYYYMMDD');
         a.month(3);
         assert.equal(a.month(), 3, 'month edge case');
     });
 
     // Disable this, until we weekYear setter is fixed.
-    // https://github.com/moment/moment/issues/1379
+    // http://github.com/moment/moment/issues/1379
     // test('setters programatic with weeks', function (assert) {
     //     var a = moment();
     //     a.set('weekYear', 2001);
@@ -35356,10 +35356,10 @@
     });
 
     test('oddball permissiveness', function (assert) {
-        //https://github.com/moment/moment/issues/1128
+        //http://github.com/moment/moment/issues/1128
         assert.ok(moment('2010-10-3199', ['MM/DD/YYYY', 'MM-DD-YYYY', 'YYYY-MM-DD']).isValid());
 
-        //https://github.com/moment/moment/issues/1122
+        //http://github.com/moment/moment/issues/1122
         assert.ok(moment('3:25', ['h:mma', 'hh:mma', 'H:mm', 'HH:mm']).isValid());
     });
 

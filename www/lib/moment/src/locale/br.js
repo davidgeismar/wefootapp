@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : breton (br)
-//! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
+//! author : Jean-Baptiste Le Duigou : http://github.com/jbleduigou
 
 import moment from '../moment';
 

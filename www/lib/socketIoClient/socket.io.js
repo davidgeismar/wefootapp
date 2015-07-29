@@ -1062,7 +1062,7 @@ function url(uri, loc){
       if ('undefined' != typeof loc) {
         uri = loc.protocol + '//' + uri;
       } else {
-        uri = 'https://' + uri;
+        uri = 'http://' + uri;
       }
     }
 
@@ -3445,7 +3445,7 @@ WS.prototype.addEventListeners = function(){
 
 /**
  * Override `onData` to use a timer on iOS.
- * See: https://gist.github.com/mloughran/2052006
+ * See: http://gist.github.com/mloughran/2052006
  *
  * @api private
  */
@@ -3576,7 +3576,7 @@ module.exports = function(opts) {
   var xscheme = opts.xscheme;
 
   // XDomainRequest has a flow of not sending cookie, therefore it should be disabled as a default.
-  // https://github.com/Automattic/engine.io-client/pull/217
+  // http://github.com/Automattic/engine.io-client/pull/217
   var enablesXDR = opts.enablesXDR;
 
   // XMLHttpRequest can be disabled on IE
@@ -3588,7 +3588,7 @@ module.exports = function(opts) {
 
   // Use XDomainRequest for IE8 if enablesXDR is true
   // because loading bar keeps flashing when using jsonp-polling
-  // https://github.com/yujiosaka/socke.io-ie8-loading-example
+  // http://github.com/yujiosaka/socke.io-ie8-loading-example
   try {
     if ('undefined' != typeof XDomainRequest && !xscheme && enablesXDR) {
       return new XDomainRequest();
@@ -3652,7 +3652,7 @@ function useColors() {
     // is firebug? http://stackoverflow.com/a/398120/376773
     (window.console && (console.firebug || (console.exception && console.table))) ||
     // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    // http://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
     (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
 }
 
@@ -4096,7 +4096,7 @@ var isAndroid = navigator.userAgent.match(/Android/i);
 /**
  * Check if we are running in PhantomJS.
  * Uploading a Blob with PhantomJS does not work correctly, as reported here:
- * https://github.com/ariya/phantomjs/issues/11395
+ * http://github.com/ariya/phantomjs/issues/11395
  * @type boolean
  */
 var isPhantomJS = /PhantomJS/i.test(navigator.userAgent);
@@ -4754,7 +4754,7 @@ module.exports = function(arraybuffer, start, end) {
 },{}],29:[function(_dereq_,module,exports){
 /*
  * base64-arraybuffer
- * https://github.com/niklasvh/base64-arraybuffer
+ * http://github.com/niklasvh/base64-arraybuffer
  *
  * Copyright (c) 2012 Niklas von Hertzen
  * Licensed under the MIT license.
@@ -5248,7 +5248,7 @@ module.exports = WebSocket ? ws : null;
  *
  * The third `opts` options object gets ignored in web browsers, since it's
  * non-standard, and throws a TypeError if passed to the constructor.
- * See: https://github.com/einaros/ws/issues/227
+ * See: http://github.com/einaros/ws/issues/227
  *
  * @param {String} uri
  * @param {Array} protocols (optional)
@@ -5348,7 +5348,7 @@ var global = _dereq_('global');
  *
  * Logic borrowed from Modernizr:
  *
- *   - https://github.com/Modernizr/Modernizr/blob/master/feature-detects/cors.js
+ *   - http://github.com/Modernizr/Modernizr/blob/master/feature-detects/cors.js
  */
 
 try {

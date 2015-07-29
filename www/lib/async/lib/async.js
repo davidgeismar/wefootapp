@@ -1,6 +1,6 @@
 /*!
  * async
- * https://github.com/caolan/async
+ * http://github.com/caolan/async
  *
  * Copyright 2010-2014 Caolan McMahon
  * Released under the MIT license

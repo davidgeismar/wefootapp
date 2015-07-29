@@ -6,18 +6,18 @@
 #### New
 
 - [Progress Indicator plugin](http://pbernasconi.github.io/cordova-progressIndicator/)  d70f387
-- [Clipboard plugin](https://github.com/VersoSolutions/CordovaClipboard) f54bdc8
-- [SMS plugin](https://github.com/aharris88/phonegap-sms-plugin)
-- [Bluetooth Serial plugin](https://github.com/don/BluetoothSerial)
-- [AdMob Plugin](https://github.com/floatinghotpot/cordova-plugin-admob)
-- [Background Geolocation Plugin](https://github.com/christocracy/cordova-plugin-background-geolocation)
-- [Facebook Connect Plugin](https://github.com/Wizcorp/phonegap-facebook-plugin)
-- [Printer Plugin](https://github.com/katzer/cordova-plugin-printer)
-- [Native Audio Plugin](https://github.com/SidneyS/cordova-plugin-nativeaudio) 96f4570
-- [Media plugin](https://github.com/apache/cordova-plugin-media) a235517
+- [Clipboard plugin](http://github.com/VersoSolutions/CordovaClipboard) f54bdc8
+- [SMS plugin](http://github.com/aharris88/phonegap-sms-plugin)
+- [Bluetooth Serial plugin](http://github.com/don/BluetoothSerial)
+- [AdMob Plugin](http://github.com/floatinghotpot/cordova-plugin-admob)
+- [Background Geolocation Plugin](http://github.com/christocracy/cordova-plugin-background-geolocation)
+- [Facebook Connect Plugin](http://github.com/Wizcorp/phonegap-facebook-plugin)
+- [Printer Plugin](http://github.com/katzer/cordova-plugin-printer)
+- [Native Audio Plugin](http://github.com/SidneyS/cordova-plugin-nativeaudio) 96f4570
+- [Media plugin](http://github.com/apache/cordova-plugin-media) a235517
 - [Battery Status plugin](org.apache.cordova.battery-status) 897dd65
-- [Keychain plugin](https://github.com/shazron/KeychainPlugin)
-- [Date Picker plugin](https://github.com/VitaliiBlagodir/cordova-plugin-datepicker)
+- [Keychain plugin](http://github.com/shazron/KeychainPlugin)
+- [Date Picker plugin](http://github.com/VitaliiBlagodir/cordova-plugin-datepicker)
 
 
 
@@ -96,9 +96,9 @@
 
 Where promise is the internal promise, and watchId is the watchId that can be used to clear the watch later.
 
- - [Capture](https://github.com/apache/cordova-plugin-media-capture) plugin
- - [Flashlight](https://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin) plugin
- - [AppAvailability](https://github.com/ohh2ahh/AppAvailability) plugin
+ - [Capture](http://github.com/apache/cordova-plugin-media-capture) plugin
+ - [Flashlight](http://github.com/EddyVerbruggen/Flashlight-PhoneGap-Plugin) plugin
+ - [AppAvailability](http://github.com/ohh2ahh/AppAvailability) plugin
  - Cordova preferences plugin
 
 And lots of fixes!
@@ -163,8 +163,8 @@ ngCordova is ready for some bleeding edge testing. So far we support the followi
 - org.apache.cordova.splashscreen
 - org.apache.cordova.device-orientation
 - org.apache.cordova.contacts
-- https://github.com/driftyco/ionic-plugins-keyboard
-- https://github.com/wildabeast/BarcodeScanner
+- http://github.com/driftyco/ionic-plugins-keyboard
+- http://github.com/wildabeast/BarcodeScanner
 
 
 Give it a try, and please report lots of issues and contribute PRs. :icecream: 

@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : Persian (fa)
-//! author : Ebrahim Byagowi : https://github.com/ebraminio
+//! author : Ebrahim Byagowi : http://github.com/ebraminio
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

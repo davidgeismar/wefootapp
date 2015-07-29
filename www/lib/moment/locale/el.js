@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : modern greek (el)
-//! author : Aggelos Karalias : https://github.com/mehiel
+//! author : Aggelos Karalias : http://github.com/mehiel
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : dutch (nl)
-//! author : Joris Röling : https://github.com/jjupiter
+//! author : Joris Röling : http://github.com/jjupiter
 
 import moment from '../moment';
 

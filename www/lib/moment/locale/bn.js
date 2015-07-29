@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : Bengali (bn)
-//! author : Kaushik Gandhi : https://github.com/kaushikgandhi
+//! author : Kaushik Gandhi : http://github.com/kaushikgandhi
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

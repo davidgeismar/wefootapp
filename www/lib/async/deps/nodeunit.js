@@ -1,6 +1,6 @@
 /*!
  * Nodeunit
- * https://github.com/caolan/nodeunit
+ * http://github.com/caolan/nodeunit
  * Copyright (c) 2010 Caolan McMahon
  * MIT Licensed
  *

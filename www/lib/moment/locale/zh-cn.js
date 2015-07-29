@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : chinese (zh-cn)
-//! author : suupic : https://github.com/suupic
-//! author : Zeno Zeng : https://github.com/zenozeng
+//! author : suupic : http://github.com/suupic
+//! author : Zeno Zeng : http://github.com/zenozeng
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

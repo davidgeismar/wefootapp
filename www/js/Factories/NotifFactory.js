@@ -73,35 +73,42 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         return ['participe à un foot.','/foot/'];
       }
     };
-    $http.get('http://'+serverAddress+'/user/get/'+actu.related_user).success(function(user){
-      actu.userName = user.first_name;
-      actu.userLink = '/friend/'+user.id;
-      actu.texte = parseActu(actu.typ)[0];
-      actu.picture = user.picture;
+    if(actu.typ == 'WF'){
+      actu.texte = actu.attached_text;
+      actu.picture = "img/logo.jpg";
+      if(callback) callback();
+    }
+    else{
+      $http.get('http://'+serverAddress+'/user/get/'+actu.related_user).success(function(user){
+        actu.userName = user.first_name;
+        actu.userLink = '/friend/'+user.id;
+        actu.texte = parseActu(actu.typ)[0];
+        actu.picture = user.picture;
 
-      if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-        $http.get('http://'+serverAddress+'/foot/get/'+actu.related_stuff).success(function(data){
-          actu.related_info = data;
-          date = new Date(data.date);
-          actu.related_info.dateString = getJour(date)+' à '+getHour(date);
-          actu.related_info.format = Math.floor(data.nb_player/2)+"|"+Math.floor(data.nb_player/2)
-          if(callback)
-            callback();
-        });
-      }
-      else if(actu.typ == 'newFriend'){
-        $http.get('http://'+serverAddress+'/user/get/'+actu.user).success(function(data){
-          actu.userName2 = data.first_name;
-          actu.userLink2 = '/friend/'+data.id;
-          actu.picture2 = data.picture;
-          if(callback)
-            callback();
-        });
-      }
-      else if(callback){
-        callback();
-      }
-    });
+        if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
+          $http.get('http://'+serverAddress+'/foot/get/'+actu.related_stuff).success(function(data){
+            actu.related_info = data;
+            date = new Date(data.date);
+            actu.related_info.dateString = getJour(date)+' à '+getHour(date);
+            actu.related_info.format = Math.floor(data.nb_player/2)+"|"+Math.floor(data.nb_player/2)
+            if(callback)
+              callback();
+          });
+        }
+        else if(actu.typ == 'newFriend'){
+          $http.get('http://'+serverAddress+'/user/get/'+actu.user).success(function(data){
+            actu.userName2 = data.first_name;
+            actu.userLink2 = '/friend/'+data.id;
+            actu.picture2 = data.picture;
+            if(callback)
+              callback();
+          });
+        }
+        else if(callback){
+          callback();
+        }
+      });
+    }
 };
 
 handle.notify = function(notif,callback,push){
