@@ -4,7 +4,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
   $scope.user = $localStorage.user;
   $scope.messageContent;
 
-  io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+  io.socket.post(serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
   $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
   $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].seen = true;
   $ionicScrollDelegate.scrollBottom();
@@ -12,7 +12,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
   $rootScope.updateMessage = function(){
     $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
-    io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+    io.socket.post(serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
     $scope.$digest();
     $ionicScrollDelegate.scrollBottom();
   }
@@ -20,8 +20,8 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $scope, $rootSc
 
   $scope.sendMessage = function(message){
    if(message.length>0){
-     $http.post('http://'+serverAddress+'/message/create',{senderId :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
-      io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
+     $http.post(serverAddress+'/message/create',{senderId :$localStorage.user.id, messagestr:message, chat:$scope.chat.id, receivers:$scope.chat.users}).success(function(data){
+      io.socket.post(serverAddress+'/chatter/updateLts',{user: $localStorage.user.id, chat: $scope.chat.id});
       $scope.messageContent=null;
       $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
 
@@ -41,7 +41,7 @@ $scope.showMessageButton = function(messageContent){
 $scope.init = function(){
 
   if ($scope.chat.typ==2){
-    $http.get('http://'+serverAddress+'/foot/getInfo/'+$scope.chat.related).success(function(elem){
+    $http.get(serverAddress+'/foot/getInfo/'+$scope.chat.related).success(function(elem){
       $scope.detail = { 
         organisator : elem.orga,
         orgaName : elem.orgaName,

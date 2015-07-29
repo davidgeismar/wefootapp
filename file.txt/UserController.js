@@ -23,7 +23,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editClub = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://'+serverAddress+'/editUser',{favorite_club: value}).success(function(){
+      $http.post(serverAddress+'/editUser',{favorite_club: value}).success(function(){
         self.user.favorite_club = value;
         self.toEdit[0] = false;
       });
@@ -33,7 +33,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editPoste = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://'+serverAddress+'/editUser',{poste: value}).success(function(){
+      $http.post(serverAddress+'/editUser',{poste: value}).success(function(){
         self.user.poste = value;
         self.toEdit[1] = false;
       });
@@ -54,7 +54,7 @@ if($scope.user && $scope.user.poste==null){
           userId: $localStorage.user.id
         }
       };
-      $cordovaFileTransfer.upload('http://'+serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
+      $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
       .then(function(result) {  
         // Success!
         console.log('hello');
@@ -85,8 +85,8 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  // $http.post('http://'+serverAddress+'/connexion/delete',{id : $localStorage.user.id});
-  io.socket.post('http://'+serverAddress+'/connexion/delete');
+  // $http.post(serverAddress+'/connexion/delete',{id : $localStorage.user.id});
+  io.socket.post(serverAddress+'/connexion/delete');
   $localStorage.user = {};
   $localStorage.token = "";
   $location.path('/');
@@ -131,7 +131,7 @@ $scope.logout = function (){
       $rootScope.friendsId.push(friend.id);
     });
     if(word.length>2){
-     $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
+     $http.get(serverAddress+'/search/'+word).success(function(data){
       $scope.results = data;
     });
   }
@@ -146,7 +146,7 @@ $scope.addFriend = function(target, facebook){
   else{
     postData = {user1:$localStorage.user.id, user2:target};
   }
-  $http.post('http://'+serverAddress+'/addFriend',postData).success(function(data){
+  $http.post(serverAddress+'/addFriend',postData).success(function(data){
     var notif = {user: target, related_user: $localStorage.user.id, typ:'newFriend', related_stuff:$localStorage.user.id};
     notify(notif);
     data.statut = 0;
@@ -158,7 +158,7 @@ $scope.addFriend = function(target, facebook){
 
 $scope.createChat = function(user){
 
-  $http.post('http://'+serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
+  $http.post(serverAddress+'/chat/create',{users :[$localStorage.user.id, user.id], typ:1}).success(function(chat){
     $rootScope.closeModal();
     chat.messages = new Array();
     $localStorage.chat=chat;
@@ -207,7 +207,7 @@ $scope.setNote = function(note, target){
 
 
 $scope.initNotes = function(){
-  $http.get('http://'+serverAddress+'/getDetailledGrades/'+$scope.user.id).success(function(data){
+  $http.get(serverAddress+'/getDetailledGrades/'+$scope.user.id).success(function(data){
     $scope.user.nbGrades = data.nbGrades;
     $scope.setNote(Math.round(data.technique), 0);
     $scope.setNote(Math.round(data.frappe), 1);

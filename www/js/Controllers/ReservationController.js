@@ -34,7 +34,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $scope.found = $localStorage.found;
    
     $scope.getTerrainsFree = function(){
-      $http.post('http://'+serverAddress+'/reservation/getTerrainsFree',$localStorage.reservationClient).success(function(field){
+      $http.post(serverAddress+'/reservation/getTerrainsFree',$localStorage.reservationClient).success(function(field){
         $scope.freeField= field;
         if($scope.freeField){
           $scope.found = 1;
@@ -74,7 +74,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
           indoor: $localStorage.reservationClient.indoor,
           api_ref: $localStorage.reservationClient.api_ref
         }
-            $http.post('http://'+serverAddress+'/reservation/getTerrainsFree',  
+            $http.post(serverAddress+'/reservation/getTerrainsFree',  
               options).success(function(freeField){
                 if(freeField){
                 var newHour = {};
@@ -110,7 +110,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
 
 
     $scope.showfree = function(terrain){
-        $http.post('http://'+serverAddress+'/terrain/showreservations',terrain).success(function(terrain){
+        $http.post(serverAddress+'/terrain/showreservations',terrain).success(function(terrain){
             for(var i=0; i<$scope.listeterrain.length;i++){
                 if($scope.listeterrain[i].id == terrain[0].id){
                     $localStorage.terrain = $scope.listeterrain[i];
@@ -137,7 +137,7 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
 
       $scope.hideModal = function(){
         if($scope.infos.telephone.length>9 && $scope.infos.birthday){
-          $http.post('http://'+serverAddress+'/user/update',$scope.infos).success(function(newUser){
+          $http.post(serverAddress+'/user/update',$scope.infos).success(function(newUser){
             $paiement.getAllCards(newUser,function(card,newUser){
               $localStorage.setObject('user',newUser);
               user = newUser;

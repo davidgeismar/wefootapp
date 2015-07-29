@@ -11,7 +11,7 @@ angular.module('notif',[])
 			$location.path(url);
 	}
 	if($rootScope.notifs.length == 0){ //New connexion
-		$http.get('http://'+serverAddress+'/getNotif/'+$localStorage.getObject('user').id).success(function(data){
+		$http.get(serverAddress+'/getNotif/'+$localStorage.getObject('user').id).success(function(data){
 			if(data.length == 0)
 				$ionicLoading.hide();
 			async.each(data, function(notif,callback){
@@ -25,7 +25,7 @@ angular.module('notif',[])
 		});
 	}
 	else{  //Update
-		$http.post('http://'+serverAddress+'/user/getLastNotif',{id: $localStorage.getObject('user').id,last_seen: $localStorage.getObject('user').last_seen}).success(function(data){
+		$http.post(serverAddress+'/user/getLastNotif',{id: $localStorage.getObject('user').id,last_seen: $localStorage.getObject('user').last_seen}).success(function(data){
 			if(data.length == 0)
 				$ionicLoading.hide();
 			async.each(data, function(notif,callback){
@@ -39,7 +39,7 @@ angular.module('notif',[])
 		});
 	}
 
-	$http.post('http://'+serverAddress+'/user/updateSeen',{id: $localStorage.getObject('user').id}).success(function(user){
+	$http.post(serverAddress+'/user/updateSeen',{id: $localStorage.getObject('user').id}).success(function(user){
 		var localUser = $localStorage.getObject('user');
 		localUser.last_seen = user.last_seen;
 		$localStorage.setObject('user',localUser);

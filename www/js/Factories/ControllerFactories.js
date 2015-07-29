@@ -31,7 +31,7 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       $cordovaPush.register(registerOptions).then(function (result) {
         guy.pushToken = result;
         $localStorage.setObject('user',guy);
-        $http.post('http://'+serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
+        $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
           callback();
         }).error(function(err){
           errors.push("Error push");
@@ -46,8 +46,9 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 }
 
 
+
 // allFunction.push(function(callback){
-//   io.socket.post('http://'+serverAddress+'/connexion/setConnexion',{id: userId},function(){
+//   io.socket.post(serverAddress+'/connexion/setConnexion',{id: userId},function(){
 //     callback();
 //   }); 
 // });
@@ -55,14 +56,14 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 
 
 allFunction.push(function(callback){
-  $http.post('http://'+serverAddress+'/user/update/',{id: userId, pending_notif: 0}).success(function(){
+  $http.post(serverAddress+'/user/update/',{id: userId, pending_notif: 0}).success(function(){
     callback();
   });
 });
 
 if(setUUID){
   allFunction.push(function(callback){
-    $http.get('http://'+serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
+    $http.get(serverAddress+'/getAllFriends/'+userId+'/0').success(function(data){
       var friends = data[0];
       if(data[0].length==0) {
         $localStorage.setObject('friends',[]);
@@ -85,7 +86,7 @@ if(setUUID){
 
 
 allFunction.push(function(callback){
-  $http.get('http://'+serverAddress+'/getAllChats/'+userId).success(function(data){
+  $http.get(serverAddress+'/getAllChats/'+userId).success(function(data){
     $localStorage.set('lastTimeUpdated', moment());
     $localStorage.setObject('chats',data);
     chats.initNotif();
@@ -97,7 +98,7 @@ allFunction.push(function(callback){
 });
 
 allFunction.push(function(callback){
-  $http.post('http://'+serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
+  $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
     $rootScope.nbNotif = nb.length;
     callback();
   }).error(function(){
@@ -130,7 +131,7 @@ return connect;
 
   paiement.getAllCards = function(user,callback){
     $searchLoader.show();
-    $http.post('http://'+serverAddress+'/pay/getCards',{user: user}).success(function(result){
+    $http.post(serverAddress+'/pay/getCards',{user: user}).success(function(result){
       $searchLoader.hide();
       callback(result[0],result[1]);
     });
@@ -143,7 +144,7 @@ return connect;
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post('http://'+serverAddress+'/pay/registerCard',{user: user, info: card}).success(function(newCard){
+    $http.post(serverAddress+'/pay/registerCard',{user: user, info: card}).success(function(newCard){
       newCard.Alias = card.number;
       newCard.Id = newCard.CardId;
       callback(newCard);
@@ -161,8 +162,8 @@ return connect;
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post('http://'+serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot, field: resa.field}).success(function(){
-        $http.post('http://'+serverAddress+'/reservation/create',resa).success(function(){
+      $http.post(serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot, field: resa.field}).success(function(){
+        $http.post(serverAddress+'/reservation/create',resa).success(function(){
           callback();
           $ionicLoading.hide();
         }).error(function(){
@@ -191,7 +192,7 @@ return connect;
       return actusByDay[0][0].id;
     }
   }
-  
+
   profil.getAllActu = function(callback3){
     var dates = $localStorage.getObject('dates');
     var oldActu = $localStorage.getObject('actus');
@@ -208,7 +209,9 @@ return connect;
       });
     }
     var friends_id = _.pluck($localStorage.getObject('friends'),'id');
-    $http.post('http://'+serverAddress+'/actu/getActu/',{user:$localStorage.getObject('user'), friends: friends_id, skip:lastId}).success(function(data){
+    $http.post(serverAddress+'/actu/getActu/',{user:$localStorage.getObject('user'), friends: friends_id, skip:lastId}).success(function(data){
+      console.log('seeData');
+      console.log(data);
       var actusByDay = _.values(data);
       if(actusByDay.length==0) $ionicLoading.hide();
       async.each(actusByDay,function(actus,callback2){
@@ -325,7 +328,7 @@ return profil;
   foot.searchFields = function(word,callback){
     var user = $localStorage.getObject('user');
       $searchLoader.show();
-      $http.get('http://'+serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
+      $http.get(serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
         $searchLoader.hide();
         callback(data);
       });
@@ -334,11 +337,11 @@ return profil;
   foot.create = function(params,callback2){
     ionicLoading();
     var user = $localStorage.getObject('user');
-    $http.post('http://'+serverAddress+'/foot/create',params).success(function(foot){
+    $http.post(serverAddress+'/foot/create',params).success(function(foot){
       var chatters = [];
       angular.copy(params.toInvite, chatters);
       chatters.push($localStorage.getObject('user').id);
-      $http.post('http://'+serverAddress+'/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+ user.first_name}).success(function(){
+      $http.post(serverAddress+'/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+ user.first_name}).success(function(){
       });
       async.each(params.toInvite,function(invited,callback){
         $handleNotif.notify({user:invited, related_user: user.id, typ:'footInvit',related_stuff: foot.id},function(){
@@ -352,11 +355,11 @@ return profil;
   foot.loadFoot = function(callback2){
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
-    $http.get('http://'+serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
+    $http.get(serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
       if(data.length==0) $ionicLoading.hide();
       console.log(data);
       async.each(data, function(foot,callback){
-        $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
+        $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
           foot.organisator = elem.orga;
           foot.orgaName = elem.orgaName;
           foot.field = elem.field;
@@ -383,11 +386,11 @@ return profil;
     var finish = false;
     var user = $localStorage.getObject('user');
     var result = { players: [] };
-    $http.get('http://'+serverAddress+'/foot/get/'+id).success(function(data){  //Get foot attributes
+    $http.get(serverAddress+'/foot/get/'+id).success(function(data){  //Get foot attributes
       result.foot = data;
       date = new Date(data.date);
       date = getJour(date)+' '+getHour(date);
-      $http.get('http://'+serverAddress+'/foot/getInfo/'+id).success(function(info){  //Get foot info
+      $http.get(serverAddress+'/foot/getInfo/'+id).success(function(info){  //Get foot info
         result.foot.organisator = info.orga;
         result.foot.orgaName = info.orgaName;
         result.foot.field = info.field;
@@ -396,7 +399,7 @@ return profil;
       });
     });
 
-    $http.get('http://'+serverAddress+'/foot/getAllPlayers/'+id).success(function(allPlayers){  //Get list of playersId
+    $http.get(serverAddress+'/foot/getAllPlayers/'+id).success(function(allPlayers){  //Get list of playersId
       result.invited = _.pluck(_.filter(allPlayers,function(player){return player.statut>0}),'user');
       result.isInvited = (result.invited.indexOf($localStorage.getObject('user').id)>-1);
       result.isPending =  (_.pluck(_.filter(allPlayers,function(player){return player.statut==0}),'id').indexOf(user.id)>-1);
@@ -404,7 +407,7 @@ return profil;
       data = _.pluck(data,'user'); //All confirmed players ids.
       result.isPlaying = (data.indexOf(user.id)>-1);
       async.each(data, function(player,callback){
-          $http.get('http://'+serverAddress+'/user/get/'+player).success(function(user){   //Get all players attributes
+          $http.get(serverAddress+'/user/get/'+player).success(function(user){   //Get all players attributes
             result.players.push(user);
             callback();
           });
@@ -417,7 +420,7 @@ return profil;
 }
 
 foot.removePlayer = function(userId,footId,isPlaying,callback){
-  $http.post('http://'+serverAddress+'/foot/removePlayer',{foot: footId, user: userId}).success(function(){
+  $http.post(serverAddress+'/foot/removePlayer',{foot: footId, user: userId}).success(function(){
     if(!isPlaying){
       var plucked = _.pluck($localStorage.footInvitation,'id');
       index = plucked.indexOf(footId);
@@ -434,7 +437,7 @@ foot.removePlayer = function(userId,footId,isPlaying,callback){
 
 foot.deleteFoot = function(footId, players,callback2){
   var userId = $localStorage.getObject('user').id;
-  $http.post('http://'+serverAddress+'/foot/deleteFoot',{foot: footId}).success(function(){
+  $http.post(serverAddress+'/foot/deleteFoot',{foot: footId}).success(function(){
     var pos = _.pluck(players,'id').indexOf(userId);
       var toNotify = players; //Notify all players except the organisator
       toNotify.splice(pos,1);
@@ -452,7 +455,7 @@ foot.deleteFoot = function(footId, players,callback2){
 
 foot.playFoot = function(player,foot,players){
   var user = $localStorage.getObject('user');
-  $http.post('http://'+serverAddress+'/player/update',{foot:foot.id,user:player}).success(function(){
+  $http.post(serverAddress+'/player/update',{foot:foot.id,user:player}).success(function(){
     players.push($localStorage.getObject('user'));
     var plucked = _.pluck($localStorage.footInvitation,'id');
     index = plucked.indexOf(foot.id);
@@ -469,11 +472,11 @@ foot.playFoot = function(player,foot,players){
 
 foot.searchFoot = function(params,callback2){
   $searchLoader.show();
-  $http.post('http://'+serverAddress+'/foot/query',params).success(function(data){
+  $http.post(serverAddress+'/foot/query',params).success(function(data){
     results =[];
     async.each(data,function(foot,callback){
       var finish = false;
-        $http.get('http://'+serverAddress+'/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
+        $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
           foot.organisator = info.orga;
           foot.orgaName = info.orgaName;
           foot.field = info.field;

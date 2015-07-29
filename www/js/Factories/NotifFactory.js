@@ -34,7 +34,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
 
 
-    $http.get('http://'+serverAddress+'/user/get/'+notif.related_user).success(function(user){
+    $http.get(serverAddress+'/user/get/'+notif.related_user).success(function(user){
 
       if(user.id == $localStorage.getObject('user').id)
        notif.userName = "Vous";
@@ -58,7 +58,6 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
   };
 
   handle.handleActu = function(actu,callback){
-
     var parseActu = function(typ){
       switch(typ){
         case 'newFriend':
@@ -79,7 +78,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
       if(callback) callback();
     }
     else{
-      $http.get('http://'+serverAddress+'/user/get/'+actu.related_user).success(function(user){
+      $http.get(serverAddress+'/user/get/'+actu.related_user).success(function(user){
         actu.userName = user.first_name;
         actu.userLink = '/friend/'+user.id;
         actu.texte = parseActu(actu.typ)[0];
@@ -113,7 +112,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
 handle.notify = function(notif,callback,push){
 
-  io.socket.post('http://'+serverAddress+'/actu/newNotif',notif);
+  io.socket.post(serverAddress+'/actu/newNotif',notif);
 
   if(push){
     var content = {};
@@ -121,9 +120,9 @@ handle.notify = function(notif,callback,push){
       content.user = notif.user;
       content.texte = $localStorage.getObject('user').first_name + " " + notif.texte;
       if(callback)
-        io.socket.post('http://'+serverAddress+'/push/sendPush',content,callback());
+        io.socket.post(serverAddress+'/push/sendPush',content,callback());
       else
-        io.socket.post('http://'+serverAddress+'/push/sendPush',content);
+        io.socket.post(serverAddress+'/push/sendPush',content);
     });
   }
 };

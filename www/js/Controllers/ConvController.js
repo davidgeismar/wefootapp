@@ -28,7 +28,7 @@ $rootScope.$on('newMessage', function(event){
   // $rootScope.updateMessage = function(){
   //   $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
   //   $localStorage.setObject('chats',$rootScope.chats);
-  //   io.socket.post('http://'+serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
+  //   io.socket.post(serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
   //   $scope.$digest();
   //   $ionicScrollDelegate.scrollBottom();
   // }
@@ -51,7 +51,7 @@ $scope.showMessageButton = function(messageContent){
 $scope.init = function(){
 
   if ($scope.chat.typ==2){
-    $http.get('http://'+serverAddress+'/foot/getInfo/'+$scope.chat.related).success(function(elem){
+    $http.get(serverAddress+'/foot/getInfo/'+$scope.chat.related).success(function(elem){
       $scope.detail = { 
         organisator : elem.orga,
         orgaName : elem.orgaName,

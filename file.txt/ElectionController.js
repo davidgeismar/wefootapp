@@ -36,7 +36,7 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.elir = function(){
 		if($scope.homme || $scope.chevre){
-			$http.post('http://'+serverAddress+'/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
+			$http.post(serverAddress+'/vote/create',{electeur:$localStorage.user.id, homme:$scope.homme, chevre:$scope.chevre, foot:$scope.foot.id}).success(function(){
 				$scope.showAlert();
 			}).error(function(){
 				console.log('err');
@@ -49,18 +49,18 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 
 	$scope.init = function(){
 
-			$http.get('http://'+serverAddress+'/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
+			$http.get(serverAddress+'/getVotedStatus/'+$localStorage.user.id+'/'+$scope.foot.id).success(function(result){
 				//result (vrai == déjà voté, faux == pas encore voté)
 				if(!result){
 			//On récupère les joueurs d'un match
-			$http.get('http://'+serverAddress+'/getVoters/'+$scope.foot.id).success(function(results){
+			$http.get(serverAddress+'/getVoters/'+$scope.foot.id).success(function(results){
 				$scope.users = results;
 				console.log(results);
 			}).error(function(){
 				console.log('err');
 			});
 
-			$http.get('http://'+serverAddress+'/foot/getInfo/'+$scope.foot.id).success(function(elem){
+			$http.get(serverAddress+'/foot/getInfo/'+$scope.foot.id).success(function(elem){
 				$scope.foot.organisator = elem.orga;
 				$scope.foot.orgaName = elem.orgaName;
 				$scope.foot.field = elem.field;

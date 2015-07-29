@@ -20,7 +20,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editClub = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://'+serverAddress+'/editUser',{favorite_club: value}).success(function(){
+      $http.post(serverAddress+'/editUser',{favorite_club: value}).success(function(){
         self.user.favorite_club = value;
         self.toEdit[0] = false;
       });
@@ -30,7 +30,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.editPoste = function(value){
     var self = this;
     if(value.length>0){
-      $http.post('http://'+serverAddress+'/editUser',{poste: value}).success(function(){
+      $http.post(serverAddress+'/editUser',{poste: value}).success(function(){
         self.user.poste = value;
         self.toEdit[1] = false;
       });
@@ -51,7 +51,7 @@ if($scope.user && $scope.user.poste==null){
           userId: $localStorage.getObject('user').id
         }
       };
-      $cordovaFileTransfer.upload('http://'+serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
+      $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
       .then(function(result) {  
         // Success!
         console.log('hello');
@@ -82,10 +82,10 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  io.socket.post('http://'+serverAddress+'/connexion/delete');
+  io.socket.post(serverAddress+'/connexion/delete');
   $rootScope.toShow = true;
   if($localStorage.getObject('user').pushToken)
-    $http.post('http://'+serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
+    $http.post(serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
   $localStorage.clearAll();
   $location.path('/');
 };
@@ -141,7 +141,7 @@ $scope.logout = function (){
     $searchLoader.show();
     $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
     if(word.length>1){
-     $http.get('http://'+serverAddress+'/search/'+word).success(function(data){
+     $http.get(serverAddress+'/search/'+word).success(function(data){
       $searchLoader.hide();
       $scope.results = data;
     });
@@ -170,7 +170,7 @@ $scope.addFriend = function(target, facebookFriend){
     $scope.lockFriend = target;
   }
 
-  $http.post('http://'+serverAddress+'/addFriend',postData).success(function(data){
+  $http.post(serverAddress+'/addFriend',postData).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
@@ -230,7 +230,7 @@ $scope.setNote = function(note, target){
 
 
 $scope.initNotes = function(){
-  $http.get('http://'+serverAddress+'/getDetailledGrades/'+$scope.user.id).success(function(data){
+  $http.get(serverAddress+'/getDetailledGrades/'+$scope.user.id).success(function(data){
     $scope.user.nbGrades = data.nbGrades;
     $scope.setNote(Math.round(data.technique), 0);
     $scope.setNote(Math.round(data.frappe), 1);
