@@ -1,8 +1,8 @@
 //GLOBAL FUNCTIONS
 
 // var serverAddress = "http://62.210.115.66:9000";
-                      //"https://wefoot.herokuapp.com:80";
-var serverAddress = "http://62.210.115.66:9000";
+                      //"http://wefoot.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -194,7 +194,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         var user = $localStorage.getObject('user');
         user.lat  = position.coords.latitude;
         user.lng = position.coords.longitude;
-        $http.post('http://'+serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
+        $http.post(serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
         $localStorage.setObject('user', user);
         $rootScope.getCoord = true;
       });

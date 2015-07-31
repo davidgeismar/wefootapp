@@ -85,7 +85,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
         actu.picture = user.picture;
 
         if(actu.typ == 'footConfirm' || actu.typ == 'demandAccepted'){
-          $http.get('http://'+serverAddress+'/foot/get/'+actu.related_stuff).success(function(data){
+          $http.get(serverAddress+'/foot/get/'+actu.related_stuff).success(function(data){
             actu.related_info = data;
             date = new Date(data.date);
             actu.related_info.dateString = getJour(date)+' à '+getHour(date);
@@ -95,7 +95,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
           });
         }
         else if(actu.typ == 'newFriend'){
-          $http.get('http://'+serverAddress+'/user/get/'+actu.user).success(function(data){
+          $http.get(serverAddress+'/user/get/'+actu.user).success(function(data){
             actu.userName2 = data.first_name;
             actu.userLink2 = '/friend/'+data.id;
             actu.picture2 = data.picture;

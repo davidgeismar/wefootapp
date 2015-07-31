@@ -2084,9 +2084,6 @@ ion-scroll[direction=y] {
   		.info_foots .bleufonce, .info_foots .field-foot, .nbredejoueur_foots .nbreplace{
   			font-size: 12px;
   		}
-  		.field-foot{
-  			font-size: 12px;
-  		}
   		.col-25 .bonhomme_foots{
   			width: 20px;
   			margin-left: 0px;
@@ -2228,6 +2225,11 @@ ion-scroll[direction=y] {
  	.bleufonce {
  		color: #28385c !important;
  	}
+
+ 	p.field-foot{
+  		white-space: nowrap;
+  		overflow: hidden;
+  	}
 
  	.border_bottom_foot {
  		border-bottom: 4px solid #28385c ;

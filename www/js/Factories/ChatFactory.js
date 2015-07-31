@@ -110,7 +110,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 	var obj = {};
 
 	obj.addChatToDisplayer = function(chat){
-		var chatsDisplay = $localStorage.getObject('chatsDisplay');
+		var chatsDisplay = $localStorage.getArray('chatsDisplay');
 		if(chat.messages.length>0){
 			var lastDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 			var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);

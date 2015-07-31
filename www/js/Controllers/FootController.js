@@ -124,6 +124,7 @@ if($location.path().indexOf('user/foots')>-1){
   $rootScope.friends = $localStorage.getObject('friends');
   $scope.players = [];
   $scope.ready = false; //Show after loading
+  $scope.isPlaying;
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
 
 $foot.loadInfo($stateParams.id,function(result){
@@ -133,6 +134,7 @@ $foot.loadInfo($stateParams.id,function(result){
   $scope.isPending = result.isPending;
   $scope.isPlaying = result.isPlaying;
   $scope.players = result.players;
+  $scope.isComplete = result.players.length == result.foot.nb_player;
   $scope.date = result.date;
   $scope.ready = true;
   $ionicLoading.hide();

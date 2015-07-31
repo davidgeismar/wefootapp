@@ -210,8 +210,6 @@ return connect;
     }
     var friends_id = _.pluck($localStorage.getObject('friends'),'id');
     $http.post(serverAddress+'/actu/getActu/',{user:$localStorage.getObject('user'), friends: friends_id, skip:lastId}).success(function(data){
-      console.log('seeData');
-      console.log(data);
       var actusByDay = _.values(data);
       if(actusByDay.length==0) $ionicLoading.hide();
       async.each(actusByDay,function(actus,callback2){
@@ -356,27 +354,28 @@ return profil;
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
     $http.get(serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
-      if(data.length==0) $ionicLoading.hide();
-      console.log(data);
-      async.each(data, function(foot,callback){
-        $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
-          foot.organisator = elem.orga;
-          foot.orgaName = elem.orgaName;
-          foot.field = elem.field;
-          foot.orgaPic = elem.picture;
-          foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
-          callback();
-        }).error(function(err){
-          console.log(err);
-          callback();
+      if(data.length==0 || data.rowCount==0) $ionicLoading.hide();
+      else{
+        async.each(data, function(foot,callback){
+          $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
+            foot.organisator = elem.orga;
+            foot.orgaName = elem.orgaName;
+            foot.field = elem.field;
+            foot.orgaPic = elem.picture;
+            foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
+            callback();
+          }).error(function(err){
+            console.log(err);
+            callback();
+          });
+          if(foot.statut==1)
+            $localStorage.footInvitation.push(foot);
+          else if(foot.statut>1)
+            $localStorage.footTodo.push(foot);
+        },function(){
+          callback2();
         });
-        if(foot.statut==1)
-          $localStorage.footInvitation.push(foot);
-        else if(foot.statut>1)
-          $localStorage.footTodo.push(foot);
-      },function(){
-        callback2();
-      });
+      }
     });
   }
 
