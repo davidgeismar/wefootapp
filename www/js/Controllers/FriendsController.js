@@ -2,7 +2,7 @@ angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
 
   $scope.user = $localStorage.getObject('user');
-  $rootScope.friends = $localStorage.getObject('friends');
+  $rootScope.friends = $localStorage.getArray('friends');
   $scope.results = $rootScope.friends;
 
   $scope.addFavorite = function(target){

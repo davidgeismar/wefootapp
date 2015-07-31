@@ -22,8 +22,14 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
+.last70{ /* END OF CONTENT */
+	padding-bottom: 70px !important;
+}
 .last-margin{
 	margin-bottom: 200px !important;
+}
+.last-element{
+	margin-bottom:50px !important;
 }
 .transparent{
 	background-color: transparent !important;
@@ -1179,11 +1185,10 @@ ion-scroll[direction=y] {
 	border-radius:0px;
 	margin-bottom:0px;
 }
-.one_friends .item{
 
-}
 .name_friends{
 	display: inline-block;
+	width:60%;
 }
 .list .item{
 	border-radius:0px;
@@ -2639,6 +2644,25 @@ ion-scroll[direction=y] {
 	color:#273A59;
 }
 
+.resa-subtitle{
+	text-align: center;
+	font-size: 14px;
+	margin-top: 15px;
+	color:#273A59;
+}
+.item-radio input:checked ~ .item-content{
+	background-color:#F2F3F9;
+}
+.duree-button{
+	line-height: 15px;
+	border-color:#28385C;
+	background-color:#F2F3F9;
+}
+
+.item-radio .item-content{
+	background-color:#F2F3F9;
+}
+
 .footL-tab{
 	display: inline-block;
 	width: 24%;
@@ -2993,4 +3017,14 @@ ion-scroll[direction=y] {
 	font-size: 20px;
 	color: #28385c;
 	display: block;
+}
+.nbhours-resa{
+	display:inline-block;
+	width:30%;
+	white-space: nowrap;
+	overflow: visible;
+}
+
+.item-radio .radio-icon{
+	top:-15px;
 }

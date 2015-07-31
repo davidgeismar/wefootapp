@@ -1,18 +1,18 @@
-app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localStorage, $rootScope){
+app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($http,$localStorage, $rootScope, mySock){
 
 	var obj = {};
 	//Update the lastTimeSeen
 	obj.updateLts =  function(chatId){
-		var chats = $localStorage.getObject('chats');
+		var chats = $localStorage.getArray('chats');
 		var user = $localStorage.getObject('user');
 		var index = _.pluck(chats, 'id').indexOf(chatId);
-		io.socket.post(serverAddress+'/chatter/updateLts',{user: user.id, chat: chatId});
+		mySock.req(serverAddress+'/chatter/updateLts',{user: user.id, chat: chatId});
 		chats[index].lastTime = moment();
 		$localStorage.setObject('chats', chats);
 	}
 	obj.updateDisplayer = function(message){
-		var chatsDisplay = $localStorage.getObject('chatsDisplay');
-		var chats = $localStorage.getObject('chats');
+		var chatsDisplay = $localStorage.getArray('chatsDisplay');
+		var chats = $localStorage.getArray('chats');
 		var indexCD = _.pluck(chatsDisplay, 'id').indexOf(message.chat);
 		var indexC = _.pluck(chats, 'id').indexOf(message.chat);
 		var lastDate = new Date(message.createdAt);
@@ -22,7 +22,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		$rootScope.$emit('updateChatDisplayer');
 	}
 	obj.addMessage =  function(message){
-		var chats = $localStorage.getObject('chats');
+		var chats = $localStorage.getArray('chats');
 		var index = _.pluck(chats, 'id').indexOf(message.chat);
 		if(index>-1){
 			chats[index].messages.push(message);
@@ -38,7 +38,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		});
 	}
 	obj.addChatter =  function (chatter){
-		var chats = $localStorage.getObject('chats');
+		var chats = $localStorage.getArray('chats');
 		var index = _.pluck(chats, 'id').indexOf(chatter.chat);
 		if(index>-1){
 			chats[index].users.push(chatter.user);
@@ -47,8 +47,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 	}
 	obj.deactivateChatter =  function (chatId){
 		var user = $localStorage.getObject('user');
-		var chats = $localStorage.getObject('chats');
-		var chatsDisplay = $localStorage.getObject('chatsDisplay');
+		var chats = $localStorage.getArray('chats');
+		var chatsDisplay = $localStorage.getArray('chatsDisplay');
 		var indexC = _.pluck(chats, 'id').indexOf(chatId);
 		var indexCD = _.pluck(chatsDisplay, 'id').indexOf(chatId);
 		if(indexC>-1){
@@ -64,9 +64,9 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		}
 	}
 	obj.setSeenStatus = function(chatId){
-		var chats = $localStorage.getObject('chats');
+		var chats = $localStorage.getArray('chats');
 		var indexC = _.pluck(chats, 'id').indexOf(chatId);
-		var chatsDisplay = $localStorage.getObject('chatsDisplay');
+		var chatsDisplay = $localStorage.getArray('chatsDisplay');
 		var indexCD = _.pluck(chatsDisplay, 'id').indexOf(chatId);
 		if(indexC>-1){
 			if(chats[indexC].messages.length>0){
@@ -87,7 +87,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope',function($http,$localS
 		}
 	}
 	obj.isSeen = function(chatId){
-		var chats = $localStorage.getObject('chats');
+		var chats = $localStorage.getArray('chats');
 		var index = _.pluck(chats, 'id').indexOf(chatId);
 		if(chats[index].seen){
 			return true;
@@ -165,12 +165,13 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			});
 		}
 		obj.initDisplayer = function(){
-			var chats = $localStorage.getObject('chats');
+			var chats = $localStorage.getArray('chats');
 			var chatsDisplay = [];
 			angular.forEach(chats, function(chat) {
 				if(chat.messages.length>0){
 					var lastDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 					var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);
+					
 					var stuff = getStuffById(chat.messages[chat.messages.length-1].sender_id, chat.users);
 					if(stuff)
 						var chatPic = stuff.picture;
@@ -191,7 +192,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			$localStorage.setObject('chatsDisplay', chatsDisplay);
 		}
 		obj.initNotif = function(){
-			var chats = $localStorage.getObject('chats');
+			var chats = $localStorage.getArray('chats');
 			angular.forEach(chats, function(chat, index) {
 				if(chat.messages.length>0){
 					var lastTimeMessage = moment(chat.messages[chat.messages.length-1].createdAt);
@@ -208,7 +209,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			$localStorage.setObject('chats', chats);	
 		}
 		obj.getNbNotif = function(){
-			var chats = $localStorage.getObject('chats');
+			var chats = $localStorage.getArray('chats');
 			return _.filter(chats, function(chat){return !chat.seen}).length;
 		}
 		obj.getChat = function(related){

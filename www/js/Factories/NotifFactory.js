@@ -1,5 +1,5 @@
 //Get all necessary info on the notif: texte attribute related_user name and link (called in NotifController and app.run)
-app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage){
+app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$localStorage, mySock){
   var handle = {};
   handle.handleNotif = function(notif,callback){
 
@@ -35,15 +35,19 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
 
     $http.get(serverAddress+'/user/get/'+notif.related_user).success(function(user){
+      if(notif.typ=="endGame"){
+        if(user.id == $localStorage.getObject('user').id)
+            notif.userName = "Votre foot est terminé, ";
+          else
+            notif.userName = "Le foot de "+user.first_name+" est terminé, ";
+        }
+        else{
+          if(user.id == $localStorage.getObject('user').id)
+           notif.userName = "Vous";
+         else
+          notif.userName = user.first_name;
+      }
 
-      if(user.id == $localStorage.getObject('user').id)
-       notif.userName = "Vous";
-     else{
-      if(notif.typ!="endGame")
-        notif.userName = user.first_name;
-      else
-        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
-    }
     notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)
@@ -112,7 +116,7 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
 handle.notify = function(notif,callback,push){
 
-  io.socket.post(serverAddress+'/actu/newNotif',notif);
+  mySock.req(serverAddress+'/actu/newNotif',notif);
 
   if(push){
     var content = {};
@@ -120,9 +124,9 @@ handle.notify = function(notif,callback,push){
       content.user = notif.user;
       content.texte = $localStorage.getObject('user').first_name + " " + notif.texte;
       if(callback)
-        io.socket.post(serverAddress+'/push/sendPush',content,callback());
+        mySock.req(serverAddress+'/push/sendPush',content,callback());
       else
-        io.socket.post(serverAddress+'/push/sendPush',content);
+        mySock.req(serverAddress+'/push/sendPush',content);
     });
   }
 };

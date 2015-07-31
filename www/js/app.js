@@ -1,5 +1,4 @@
 //GLOBAL FUNCTIONS
-
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
 var serverAddress = "http://localhost:1337";
@@ -86,7 +85,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock) {
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -127,7 +126,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('connect', function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
-      io.socket.post(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
+      mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
@@ -464,6 +463,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
         config.headers = config.headers || {};
         if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.get('token');
+        }
+        else{
+          console.log("fail");
         }
         return config;
       },
