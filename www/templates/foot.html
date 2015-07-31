@@ -15,11 +15,11 @@
 <div id="imagehead-foot" style="background:url({{foot.field.picture}}) no-repeat center;  background-size: cover; ">
 </div>
 <a href="tel: {{foot.field.telephone}}" ng-if="user.id == foot.organisator && !foot.booked && !foot.field.partner" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-ios-telephone"></i>Réserver le terrain</a>
-<a ng-click="book()" ng-if="user.id == foot.organisator && !foot.booked && foot.field.partner" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-calendar"></i>Réserver le terrain</a>
-<button ng-if="user.id != foot.organisator && foot.friend_can_invite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-ios-email"></i>Inviter vos amis</button>
-<button ng-if="!isPlaying && isInvited" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>
+<a ng-click="book()" ng-if="user.id == foot.organisator && !foot.booked && foot.field.partner" class="button button-book-foot"><!-- <i class="ion-calendar"></i> --> <i class="ion-calendar"></i><p>Réserver le terrain</p></a>
+<button ng-if="user.id != foot.organisator && foot.friend_can_invite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot" style="font-size:35px;"> <i class="ion-ios-email"></i><p>Inviter vos amis</p></button>
+<button ng-if="!isPlaying && isInvited" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i><p>Participer</p></button>
 <button ng-if="!isPlaying && isInvited" ng-click="removePlayer(user.id,true)" class="button button-book-foot" style="background-color: #E2334C"> <i class="ion-close-circled"></i>Je ne peux pas</button>
-<button ng-if="!isInvited && !foot.priv && !isPending" ng-click="askToPlay(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Demander à jouer</button>
+<button ng-if="!isInvited && !foot.priv && !isPending" ng-click="askToPlay(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i><p>Demander à jouer</p></button>
 <div ng-if="user.id == foot.organisator" class="bouttons3-foot">	
 	<button ng-click="closePublic()" ng-if="!foot.priv" class="boutton-foot">
 		<i class="ion-locked"></i>
@@ -68,7 +68,7 @@
 		<p ng-if="foot.field.telephone!=null" style="color:#006DFF"> <i class="ion-ios-telephone"></i>{{foot.field.telephone}}</p>
 	</div>
 </div>
-<div class="last">
+<div class="last70">
 <button ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot">
 	<i class="ion-close-circled"></i> Annuler le Foot
 </button>

@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -47,9 +47,9 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
 
 
 allFunction.push(function(callback){
-  io.socket.post(serverAddress+'/connexion/setConnexion',{id: userId},function(){
-    callback();
-  }); 
+  mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
+  callback();  
+});
 });
 
 
@@ -122,7 +122,6 @@ async.each(allFunction, function(oneFunc,callback){
 return connect;
 
 }])
-
 
 
 .factory('$paiement',['$http','$ionicLoading','$searchLoader','$confirmation',function($http,$ionicLoading,$searchLoader,$confirmation){
@@ -207,7 +206,7 @@ return connect;
         showBackdrop: false
       });
     }
-    var friends_id = _.pluck($localStorage.getObject('friends'),'id');
+    var friends_id = _.pluck($localStorage.getArray('friends'),'id');
     $http.post(serverAddress+'/actu/getActu/',{user:$localStorage.getObject('user'), friends: friends_id, skip:lastId}).success(function(data){
       var actusByDay = _.values(data);
       if(actusByDay.length==0) $ionicLoading.hide();
@@ -324,11 +323,11 @@ return profil;
 
   foot.searchFields = function(word,callback){
     var user = $localStorage.getObject('user');
-      $searchLoader.show();
-      $http.get(serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
-        $searchLoader.hide();
-        callback(data);
-      });
+    $searchLoader.show();
+    $http.get(serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
+      $searchLoader.hide();
+      callback(data);
+    });
   }
 
   foot.create = function(params,callback2){
@@ -487,5 +486,19 @@ foot.searchFoot = function(params,callback2){
   });
 }
 return foot;
+}])
+
+.factory('mySock',['$localStorage',function($localStorage){
+  var mySock = {};
+
+mySock.req = function(url, params, callback, methode){
+  if(!methode){
+    methode = 'post';
+  }
+ io.socket.request({method:methode,url:url,headers:{Authorization :$localStorage.get('token')},params:params}, callback);
+};
+
+
+return mySock;
 }])
 

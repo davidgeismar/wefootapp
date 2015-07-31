@@ -8,8 +8,8 @@ angular.module('foot',[]).controller('FootController', function ($scope,$ionicMo
 $scope.foot = {};
 $scope.results = [];
 $scope.tab = "1";
-if($localStorage.getObject('friends')){
-  $rootScope.friends = $localStorage.getObject('friends');
+if($localStorage.getArray('friends')){
+  $rootScope.friends = $localStorage.getArray('friends');
 }
 if($localStorage.fieldChosen){
   $scope.foot.field = $localStorage.fieldChosen.id;
@@ -121,7 +121,7 @@ if($location.path().indexOf('user/foots')>-1){
     showBackdrop: true
   });
   $scope.user = $localStorage.getObject('user');
-  $rootScope.friends = $localStorage.getObject('friends');
+  $rootScope.friends = $localStorage.getArray('friends');
   $scope.players = [];
   $scope.ready = false; //Show after loading
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
@@ -152,7 +152,7 @@ $scope.refresh = function(){
 }
 
   $scope.book = function(){
-    $localStorage.reservationClient = {foot: $scope.foot.id, field: $scope.foot.field.id, date: $scope.foot.date};
+    $localStorage.reservationClient = {foot: $scope.foot.id, field: $scope.foot.field.id, date: $scope.foot.date, student_discount:$scope.foot.field.student_discount};
     $localStorage.found = 0;
     $localStorage.foot = $scope.foot;
     $location.path('/resa/recap');
@@ -302,13 +302,13 @@ $scope.closeModal3 = function(launch){
     }
 
       $scope.launchChat = function (footId){
-      var chat = _.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
+      var chat = _.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
       if(chat){
           $location.path('/conv/'+chat.id);
         }
         else
           chats.getChat(footId).then(function(){
-            $location.path('/conv/'+_.find($localStorage.getObject('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
+            $location.path('/conv/'+_.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
           });
       }  
    })

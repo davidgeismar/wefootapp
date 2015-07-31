@@ -40,7 +40,6 @@ obj.getFacebookProfileInfo = function () {
     var info = $q.defer();
     facebookConnectPlugin.api('/me', "",
       function (response) {
-        alert("Result: " + JSON.stringify(response));
         info.resolve(response);
       },
       function (response) {

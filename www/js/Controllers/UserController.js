@@ -1,11 +1,10 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect, mySock){
 
 
   $scope.user = $localStorage.getObject('user');
-  $rootScope.friends = $localStorage.getObject('friends');
-
+  $rootScope.friends = $localStorage.getArray('friends');
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
 if($scope.user && $scope.user.favorite_club==null){
@@ -82,12 +81,19 @@ if($scope.user && $scope.user.poste==null){
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  io.socket.post(serverAddress+'/connexion/delete');
-  $rootScope.toShow = true;
-  if($localStorage.getObject('user').pushToken)
-    $http.post(serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
+ mySock.req(serverAddress+'/connexion/delete');
+ $rootScope.toShow = true;
+ if($localStorage.getObject('user').pushToken){
+  $http.post(serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
+    $localStorage.clearAll();
+    $location.path('/');
+  });
+}
+else{
   $localStorage.clearAll();
   $location.path('/');
+}
+
 };
   //MODAL HANDLER
 
@@ -122,7 +128,7 @@ $scope.logout = function (){
       fbConnect.getFacebookFriends().then(function(data){
         $scope.facebookFriends = data.data;
         //IDs of my facebookFriends list
-        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getObject('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
         console.log($scope.facebookFriendsId);
         $searchLoader.hide();
       });
@@ -139,7 +145,7 @@ $scope.logout = function (){
   }
   $scope.searchQuery = function(word){
     $searchLoader.show();
-    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
+    $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
     if(word.length>1){
      $http.get(serverAddress+'/search/'+word).success(function(data){
       $searchLoader.hide();
@@ -175,10 +181,11 @@ $scope.addFriend = function(target, facebookFriend){
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
-    var friends = $localStorage.getObject('friends');
+    var friends = $localStorage.getArray('friends');
     friends.push(data);
     $localStorage.setObject('friends',friends);
     $rootScope.friends.push(data);
+    console.log($rootScope.friends);
     $scope.word ="";
     $scope.lockFriend ="";
   });

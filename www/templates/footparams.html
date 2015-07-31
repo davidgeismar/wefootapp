@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <a class="item item-icon-left align_creer_foot" href="#">
+  <div class="item item-icon-left align_creer_foot" href="#">
     <div class="row">
       <div class="col col-25">
         <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
@@ -31,8 +31,8 @@
      </div>
      <div class="col col-25 venue1">
        <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
-       <label class="item item-input item-select" style="border-style:none;bottom:4px;">
-       <select ng-model="foot.nb_player" style="position:relative; padding:0;">
+       <label class="item item-input item-select" style="border-style:none;bottom:4px;width:65px">
+       <select ng-model="foot.nb_player" style="position:relative; padding:0; ">
            <option>6</option>
            <option>7</option>
            <option>8</option>          
@@ -42,15 +42,29 @@
            <option>12</option>
            <option>13</option>
            <option>14</option>
+           <option>15</option>
+           <option>16</option>
+           <option>17</option>
+           <option>18</option>
+           <option>19</option>
+           <option>20</option>
+           <option>21</option>
+           <option>22</option>
+           <option>23</option>
+           <option>24</option>
+           <option>25</option>
+           <option>26</option>
+           <option>27</option>
+           <option>28</option>
          </select>
        </label>
      </div>
    </div>
- </a>
+ </div>
  <div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
   <div class="row">
     <div class="col col-25 invit_params">
-      <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg"/>
+      <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg" style="margin-left: -10px;"/>
     </div>
     <div class="col col-50">
       <p class="dispo">Inviter vos amis </p>
@@ -88,14 +102,14 @@
 </div>
 <div class="private_foot" ng-if="foot.priv">
   <p class="type-foot">Votre Foot est privé. </p>
-  <p class="type-foot-subtitle">Seuls vos amis invités à ce foot pourront vous rejoindre.</p>
+  <p class="type-foot-subtitle">Seuls vos amis invités pourront le rejoindre.</p>
 </div>
 <div class="public_foot" ng-if="!foot.priv">
   <p class="type-foot">Votre Foot est public. </p>
   <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
 </div>
 <div class="item item-icon-left level_foot">
- <div class="text-center"> <p>Niveau du Foot</p></div>
+ <div class="text-center"> <p style="padding-right: 30px;">Niveau du Foot</p></div>
  <div class="row">
   <div class="size_level col align" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
   <div class="size_level col align" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img ng-src="img/niveau_2.svg"/><p>Moyen</p></div>
