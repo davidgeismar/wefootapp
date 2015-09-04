@@ -6,7 +6,7 @@ angular.module('connections',[])
  //Prevent for loading to early
 
  $ionicPlatform.ready(function(){
-  if($localStorage.getObject('user') && $localStorage.getObject('user').id){ //If user has already sat connection from this device he will be logged automatically
+  if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('token')){ //If user has already sat connection from this device he will be logged automatically
     $ionicLoading.show({
       content: 'Loading Data',
       animation: 'fade-out',
@@ -71,7 +71,7 @@ $scope.facebookConnect = function() {
       hideOnStateChange: true
     });
     $http.post(serverAddress+'/user/create',$scope.user).success(function(data){
-     $localStorage.token = data[0].token;
+     $localStorage.set('token',data[0].token);
      $localStorage.setObject('user',data[0]);
      $localStorage.setObject('friends',[]);
      mySock.req(serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id

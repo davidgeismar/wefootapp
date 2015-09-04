@@ -1,7 +1,7 @@
 //GLOBAL FUNCTIONS
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
 
 
@@ -210,7 +210,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
   }
   if(window.StatusBar) {
     StatusBar.styleDefault();
