@@ -350,7 +350,7 @@ return profil;
         },true);
       },function(){});
       callback2(foot);
-    });
+    }).error(function(){console.log(params);});
   }
 
   foot.loadFoot = function(callback2){

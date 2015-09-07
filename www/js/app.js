@@ -1,7 +1,7 @@
 //GLOBAL FUNCTIONS
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
 
 
@@ -38,8 +38,8 @@ var getIndex = function(id, stuffArray){
 
 var getJour = function(date){
   date = new Date(date);
-  var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  var semaine = ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'];
+  var mois = ['Jan','Fev','Mars','Avril','Mai','Juin','Juil','Aout','Sept','Oct','Nov','Dec'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
   return(j+' '+date.getDate()+' '+m);

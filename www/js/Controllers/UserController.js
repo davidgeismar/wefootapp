@@ -83,6 +83,7 @@ if($scope.user && $scope.user.poste==null){
 $scope.logout = function (){
  mySock.req(serverAddress+'/connexion/delete');
  $rootScope.toShow = true;
+ $rootScope.notifs = [];
  if($localStorage.getObject('user').pushToken){
   $http.post(serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
     $localStorage.clearAll();

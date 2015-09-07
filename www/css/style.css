@@ -310,6 +310,7 @@ ion-scroll[direction=y] {
 	color: #fff;
 	font-weight: bold;
 	border-radius: 5px;
+	margin-bottom: 40px;
 }
 .type-foot{
 	color: #006dff;
@@ -468,13 +469,16 @@ ion-scroll[direction=y] {
 }
 .homepage_connect{
 	background-color: #006ddf;
+	margin-bottom: 10px;
 }
 .homepage_fb{
 	background-color: #3b5998;
 }
 .homepage_register{
 	margin-top: 50px;
-	border: 1px solid #006ddf;
+	border: 2px solid #006ddf;
+	background-color: #fff;
+	color: #006ddf;
 }
 .actu_header{
 	background-color: #28385c;
@@ -569,7 +573,7 @@ ion-scroll[direction=y] {
 }
 .container_actu{
 	padding-top: 20px;
-	height: auto;
+	height: auto !important;
 	position: absolute;
 }
 .left-side-slider i{
@@ -935,6 +939,11 @@ ion-scroll[direction=y] {
 }
 .no_hide{
 	display: inline-block !important;
+}
+ion-view[view-title="Conv"] ion-content{
+	background-image: url("../img/fond_chat.jpg");
+	background-size: cover;
+    background-position: center;
 }
 .text_chat{
 	font-size: 36px;
@@ -1543,7 +1552,11 @@ ion-scroll[direction=y] {
   		padding-right: 10px;
   		border-bottom: 3px solid #28385c;
   		padding-bottom: 0px;
-
+  	}
+  	.one-field p{
+  		white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
   	}
   	.content-footfield{
   		text-align: left;
@@ -1895,6 +1908,9 @@ ion-scroll[direction=y] {
   	.range-footfinder p{
   		margin-right: 20%;
   		text-align: center;
+  		white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
   	}
   	.date-footfinder{
   		font-weight: bold;
@@ -2073,7 +2089,7 @@ ion-scroll[direction=y] {
   			width: 28%;
   		}
   		.border_bottom_foot{
-  			height: 160px !important;
+  			height: 150px !important;
   			padding: 0px;
   		}
   		.fleche_bleu_fonce_foots {
@@ -2215,6 +2231,7 @@ ion-scroll[direction=y] {
  		-ms-transform: rotate(20deg); /* IE 9 */
  		-webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
  		transform: rotate(20deg);
+ 		height: 20px;
  	}
 
  	.nbreplace {
@@ -2238,7 +2255,7 @@ ion-scroll[direction=y] {
 
  	.border_bottom_foot {
  		border-bottom: 4px solid #28385c ;
- 		height: 200px;
+ 		height: 180px;
  	}
  	.actu_header .header_left_foot{
  		width: 28px;
