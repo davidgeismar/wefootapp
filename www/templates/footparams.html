@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div class="item item-icon-left align_creer_foot" href="#">
+  <div class="item item-icon-left align_creer_foot">
     <div class="row">
       <div class="col col-25">
         <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
@@ -74,7 +74,7 @@
     </div>
   </div>
 </div>
-<div class="item item-icon-left align_creer_foot  " href="#">
+<div class="item item-icon-left align_creer_foot" href="#">
   <div class="row">
     <div class="col col-25">
       <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
@@ -82,7 +82,7 @@
     <div class="col col-50 venue">
       <p>Vos amis peuvent <br> inviter leurs amis</p>
     </div>
-    <ion-toggle ng-model="foot.friend_can_invite" id="invite_friends_toggle">
+    <ion-toggle class="col col-25" ng-model="foot.friend_can_invite" id="invite_friends_toggle">
   </ion-toggle>
 </div>
 </div>
@@ -101,20 +101,20 @@
   </div>
 </div>
 <div class="private_foot" ng-if="foot.priv">
-  <p class="type-foot">Votre Foot est privé. </p>
+  <p class="type-foot">Votre Foot est privé.</p>
   <p class="type-foot-subtitle">Seuls vos amis invités pourront le rejoindre.</p>
 </div>
 <div class="public_foot" ng-if="!foot.priv">
-  <p class="type-foot">Votre Foot est public. </p>
+  <p class="type-foot">Votre Foot est public.</p>
   <p class="type-foot-subtitle">Tout le monde pourra rejoindre ce foot.</p>
 </div>
 <div class="item item-icon-left level_foot">
  <div class="text-center"> <p style="padding-right: 30px;">Niveau du Foot</p></div>
  <div class="row">
-  <div class="size_level col align" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
-  <div class="size_level col align" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img ng-src="img/niveau_2.svg"/><p>Moyen</p></div>
-  <div class="size_level col align" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img ng-src="img/niveau_3.svg"/><p>Expert</p></div>
-  <div class="size_level col align" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img ng-src="img/niveau_0.svg"/><p>Tous</p></div>
+  <div class="size_level col" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
+  <div class="size_level col" ng-click="foot.level = 2" ng-class="{active: foot.level ==2}"><img ng-src="img/niveau_2.svg"/><p>Moyen</p></div>
+  <div class="size_level col" ng-click="foot.level = 3" ng-class="{active: foot.level ==3}"><img ng-src="img/niveau_3.svg"/><p>Expert</p></div>
+  <div class="size_level col" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img ng-src="img/niveau_0.svg"/><p>Tous</p></div>
 </div>
 </div>
 

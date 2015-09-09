@@ -365,7 +365,7 @@ return profil;
             foot.orgaName = elem.orgaName;
             foot.field = elem.field;
             foot.orgaPic = elem.picture;
-            foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
+            foot.dateString = getJourShort(new Date(foot.date))+', '+getHour(new Date(foot.date));
             callback();
           }).error(function(err){
             console.log(err);

@@ -69,9 +69,6 @@
 	</div>
 </div>
 <div class="last70">
-<button ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot">
-	<i class="ion-close-circled"></i> Annuler le Foot
-</button>
 <button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot">
 	<i class="ion-close-circled"></i> Se retirer du foot
 </button>

@@ -84,7 +84,7 @@ ion-scroll[direction=y] {
 .list-inset{
 	background-color: transparent;
 }
-.align {
+.align { /* DEPRECATED */
 	margin-left:-40px;
 }
 .hidden{
@@ -156,6 +156,10 @@ ion-scroll[direction=y] {
 	display: block;
 	color: #006ddf;
 }
+.time_date{
+	position: relative;
+    top: 5px;
+}
 .icon_bonhomme {
 	height:27px;
 	margin-top: 13px;
@@ -178,12 +182,15 @@ ion-scroll[direction=y] {
 	margin-top: 10px;
 	border-right: solid 1px blue;
 }
+ion-view[view-title="footparams"] .item-icon-left{
+	padding-left: 10px;
+}
 #invite_friends_toggle{
 	border: none;
 	margin-top: 5px;
 	height:50px;
 	background-color: transparent;
-	margin-left:-35px;
+	margin-left:5px;
 }
 
 #icon_calendar {
@@ -545,8 +552,8 @@ ion-scroll[direction=y] {
 	color: #ffffff;
 	font-weight: bold;
 }
-.hide-icon{
-	visibility: hidden;
+.show-icon{
+	visibility: visible;
 }
 .right-side-slider i{
 	font-size: 35px;
@@ -922,7 +929,7 @@ ion-scroll[direction=y] {
 }
 .logout_menu{
 	position: relative;
-	bottom:10px;
+	bottom:30px;
 }
 .icon-logout{
 	background-image: url('../img/shut-down2.svg');
@@ -1851,20 +1858,18 @@ ion-view[view-title="Conv"] ion-content{
   		font-size: 15px;
   		background-color: transparent;
   		display: inline-block;
-  		border-radius: 5px;
   		width: 64%;
   		margin-left: 18%;
   		text-align: center;
   		color: red;
-  		border: 1px solid red;
   		font-family: 'Ubuntu';
-  		margin-top: 25px;
+  		margin-top: 20px;
   		height: 40px;
   	}
   	.annuler-foot i{
   		position: relative;
   		right: 10px;
-  		top:2px;
+  		top: 1px;
   		font-size: 20px;
   	}
 
@@ -1922,6 +1927,11 @@ ion-view[view-title="Conv"] ion-content{
   		background-size: cover;
   		min-height: 100%;
   	}
+  	.background_footfinder p{
+  		white-space: nowrap;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
+  	}
   	@media screen and (min-width: 414px) { /*IPHONE 6 + */
   		.logo-profil-container{
   			left: 165px;
@@ -1936,7 +1946,7 @@ ion-view[view-title="Conv"] ion-content{
   	@media screen and (max-width: 400px) { /* ANDROID */
   		.logout_menu{
   			position: relative;
-  			bottom:20px;
+  			bottom:40px;
   		}
   		.boutton-foot{
   			height: 70px;
@@ -3034,6 +3044,7 @@ ion-view[view-title="Conv"] ion-content{
 	font-size: 20px;
 	color: #28385c;
 	display: block;
+	visibility: hidden;
 }
 .nbhours-resa{
 	display:inline-block;

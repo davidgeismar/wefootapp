@@ -1,7 +1,8 @@
 //GLOBAL FUNCTIONS
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
-var serverAddress = "http://wefoot.herokuapp.com:80";
+                      //"http://localhost:1337";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -38,8 +39,17 @@ var getIndex = function(id, stuffArray){
 
 var getJour = function(date){
   date = new Date(date);
+  var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  var m = mois[date.getMonth()];
+  var j = semaine[date.getDay()];
+  return(j+' '+date.getDate()+' '+m);
+};
+
+var getJourShort = function(date){
+  date = new Date(date);
   var semaine = ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'];
-  var mois = ['Jan','Fev','Mars','Avril','Mai','Juin','Juil','Aout','Sept','Oct','Nov','Dec'];
+  var mois = ['Jan','Fev','Mars','Avr','Mai','Juin','Juil','Aout','Sept','Oct','Nov','Dec'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
   return(j+' '+date.getDate()+' '+m);
@@ -164,13 +174,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     });
   //Nouveau chat 
   io.socket.on('newChat',function(chat){
-    console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    console.log(message);
     $localStorage.set('lastTimeUpdated', moment().format());
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
@@ -210,7 +218,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
   }
   if(window.StatusBar) {
     StatusBar.styleDefault();

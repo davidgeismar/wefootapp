@@ -22,20 +22,20 @@
 <div class="row text-center">
   <div class="col">
     <div ng-click="showDatePicker()" class="item nativedatepicker">
-      <i class="ion-calendar ion_cal"></i><p class="create_foot_label">Date</p>
+      <i class="ion-calendar ion_cal"></i>
       <p class="time_date"> {{date}} </p>
       <i class="ion-chevron-down arrow_cal"></i>
     </div>
   </div>
   <div class="col">
     <div ng-click="showHourPicker()" class="item">
-      <i class="ion-ios-clock-outline ion_cal"></i><p class="create_foot_label">Heure</p>
+      <i class="ion-ios-clock-outline ion_cal"></i>
       <p class="time_date">{{hour}}</p>
       <i class="ion-chevron-down arrow_cal"></i>
     </div>
   </div>
 </div>
-<div class="item item-icon-left" href="#">
+<div class="item item-icon-left align_creer_foot">
   <div class="row">
     <div class="col col-25">
       <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
@@ -74,7 +74,7 @@
    </div>
  </div>
 </div>
-<div class="item item-icon-left" href="#">
+<div class="item item-icon-left align_creer_foot" href="#">
   <div class="row">
     <div class="col col-25">
       <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
@@ -86,7 +86,7 @@
   </ion-toggle>
 </div>
 </div>
-<div class="item item-icon-leftlevel_foot" href="#">
+<div class="item item-icon-left level_foot">
  <div class="text-center"> <p style="padding-right: 30px;">Niveau du Foot</p></div>
  <div class="row">
   <div class="size_level col" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
@@ -98,6 +98,9 @@
 <button ng-click="closeModal3(true)" class="button button-book-foot">
   Valider
 </button>
+<div ng-if="user.id == foot.organisator" ng-click="confirmDelete(user.id)" class="annuler-foot">
+  <i class="ion-close-circled"></i> Annuler le Foot
+</div>
 </div>
 </ion-content>
 </div>
