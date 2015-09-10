@@ -19,9 +19,7 @@ angular.module('note',[])
 	$scope.init = function(){
 		$scope.initBypass = true;
 		$http.get(serverAddress+'/getGrade/'+$localStorage.getObject('user').id+'/'+$scope.friend.id).success(function(response){
-			console.log(response);
 			if(response.length==0){
-				console.log("here");
 				for(var i = 0; i<5; i++){
 					$scope.setNote(0,i);
 				}

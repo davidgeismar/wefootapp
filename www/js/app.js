@@ -2,7 +2,7 @@
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
                       //"http://localhost:1337";
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
 
 
