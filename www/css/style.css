@@ -22,6 +22,9 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
+.last50{ /* END OF CONTENT */
+	padding-bottom: 50px !important;
+}
 .last70{ /* END OF CONTENT */
 	padding-bottom: 70px !important;
 }
@@ -1844,7 +1847,6 @@ ion-view[view-title="Conv"] ion-content{
   		border-radius: 50%;
   	}
   	.urban-foot{
-  		margin-bottom: 40px;
   		margin-left: 10%;
   	}
 
