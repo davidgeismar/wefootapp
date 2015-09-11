@@ -483,6 +483,7 @@ foot.searchFoot = function(params,callback2){
           foot.orgaName = info.orgaName;
           foot.field = info.field;
           foot.orgaPic = info.picture;
+          foot.dateString = getHour(foot.date);
           results.push(foot);
           callback();
         });

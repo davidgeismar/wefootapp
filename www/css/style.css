@@ -182,9 +182,15 @@ ion-scroll[direction=y] {
 	margin-top: 10px;
 	border-right: solid 1px blue;
 }
+
 ion-view[view-title="footparams"] .item-icon-left{
 	padding-left: 10px;
 }
+
+.modal-backdrop .level_foot{
+	padding-left: 30px;
+}
+
 #invite_friends_toggle{
 	border: none;
 	margin-top: 5px;
@@ -300,6 +306,13 @@ ion-view[view-title="footparams"] .item-icon-left{
 .checkbox_foot_friends input:after {
 	width: 11px;
 	border-width: 2px;
+}
+#toggleAll_friends{
+	border-bottom: 2px solid #DBDAE3;
+/*	margin-bottom: 20px*/
+}
+#toggleAll_friends p{
+	padding-top: 23px;
 }
 .fond {
 	background-color: rgb(241, 242, 244);
@@ -1201,7 +1214,9 @@ ion-view[view-title="Conv"] ion-content{
 	border-radius:0px;
 	margin-bottom:0px;
 }
-
+.target_toggle_friends[disabled]:before{
+	background-color: #DBDAE3;
+}
 .name_friends{
 	display: inline-block;
 	width:60%;
@@ -1742,6 +1757,11 @@ ion-view[view-title="Conv"] ion-content{
   		margin-bottom: 0;
   		margin-left: 20px;
   	}
+  	  	.name-player-foot i{
+  		float: right;
+  		color: grey;
+  		font-size: 20px;
+  	}
   	.row.player-foot{
   		border-top: 2px solid #c4c4c4;
   		padding-top: 7px;
@@ -1824,7 +1844,7 @@ ion-view[view-title="Conv"] ion-content{
   		border-radius: 50%;
   	}
   	.urban-foot{
-  		margin-bottom: 20px;
+  		margin-bottom: 40px;
   		margin-left: 10%;
   	}
 
@@ -1865,6 +1885,19 @@ ion-view[view-title="Conv"] ion-content{
   		font-family: 'Ubuntu';
   		margin-top: 20px;
   		height: 40px;
+  	}
+  	  .retirer-foot{
+  		font-size: 15px;
+  		background-color: transparent;
+  		display: inline-block;
+  		width: 64%;
+  		margin-left: 18%;
+  		text-align: center;
+  		color: red;
+  		font-family: 'Ubuntu';
+  		margin-top: 20px;
+  		height: 40px;
+  		border: 1px solid red;
   	}
   	.annuler-foot i{
   		position: relative;
@@ -2607,7 +2640,16 @@ ion-view[view-title="Conv"] ion-content{
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
-
+#invite_friends_toggle_edit{
+	border: none;
+    margin-top: 5px;
+    height: 50px;
+    background-color: transparent;
+    margin-left: 5px;
+}
+#invite_friends_toggle_edit label{
+	right: inherit;
+}
 .invite-facebook{
 	background-color:inherit;
 	border:none;

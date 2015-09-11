@@ -16,7 +16,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
     elem.className = elem.className.substring(0,elem.className.indexOf("icon_")-1) + " " + icon;
   else
    elem.className = elem.className + " " + icon;
-}
+  }
 };
 var newTime = function (oldTime){
   return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
@@ -149,6 +149,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   // Notification event handler
   io.socket.on('notif',function(data){
+    console.log(data);
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
 
@@ -482,7 +483,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/login');
         }
         $rootScope.$broadcast('loading:hide');
-        console.log(response);
         $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       },

@@ -1,6 +1,7 @@
 <ion-view view-title="foot">
 <ion-header-bar class="actu_header">
-<a class="button button-clear header_left_foot" ng-href="#/user/foots"><span class="white ion-chevron-left"></span></a>
+<a ng-if="!isInvited && !foot.priv && !isPending" class="button button-clear header_left_foot" ng-href="#/footfinder"><span class="white ion-chevron-left"></span></a>
+<a ng-if="isInvited || foot.priv || isPending" class="button button-clear header_left_foot" ng-href="#/user/foots"><span class="white ion-chevron-left"></span></a>
 <img class="logo_wf_foot" ng-src="img/logo_WF.svg">
 <i ng-if="isInvited || isPlaying" class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>
@@ -51,10 +52,14 @@
 		<div class="img_friends img_foot col col-20">
             <img ng-src="{{player.picture}}">
         </div>
-        <a href="#/friend/{{player.id}}" class="name-player-foot col col-80">
+        <a ng-if="user.id != player.id || foot.organisator == user.id " href="#/friend/{{player.id}}" class="name-player-foot col col-80">
 			<p>	{{player.first_name}} {{player.last_name}} </p>
 			<p ng-if="foot.organisator == player.id" class="orga-foot"> Organisateur de ce foot</p>
 		</a>
+		<div ng-if="user.id == player.id && foot.organisator != user.id" ng-click="removePlayer(user.id)" class="name-player-foot col col-80">
+			<p>	{{player.first_name}} {{player.last_name}} <i class="ion-close-circled"></i> </p>
+			<p ng-if="foot.organisator == player.id" class="orga-foot"> Organisateur de ce foot</p>
+		</div>
 	</div>
 </div>
 <hr class="field-foot-separator" size=5px color=#28385B width=85%>
@@ -68,11 +73,9 @@
 		<p ng-if="foot.field.telephone!=null" style="color:#006DFF"> <i class="ion-ios-telephone"></i>{{foot.field.telephone}}</p>
 	</div>
 </div>
-<div class="last70">
-<button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="annuler-foot">
+<!-- <button ng-if="(user.id != foot.organisator)&&(isPlaying)" ng-click="removePlayer(user.id)" class="retirer-foot">
 	<i class="ion-close-circled"></i> Se retirer du foot
-</button>
-</div>
+</button> -->
 </div>
 </ion-content>
 <div class="err_container">{{err}}</div>
