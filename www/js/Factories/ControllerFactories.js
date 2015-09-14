@@ -10,7 +10,7 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     var errors = [];
 
 
-if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
+if(setUUID && window.device){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
     $ionicPlatform.ready(function () {
       var registerOptions;
@@ -29,9 +29,11 @@ if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No d
       }
 
       $cordovaPush.register(registerOptions).then(function (result) {
+        console.log("herreee");
         guy.pushToken = result;
         $localStorage.setObject('user',guy);
         $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
+          console.log("succcesssss");
           callback();
         }).error(function(err){
           errors.push("Error push");

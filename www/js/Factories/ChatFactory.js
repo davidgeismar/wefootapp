@@ -18,7 +18,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 		var lastDate = new Date(message.createdAt);
 		var lastMessage = shrinkMessage(message.messagestr);
 		var chatPic = getStuffById(message.sender_id, chats[indexC].users).picture;
-		chatsDisplay[indexCD] = {id:message.chat, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};				$localStorage.setObject('chatsDisplay', chatsDisplay);
+		chatsDisplay[indexCD] = {id:message.chat, lastTime:lastDate, lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};				$localStorage.setObject('chatsDisplay', chatsDisplay);
 		$rootScope.$emit('updateChatDisplayer');
 	}
 	obj.addMessage =  function(message){
@@ -117,11 +117,11 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var chatPic = getStuffById(chat.messages[chat.messages.length-1].sender_id, chat.users).picture;
 				//1VS1
 				if(chat.typ==1){
-					chatsDisplay.push({id:chat.id, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:"test", seen:chat.seen, chatPic:chatPic });
+					chatsDisplay.push({id:chat.id, lastTime:lastDate, lastMessage:lastMessage, titre:"test", seen:chat.seen, chatPic:chatPic });
 				}
 				//Foot
 				else {
-					chatsDisplay.push({id:chat.id, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:chat.desc, seen:chat.seen, chatPic:chatPic });
+					chatsDisplay.push({id:chat.id, lastTime:lastDate, lastMessage:lastMessage, titre:chat.desc, seen:chat.seen, chatPic:chatPic });
 				}
 			}
 			//Chat vide
@@ -177,11 +177,11 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 						var chatPic = stuff.picture;
 				//1VS1
 				if(chat.typ==1){
-					chatsDisplay.push({id:chat.id, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:"test", seen:chat.seen, chatPic:chatPic });
+					chatsDisplay.push({id:chat.id, lastTime:lastDate, lastMessage:lastMessage, titre:"test", seen:chat.seen, chatPic:chatPic });
 				}
 				//Foot
 				else {
-					chatsDisplay.push({id:chat.id, lastTime:newTime(lastDate), lastMessage:lastMessage, titre:chat.desc, seen:chat.seen, chatPic:chatPic });
+					chatsDisplay.push({id:chat.id, lastTime:lastDate, lastMessage:lastMessage, titre:chat.desc, seen:chat.seen, chatPic:chatPic });
 				}
 			}
 			//Chat vide

@@ -13,6 +13,15 @@ $scope.launchChat = function(chatId){
 	$location.path('/conv/'+chatId);
 }
 
+$scope.sortChat = function(chat) {
+    var date = new Date(chat.lastTime);
+    return date;
+};
+
+$scope.formatTime = function (oldTime){
+  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
+};
+
 $rootScope.$on('updateChatDisplayer', function(event){
   $scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
   if(!$scope.$$phase) {

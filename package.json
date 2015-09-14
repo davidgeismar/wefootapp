@@ -38,7 +38,8 @@
     },
     "cordova-plugin-contacts",
     "cordova-sqlite-storage",
-    "cordova-plugin-geolocation"
+    "cordova-plugin-geolocation",
+    "cordova-plugin-screen-orientation"
   ],
   "cordovaPlatforms": [
     "android"

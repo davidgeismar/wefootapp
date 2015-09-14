@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src &apos;self&apos; &apos;unsafe-inline&apos;; script-src &apos;self&apos; &apos;unsafe-inline&apos; &apos;unsafe-eval&apos;"> -->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.facebook.net *.facebook.com http://localhost:35729;">
+
     <title></title>
     <!-- Latest compiled and minified CSS -->
 
@@ -15,9 +16,7 @@
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
-<<<<<<< HEAD
 -->
-<!-- ionic/angularjs js -->
 
 
 <!-- Latest compiled and minified JavaScript -->
@@ -82,8 +81,6 @@
     io.sails.useCORSRouteToGetCookie = false;
     io.sails.url = serverAddress+'/';
 </script>
-
-<!-- <script src="http://jsconsole.com/remote.js?2B43F4D9-33B4-4084-8E3E-F2B53EAC775A"></script> -->
 
 
 </html>

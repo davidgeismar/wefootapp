@@ -1,7 +1,7 @@
 <ion-view view-title="Chat">
 <ion-content class="has-header has-footer">
 <ion-list can-swipe="true">
-<ion-item ng-repeat="chatDisplay in chatsDisplay | orderBy: '-lastTime'" class="chat_box_content" ng-click="launchChat(chatDisplay.id)">
+<ion-item ng-repeat="chatDisplay in chatsDisplay | orderBy: '-sortChat':true" class="chat_box_content" ng-click="launchChat(chatDisplay.id)">
 <div class="img_chat">
     <img ng-src="{{chatDisplay.chatPic}}">
 </div>
@@ -9,7 +9,7 @@
     {{chatDisplay.titre}}
 </h3>
 <h3 class="chat_box_time" ng-class="{'not_read_chat_desc_time': chatDisplay.seen == false}">
-    {{chatDisplay.lastTime}}
+    {{formatTime(chatDisplay.lastTime)}}
 </h3>
 <p class="chat_box_preview" ng-class="{'not_read_short_message': chatDisplay.seen == false}"> {{chatDisplay.lastMessage}}</p>
 <ion-option-button class="button-assertive" ng-click="deleteChat(chatDisplay.id)">Effacer</ion-option-button>

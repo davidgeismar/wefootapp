@@ -2,12 +2,12 @@
 // var serverAddress = "http://62.210.115.66:9000";
                       //"http://wefoot.herokuapp.com:80";
                       //"http://localhost:1337";
-var serverAddress = "http://localhost:1337";
-console.log("Connected to "+serverAddress);
+                      var serverAddress = "http://wefoot.herokuapp.com:80";
+                      console.log("Connected to "+serverAddress);
 
 
 
-var modalLink = "";
+                      var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
 	elem = document.getElementsByClassName('iconHeader')[0];
@@ -17,9 +17,6 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
   else
    elem.className = elem.className + " " + icon;
 }
-};
-var newTime = function (oldTime){
-  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
 
 var getStuffById = function(id,stuffArray){
@@ -107,6 +104,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
+
+  if(window.device)
+    screen.lockOrientation('portrait');
 
   $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
     if(notification.alert) {
@@ -208,7 +208,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     });
   }
   $ionicPlatform.ready(function() {
-
     $rootScope.$broadcast('appReady');
 
     // $ionicPlatform.on('offline',function(){
@@ -231,6 +230,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
 
   $ionicPlatform.on('resume',function(){
+    if(window.device)
+      screen.lockOrientation('portrait');
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
