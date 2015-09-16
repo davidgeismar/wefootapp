@@ -13,19 +13,15 @@ angular.module('note',[])
 		}
 	}
 
-	$scope.initBypass = true;
 	$scope.friend = _.find($localStorage.getArray('friends'), function(friend){ return friend.id == $stateParams.id; });
 
 	$scope.init = function(){
 		$scope.initBypass = true;
 		$http.get(serverAddress+'/getGrade/'+$localStorage.getObject('user').id+'/'+$scope.friend.id).success(function(response){
-			console.log(response);
 			if(response.length==0){
-				console.log("here");
 				for(var i = 0; i<5; i++){
 					$scope.setNote(0,i);
 				}
-				$scope.initBypass = false;
 			}
 			else
 			{	
@@ -34,7 +30,6 @@ angular.module('note',[])
 				$scope.setNote(response[0].physique, 2);
 				$scope.setNote(response[0].fair_play, 3);
 				$scope.setNote(response[0].assiduite, 4);
-				$scope.initBypass = false;
 			}
 		});
 
@@ -47,7 +42,6 @@ angular.module('note',[])
 	}
 
 	$scope.setNote = function(note, target){
-		if($scope.activate[target] || $scope.initBypass){
 			$scope.notes[target] = note;
 			for(var i=0; i<5; i++) {
 				if(i+1<=note)
@@ -55,13 +49,12 @@ angular.module('note',[])
 				else
 					$scope.starStatus[target][i] = "ion-android-star-outline";
 			}
-		}
 	}
 
 	$scope.postNote = function(){
 		var cpt = 0;
 		for(var i=0; i<5; i++) {
-			if($scope.activate[i]==false)
+			if($scope.notes[i]==0)
 				cpt++;
 		}
 		if (cpt==5){
@@ -76,12 +69,6 @@ angular.module('note',[])
 				$scope.showAlert();
 			});
 
-		}
-	}
-
-	$scope.activation = function(target){
-		if($scope.activate[target]){
-			return "hide-icon";
 		}
 	}
 

@@ -22,6 +22,9 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
+.last50{ /* END OF CONTENT */
+	padding-bottom: 50px !important;
+}
 .last70{ /* END OF CONTENT */
 	padding-bottom: 70px !important;
 }
@@ -182,15 +185,24 @@ ion-scroll[direction=y] {
 	margin-top: 10px;
 	border-right: solid 1px blue;
 }
+
 ion-view[view-title="footparams"] .item-icon-left{
 	padding-left: 10px;
 }
+
+.modal-backdrop .level_foot{
+	padding-left: 30px;
+}
+
 #invite_friends_toggle{
 	border: none;
 	margin-top: 5px;
 	height:50px;
 	background-color: transparent;
-	margin-left:5px;
+	margin-left:20px;
+}
+.nb_player_params{
+	margin-left: 15px;
 }
 
 #icon_calendar {
@@ -300,6 +312,13 @@ ion-view[view-title="footparams"] .item-icon-left{
 .checkbox_foot_friends input:after {
 	width: 11px;
 	border-width: 2px;
+}
+#toggleAll_friends{
+	border-bottom: 2px solid #DBDAE3;
+/*	margin-bottom: 20px*/
+}
+#toggleAll_friends p{
+	padding-top: 23px;
 }
 .fond {
 	background-color: rgb(241, 242, 244);
@@ -1201,7 +1220,9 @@ ion-view[view-title="Conv"] ion-content{
 	border-radius:0px;
 	margin-bottom:0px;
 }
-
+.target_toggle_friends[disabled]:before{
+	background-color: #DBDAE3;
+}
 .name_friends{
 	display: inline-block;
 	width:60%;
@@ -1328,6 +1349,9 @@ ion-view[view-title="Conv"] ion-content{
 	width: 40px;
 	height: 40px;
 }
+.img_search_left{
+	float: left;
+}
 .one_search{
 	margin: 0px 20px;
 	border-bottom: 1px solid #DBDAE3;
@@ -1335,13 +1359,18 @@ ion-view[view-title="Conv"] ion-content{
 }
 .name_search{
 	display: inline-block;
+	width: 70%;
+	float: left;
+	height: 100%;
 }
 .name_search p{
 	position: relative;
-	bottom: 12px;
+	top: 20px;
 	margin-left: 5px;
 	font-size: 17px;
 	color: #28385c;
+	white-space:nowrap;
+	text-overflow:ellipsis;
 }
 .icon_friend_search{
 	background-repeat: no-repeat;
@@ -1517,7 +1546,7 @@ ion-view[view-title="Conv"] ion-content{
   	.select-place input{
   		border: none;
   		color: #369bff;
-  		width: 90%;
+  		width: 85%;
   		background-color: inherit;
   	}
   	.select-place i{
@@ -1742,6 +1771,11 @@ ion-view[view-title="Conv"] ion-content{
   		margin-bottom: 0;
   		margin-left: 20px;
   	}
+  	  	.name-player-foot i{
+  		float: right;
+  		color: grey;
+  		font-size: 20px;
+  	}
   	.row.player-foot{
   		border-top: 2px solid #c4c4c4;
   		padding-top: 7px;
@@ -1824,7 +1858,6 @@ ion-view[view-title="Conv"] ion-content{
   		border-radius: 50%;
   	}
   	.urban-foot{
-  		margin-bottom: 20px;
   		margin-left: 10%;
   	}
 
@@ -1866,6 +1899,19 @@ ion-view[view-title="Conv"] ion-content{
   		margin-top: 20px;
   		height: 40px;
   	}
+  	  .retirer-foot{
+  		font-size: 15px;
+  		background-color: transparent;
+  		display: inline-block;
+  		width: 64%;
+  		margin-left: 18%;
+  		text-align: center;
+  		color: red;
+  		font-family: 'Ubuntu';
+  		margin-top: 20px;
+  		height: 40px;
+  		border: 1px solid red;
+  	}
   	.annuler-foot i{
   		position: relative;
   		right: 10px;
@@ -1904,18 +1950,23 @@ ion-view[view-title="Conv"] ion-content{
   		padding: 0px;
   	}
   	.range-footfinder i{
-  		font-size: 20px;
+  		font-size: 25px;
   		padding-top: 5px;
   	}
   	.range-footfinder .ion-arrow-left-a{
   		margin-right: 20%;
   	}
   	.range-footfinder p{
-  		margin-right: 20%;
+  		width: 100%;
   		text-align: center;
   		white-space: nowrap;
     	overflow: hidden;
     	text-overflow: ellipsis;
+  	}
+  	.switcher-finder-container{
+  		width: 50px;
+    	text-align: center;
+    	height: 28px;
   	}
   	.date-footfinder{
   		font-weight: bold;
@@ -2607,7 +2658,16 @@ ion-view[view-title="Conv"] ion-content{
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
-
+#invite_friends_toggle_edit{
+	border: none;
+    margin-top: 5px;
+    height: 50px;
+    background-color: transparent;
+    margin-left: 20px;
+}
+#invite_friends_toggle_edit label{
+	right: inherit;
+}
 .invite-facebook{
 	background-color:inherit;
 	border:none;

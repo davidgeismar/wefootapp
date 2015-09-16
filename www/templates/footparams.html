@@ -29,7 +29,7 @@
       <div class="col col-50 venue1">
        <p>Nombre de joueurs</p>
      </div>
-     <div class="col col-25 venue1">
+     <div class="col col-25 venue1 nb_player_params">
        <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
        <label class="item item-input item-select" style="border-style:none;bottom:4px;width:65px">
        <select ng-model="foot.nb_player" style="position:relative; padding:0; ">
@@ -134,9 +134,17 @@
     <input ng-model="searchFriends" type="text" placeholder="Rechercher des amis">
   </label>
   <div id="container_foot_friends" class="container_list_friends">
+      <div id="toggleAll_friends" class="one_friends item item-checkbox item_foot_friend">
+        <label class="checkbox checkbox_foot_friends">
+          <input ng-click="toggleAll()" type="checkbox">
+        </label>
+        <div class="name_friends name_foot_friends">
+            <p> Inviter tous les amis </p>
+        </div>
+      </div>
     <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">
       <label class="checkbox checkbox_foot_friends">
-       <input ng-click="addToFoot(friend.id)" type="checkbox">
+       <input class="target_toggle_friends" ng-click="addToFoot(friend.id)" type="checkbox">
      </label>
 
      <div class="img_chat img_friends">

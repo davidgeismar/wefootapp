@@ -1,13 +1,13 @@
 //GLOBAL FUNCTIONS
 // var serverAddress = "http://62.210.115.66:9000";
-                      //"http://wefoot.herokuapp.com:80";
-                      //"http://localhost:1337";
-                      var serverAddress = "http://wefoot.herokuapp.com:80";
-                      console.log("Connected to "+serverAddress);
+//"http://wefoot.herokuapp.com:80";
+//"http://localhost:1337";
+
+var serverAddress = "http://wefoot.herokuapp.com:80";
+console.log("Connected to "+serverAddress);
 
 
-
-                      var modalLink = "";
+var modalLink = "";
 var switchIcon = function (icon,link) {       // Switch the icon in the header bar
 	modalLink = link;
 	elem = document.getElementsByClassName('iconHeader')[0];
@@ -108,11 +108,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   if(window.device)
     screen.lockOrientation('portrait');
 
-  $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
-    if(notification.alert) {
-      navigator.notification.alert(notification.alert);
-    }
-  });
+  // $rootScope.$on('$cordovaPush:notificationReceived',function (event,notification){
+  //   if(notification.alert) {
+  //     navigator.notification.alert(notification.alert);
+  //   }
+  // });
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -149,6 +149,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   // Notification event handler
   io.socket.on('notif',function(data){
+    console.log(data);
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
 
@@ -209,7 +210,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   }
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
-
+  if(window.device)
+    navigator.splashscreen.show();
+    setTimeout(function() {
+      navigator.splashscreen.hide();
+    }, 8000);
     // $ionicPlatform.on('offline',function(){
     //   console.log('offline');
     //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
@@ -217,7 +222,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
   if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
   }
   if(window.StatusBar) {
     StatusBar.styleDefault();
@@ -251,7 +256,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   };
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
-
+  //CENTER ALL TITLES
+  $ionicConfigProvider.navBar.alignTitle('center');
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -480,10 +486,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       },
       'responseError': function(response) {
         if(response.status === 403) {
-          $location.path('/login');
+          $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        console.log(response);
         $rootScope.err = "Erreur connexion";
         return $q.reject(response);
       },

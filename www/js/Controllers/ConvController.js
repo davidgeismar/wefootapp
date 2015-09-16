@@ -25,6 +25,9 @@ $rootScope.$on('newMessage', function(event){
   $ionicScrollDelegate.scrollBottom();
 });
 
+$scope.go = function(target){
+  $location.path(target);
+}
 
 $scope.sendMessage = function(){
  if($scope.messageContent.length>0){

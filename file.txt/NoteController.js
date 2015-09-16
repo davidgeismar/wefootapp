@@ -43,12 +43,7 @@ angular.module('note',[])
 
 	$scope.init();
 
-	$scope.enableNote = function(target){
-		$scope.activate[target] = true;
-	}
-
 	$scope.setNote = function(note, target){
-		if($scope.activate[target] || $scope.initBypass){
 			$scope.notes[target] = note;
 			for(var i=0; i<5; i++) {
 				if(i+1<=note)
@@ -56,7 +51,6 @@ angular.module('note',[])
 				else
 					$scope.starStatus[target][i] = "ion-android-star-outline";
 			}
-		}
 	}
 
 	$scope.postNote = function(){
@@ -80,12 +74,6 @@ angular.module('note',[])
 				$scope.activate[i] = false;
 			}
 
-		}
-	}
-
-	$scope.activation = function(target){
-		if($scope.activate[target]){
-			return "hide-icon";
 		}
 	}
 

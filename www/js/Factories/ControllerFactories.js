@@ -24,27 +24,46 @@ if(setUUID && window.device){  // No device on testing second argument removes e
       }
       else if (ionic.Platform.isAndroid()){
         registerOptions =    {
-          "senderID": "wefoot-978"
+          "senderID": "124322564355"
         };
       }
 
-      $cordovaPush.register(registerOptions).then(function (result) {
-        console.log("herreee");
-        guy.pushToken = result;
+      var push = PushNotification.init(
+      { 
+        "android": {"senderID": "124322564355"},
+        "ios": {"alert": "true", "badge": "true", "sound": "true"} 
+      });
+
+      push.on('registration', function(data) {
+        console.log(data);
+        guy.pushToken = data.registrationId;
         $localStorage.setObject('user',guy);
-        $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
-          console.log("succcesssss");
+        $http.post(serverAddress+'/push/create',{user: userId, push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
           callback();
         }).error(function(err){
           errors.push("Error push");
         });
-      },function(err){
-        console.log(err);
       });
-    }, function(err) {
-      errors.push("Error push");
-    });
-  });
+
+
+  //     $cordovaPush.register(registerOptions).then(function (result) {
+  //       guy.pushToken = result;
+  //       console.log(result);
+  //       $localStorage.setObject('user',guy);
+  //       $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
+  //         callback();
+  //       }).error(function(err){
+  //         errors.push("Error push");
+  //       });
+  //     },function(err){
+  //       console.log(err);
+  //     });
+  //   }, function(err) {
+  //     errors.push("Error push");
+  //   });
+  // });
+});
+});
 }
 
 
@@ -56,8 +75,8 @@ if(setUUID && window.device){  // No device on testing second argument removes e
 // });
 allFunction.push(function(callback){
   mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
-  callback();  
-});
+    callback();  
+  });
 });
 
 
@@ -95,9 +114,11 @@ allFunction.push(function(callback){
   $http.get(serverAddress+'/getAllChats/'+userId).success(function(data){
     $localStorage.set('lastTimeUpdated', moment());
     $localStorage.setObject('chats',data);
-    chats.initNotif();
+    chats.initNotif(function(){
     chats.initDisplayer();
     callback();
+  });
+    
   }).error(function(err){
     errors.push("Error chats");
   });
@@ -485,6 +506,7 @@ foot.searchFoot = function(params,callback2){
           foot.orgaName = info.orgaName;
           foot.field = info.field;
           foot.orgaPic = info.picture;
+          foot.dateString = getHour(foot.date);
           results.push(foot);
           callback();
         });
@@ -500,14 +522,14 @@ return foot;
 .factory('mySock',['$localStorage',function($localStorage){
   var mySock = {};
 
-mySock.req = function(url, params, callback, methode){
-  if(!methode){
-    methode = 'post';
-  }
- io.socket.request({method:methode,url:url,headers:{Authorization :$localStorage.get('token')},params:params}, callback);
-};
+  mySock.req = function(url, params, callback, methode){
+    if(!methode){
+      methode = 'post';
+    }
+    io.socket.request({method:methode,url:url,headers:{Authorization :$localStorage.get('token')},params:params}, callback);
+  };
 
 
-return mySock;
+  return mySock;
 }])
 

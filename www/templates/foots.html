@@ -6,7 +6,7 @@
         <span ng-class="{active: tab==1}" class="gris">FOOTS <strong><br>A VENIR</strong></span>
       </li>
       <li ng-click="tab = 2" ng-class="{activeliseret:tab==2}" class="foot-tab">
-        <span ng-class="{active: tab==2}" class="gris" >INVITATION <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
+        <span ng-class="{active: tab==2}" class="gris" >INVITATIONS <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
     <ion-scroll direction="y" class= "carte_foots background_foots last">
       <ion-refresher on-refresh="refresh()">                 
@@ -47,7 +47,7 @@
                 <div class= "col col-50 info_foots">
                   <div class="bleuciel"> <strong>{{foot.orgaName}}</strong></div>
                    <p class="bleufonce"><strong>{{foot.dateString}}</strong></p>
-                   <p style="text-transform: uppercase;" class="field-foots">{{foot.field.name}}</p>
+                   <p style="text-transform: uppercase;" class="field-foot">{{foot.field.name}}</p>
                 </div>
                 <div class="col col-25 fleche_bleu_fonce_foots"><img ng-src="img/fleche_bleufonce.svg" alt=""></div>
             </div>

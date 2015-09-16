@@ -20,7 +20,6 @@ if($localStorage.getObject('user').id){
 }
 $scope.foot.toInvite = [];
 
-
 $scope.addToFoot = function(id){
   var index = $scope.foot.toInvite.indexOf(id);
   if(index>-1)
@@ -87,6 +86,19 @@ $scope.launchReq = function(){
   });
 }
 
+  $scope.toggleAll = function(){
+    if(!$scope.toggleClicked){
+      $scope.toggleClicked = true;
+      $('.target_toggle_friends').prop('disabled', true);
+      $scope.foot.toInvite = _.pluck($localStorage.getArray('friends'),('id'));
+    }
+    else{
+      $scope.toggleClicked = false;
+      $('.target_toggle_friends').prop('disabled', false);
+      $scope.foot.toInvite = [];
+    }
+  } 
+
 if($location.path().indexOf('user/foots')>-1){
   
   $ionicLoading.show({
@@ -148,6 +160,8 @@ $scope.refresh = function(){
       $scope.isInvited = result.isInvited;
       $scope.isPending = result.isPending;
       $scope.isPlaying = result.isPlaying;
+      $scope.players = result.players;
+      $scope.isComplete = result.players.length == result.foot.nb_player;
       $scope.date = result.date;
       $scope.$broadcast('scroll.refreshComplete');
     });
@@ -161,15 +175,20 @@ $scope.refresh = function(){
     $location.path('/resa/recap');
   }
 
-  $scope.removePlayer = function(userId){
+  var removePlayerAction = function(userId){
     $foot.removePlayer(userId,$scope.foot.id, $scope.isPlaying, function(){
       $location.path('/user/foots');
     });
   }
 
+  $scope.removePlayer = function(userId){
+    $confirmation('Etes vous sur de vouloir vous retirer de ce foot?',function(){removePlayerAction(userId)});
+  }
+
   var deleteFoot = function(){
     $foot.deleteFoot($scope.foot.id, $scope.players, function(){
       $location.path('/user/foots');
+      $scope.modal3.hide();
     })
   }
 
@@ -219,6 +238,21 @@ $scope.refresh = function(){
     }
     $scope.modal2.hide();
   };
+
+
+  $scope.toggleAll = function(){
+    if(!$scope.toggleClicked){
+      $scope.toggleClicked = true;
+      $('.target_toggle_friends').prop('disabled', true);
+      $scope.foot.toInvite = _.difference(_.pluck($localStorage.getArray('friends'),('id')),$scope.invited);
+    }
+    else{
+      $scope.toggleClicked = false;
+      $('.target_toggle_friends').prop('disabled', false);
+      $scope.foot.toInvite = [];
+    }
+  } 
+
   $scope.addToFoot = function(id) {
     $scope.foot.toInvite.push(id);
   };
@@ -258,7 +292,6 @@ $scope.closeModal3 = function(launch){
   $scope.modal3.hide();
   if(launch){
       $scope.foot.field = $scope.selectedField.id; //Just send the id
-      console.log($scope.foot);
       $http.post(serverAddress+'/foot/update',$scope.foot).success(function(){
         $scope.foot.field = $scope.selectedField;
         var toNotify = _.filter($scope.players,function(player){return player.id != $localStorage.getObject('user').id});
@@ -313,7 +346,7 @@ $scope.closeModal3 = function(launch){
           chats.getChat(footId).then(function(){
             $location.path('/conv/'+_.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
           });
-      }  
+      } 
    })
 
 

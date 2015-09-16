@@ -9,9 +9,17 @@
       <input ng-model="searchFriends" type="text" placeholder="Rechercher un foot">
     </label>
     <div id="container_foot_friends" class="container_list_friends">
+      <div id="toggleAll_friends" class="one_friends item item-checkbox item_foot_friend">
+        <label class="checkbox checkbox_foot_friends">
+          <input ng-click="toggleAll()" type="checkbox">
+        </label>
+        <div class="name_friends name_foot_friends">
+            <p> Inviter tous les amis </p>
+        </div>
+      </div>
       <div ng-repeat="friend in friends | filter:searchFriends | orderBy:'-statut'" class="one_friends item item-checkbox item_foot_friend">
       <label class="checkbox checkbox_foot_friends">
-       <input ng-if="invited.indexOf(friend.id)==-1" ng-click="addToFoot(friend.id)" type="checkbox">
+       <input class="target_toggle_friends" ng-if="invited.indexOf(friend.id)==-1" ng-click="addToFoot(friend.id)" type="checkbox">
        <i ng-if="invited.indexOf(friend.id)>-1" class="ion-checkmark-round"></i>
       </label>
         

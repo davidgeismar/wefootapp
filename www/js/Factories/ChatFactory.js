@@ -72,6 +72,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 			if(chats[indexC].messages.length>0){
 				var lastTimeMessage = moment(chats[indexC].messages[chats[indexC].messages.length-1].createdAt);
 				var lastTimeSeen = moment(chats[indexC].lastTime).add(5, 'seconds');
+				var lastUser = chat.messages[chat.messages.length-1].sender_id;
 				if(lastTimeMessage.diff(lastTimeSeen)>0 || !chats[indexC].lastTime){
 					chats[indexC].seen = false;
 					chatsDisplay[indexCD].seen = false;
@@ -191,14 +192,16 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 		});	
 			$localStorage.setObject('chatsDisplay', chatsDisplay);
 		}
-		obj.initNotif = function(){
+		obj.initNotif = function(callback){
 			var chats = $localStorage.getArray('chats');
+			var user = $localStorage.getObject('user');
 			angular.forEach(chats, function(chat, index) {
 				if(chat.messages.length>0){
 					var lastTimeMessage = moment(chat.messages[chat.messages.length-1].createdAt);
+					var lastUser = chat.messages[chat.messages.length-1].sender_id;
 					var lastTimeSeen = moment(chat.lastTime);
-					if(lastTimeMessage.diff(lastTimeSeen)>0){
-						chats[index].seen = false;
+					if(lastTimeMessage.diff(lastTimeSeen)<0 || user.id == lastUser){
+						chats[index].seen = true;
 					}
 					else
 						chats[index].seen = true;
@@ -206,7 +209,8 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				else
 					chats[index].seen = true;
 			});
-			$localStorage.setObject('chats', chats);	
+			$localStorage.setObject('chats', chats);
+			callback();	
 		}
 		obj.getNbNotif = function(){
 			var chats = $localStorage.getArray('chats');

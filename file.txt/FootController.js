@@ -45,11 +45,10 @@ $scope.addToFoot = function(id){
     var options1 = {
       date: new Date(),
       minDate: new Date(),
-      mode: 'time', // or 'time'
+      mode: 'time',
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
-      cancelButtonLabel: 'CANCEL',
-      cancelButtonColor: '#000000'
+      is24Hour:true
     };
     $scope.showDatePicker = function(){
       $cordovaDatePicker.show(options).then(function(date){
@@ -69,7 +68,7 @@ $scope.addToFoot = function(id){
       });
     }
     if($location.path().indexOf('footparams')>0){
-  $scope.foot.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
+  $scope.foot.date = new Date();
   $scope.hour = getHour($scope.foot.date);
   $scope.date = getJour($scope.foot.date);
   $scope.foot.nb_player = 10;
@@ -225,9 +224,11 @@ if($location.path().indexOf('user/foots')>0){
       data = _.filter(allPlayers,function(player){return player.statut>1});
       data = _.pluck(data,'user'); //All confirmed players ids.
       $scope.isPlaying = (data.indexOf($localStorage.user.id)>-1);
+      console.log('here');
       async.each(data, function(player,callback){
           $http.get(serverAddress+'/user/get/'+player).success(function(user){   //Get all players attributes
             $scope.players.push(user);
+            console.log(user);
             callback();
           });
         },function(err){             //Indicate loading all players is finish
