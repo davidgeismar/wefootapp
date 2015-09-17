@@ -506,6 +506,10 @@ $scope.launchChat = function (footId){
     });
   }
 
+  $scope.filterFoots = function (foot) { 
+    return foot.organisator != $localStorage.getObject('user').id;
+};
+
 
   $scope.updateDate = function(){
     ind = parseInt($scope.params.dateValue);

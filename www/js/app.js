@@ -92,7 +92,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user) {
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -195,26 +195,16 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     return chats.getNbNotif();
   };
 
-  var getCoord = function(){
-    $ionicPlatform.ready(function () {
-      var posOptions = {timeout: 10000, enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        var user = $localStorage.getObject('user');
-        user.lat  = position.coords.latitude;
-        user.lng = position.coords.longitude;
-        $http.post(serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
-        $localStorage.setObject('user', user);
-        $rootScope.getCoord = true;
-      });
-    });
-  }
+
+
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
-  if(window.device)
+  if(window.device){
     navigator.splashscreen.show();
     setTimeout(function() {
       navigator.splashscreen.hide();
     }, 8000);
+  }
     // $ionicPlatform.on('offline',function(){
     //   console.log('offline');
     //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
@@ -227,9 +217,8 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   if(window.StatusBar) {
     StatusBar.styleDefault();
   }
-  getCoord();
 });
-
+  //Used to display the distance / or not
   $rootScope.getCoord = false;
 
 
@@ -244,7 +233,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       });
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
-      getCoord();
+      user.getCoord();
     }
   });
 

@@ -58,7 +58,7 @@ $scope.facebookConnect = function() {
 
 })
 
-.controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading, $ionicHistory, mySock){
+.controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading, $ionicHistory, mySock, user){
   $ionicHistory.clearCache();
   $ionicHistory.clearHistory();
   $scope.err = "";
@@ -74,6 +74,7 @@ $scope.facebookConnect = function() {
      $localStorage.set('token',data[0].token);
      $localStorage.setObject('user',data[0]);
      $localStorage.setObject('friends',[]);
+      user.getCoord();
      mySock.req(serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){

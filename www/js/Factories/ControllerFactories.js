@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -131,6 +131,12 @@ allFunction.push(function(callback){
   }).error(function(){
     errors.push("Error notif");
   });       
+});
+
+
+allFunction.push(function(callback){
+user.getCoord();
+callback();
 });
 
 
@@ -283,6 +289,8 @@ return profil;
 }])
 
 
+
+
 .factory('$foot',['$http','$ionicLoading','$handleNotif','$localStorage','$cordovaDatePicker','$searchLoader','$cordovaGeolocation',function($http,$ionicLoading,$handleNotif,$localStorage,$cordovaDatePicker, $searchLoader, $cordovaGeolocation){
 
   var foot = {};
@@ -313,7 +321,8 @@ return profil;
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
-      cancelButtonColor: '#000000'
+      cancelButtonColor: '#000000',
+      is24Hour:true
     }];
   }
 
@@ -531,5 +540,27 @@ return foot;
 
 
   return mySock;
+}])
+
+.factory('user',['$http','$ionicLoading','$handleNotif','$localStorage','$rootScope','$cordovaGeolocation','$ionicPlatform',function($http,$ionicLoading,$handleNotif,$localStorage,$rootScope,$cordovaGeolocation,$ionicPlatform){
+  var user = {};
+
+  user.getCoord = function(){
+        $ionicPlatform.ready(function () {
+      var posOptions = {timeout: 10000, enableHighAccuracy: true};
+      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        var user = $localStorage.getObject('user');
+        user.lat  = position.coords.latitude;
+        user.lng = position.coords.longitude;
+        $http.post(serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
+        $localStorage.setObject('user', user);
+        $rootScope.getCoord = true;
+      });
+    });
+  }
+
+  
+
+return user;
 }])
 

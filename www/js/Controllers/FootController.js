@@ -28,24 +28,24 @@ $scope.addToFoot = function(id){
     $scope.foot.toInvite.push(id);
 }
 
-    $scope.showDatePicker = function(){
-      $foot.pickDate($scope.foot.date, function(dates){
-        $scope.foot.date = dates.date;
-        $scope.date = dates.dateString;
-      });
-    }
+$scope.showDatePicker = function(){
+  $foot.pickDate($scope.foot.date, function(dates){
+    $scope.foot.date = dates.date;
+    $scope.date = dates.dateString;
+  });
+}
 
-    $scope.showHourPicker = function(){
-      $foot.pickHour($scope.foot.date, function(dates){
-        $scope.foot.date = dates.date;
-        $scope.hour = dates.dateString;
-      });
-    }
+$scope.showHourPicker = function(){
+  $foot.pickHour($scope.foot.date, function(dates){
+    $scope.foot.date = dates.date;
+    $scope.hour = dates.dateString;
+  });
+}
 
-  if($location.path().indexOf('footparams')>0){
-    $scope.foot = $foot.setDefaultOptions($scope.foot);
-    $scope.hour = getHour($scope.foot.date);
-    $scope.date = getJour($scope.foot.date);
+if($location.path().indexOf('footparams')>0){
+  $scope.foot = $foot.setDefaultOptions($scope.foot);
+  $scope.hour = getHour($scope.foot.date);
+  $scope.date = getJour($scope.foot.date);
 
   $ionicModal.fromTemplateUrl('modal.html', {
     scope: $scope,
@@ -86,18 +86,18 @@ $scope.launchReq = function(){
   });
 }
 
-  $scope.toggleAll = function(){
-    if(!$scope.toggleClicked){
-      $scope.toggleClicked = true;
-      $('.target_toggle_friends').prop('disabled', true);
-      $scope.foot.toInvite = _.pluck($localStorage.getArray('friends'),('id'));
-    }
-    else{
-      $scope.toggleClicked = false;
-      $('.target_toggle_friends').prop('disabled', false);
-      $scope.foot.toInvite = [];
-    }
-  } 
+$scope.toggleAll = function(){
+  if(!$scope.toggleClicked){
+    $scope.toggleClicked = true;
+    $('.target_toggle_friends').prop('disabled', true);
+    $scope.foot.toInvite = _.pluck($localStorage.getArray('friends'),('id'));
+  }
+  else{
+    $scope.toggleClicked = false;
+    $('.target_toggle_friends').prop('disabled', false);
+    $scope.foot.toInvite = [];
+  }
+} 
 
 if($location.path().indexOf('user/foots')>-1){
   
@@ -109,17 +109,17 @@ if($location.path().indexOf('user/foots')>-1){
   
 
   $foot.loadFoot(function(){
-        $scope.footInvitation = $localStorage.footInvitation;
-        $scope.footTodo = $localStorage.footTodo;
-        $ionicLoading.hide();
+    $scope.footInvitation = $localStorage.footInvitation;
+    $scope.footTodo = $localStorage.footTodo;
+    $ionicLoading.hide();
   });
 
   $scope.refresh = function(){
     $foot.loadFoot(function(){
-        $scope.footInvitation = $localStorage.footInvitation;
-        $scope.footTodo = $localStorage.footTodo;
-        $ionicLoading.hide();
-        $scope.$broadcast('scroll.refreshComplete');
+      $scope.footInvitation = $localStorage.footInvitation;
+      $scope.footTodo = $localStorage.footTodo;
+      $ionicLoading.hide();
+      $scope.$broadcast('scroll.refreshComplete');
     });
   }
 }
@@ -139,20 +139,20 @@ if($location.path().indexOf('user/foots')>-1){
   $scope.isPlaying;
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
 
-$foot.loadInfo($stateParams.id,function(result){
-  $scope.foot = result.foot;
-  $scope.invited = result.invited;
-  $scope.isInvited = result.isInvited;
-  $scope.isPending = result.isPending;
-  $scope.isPlaying = result.isPlaying;
-  $scope.players = result.players;
-  $scope.isComplete = result.players.length == result.foot.nb_player;
-  $scope.date = result.date;
-  $scope.ready = true;
-  $ionicLoading.hide();
-});
+  $foot.loadInfo($stateParams.id,function(result){
+    $scope.foot = result.foot;
+    $scope.invited = result.invited;
+    $scope.isInvited = result.isInvited;
+    $scope.isPending = result.isPending;
+    $scope.isPlaying = result.isPlaying;
+    $scope.players = result.players;
+    $scope.isComplete = result.players.length == result.foot.nb_player;
+    $scope.date = result.date;
+    $scope.ready = true;
+    $ionicLoading.hide();
+  });
 
-$scope.refresh = function(){
+  $scope.refresh = function(){
     $scope.players = [];
     $foot.loadInfo($stateParams.id,function(result){
       $scope.foot = result.foot;
@@ -165,7 +165,7 @@ $scope.refresh = function(){
       $scope.date = result.date;
       $scope.$broadcast('scroll.refreshComplete');
     });
-}
+  }
 
   $scope.book = function(){
     var user = $localStorage.getObject('user');
@@ -257,11 +257,11 @@ $scope.refresh = function(){
     $scope.foot.toInvite.push(id);
   };
   $scope.askToPlay = function(id){
-      $http.post(serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
-        $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
-        $scope.isPending = true;
-      });
-    };
+    $http.post(serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
+      $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
+      $scope.isPending = true;
+    });
+  };
 
 
 
@@ -310,44 +310,44 @@ $scope.closeModal3 = function(launch){
 
   $scope.searchField = function(word){
     if(word.length>1){
-        $http.get(serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
-          $scope.fields = data;
-        });
-      }
-      else
-        $scope.fields = [];
-    };
-
-    $scope.updateField = function(field){
-      $scope.selectedField = field;
+      $http.get(serverAddress+'/field/search/'+$localStorage.getObject('user').id+'/'+word).success(function(data){
+        $scope.fields = data;
+      });
+    }
+    else
       $scope.fields = [];
-    };
+  };
 
-    $scope.showDatePicker = function(){
-      $foot.pickDate($scope.foot.date, function(dates){
-        $scope.foot.date = dates.date;
-        $scope.date = dates.dateString;
-      });
+  $scope.updateField = function(field){
+    $scope.selectedField = field;
+    $scope.fields = [];
+  };
+
+  $scope.showDatePicker = function(){
+    $foot.pickDate($scope.foot.date, function(dates){
+      $scope.foot.date = dates.date;
+      $scope.date = dates.dateString;
+    });
+  }
+
+  $scope.showHourPicker = function(){
+    $foot.pickHour($scope.foot.date, function(dates){
+      $scope.foot.date = dates.date;
+      $scope.hour = dates.dateString;
+    });
+  }
+
+  $scope.launchChat = function (footId){
+    var chat = _.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
+    if(chat){
+      $location.path('/conv/'+chat.id);
     }
-
-    $scope.showHourPicker = function(){
-      $foot.pickHour($scope.foot.date, function(dates){
-        $scope.foot.date = dates.date;
-        $scope.hour = dates.dateString;
+    else
+      chats.getChat(footId).then(function(){
+        $location.path('/conv/'+_.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
       });
-    }
-
-      $scope.launchChat = function (footId){
-      var chat = _.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId });
-      if(chat){
-          $location.path('/conv/'+chat.id);
-        }
-        else
-          chats.getChat(footId).then(function(){
-            $location.path('/conv/'+_.find($localStorage.getArray('chats'), function(chat){ return chat.typ == 2 && chat.related == footId }).id);
-          });
-      } 
-   })
+  } 
+})
 
 
 
@@ -365,7 +365,9 @@ $scope.closeModal3 = function(launch){
     })
   }
 
-
+  $scope.filterFoots = function (foot) { 
+    return foot.organisator != $localStorage.getObject('user').id;
+  }
   $scope.updateDate = function(val){
     value = $scope.params.dateValue + val||0;
     if(value > -1 && value < 5){
