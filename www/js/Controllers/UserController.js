@@ -48,6 +48,9 @@ if($scope.user && $scope.user.poste==null){
       var optionsFt = {
         params : {
           userId: $localStorage.getObject('user').id
+        },
+        headers : {
+          Authorization:$localStorage.get('token')
         }
       };
       $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)

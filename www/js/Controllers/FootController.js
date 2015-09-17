@@ -256,6 +256,7 @@ if($location.path().indexOf('user/foots')>-1){
   $scope.addToFoot = function(id) {
     $scope.foot.toInvite.push(id);
   };
+
   $scope.askToPlay = function(id){
     $http.post(serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
       $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);

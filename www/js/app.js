@@ -3,7 +3,7 @@
 //"http://wefoot.herokuapp.com:80";
 //"http://localhost:1337";
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -149,7 +149,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   // Notification event handler
   io.socket.on('notif',function(data){
-    console.log(data);
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
 
