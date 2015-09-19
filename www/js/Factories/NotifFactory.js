@@ -26,7 +26,7 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
         case 'demandAccepted':
         return ['a accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
-        return ['a accepté votre demande pour rejoindre son foot.'];
+        return ['a refusé votre demande pour rejoindre son foot.'];
         case '3hoursBefore':
         return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
       }

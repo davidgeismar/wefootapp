@@ -80,7 +80,6 @@ angular.module('friend',[])
 				$location.path('/user/foots');
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandAccepted',related_stuff:$scope.foot.id});
 			});
-			chat.post
 		}
 		else{
 			$http.post(serverAddress+'/foot/refusePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){

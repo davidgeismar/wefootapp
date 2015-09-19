@@ -42,8 +42,10 @@ angular.module('field',[])
           var optionsFt = {
             params : {
               fieldId: data.id
+            },
+            headers : {
+              Authorization:$localStorage.get('token')
             }
-
           };
           $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
           .then(function(result) {

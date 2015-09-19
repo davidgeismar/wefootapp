@@ -149,7 +149,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   // Notification event handler
   io.socket.on('notif',function(data){
-    console.log(data);
     $rootScope.nbNotif++;
     $rootScope.$digest();//Wait the notif to be loaded
 
