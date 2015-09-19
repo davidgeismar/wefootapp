@@ -112,7 +112,7 @@ if(setUUID){
 
 allFunction.push(function(callback){
   $http.get(serverAddress+'/getAllChats/'+userId).success(function(data){
-    $localStorage.set('lastTimeUpdated', moment());
+    $localStorage.set('lastTimeUpdated', moment().format());
     $localStorage.setObject('chats',data);
     chats.initNotif(function(){
     chats.initDisplayer();
