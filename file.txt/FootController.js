@@ -486,7 +486,14 @@ $scope.launchChat = function (footId){
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
-  $scope.params = {dateValue: '0', field: '', date: new Date() };
+  console.log(currentDate);
+  var currentDate ;
+  if($rootScope.lastDate){
+    currentDate = $rootScope.lastDate
+  }
+  else
+    currentDate = new Date();
+  $scope.params = {dateValue: '0', field: '', date: currentDate };
   var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
   new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
   $scope.getData = function(params){
@@ -515,6 +522,7 @@ $scope.launchChat = function (footId){
     ind = parseInt($scope.params.dateValue);
     $scope.date = getJour(dates[ind]);
     $scope.params.date = dates[ind];
+    $rootScope.lastDate = dates[ind];
     $scope.getData($scope.params);
   }
   $scope.updateDate();

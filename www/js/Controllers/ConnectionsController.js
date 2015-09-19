@@ -22,7 +22,7 @@ angular.module('connections',[])
   }
 });
 
-$scope.facebookConnect = function() {
+ $scope.facebookConnect = function() {
   $ionicHistory.clearCache();
   $ionicHistory.clearHistory();
   fbConnect.connect();
@@ -74,12 +74,12 @@ $scope.facebookConnect = function() {
      $localStorage.set('token',data[0].token);
      $localStorage.setObject('user',data[0]);
      $localStorage.setObject('friends',[]);
-      user.getCoord();
+     user.getCoord();
      mySock.req(serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
      $location.path('/user/profil');
    }).error(function(err){
     $ionicLoading.hide();
-    $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
+    $scope.err = "Erreur : veuillez vérifier que tous les champs sont remplis et que l'adresse mail n'est pas déjà associée à un autre compte.";
   });
  }
 })

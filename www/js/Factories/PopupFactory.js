@@ -20,8 +20,8 @@ app.factory('$searchLoader',[function(){
       $('.sk-spinner').addClass('hidden');
   }
   loader.show = function(){
-      if($('.sk-spinner').hasClass('hidden'))
-        $('.sk-spinner').removeClass('hidden'); 
+    if($('.sk-spinner').hasClass('hidden'))
+      $('.sk-spinner').removeClass('hidden'); 
   }
   return loader;
 }])
@@ -31,17 +31,17 @@ app.factory('$validated',[function(){
   validated.show = function(obj,callback){
     var elem = $(document).find('.validated-container');
     if(elem.length==0){
-    var html = 
-        "<div class='validated-container'>"+
-          "<div class='validated-content'>"+
-            "<div class='validated-text'>"+
-              obj.texte
-            "</div>"+
-            "<div class='validated-icon'>"+
-              "<i class="+obj.icon+"></i>"+
-            "</div>"+
-          "</div>"+
-        "</div>";
+      var html = 
+      "<div class='validated-container'>"+
+      "<div class='validated-content'>"+
+      "<div class='validated-text'>"+
+      obj.texte
+      "</div>"+
+      "<div class='validated-icon'>"+
+      "<i class="+obj.icon+"></i>"+
+      "</div>"+
+      "</div>"+
+      "</div>";
 
       $('ion-view').append(html);
       $('.validated-container').fadeIn();
@@ -58,3 +58,13 @@ app.factory('$validated',[function(){
   }
   return validated;
 }])
+
+// app.factory('bugReport', ['$ionicPopup','$rootScope',function($ionicPopup,$rootScope) {
+
+//   var bugPopup = {};
+
+//   // bugPopup.then(function(res) {
+//   //   console.log('Tapped!', res);
+//   // });
+// return bugPopup;
+// }])

@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect, mySock){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -48,6 +48,9 @@ if($scope.user && $scope.user.poste==null){
       var optionsFt = {
         params : {
           userId: $localStorage.getObject('user').id
+        },
+        headers : {
+          Authorization:$localStorage.get('token')
         }
       };
       $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
@@ -75,7 +78,7 @@ if($scope.user && $scope.user.poste==null){
       console.log('Error getting pic');
     });
 
-  }
+}
 
 
   //END EDITIONS
@@ -96,6 +99,51 @@ else{
 }
 
 };
+
+
+
+
+
+var getBug = function(callback){
+  $scope.bug = {};
+  $ionicPopup.show({
+    template: '<select     style="width: 100%;font-size: 24px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
+    title: 'Soumettre un bug',
+    subTitle: 'Nous vous remercions par avance de cette soumission. Notre équipe corrigera ce bug dès que possible.',
+    scope: $scope,
+    buttons: [
+    { text: 'Annuler' },
+    {
+      text: '<b>Envoyer</b>',
+      type: 'button-positive',
+      onTap: function(e) {
+        if (!$scope.bug.option && !$scope.bug.texte) {
+            $scope.err = "Veuillez remplir les deux champs";
+            e.preventDefault();
+          } else {
+            callback("[DATE : "+new Date()+"] [TYPE : "+$scope.bug.option+"] [TEXTE : "+$scope.bug.texte+"] ");
+          }
+        }
+      }
+      ]
+    });
+}
+
+
+$scope.bugReport = function (){
+ getBug(function(data){
+   var bug = data;
+   // bug.user = $localStorage.getObject('user').id;
+   // bug.phone = device.model;
+   // bug.phone_version = device.version;
+   bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
+
+   $http.post(serverAddress+'/bugreport/addToTrello',{bug:bug}).success(function(){
+   });
+
+ });
+ 
+}
   //MODAL HANDLER
 
   $ionicModal.fromTemplateUrl('templates/search.html', {

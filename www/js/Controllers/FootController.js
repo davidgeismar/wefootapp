@@ -351,16 +351,22 @@ $scope.closeModal3 = function(launch){
 
 
 
-.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$cordovaGeolocation,$foot) {
+.controller('FootFinderController', function ($scope,$http,$localStorage,$location,$cordovaGeolocation,$foot, $rootScope) {
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
-  $scope.params = {dateValue: 0, field: '', date: new Date() };
+
+if(!$rootScope.paramsFinder)
+$rootScope.paramsFinder = {dateValue: 0, field: '', date: new Date()};
+
+
+// console.log($rootScope.paramsFinder);
+
   var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-  new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000)];
+  new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)];
   
   $scope.getData = function(){
-    $foot.searchFoot($scope.params,function(results){
+    $foot.searchFoot($rootScope.paramsFinder,function(results){
       $scope.results = results;
     })
   }
@@ -369,12 +375,15 @@ $scope.closeModal3 = function(launch){
     return foot.organisator != $localStorage.getObject('user').id;
   }
   $scope.updateDate = function(val){
-    value = $scope.params.dateValue + val||0;
-    if(value > -1 && value < 5){
-      $scope.params.dateValue = value;
+    if(val)
+      value = $rootScope.paramsFinder.dateValue + val;
+    else
+      value = $rootScope.paramsFinder.dateValue;
+    if(value > -1 && value < 10){
+      $rootScope.paramsFinder.dateValue = value;
       $scope.date = getJour(dates[value]);
-      $scope.params.date = dates[value];
-      $scope.getData($scope.params);
+      $rootScope.paramsFinder.date = dates[value];
+      $scope.getData($rootScope.paramsFinder);
     }
   }
   $scope.updateDate();

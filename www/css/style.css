@@ -2663,7 +2663,7 @@ ion-view[view-title="Conv"] ion-content{
     margin-top: 5px;
     height: 50px;
     background-color: transparent;
-    margin-left: 20px;
+    margin-left: 5px;
 }
 #invite_friends_toggle_edit label{
 	right: inherit;
@@ -3115,4 +3115,9 @@ ion-view[view-title="Conv"] ion-content{
 
 .item-radio .radio-icon{
 	top:-15px;
+}
+.bug_logo{
+	font-size: 23px;
+    color: #006dff;
+    margin-left: 26px;
 }
