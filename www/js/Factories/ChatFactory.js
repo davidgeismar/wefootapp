@@ -72,7 +72,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 			if(chats[indexC].messages.length>0){
 				var lastTimeMessage = moment(chats[indexC].messages[chats[indexC].messages.length-1].createdAt);
 				var lastTimeSeen = moment(chats[indexC].lastTime).add(5, 'seconds');
-				var lastUser = chat.messages[chat.messages.length-1].sender_id;
+				var lastUser = chats[indexC].messages[chat.messages.length-1].sender_id;
 				if(lastTimeMessage.diff(lastTimeSeen)>0 || !chats[indexC].lastTime){
 					chats[indexC].seen = false;
 					chatsDisplay[indexCD].seen = false;

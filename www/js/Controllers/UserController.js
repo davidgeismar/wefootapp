@@ -137,8 +137,8 @@ $scope.bugReport = function (){
    // bug.phone = device.model;
    // bug.phone_version = device.version;
    bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
-
-   $http.post(serverAddress+'/bugreport/addToTrello',{bug:bug}).success(function(){
+   console.log(bug);
+   $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
    });
 
  });
@@ -330,7 +330,7 @@ $scope.sendSmsMessage = function(){
                 intent: 'INTENT'  // send SMS with the native android SMS messaging
               }
             };
-            $cordovaSms.send('', 'Téléchargez wefoot bande de bitches', options).then(function() {
+            $cordovaSms.send('', 'Téléchargez wefoot sur', options).then(function() {
               $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
             }, function(error) {
               console.log('error');
