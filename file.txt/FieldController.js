@@ -1,8 +1,8 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $ionicModal){
   $scope.field = {};
   $scope.field.origin = "private";
-  $scope.field.related_to = $localStorage.user.id;
+  $scope.field.related_to = $localStorage.getObject('user').id;
 
   $scope.imageUri;
 
@@ -13,6 +13,19 @@ angular.module('field',[])
     quality: 80
   };
 
+  $ionicModal.fromTemplateUrl('templates/modalFieldAddress.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+  };
 
 
   $scope.getPic = function(){
@@ -26,11 +39,10 @@ angular.module('field',[])
   }
 
 
-
   $scope.launchReq = function(){
-  if($scope.imageUri){
-    $scope.field.related_to = $localStorage.user.id;
-  }
+    if($scope.imageUri){
+      $scope.field.related_to = $localStorage.getObject('user').id;
+    }
     $http.post(serverAddress+'/field/create',$scope.field).success(function(data, status) {
       console.log('CALLEEDDDD');
 
@@ -39,9 +51,9 @@ angular.module('field',[])
           params : {
             fieldId: data.id
           },
-        headers : {
-          Authorization:$localStorage.get('token')
-        }
+          headers : {
+            Authorization:$localStorage.get('token')
+          }
 
         };
         $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)

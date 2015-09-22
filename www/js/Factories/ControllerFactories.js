@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user','push',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user,push){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -13,57 +13,10 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
 if(setUUID && window.device){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
     $ionicPlatform.ready(function () {
-      var registerOptions;
-
-      if(ionic.Platform.isIOS()){
-        registerOptions = {
-          badge: true,
-          sound: true,
-          alert: true
-        };
-      }
-      else if (ionic.Platform.isAndroid()){
-        registerOptions =    {
-          "senderID": "124322564355"
-        };
-      }
-
-      var push = PushNotification.init(
-      { 
-        "android": {"senderID": "124322564355"},
-        "ios": {"alert": "true", "badge": "true", "sound": "true"} 
-      });
-
-      push.on('registration', function(data) {
-        console.log(data);
-        guy.pushToken = data.registrationId;
-        $localStorage.setObject('user',guy);
-        $http.post(serverAddress+'/push/create',{user: userId, push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
-          callback();
-        }).error(function(err){
-          errors.push("Error push");
-        });
-      });
-
-
-  //     $cordovaPush.register(registerOptions).then(function (result) {
-  //       guy.pushToken = result;
-  //       console.log(result);
-  //       $localStorage.setObject('user',guy);
-  //       $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
-  //         callback();
-  //       }).error(function(err){
-  //         errors.push("Error push");
-  //       });
-  //     },function(err){
-  //       console.log(err);
-  //     });
-  //   }, function(err) {
-  //     errors.push("Error push");
-  //   });
-  // });
-});
-});
+      push.register();
+      callback();
+    });
+  });
 }
 
 
@@ -115,9 +68,9 @@ allFunction.push(function(callback){
     $localStorage.set('lastTimeUpdated', moment().format());
     $localStorage.setObject('chats',data);
     chats.initNotif(function(){
-    chats.initDisplayer();
-    callback();
-  });
+      chats.initDisplayer();
+      callback();
+    });
     
   }).error(function(err){
     errors.push("Error chats");
@@ -135,8 +88,8 @@ allFunction.push(function(callback){
 
 
 allFunction.push(function(callback){
-user.getCoord();
-callback();
+  user.getCoord();
+  callback();
 });
 
 
@@ -546,7 +499,7 @@ return foot;
   var user = {};
 
   user.getCoord = function(){
-        $ionicPlatform.ready(function () {
+    $ionicPlatform.ready(function () {
       var posOptions = {timeout: 10000, enableHighAccuracy: true};
       $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
         var user = $localStorage.getObject('user');
@@ -561,6 +514,43 @@ return foot;
 
   
 
-return user;
+  return user;
+}])
+
+.factory('push',['$http','$localStorage','$ionicPlatform',function($http,$localStorage,$ionicPlatform){
+  var push = {};
+  $ionicPlatform.ready(function () {
+    if(window.device){
+    var cordovaPush = PushNotification.init(
+    { 
+      "android": {"senderID": "124322564355"},
+      "ios": {"alert": "true", "badge": "true", "sound": "true"} 
+    });
+
+    push.register = function(){
+
+      cordovaPush.on('registration', function(data) {
+        console.log(data);
+        var user = $localStorage.getObject('user');
+        user.pushToken = data.registrationId;
+        $localStorage.setObject('user',user);
+        $http.post(serverAddress+'/push/create',{user: userId, push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
+          callback();
+        }).error(function(err){
+          errors.push("Error push");
+        });
+      });
+    }
+    push.unregister = function(){
+      cordovaPush.unregister(function(success){
+      }, 
+      function(error){
+        console.log(error);
+      });
+    }
+  }
+  })
+  return push;
+
 }])
 

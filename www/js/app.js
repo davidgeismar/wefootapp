@@ -75,7 +75,7 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
 
 app.config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
@@ -198,12 +198,12 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
-  if(window.device){
-    navigator.splashscreen.show();
-    setTimeout(function() {
-      navigator.splashscreen.hide();
-    }, 8000);
-  }
+    if(window.device){
+      navigator.splashscreen.show();
+      setTimeout(function() {
+        navigator.splashscreen.hide();
+      }, 8000);
+    }
     // $ionicPlatform.on('offline',function(){
     //   console.log('offline');
     //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
@@ -228,7 +228,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
-        $rootScope.$digest();
+        if(!$scope.$$phase) {
+          $rootScope.$digest();
+        }
       });
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;

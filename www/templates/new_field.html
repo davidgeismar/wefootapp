@@ -7,33 +7,31 @@
 <ion-content class="has-header padding">
 <div class="last container-new-field">
 
-<div ng-click="getPic()" class="select_pic_container_field">
-  <i class="ion-android-camera cam_size"><i ng-show="imageUri !=null" class="ion-ios-checkmark-outline green-check"></i></i>
+  <div ng-click="getPic()" class="select_pic_container_field">
+    <i class="ion-android-camera cam_size"><i ng-show="imageUri !=null" class="ion-ios-checkmark-outline green-check"></i></i>
 
-  <i class="ion-upload upload_size"></i>
-  <h3 class="select_pic_field">Sélectionner une photo de terrain</h3>
-</div>
+    <i class="ion-upload upload_size"></i>
+    <h3 class="select_pic_field">Sélectionner une photo de terrain</h3>
+  </div>
 
-<div class="main_app">
-  <form class="list field_form last">
+  <div class="main_app">
+    <form class="list field_form last">
 
-    <label class="field_input item item-input field_input">
-      <input type="text"  ng-model="field.name" placeholder="Nom du terrain">
-    </label>
-    <label class="field_input item item-input">
-      <input type="text" ng-model="field.address" placeholder="Rue">
-    </label>
-    <label class="field_input item item-input" style="display:inline-block; width:45%; margin-right:0;">
-      <input type="text" ng-model="field.city" placeholder="Ville">
-    </label>
-        <label class="field_input item item-input" style="display:inline-block; float:right; width:40%; margin-left:0;">
-    <input type="text" ng-model="field.zip_code" placeholder="Code postal">
-    </label>
+      <label class="field_input item item-input field_input">
+        <input type="text"  ng-model="field.name" placeholder="Nom du terrain">
+      </label>
+      <label  class="field_input item item-input">
+      <ion-google-place placeholder="Entrer une adresse, un lieu" ng-model="field.address"/>
+      </label>
+<!--             <button ng-click="test()" style="margin-top:20px;margin-bottom: 50px;" class="homepage_button button">
+        Valider
+      </button> -->
       <button ng-click="launchReq()" style="margin-top:20px;margin-bottom: 50px;" class="homepage_button button">
         Valider
       </button>
-  </form>
-  <p class="err_container ng-binding">{{err}}</p>
+    </form>
+    <p class="err_container ng-binding">{{err}}</p>
+  </div>
 </div>
 
 </ion-content>

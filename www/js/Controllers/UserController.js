@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock, push){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -91,6 +91,7 @@ $scope.logout = function (){
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
     $localStorage.clearAll();
     $location.path('/');
+    push.unregister();
   });
 }
 else{
@@ -107,7 +108,7 @@ else{
 var getBug = function(callback){
   $scope.bug = {};
   $ionicPopup.show({
-    template: '<select     style="width: 100%;font-size: 24px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
+    template: '<select     style="width: 100%;font-size: 16px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
     title: 'Soumettre un bug',
     subTitle: 'Nous vous remercions par avance de cette soumission. Notre équipe corrigera ce bug dès que possible.',
     scope: $scope,
