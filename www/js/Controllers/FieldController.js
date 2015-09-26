@@ -1,5 +1,5 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $rootScope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory, $ionicModal){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory){
   $scope.field = {};
   $scope.field.origin = "private";
   $scope.field.related_to = $localStorage.getObject('user').id;
@@ -14,6 +14,7 @@ angular.module('field',[])
   };
 
 
+
   $scope.getPic = function(){
     $cordovaImagePicker.getPictures(options)
     .then(function (results) {
@@ -23,14 +24,20 @@ angular.module('field',[])
       console.log('Error pic');
     });
   }
-// $scope.test = function(){
-//   console.log($scope.field.address.city());
-// }
+
 
 
   $scope.launchReq = function(){
     $scope.err = "";
+    if(!$scope.field.zip_code === parseInt($scope.field.zip_code,10) && !$scope.field.zip_code.length==5)
+      $scope.err = "Veuillez vérifier le code postal";
+    if(!$scope.field.address && !$scope.field.zip_code && !$scope.field.city && !$scope.field.name){
+      $scope.err = "Veuillez vérifier les champs";
+    }
+    else {
+
       $http.post(serverAddress+'/field/create',$scope.field).success(function(data, status) {
+
         if($scope.imageUri){
           var optionsFt = {
             params : {
@@ -57,6 +64,7 @@ angular.module('field',[])
           $ionicHistory.goBack();
         }
       });
+    }
 
   }
 })

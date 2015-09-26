@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock, push){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect, mySock){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -78,7 +78,7 @@ if($scope.user && $scope.user.poste==null){
       console.log('Error getting pic');
     });
 
-}
+  }
 
 
   //END EDITIONS
@@ -91,7 +91,6 @@ $scope.logout = function (){
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
     $localStorage.clearAll();
     $location.path('/');
-    push.unregister();
   });
 }
 else{
@@ -100,51 +99,6 @@ else{
 }
 
 };
-
-
-
-
-
-var getBug = function(callback){
-  $scope.bug = {};
-  $ionicPopup.show({
-    template: '<select     style="width: 100%;font-size: 16px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
-    title: 'Soumettre un bug',
-    subTitle: 'Nous vous remercions par avance de cette soumission. Notre équipe corrigera ce bug dès que possible.',
-    scope: $scope,
-    buttons: [
-    { text: 'Annuler' },
-    {
-      text: '<b>Envoyer</b>',
-      type: 'button-positive',
-      onTap: function(e) {
-        if (!$scope.bug.option && !$scope.bug.texte) {
-            $scope.err = "Veuillez remplir les deux champs";
-            e.preventDefault();
-          } else {
-            callback("[DATE : "+new Date()+"] [TYPE : "+$scope.bug.option+"] [TEXTE : "+$scope.bug.texte+"] ");
-          }
-        }
-      }
-      ]
-    });
-}
-
-
-$scope.bugReport = function (){
- getBug(function(data){
-   var bug = data;
-   // bug.user = $localStorage.getObject('user').id;
-   // bug.phone = device.model;
-   // bug.phone_version = device.version;
-   bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
-   console.log(bug);
-   $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
-   });
-
- });
- 
-}
   //MODAL HANDLER
 
   $ionicModal.fromTemplateUrl('templates/search.html', {
@@ -331,7 +285,7 @@ $scope.sendSmsMessage = function(){
                 intent: 'INTENT'  // send SMS with the native android SMS messaging
               }
             };
-            $cordovaSms.send('', 'Téléchargez wefoot sur', options).then(function() {
+            $cordovaSms.send('', 'Téléchargez wefoot bande de bitches', options).then(function() {
               $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
             }, function(error) {
               console.log('error');

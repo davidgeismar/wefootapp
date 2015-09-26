@@ -80,7 +80,7 @@
     <div class="col col-25">
       <img class= "icon_bonhomme" ng-src="img/icon_partager.svg"/>
     </div>
-    <div class="col col-50 venue" style="margin-left:0px">
+    <div class="col col-50 venue">
       <p>Vos amis peuvent <br> inviter leurs amis</p>
     </div>
     <ion-toggle class="col col-25" ng-model="foot.friend_can_invite" id="invite_friends_toggle_edit">
@@ -88,7 +88,7 @@
 </div>
 </div>
 
-<div class="item item-icon-left level_foot" style="text-align:center; width: 96%; margin: 0 auto; margin-bottom: 15px;">
+<div class="item align_creer_foot level_foot">
  <div class="text-center"> <p style="padding-right: 30px;">Niveau du Foot</p></div>
  <div class="row">
   <div class="size_level col" ng-click="foot.level = 1" ng-class="{active: foot.level ==1}"><img ng-src="img/niveau_1.svg"/><p>Débutant</p></div>
@@ -97,7 +97,6 @@
   <div class="size_level col" ng-click="foot.level = 0" ng-class="{active: foot.level ==0}"><img ng-src="img/niveau_0.svg"/><p>Tous</p></div>
 </div>
 </div>
-
 <button ng-click="closeModal3(true)" class="button button-book-foot">
   Valider
 </button>

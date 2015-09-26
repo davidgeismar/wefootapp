@@ -1,5 +1,5 @@
 {
-  "name": "wefootapp1",
+  "name": "wefootapp",
   "version": "1.0.0",
   "description": "wefootapp1: An Ionic project",
   "dependencies": {
@@ -26,7 +26,7 @@
   "cordovaPlugins": [
     {
       "id": "com.phonegap.plugins.facebookconnect",
-      "locator": "../ngcordova-facebook/phonegap-facebook-plugin"
+      "locator": "phonegap-facebook-plugin"
     },
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.file-transfer",
@@ -40,7 +40,11 @@
     "cordova-plugin-geolocation",
     "phonegap-plugin-push",
     "cordova-plugin-datepicker",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "phonegap-facebook-plugin",
+    "cordova-plugin-screen-orientation"
   ],
   "cordovaPlatforms": [
     "android"
