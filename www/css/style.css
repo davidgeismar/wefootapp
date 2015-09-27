@@ -31,6 +31,9 @@ a{
 .last-margin{
 	margin-bottom: 200px !important;
 }
+.last-margin-footfinder{
+	margin-bottom: 350px !important;
+}
 .last-element{
 	margin-bottom:50px !important;
 }
@@ -1973,10 +1976,10 @@ ion-view[view-title="Conv"] ion-content{
   		width: 150px;
   		padding-top: 12px;
   	}
-  	.background_footfinder{
+  	ion-scroll[direction=y].background_footfinder{
   		background-image: url('../img/photo-bg-footfinder.png');
   		background-size: cover;
-  		min-height: 100%;
+  		height: 77vh;
   	}
   	.background_footfinder p{
   		white-space: nowrap;

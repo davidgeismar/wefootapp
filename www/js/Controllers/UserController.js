@@ -37,6 +37,7 @@ if($scope.user && $scope.user.poste==null){
   }
 
   $scope.editProfilPic = function(){
+
     var optionsImg = {
       maximumImagesCount: 1,
       width: 200,
@@ -44,7 +45,7 @@ if($scope.user && $scope.user.poste==null){
     };
 
     $cordovaImagePicker.getPictures(optionsImg).then(function (results) {
-
+      console.log(results);
       var optionsFt = {
         params : {
           userId: $localStorage.getObject('user').id
@@ -53,15 +54,16 @@ if($scope.user && $scope.user.poste==null){
           Authorization:$localStorage.get('token')
         }
       };
-      $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
-      .then(function(result) {  
+      if($scope.user && $scope.user.id){
+        $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
+        .then(function(result) {
+          $scope.user.picture="";  //RESET CACHE FOR THE SCOPE (NECESSARY)
         // Success!
-        console.log('hello');
         setTimeout(function(){
           user = $localStorage.getObject('user')
           user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
-          $localStorage.setObject('user',user); 
-          $scope.user.picture = $localStorage.getObject('user').picture;
+          $localStorage.setObject('user',user);
+          $scope.user.picture = result.response+'#'+ new Date().getTime();
           $ionicLoading.hide();
         },3000);
       }, function(err) {
@@ -73,7 +75,7 @@ if($scope.user && $scope.user.poste==null){
           showBackdrop: true
         });
       });
-
+      }
     }, function(error) {
       console.log('Error getting pic');
     });
@@ -124,19 +126,21 @@ else{
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-    if (!window.cordova) {
-      //this is for browser only
-      facebookConnectPlugin.browserInit(1133277800032088);
-    }
-    facebookConnectPlugin.getLoginStatus(function(success){
-      fbConnect.getFacebookFriends().then(function(data){
-        $scope.facebookFriends = data.data;
-        //IDs of my facebookFriends list
-        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
-        console.log($scope.facebookFriendsId);
-        $searchLoader.hide();
-      });
-    });
+
+    //TO UNCOMMENT NEEDS DEBUG
+  //   if (!window.cordova) {
+  //     //this is for browser only
+  //     facebookConnectPlugin.browserInit(1133277800032088);
+  //   }
+  //   facebookConnectPlugin.getLoginStatus(function(success){
+  //     fbConnect.getFacebookFriends().then(function(data){
+  //       $scope.facebookFriends = data.data;
+  //       //IDs of my facebookFriends list
+  //       $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+  //       console.log($scope.facebookFriendsId);
+  //       $searchLoader.hide();
+  //     });
+  //   });
   }
 
 

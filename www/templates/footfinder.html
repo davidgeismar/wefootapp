@@ -15,7 +15,7 @@
       	</div>
         <div class="container_results_footfinder">
         <searchLoader></searchLoader> 
-        <ion-scroll direction="y" class= "carte_foots background_footfinder">
+        <ion-scroll direction="y" class= "carte_foots background_footfinder last">
       	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results | filter: filterFoots" ng-class="{'last-margin': $index==results.length-1}">
             <div class="row">
               <div class="col col-25">
