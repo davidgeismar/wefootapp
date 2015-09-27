@@ -3,7 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.facebook.net *.facebook.com http://localhost:35729;">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; 
+    style-src 'self' 'unsafe-inline'; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' 
+                       *.facebook.net 
+                        *.facebook.com                            
+                        http://*.google.com
+                        http://*.gstatic.com
+                        http://*.googleapis.com
+                        https://*.google.com
+                        https://*.gstatic.com
+                        https://*.googleapis.com
+                        http://localhost:35729;">
 
     <title></title>
     <!-- Latest compiled and minified CSS -->
@@ -13,6 +24,7 @@
     <link href="lib/ionicons/css/ionicons.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="lib/angular-rangeslider/angular.rangeSlider.css" rel="stylesheet">
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
@@ -41,6 +53,8 @@
 <script src="lib/ionic-service-core/ionic-core.js"></script>
 <script src="lib/ionic-service-push/ionic-push.js"></script>
 <script type="text/javascript" src="lib/pouchdb.js"></script>
+<script type="text/javascript" src="lib/ion-google-place/ion-google-place.js"></script>
+<link rel="stylesheet" href="lib/ion-google-place/ion-google-place.css"></script>
 <!-- your app's js -->
 <script src="js/app.js"></script>
 
