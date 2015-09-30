@@ -1,7 +1,7 @@
 <ion-view view-title="Chat">
 <ion-content class="has-header has-footer">
 <ion-list can-swipe="true">
-<ion-item ng-repeat="chatDisplay in chatsDisplay | orderBy: '-sortChat':true" class="chat_box_content" ng-click="launchChat(chatDisplay.id)">
+<ion-item ng-repeat="chatDisplay in chatsDisplay | orderBy: '-lastTime'" class="chat_box_content" ng-click="launchChat(chatDisplay.id)">
 <div class="img_chat">
     <img ng-src="{{chatDisplay.chatPic}}">
 </div>

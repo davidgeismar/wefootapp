@@ -20,21 +20,21 @@
   </ion-refresher>
   <div class="last">
    <div ng-repeat="actus in actusByDay" class="row day_timeline">
-      <div class="col-20">
+      <div class="col-15">
         <p class= "date_timeline">{{dates[$index].substring(0,5)}}</p>
       </div>
-      <div class="col col-80 border_profil">
-        <div class="row" ng-repeat="actu in actus">
+      <div class="col col-85 border_profil">
+        <div class="row" ng-repeat="actu in actus" style="margin-bottom:12px">
           <div class="col-10">
             <img class= "img_profil" ng-src="{{actu.picture}}" alt="">
           </div>
-          <div class="col-80 main_content_profil">
+          <div class="col-75 main_content_profil">
              <p class="nowrap_foot"> <a href="#{{actu.userLink}}" class="bleuciel">{{actu.userName}}</a> <span ng-class="{actu_wf: actu.typ == 'WF'}"> {{actu.texte}} </span><a class="bleuciel" ng-if="actu.userName2" href="#{{actu.userLink2}}"> {{actu.userName2}}</a></p>
              <i ng-if="actu.related_info" class= "ion-ios-football" style="font-size:21px;"></i>
              <img ng-if="actu.userName2" class="img_friends_profil" ng-src="{{actu.picture2}}" alt="">
              <p class="nowrap_foot" ng-if="actu.related_info"> {{actu.related_info.dateString}} <br></p>
           </div>
-          <div class="col-10">
+          <div class="col-15">
             <p ng-if="actu.related_info" class="number_players_profil indic-profil">{{actu.related_info.format}}</p>
             <img ng-if="actu.userName2" ng-src="img/icon_bonhomme_carnet_bleu.svg" height="20" class="level_foot_profil bonhomme_profil" >
             <img ng-if="actu.related_info" class="img_level_foots number_players_profil level_foot_profil" ng-src="img/niveau_{{actu.related_info.level}}.svg">

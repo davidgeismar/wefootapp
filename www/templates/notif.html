@@ -1,7 +1,7 @@
 <ion-view view-title="Notif">
 <ion-content class="has-header">
 <div class="container-notif last">
-    <div ng-click="go(notif.url)" ng-repeat="notif in notifs | orderBy:'-createdAt'" class="one-notif row">
+    <div ng-click="go(notif.url)" ng-repeat="notif in notifs | orderBy:'-createdAt' track by $index" class="one-notif row">
         <div class="img_chat img_search col-20">
             <img ng-src="{{notif.picture}}">
         </div>

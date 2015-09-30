@@ -11,21 +11,14 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
 
 
 if(setUUID && window.device){  // No device on testing second argument removes emulators
-  // allFunction.push(function(callback){
-  //   $ionicPlatform.ready(function () {
-  //     push.register();
-  //     callback();
-  //   });
-  // });
+  allFunction.push(function(callback){
+    $ionicPlatform.ready(function () {
+      push.register();
+      callback();
+    });
+  });
 }
 
-
-
-// allFunction.push(function(callback){
-//   io.socket.post(serverAddress+'/connexion/setConnexion',{id: userId},function(){
-//     callback();
-//   }); 
-// });
 allFunction.push(function(callback){
   mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
     callback();  
@@ -533,7 +526,20 @@ return foot;
     });
   }
 
-  
+  //FRIENDS ACTION
+
+  user.addFriend = function(postData, target){
+  return $http.post(serverAddress+'/addFriend',postData)
+}
+
+  user.isFriendWith = function(userId){
+    var friendsId = _.pluck($localStorage.getArray('friends'),'id');
+    if (friendsId.indexOf(userId)>-1)
+      return true;
+    else
+      return false;
+  }
+
 
   return user;
 }])

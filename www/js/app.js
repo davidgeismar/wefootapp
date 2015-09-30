@@ -232,7 +232,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
-        if(!$scope.$$phase) {
+        if(!$rootScope.$$phase) {
           $rootScope.$digest();
         }
       });

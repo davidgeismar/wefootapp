@@ -72,7 +72,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 			if(chats[indexC].messages.length>0){
 				var lastTimeMessage = moment(chats[indexC].messages[chats[indexC].messages.length-1].createdAt);
 				var lastTimeSeen = moment(chats[indexC].lastTime).add(5, 'seconds');
-				var lastUser = chat.messages[chat.messages.length-1].sender_id;
+				// var lastUser = chat.messages[chat.messages.length-1].sender_id;
 				if(lastTimeMessage.diff(lastTimeSeen)>0 || !chats[indexC].lastTime){
 					chats[indexC].seen = false;
 					chatsDisplay[indexCD].seen = false;
@@ -160,6 +160,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
 			return $http.get(serverAddress+'/chat/getUnseenMessages/'+user.id+'/'+ltu).success(function(messages){
+				console.log(messages);
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
 				});	
