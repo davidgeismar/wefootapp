@@ -466,7 +466,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     }
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope, error_reporter) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
@@ -483,7 +483,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        $rootScope.err = "Erreur connexion";
+        if($rootScope.err)
+          error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){
+            delete $rootScope.err;
+          });
+        else
+          error_reporter.show({timeout: 3000});
         return $q.reject(response);
       },
       'response': function(response){

@@ -10,6 +10,10 @@
             <p class="date-notif"> {{notif.date}} </p>
         </div>
     </div>
+    <div ng-if="notifs.length==0" class="no-instance-yet">
+	<p>Bienvenue sur la page notification:</p>
+	<p>Vous trouverez ici vos invitations aux foots, vos nominations en tant qu'homme du match ou encore vos nouvelles amitiés.</p>
+	</div>
 </div>
 </ion-content>
 </ion-view>

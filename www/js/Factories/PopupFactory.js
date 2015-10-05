@@ -38,7 +38,7 @@ app.factory('$validated',[function(){
               obj.texte
             "</div>"+
             "<div class='validated-icon'>"+
-              "<i class="+obj.icon+"></i>"+
+              "<i class='"+obj.icon+"'></i>"+
             "</div>"+
           "</div>"+
         "</div>";
@@ -52,9 +52,65 @@ app.factory('$validated',[function(){
     else{
       elem.fadeIn();
       setTimeout(function(){
-        $('.validated-container').fadeOut()
+        $('.validated-container').fadeOut();
         callback();},1000);
     }
   }
   return validated;
+}])
+/* 
+error_reporter.show({
+  timeout: integer, default to infinite,
+  texte: text, default to "Erreur lors de la requête"
+},function(){callback();})
+*/
+app.factory('error_reporter',[function(){
+    var error_reporter = {};
+    error_reporter.show =  function(obj,callback){
+      if(!obj)
+        var obj = {};
+      if(!obj.texte)
+        obj.texte = "Erreur lors de la requête.";
+      var elem = $(document).find('.error_popup_container');
+      if(elem.length == 0){
+        error_reporter.on = true;
+        var html = "<div class='error_popup_container'>"+
+                      "<div class='error_popup_content'>"+obj.texte+
+                      "</div>"+
+                    "</div>";
+        $('ion-view').append(html);
+        $('.error_popup_container').fadeIn();
+        if(obj.timeout){
+          setTimeout(function(){
+            $('.error_popup_container').fadeOut();
+            error_reporter.on = false;
+            if(callback)
+              callback();
+          },obj.timeout);
+        }
+      }
+      else{
+        if(!error_reporter.on){
+          error_reporter.on = true;
+          elem.fadeIn();
+          if(obj.timeout){
+            setTimeout(function(){
+              $('.error_popup_container').fadeOut();
+              error_reporter.on = false;
+              if(callback)
+                callback();
+            },obj.timeout);
+          }
+        }
+      }
+    };
+
+    error_reporter.hide = function(){
+      var elem = $(document).find('.error_popup_container');
+      if(elem)
+        elem.fadeOut();
+    }
+
+    error_reporter.on = false;
+    return error_reporter;
 }])

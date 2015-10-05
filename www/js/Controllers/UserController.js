@@ -56,17 +56,14 @@ if($scope.user && $scope.user.poste==null){
       if($scope.user && $scope.user.id){
         $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
         .then(function(result) {
-          $scope.user.picture="";  //RESET CACHE FOR THE SCOPE (NECESSARY)
-        // Success!
-        setTimeout(function(){
-          user = $localStorage.getObject('user')
+          var user = $localStorage.getObject('user')
           user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
           $localStorage.setObject('user',user);
           $scope.user.picture = result.response+'#'+ new Date().getTime();
           $ionicLoading.hide();
-        },3000);
+
       }, function(err) {
-        // Error
+        $ionicLoading.hide();
       }, function (progress) {
         $ionicLoading.show({
           content: 'Loading Data',
@@ -76,7 +73,7 @@ if($scope.user && $scope.user.poste==null){
       });
       }
     }, function(error) {
-      console.log('Error getting pic');
+      $ionicLoading.hide();
     });
 
 }

@@ -335,7 +335,7 @@ return profil;
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
     $http.get(serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
-      if(data.length==0 || data.rowCount==0) $ionicLoading.hide();
+      if(data.length==0 || data.rowCount==0){ $ionicLoading.hide(); callback2(); }
       else{
         async.each(data, function(foot,callback){
           $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){

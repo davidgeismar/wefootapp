@@ -160,7 +160,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
 			return $http.get(serverAddress+'/chat/getUnseenMessages/'+user.id+'/'+ltu).success(function(messages){
-				console.log(messages);
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
 				});	
