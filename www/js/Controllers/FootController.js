@@ -126,7 +126,7 @@ if($location.path().indexOf('user/foots')>-1){
 })
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats, $validated) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats, $validated,$timeout) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -263,9 +263,9 @@ if($location.path().indexOf('user/foots')>-1){
       $scope.isPending = true;
       $validated.show({texte: "Votre demande à bien été envoyée.", icon: "ion-checkmark-round"},function(){
       }); //ERROR USING CALLBACK
-      setTimeout(function(){
+      $timeout(function(){
         $location.path('/footfinder');
-      },1000);
+      },1100);
     });
   };
 

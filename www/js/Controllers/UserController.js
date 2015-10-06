@@ -86,8 +86,10 @@ $scope.logout = function (){
  $rootScope.toShow = true;
  $rootScope.notifs = [];
  if($localStorage.getObject('user').pushToken){
+  var pushToken = $localStorage.getObject('user').pushToken;
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
     $localStorage.clearAll();
+    $localStorage.set("pushToken",pushToken);
     $location.path('/');
   });
 }
@@ -159,6 +161,7 @@ $scope.bugReport = function (){
     $searchLoader.hide();
   }; 
 
+
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_fb').addClass('opened_search');
@@ -189,9 +192,11 @@ $scope.switchSearchWf = function(){
   $('.content_fb_search').addClass('hidden');
   $searchLoader.hide();
 }
+
+$rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
+$scope.results = $localStorage.getArray("facebookFriends");
 $scope.searchQuery = function(word){
   $searchLoader.show();
-  $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
   if(word.length>1){
    $http.get(serverAddress+'/search/'+word).success(function(data){
     $searchLoader.hide();
@@ -215,7 +220,6 @@ $scope.addFriend = function(target, facebookFriend){
     postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
     $scope.lockFriend = target;
     $scope.facebookFriendsId.push(target);
-    console.log($scope.facebookFriendsId);
   }
   else{
     postData = {user1: $localStorage.getObject('user').id, user2: target};

@@ -473,9 +473,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
         if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.get('token');
         }
-        else{
-          console.log("fail");
-        }
         return config;
       },
       'responseError': function(response) {
