@@ -482,7 +482,6 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        $scope.$broadcast('scroll.refreshComplete');
         if(response.status !== 0){
           if($rootScope.err)
             error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){

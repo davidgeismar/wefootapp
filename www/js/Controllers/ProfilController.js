@@ -48,6 +48,11 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	$profil.getAllActu(function(){
 		$scope.actusByDay = $localStorage.getObject('actus');
 		$scope.dates = $localStorage.getObject('dates');
+		if($scope.actusByDay.length == 0){  // set default actu
+			$scope.actusByDay.push([{"id":0,"typ":"WF","texte":"Bienvenu sur Wefoot, ceci est votre timeline. Retrouvez ici les actualités concerant vos amis, les foots organisés...","picture":"img/logo.jpg"}]);
+			var createdAt  = $localStorage.getObject('user').createdAt;
+			$scope.dates.push(moment(createdAt).locale('fr').format('L'));
+		}
 	});
 
 	$scope.refresh = function(){

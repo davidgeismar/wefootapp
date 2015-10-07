@@ -60,21 +60,25 @@ error_reporter.show({
   texte: text, default to "Erreur lors de la requête"
 },function(){callback();})
 */
-app.factory('error_reporter',['$injector',function($injector){
+app.factory('error_reporter',[function(){
     var error_reporter = {};
     error_reporter.show =  function(obj,callback){
+      
+      var header = $(document).find('.actu_header');
+      if(header.length != 0)
+        var position = header.offset().top + header.height();
+
       if(!obj)
         var obj = {};
       if(!obj.texte)
         obj.texte = "Erreur lors de la requête.";
       var elem = $(document).find('.error_popup_container');
       if(elem.length == 0){
-        var html = "<div class='error_popup_container'>"+
+        var html = "<div class='error_popup_container' style='top:"+position+"px;'>"+
                       "<div class='error_popup_content'>"+obj.texte+
                       "<i class='ion-close-circled'></i>"+
                       "</div>"+
                     "</div>";
-        $('ion-view').append(html);
         $('ion-content').append(html);
         var elem = $(document).find('.error_popup_container');
         $('.error_popup_container i').click(function(){   //Bind the hide function
