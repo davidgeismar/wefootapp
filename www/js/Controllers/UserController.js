@@ -1,6 +1,6 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect, mySock){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock, user){
 
 
   $scope.user = $localStorage.getObject('user');
@@ -45,7 +45,6 @@ if($scope.user && $scope.user.poste==null){
     };
 
     $cordovaImagePicker.getPictures(optionsImg).then(function (results) {
-      console.log(results);
       var optionsFt = {
         params : {
           userId: $localStorage.getObject('user').id
@@ -80,7 +79,7 @@ if($scope.user && $scope.user.poste==null){
       console.log('Error getting pic');
     });
 
-  }
+}
 
 
   //END EDITIONS
@@ -101,6 +100,48 @@ else{
 }
 
 };
+
+
+var getBug = function(callback){
+  $scope.bug = {};
+  $ionicPopup.show({
+    template: '<select     style="width: 100%;font-size: 16px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
+    title: 'Soumettre un bug',
+    subTitle: 'Nous vous remercions par avance de cette soumission. Notre équipe corrigera ce bug dès que possible.',
+    scope: $scope,
+    buttons: [
+    { text: 'Annuler' },
+    {
+      text: '<b>Envoyer</b>',
+      type: 'button-positive',
+      onTap: function(e) {
+        if (!$scope.bug.option && !$scope.bug.texte) {
+          $scope.err = "Veuillez remplir les deux champs";
+          e.preventDefault();
+        } else {
+          callback("[DATE : "+new Date()+"] [TYPE : "+$scope.bug.option+"] [TEXTE : "+$scope.bug.texte+"] ");
+        }
+      }
+    }
+    ]
+  });
+};
+
+
+$scope.bugReport = function (){
+ getBug(function(data){
+   var bug = data;
+   // bug.user = $localStorage.getObject('user').id;
+   // bug.phone = device.model;
+   // bug.phone_version = device.version;
+   bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
+   console.log(bug);
+   $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
+   });
+
+ });
+ 
+}
   //MODAL HANDLER
 
   $ionicModal.fromTemplateUrl('templates/search.html', {
@@ -128,42 +169,45 @@ else{
     $('.content_wf_search').addClass('hidden');
 
     //TO UNCOMMENT NEEDS DEBUG
-  //   if (!window.cordova) {
-  //     //this is for browser only
-  //     facebookConnectPlugin.browserInit(1133277800032088);
-  //   }
-  //   facebookConnectPlugin.getLoginStatus(function(success){
-  //     fbConnect.getFacebookFriends().then(function(data){
-  //       $scope.facebookFriends = data.data;
-  //       //IDs of my facebookFriends list
-  //       $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
-  //       console.log($scope.facebookFriendsId);
-  //       $searchLoader.hide();
-  //     });
-  //   });
-  }
+    if (!window.cordova) {
+      //this is for browser only
+      facebookConnectPlugin.browserInit(1133277800032088);
+    }
+    facebookConnectPlugin.getLoginStatus(function(success){
+      fbConnect.getFacebookFriends().then(function(data){
+        $scope.facebookFriends = data.data;
+        //IDs of my facebookFriends list
 
+        // $scope.facebookFriendsId = _.map(_.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id'), function(fbId){ return parseInt(fbId)});
 
-  $scope.switchSearchWf = function(){
-    $('.opened_search').removeClass('opened_search');
-    $('.switch_wf').addClass('opened_search');
-    $('.hidden').removeClass('hidden');
-    $('.content_fb_search').addClass('hidden');
-    $searchLoader.hide();
-  }
-  $scope.searchQuery = function(word){
-    $searchLoader.show();
-    $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
-    if(word.length>1){
-     $http.get(serverAddress+'/search/'+word).success(function(data){
-      $searchLoader.hide();
-      $scope.results = data;
+        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+        console.log($scope.facebookFriendsId);
+        $searchLoader.hide();
+      });
     });
-   }
-   else{
-    $scope.results = [];
+}
+
+
+$scope.switchSearchWf = function(){
+  $('.opened_search').removeClass('opened_search');
+  $('.switch_wf').addClass('opened_search');
+  $('.hidden').removeClass('hidden');
+  $('.content_fb_search').addClass('hidden');
+  $searchLoader.hide();
+}
+$scope.searchQuery = function(word){
+  $searchLoader.show();
+  $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
+  if(word.length>1){
+   $http.get(serverAddress+'/search/'+word).success(function(data){
     $searchLoader.hide();
-  }
+    $scope.results = data;
+  });
+ }
+ else{
+  $scope.results = [];
+  $searchLoader.hide();
+}
 }
 
 //Lock addFriend
@@ -172,19 +216,18 @@ $scope.lockFriend;
 //facebookFriend = true, target = facebook_id
 //facebookFriend = false, target = user.id
 $scope.addFriend = function(target, facebookFriend){
-  var postData = {};
+    var postData = {};
   if(facebookFriend){
     postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
     $scope.lockFriend = target;
-    $scope.facebookFriendsId.push(target);
+    $scope.facebookFriendsId.push(target.toString());
     console.log($scope.facebookFriendsId);
   }
   else{
     postData = {user1: $localStorage.getObject('user').id, user2: target};
     $scope.lockFriend = target;
   }
-
-  $http.post(serverAddress+'/addFriend',postData).success(function(data){
+  user.addFriend(postData, target, facebookFriend).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
@@ -197,6 +240,7 @@ $scope.addFriend = function(target, facebookFriend){
     $scope.word ="";
     $scope.lockFriend ="";
   });
+
 }
 
 

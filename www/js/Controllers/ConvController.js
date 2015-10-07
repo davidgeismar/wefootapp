@@ -15,6 +15,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
 
 //REFRESH THE CONVERSATION
 $rootScope.$on('newMessage', function(event){
+
   if(_.last($location.url().split('/'))==$scope.chat.id){
     chat.updateLts($scope.chat.id);
   }

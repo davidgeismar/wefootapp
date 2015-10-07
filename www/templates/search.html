@@ -34,7 +34,7 @@
 	</div>
     <!-- FACEBOOK SECTION -->
 	<div class="content_fb_search hidden">
-<!--       <div ng-repeat="guy in facebookFriends" class="one_search">
+      <div ng-repeat="guy in facebookFriends" class="one_search">
       <div class="img_chat img_search img_search_left">
         <img ng-src="{{guy.picture.data.url}}">
       </div>
@@ -43,22 +43,16 @@
       </div>
       <div ng-click="isFriend({{guy.id}}, true) || addFriend({{guy.id}}, true)" ng-class="{'ion-checkmark-round': isFriend({{guy.id}}, true), 'icon_friend_search': !isFriend({{guy.id}},true)}" ng-disabled ="isFriend({{guy.id}}, true)" class="icon_search">
       </div>
-    </div> -->
-    <div> NON DISPONIBLE POUR CETTE VERSION </div>
+    </div>
+    <!-- <div> NON DISPONIBLE POUR CETTE VERSION </div> -->
 	</div>
     </ion-content>
     
 
 
-    <ion-footer-bar align-title="left" style="background: url(http://img15.deviantart.net/a885/i/2010/059/2/6/green_grass_texture_01_by_goodtextures.jpg)" class="bar-assertive">
-  <h1 style="margin-top:5px; font-size:20px; color:white; text-shadow: 2px 2px black; font-weight:700">Invitez vos amis via</h1>
-<!--     <div class="buttons invite-container-sms" style="margin-left: 30px;" ng-click="sendSmsMessage()">
-    <button class="ion-chatbubble invite-sms"></button>
-  </div> -->
-  <img ng-src="img/fblogo.png" style="width:34px; margin-left:30px; border-radius: 5px;" ng-click="sendFbMessage()">
-<!--     <div class="buttons invite-container-facebook" style="margin-left: 30px;" ng-click="sendFbMessage()">
-    <button class="ion-social-facebook invite-facebook"></button>
-  </div> -->
-   <img ng-src="img/imesslogo.png" style="width:34px; margin-left:30px;" ng-click="sendSmsMessage()">
+<ion-footer-bar align-title="left" style="background: url(img/invitebg.jpg)" class="bar-assertive">
+<h1 style="margin-top: 3px; font-size:20px; color:white; text-shadow: 2px 2px black; font-weight:700">Invitez vos amis via</h1>
+<img ng-src="img/fblogo.png" style="width:34px; margin-left:30px; border-radius: 5px;" ng-click="sendFbMessage()">
+<img ng-src="img/imesslogo.png" style="width:34px; margin-left:30px;" ng-click="sendSmsMessage()">
 </ion-footer-bar>
 </ion-modal-view>

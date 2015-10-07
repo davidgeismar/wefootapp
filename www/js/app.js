@@ -4,10 +4,10 @@
 //"http://localhost:1337";
 
 window.onerror = function (errorMsg, url, lineNumber) {
-    alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
+  alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -96,7 +96,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user, push) {
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -111,12 +111,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   if(window.device)
     screen.lockOrientation('portrait');
-
-  // $rootScope.$on('$cordovaPush:notificationReceived',function (event,notification){
-  //   if(notification.alert) {
-  //     navigator.notification.alert(notification.alert);
-  //   }
-  // });
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -139,11 +133,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
 
   io.socket.on('connect', function(){
+    console.log('here');
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
       mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
+            $localStorage.set('lastTimeUpdated', moment().format());
+            console.log(moment().format());
           });
         });
       });
@@ -183,14 +180,15 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    $localStorage.set('lastTimeUpdated', moment().format());
+    console.log($localStorage.get('lastTimeUpdated'));
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
+    $localStorage.set('lastTimeUpdated', moment().format());
   });
   //Nouvel user dans un chat existant
   io.socket.on('newChatter', function(chatter){
-    $localStorage.set('lastTimeUpdated', moment().format());
     chat.addChatter(chatter);
+    $localStorage.set('lastTimeUpdated', moment().format());
   })
 
 
@@ -220,6 +218,14 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   if(window.StatusBar) {
     StatusBar.styleDefault();
   }
+  if(window.device){
+    push.cordovaPush.on('notification', function(notification){
+      var pushLocation = '/notification';
+      // if (pushLocation) {
+            $localStorage.set('goafterpush',pushLocation);
+          // }
+      });
+  }
 });
   //Used to display the distance / or not
   $rootScope.getCoord = false;
@@ -232,15 +238,22 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
-        if(!$scope.$$phase) {
+        if(!$rootScope.$$phase) {
           $rootScope.$digest();
         }
       });
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
       user.getCoord();
-    }
-  });
+
+      var goafterpush = $localStorage.get('goafterpush');
+      if (goafterpush) {
+       $localStorage.clear('goafterpush');
+         // $state.go('state',{id:goafterpush});
+         $location.path(goafterpush);
+       }
+     }
+   });
 
   $rootScope.goBack = function (value){
     $rootScope.nbGoBack = -1;
@@ -370,7 +383,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user.friends', {
-    cache: true,
+    cache: false,
     url: '/friends',
     views: {
       'menuContent' :{

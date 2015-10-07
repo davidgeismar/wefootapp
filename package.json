@@ -36,17 +36,17 @@
       "id": "com.phonegap.plugins.PushPlugin"
     },
     "cordova-plugin-contacts",
-    "cordova-sqlite-storage",
-    "cordova-plugin-geolocation",
-    "phonegap-plugin-push",
     "cordova-plugin-datepicker",
     "cordova-plugin-splashscreen",
     "cordova-plugin-device",
     "cordova-plugin-console",
     "phonegap-facebook-plugin",
-    "cordova-plugin-screen-orientation"
+    "cordova-plugin-screen-orientation",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-facebook4"
   ],
   "cordovaPlatforms": [
+    "ios",
     "android"
   ]
 }

@@ -16,6 +16,9 @@ app.factory('$localStorage', ['$window', function($window) {
     clearAll:function(){
       $window.localStorage.clear();
     },
+    clear:function(key){
+       $window.localStorage.removeItem[key];
+    },
     setAttribute: function(key, property, attribute){
       var object = JSON.parse($window.localStorage[key] || '{}');
       object[property] = attribute;

@@ -604,6 +604,7 @@ ion-view[view-title="footparams"] .item-icon-left{
 	padding-top: 20px;
 	height: auto !important;
 	position: absolute;
+	width:100%;
 }
 .left-side-slider i{
 	opacity: 1;
@@ -1977,9 +1978,11 @@ ion-view[view-title="Conv"] ion-content{
   		padding-top: 12px;
   	}
   	ion-scroll[direction=y].background_footfinder{
-  		background-image: url('../img/photo-bg-footfinder.png');
+  		background-image: url('../img/photo-bg-footfinder.jpg');
+  		background-position: center bottom;
   		background-size: cover;
   		height: 77vh;
+
   	}
   	.background_footfinder p{
   		white-space: nowrap;
@@ -2175,6 +2178,7 @@ ion-view[view-title="Conv"] ion-content{
   		}
   		.day_timeline p{
   			font-size: 12px;
+  			margin-bottom: 0px;
   		}
   		.nbredejoueur_foot{
   			margin-top: -20px;
@@ -2403,7 +2407,7 @@ ion-view[view-title="Conv"] ion-content{
  		float: right;
  	}
  	.left_player_profil{
- 		margin-top: 63px;
+ 		margin-top: 44px;
  		margin-left: -25px;
  	}
  	.img_friends_profil {
@@ -2414,24 +2418,29 @@ ion-view[view-title="Conv"] ion-content{
 
  	}
  	.level_foot_profil {
- 		margin-top: 35px;
+ 		margin-top: 20px;
  		float: right;
  		margin-right: -5px;
  	}
 
  	.bonhomme_profil {
- 		margin-left:75px;
+ 		margin-left:10px;
+ 		margin-top: 0px;
  	}
  	.date_timeline {
- 		margin-left: 25px;
+ 		margin-left: 10px;
  		border-top: solid 1px #006ddf;
  		margin-top: -40px;
  		margin-bottom: -40px;
+ 	}
+ 	.date_timeline p{
+ 	 	margin-top:-10px;
  	}
 
  	.day_timeline {
  		margin-top : 40px !important;
  		margin-bottom: 80px;
+ 		padding:0;
  	}
 
  	.cadenas_timeline {
@@ -2540,11 +2549,12 @@ ion-view[view-title="Conv"] ion-content{
 	line-height: 25px;
 	height: 70px;
 	font-weight: bold;
+	border-radius:4px;
 }
 .button-container-friend{
 	margin-top: -50px;
 	margin-bottom: 20px;
-	width: 205px;
+	width: 230px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2624,7 +2634,7 @@ ion-view[view-title="Conv"] ion-content{
 .button-container-friend{
 	margin-top: -50px;
 	margin-bottom: 50px;
-	width: 205px;
+	width: 230px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -3118,4 +3128,33 @@ ion-view[view-title="Conv"] ion-content{
 
 .item-radio .radio-icon{
 	top:-15px;
+}
+.bug_logo{
+	font-size: 21px;
+    color: #006dff;
+    margin-left: 30px;
+}
+.add_friend{
+	background-repeat: no-repeat;
+    background-position: 50%;
+    height: 33px;
+    margin-top: 0px;
+    background-size: contain;
+    width: 40px;
+    display: inline-block;
+    background-image: url('../img/icon_bonhomme_carnet.svg');
+    float: right;
+    right: 6px;
+    position: absolute;
+    z-index: 100;
+    padding: 0px;
+}
+.nowrap_foot{
+	 margin-bottom: 2px;
+}
+.delete_field{
+	margin-top: 30px;
+    display: inline-block;
+    font-size:30px;
+    color:#28385c;
 }

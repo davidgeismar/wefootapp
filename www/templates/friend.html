@@ -2,14 +2,14 @@
 <ion-header-bar  class="actu_header">
 <div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
 <h1 class="title" style="text-align: center;">{{friend.first_name}} {{friend.last_name}}</h1>
-<img class="logo_wf" src="img/logo_WF.svg">
+<img ng-if="isFriendWith(friend.id)" class="logo_wf" src="img/logo_WF.svg">
+<i ng-if="(!isFriendWith(friend.id) && !lockFriend>0) || friend.id==moi" class ="add_friend" ng-click="addFriend(friend.id)"></i>
 </ion-header-bar>
 
 <ion-content class="has-header padding last">
 
-<div class="img_menu_bg" style="background:url({{friend.picture}}) no-repeat center;   background-size: cover; ">
+<div class="img_menu_bg" ng-style="{'background':'url('+friend.picture+') no-repeat center', 'background-size': 'cover'}">
 </div>
-
 <img class="img_menu" style="display: block;margin-left: auto;margin-right: auto;" ng-src="{{friend.picture}}"/>
 
 <div class="info_friend">
@@ -27,8 +27,9 @@
 	Défier ce joueur
 </button></a> -->
 <div ng-if="isInvitationConfirmation" class="button-container-friend">
+<p style="text-align:center"><i class="ion-information-circled" style="font-size:16px"></i> Ce joueur souhaite participer à votre foot </p>
   <button ng-click="acceptInvitation(true)" class="button  button-positive button-confirm-friend">Accepter ce joueur</button>
-  <button ng-click="acceptInvitation(false)" class="button button-assertive button-confirm-friend">Refuser ce joueur</button>
+  <button style="margin-left:25px" ng-click="acceptInvitation(false)" class="button button-assertive button-confirm-friend">Refuser ce joueur</button>
 </div>
 <div class="container-friend">
   <div class="trophe-friend">

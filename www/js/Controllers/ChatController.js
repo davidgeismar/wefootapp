@@ -9,25 +9,27 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	}
 
 
-$scope.launchChat = function(chatId){
-	$location.path('/conv/'+chatId);
-}
+	$scope.launchChat = function(chatId){
+		$location.path('/conv/'+chatId);
+	}
 
-$scope.sortChat = function(chat) {
-    var date = new Date(chat.lastTime);
-    return date;
-};
+	// $scope.sortChat = function(chat) {
+	// return chat.lastTime;
+	// };
 
-$scope.formatTime = function (oldTime){
-  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
-};
+	$scope.formatTime = function (oldTime){
+		if(oldTime)
+			return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
+		else
+			return "";
+	};
 
-$rootScope.$on('updateChatDisplayer', function(event){
-  $scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
-  if(!$scope.$$phase) {
-  $scope.$digest();
-}
-});
+	$rootScope.$on('updateChatDisplayer', function(event){
+		$scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
+		if(!$scope.$$phase) {
+			$scope.$digest();
+		}
+	});
 
 // $rootScope.openModal = function() {
 // 	$rootScope.modal2.show();
@@ -38,7 +40,7 @@ $rootScope.$on('updateChatDisplayer', function(event){
 // }
 
 $scope.deleteChat = function(chatId){
-chat.deactivateChatter(chatId);
+	chat.deactivateChatter(chatId);
 }
 
 })

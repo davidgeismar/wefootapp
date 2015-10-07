@@ -1,9 +1,16 @@
-angular.module('foot',[]).controller('FootController', function ($scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot) {
+angular.module('foot',[]).controller('FootController', function ($confirmation,$scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
 } 
 
+$scope.deleteField = function(fieldId){
+  $confirmation('Etes vous sur de vouloir supprimer ce terrain ?',function(){
+    $http.post(serverAddress+'/field/deletePrivateField',{id: fieldId}).success(function(){
+      $scope.fields = _.filter($scope.fields, function(field){ return field.id !=fieldId });
+    });
+  });
+}
 
 $scope.foot = {};
 $scope.results = [];
@@ -100,7 +107,7 @@ $scope.toggleAll = function(){
 } 
 
 if($location.path().indexOf('user/foots')>-1){
-  
+
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -358,36 +365,36 @@ $scope.closeModal3 = function(launch){
     $location.path('/foot/'+id);
   } 
 
-if(!$rootScope.paramsFinder)
-$rootScope.paramsFinder = {dateValue: 0, field: '', date: new Date()};
+  if(!$rootScope.paramsFinder)
+    $rootScope.paramsFinder = {dateValue: 0, field: '', date: new Date()};
 
 
 // console.log($rootScope.paramsFinder);
 
-  var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
-  new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)];
-  
-  $scope.getData = function(){
-    $foot.searchFoot($rootScope.paramsFinder,function(results){
-      $scope.results = results;
-    })
-  }
+var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000),
+new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)];
 
-  $scope.filterFoots = function (foot) { 
-    return foot.organisator != $localStorage.getObject('user').id;
+$scope.getData = function(){
+  $foot.searchFoot($rootScope.paramsFinder,function(results){
+    $scope.results = results;
+  })
+}
+
+$scope.filterFoots = function (foot) { 
+  return foot.organisator != $localStorage.getObject('user').id;
+}
+$scope.updateDate = function(val){
+  if(val)
+    value = $rootScope.paramsFinder.dateValue + val;
+  else
+    value = $rootScope.paramsFinder.dateValue;
+  if(value > -1 && value < 10){
+    $rootScope.paramsFinder.dateValue = value;
+    $scope.date = getJour(dates[value]);
+    $rootScope.paramsFinder.date = dates[value];
+    $scope.getData($rootScope.paramsFinder);
   }
-  $scope.updateDate = function(val){
-    if(val)
-      value = $rootScope.paramsFinder.dateValue + val;
-    else
-      value = $rootScope.paramsFinder.dateValue;
-    if(value > -1 && value < 10){
-      $rootScope.paramsFinder.dateValue = value;
-      $scope.date = getJour(dates[value]);
-      $rootScope.paramsFinder.date = dates[value];
-      $scope.getData($rootScope.paramsFinder);
-    }
-  }
-  $scope.updateDate();
+}
+$scope.updateDate();
 
 })

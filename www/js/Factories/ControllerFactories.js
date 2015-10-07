@@ -11,21 +11,14 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
 
 
 if(setUUID && window.device){  // No device on testing second argument removes emulators
-  // allFunction.push(function(callback){
-  //   $ionicPlatform.ready(function () {
-  //     push.register();
-  //     callback();
-  //   });
-  // });
+  allFunction.push(function(callback){
+    $ionicPlatform.ready(function () {
+      push.register();
+      callback();
+    });
+  });
 }
 
-
-
-// allFunction.push(function(callback){
-//   io.socket.post(serverAddress+'/connexion/setConnexion',{id: userId},function(){
-//     callback();
-//   }); 
-// });
 allFunction.push(function(callback){
   mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
     callback();  
@@ -533,7 +526,20 @@ return foot;
     });
   }
 
-  
+  //FRIENDS ACTION
+
+  user.addFriend = function(postData, target){
+  return $http.post(serverAddress+'/addFriend',postData);
+}
+
+  user.isFriendWith = function(userId){
+    var friendsId = _.pluck($localStorage.getArray('friends'),'id');
+    if (friendsId.indexOf(userId)>-1)
+      return true;
+    else
+      return false;
+  }
+
 
   return user;
 }])
@@ -542,7 +548,7 @@ return foot;
   var push = {};
   $ionicPlatform.ready(function () {
     if(window.device){
-    var cordovaPush = PushNotification.init(  //PROBLEM WITH IT (MAY BE A PLUGIN INSTALLATION TROUBLE)
+    push.cordovaPush = PushNotification.init(
     { 
       "android": {"senderID": "124322564355"},
       "ios": {"alert": "true", "badge": "true", "sound": "true"} 
@@ -550,12 +556,13 @@ return foot;
 
     push.register = function(){
 
-      cordovaPush.on('registration', function(data) {
+      push.cordovaPush.on('registration', function(data) {
         console.log(data);
         var user = $localStorage.getObject('user');
         user.pushToken = data.registrationId;
         $localStorage.setObject('user',user);
-        $http.post(serverAddress+'/push/create',{user: userId, push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
+
+        $http.post(serverAddress+'/push/create',{user:user.id , push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
           callback();
         }).error(function(err){
           errors.push("Error push");
@@ -563,7 +570,7 @@ return foot;
       });
     }
     push.unregister = function(){
-      cordovaPush.unregister(function(success){
+      push.cordovaPush.unregister(function(success){
       }, 
       function(error){
         console.log(error);
