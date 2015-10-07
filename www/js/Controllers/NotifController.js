@@ -1,15 +1,17 @@
 angular.module('notif',[])
-.controller('NotifCtrl',function($scope, $localStorage, $rootScope, $http, $location,$ionicLoading,$handleNotif){
+.controller('NotifCtrl',function($scope, $localStorage, $rootScope, $http, $location,$ionicLoading,$handleNotif,$searchLoader,$cordovaNetwork){
 	//TODO USER.LASTVIEW
-	$ionicLoading.show({
-	    content: 'Loading Data',
-	    animation: 'fade-out',
-	    showBackdrop: true
-	});
+
 	$scope.go = function(url){
 		if(url)
 			$location.path(url);
 	}
+
+	angular.element(document).ready(function () {
+        if(window.device && $cordovaNetwork.isOnline())
+       	 	$searchLoader.show();
+    });
+
 	if($rootScope.notifs.length == 0){ //New connexion
 		$http.get(serverAddress+'/getNotif/'+$localStorage.getObject('user').id).success(function(data){
 			if(data.length == 0)
@@ -19,7 +21,7 @@ angular.module('notif',[])
 					callback();
 				});
 				},function(){ 
-					$ionicLoading.hide(); $rootScope.notifs = data;
+					$searchLoader.hide(); $rootScope.notifs = data;
 					$localStorage.setObject('notifs',$rootScope.notifs);
 			});
 		});
@@ -33,7 +35,7 @@ angular.module('notif',[])
 					callback();
 				});
 				},function(){ 
-					$ionicLoading.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
+					$searchLoader.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
 					$localStorage.setObject('notifs',$rootScope.notifs);
 			});
 		});

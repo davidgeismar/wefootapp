@@ -2971,9 +2971,9 @@ ion-view[view-title="Conv"] ion-content{
 }
 .error_popup_container{
 	display: none;
-	position: absolute;
+	position: fixed;
 	width: 100%;
-	bottom: 0;
+	top: 44px;
 	white-space: nowrap;
 	font-family: 'Ubuntu';
 	background-color: rgba(255,0,51,0.7);
@@ -2981,6 +2981,11 @@ ion-view[view-title="Conv"] ion-content{
 	color: #fff;
 	font-size: 12px;
 	text-align: center;
+}
+.error_popup_container i{
+	display: inline-block;
+	float: right;
+	font-size: 18px;
 }
 .sk-spinner-circle.sk-spinner {
   margin: 0 auto;
@@ -3162,7 +3167,7 @@ ion-view[view-title="Conv"] ion-content{
     padding: 0px;
 }
 .nowrap_foot{
-	    margin-bottom: 2px;
+	margin-bottom: 2px;
 }
 .no-instance-yet{
 	padding: 30px;

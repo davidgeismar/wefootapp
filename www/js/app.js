@@ -96,7 +96,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 }])
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork) {
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -104,7 +104,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
   $rootScope.chats = [];
-
+  $rootScope.hideError = error_reporter.hide();
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
@@ -207,13 +207,15 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       setTimeout(function() {
         navigator.splashscreen.hide();
       }, 3000);
+
+      if($cordovaNetwork.isOffline())
+        error_reporter.show({texte:"Veuillez vous connecter à internet."});
+
+      $rootScope.$on('$cordovaNetwork:offline',function(){
+        error_reporter.show({texte:"Pas de connexion internet!"});
+      });
     }
-    // $ionicPlatform.on('offline',function(){
-    //   console.log('offline');
-    //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
-    // });
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
+
   if(window.cordova && window.cordova.plugins.Keyboard) {
     cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
   }
@@ -466,7 +468,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     }
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope, error_reporter) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope, error_reporter, $cordovaNetwork) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
@@ -480,12 +482,18 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        if($rootScope.err)
-          error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){
-            delete $rootScope.err;
-          });
-        else
-          error_reporter.show({timeout: 3000});
+        $scope.$broadcast('scroll.refreshComplete');
+        if(response.status !== 0){
+          if($rootScope.err)
+            error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){
+              delete $rootScope.err;
+            });
+          else
+            error_reporter.show({timeout: 3000});
+        }
+        if(response.status === 0){
+          error_reporter.show({texte: "Erreur vérifiez votre connexion internet."});
+        }
         return $q.reject(response);
       },
       'response': function(response){

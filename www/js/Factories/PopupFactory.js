@@ -35,7 +35,7 @@ app.factory('$validated',[function(){
         "<div class='validated-container'>"+
           "<div class='validated-content'>"+
             "<div class='validated-text'>"+
-              obj.texte
+              obj.texte+
             "</div>"+
             "<div class='validated-icon'>"+
               "<i class='"+obj.icon+"'></i>"+
@@ -46,13 +46,9 @@ app.factory('$validated',[function(){
       $('ion-view').append(html);
       $('.validated-container').fadeIn();
       setTimeout(function(){
-        $('.validated-container').fadeOut();
-        callback();},1000);
-    }
-    else{
-      elem.fadeIn();
-      setTimeout(function(){
-        $('.validated-container').fadeOut();
+        $('.validated-container').fadeOut(400,function(){
+          $(this).remove();
+        });
         callback();},1000);
     }
   }
@@ -64,7 +60,7 @@ error_reporter.show({
   texte: text, default to "Erreur lors de la requête"
 },function(){callback();})
 */
-app.factory('error_reporter',[function(){
+app.factory('error_reporter',['$injector',function($injector){
     var error_reporter = {};
     error_reporter.show =  function(obj,callback){
       if(!obj)
@@ -73,34 +69,26 @@ app.factory('error_reporter',[function(){
         obj.texte = "Erreur lors de la requête.";
       var elem = $(document).find('.error_popup_container');
       if(elem.length == 0){
-        error_reporter.on = true;
         var html = "<div class='error_popup_container'>"+
                       "<div class='error_popup_content'>"+obj.texte+
+                      "<i class='ion-close-circled'></i>"+
                       "</div>"+
                     "</div>";
         $('ion-view').append(html);
-        $('.error_popup_container').fadeIn();
+        $('ion-content').append(html);
+        var elem = $(document).find('.error_popup_container');
+        $('.error_popup_container i').click(function(){   //Bind the hide function
+          error_reporter.hide();
+        });
+        elem.fadeIn();
         if(obj.timeout){
           setTimeout(function(){
-            $('.error_popup_container').fadeOut();
-            error_reporter.on = false;
+            elem.fadeOut(400,function(){
+              $(this).remove();
+            });
             if(callback)
               callback();
           },obj.timeout);
-        }
-      }
-      else{
-        if(!error_reporter.on){
-          error_reporter.on = true;
-          elem.fadeIn();
-          if(obj.timeout){
-            setTimeout(function(){
-              $('.error_popup_container').fadeOut();
-              error_reporter.on = false;
-              if(callback)
-                callback();
-            },obj.timeout);
-          }
         }
       }
     };
@@ -108,9 +96,10 @@ app.factory('error_reporter',[function(){
     error_reporter.hide = function(){
       var elem = $(document).find('.error_popup_container');
       if(elem)
-        elem.fadeOut();
-    }
+        elem.fadeOut(400,function(){
+              $(this).remove();
+        });
+    };
 
-    error_reporter.on = false;
     return error_reporter;
 }])

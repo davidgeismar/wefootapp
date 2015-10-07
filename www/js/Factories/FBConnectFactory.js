@@ -161,7 +161,7 @@ obj.connect = function(){
     return friends.promise;
   }
 
-  obj.getFacebookFriendsInfos = function(callback){
+  obj.getFacebookFriendsInfos = function(){
     obj.getFacebookFriends().then(function(friends){
       var friendsId = _.pluck(friends.data,'id');
       $http.post(serverAddress+"/user/getViaFbId",{users:friendsId}).success(function(data){
