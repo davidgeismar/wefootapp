@@ -41,11 +41,13 @@ $scope.facebookConnect = function() {
 })
 
 
-.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope,$ionicLoading,$connection,$ionicHistory){
+.controller('LoginCtrl', function($scope, $http, $location, $localStorage, $rootScope,$ionicLoading,$connection,$ionicHistory,$cordovaNetwork){
   $scope.err = "";
   $scope.user={};
 
   $scope.launchReq = function(){
+    if($scope.err)
+      delete $scope.err;
     if(window.device && $cordovaNetwork.isOffline()){
       error_reporter.show({texte: "Connectez vous d'abord à internet!"});
     }
@@ -73,12 +75,14 @@ $scope.facebookConnect = function() {
 
 })
 
-.controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading, $ionicHistory, mySock, user){
+.controller('RegisterCtrl', function($scope, $http, $location, $localStorage,$ionicLoading, $ionicHistory, mySock, user,$cordovaNetwork){
   $ionicHistory.clearCache();
   $ionicHistory.clearHistory();
   $scope.err = "";
   $scope.user={};
   $scope.launchReq = function(){
+    if($scope.err)
+      delete $scope.err;
     if(window.device && $cordovaNetwork.isOffline()){
       error_reporter.show({texte: "Connectez vous d'abord à internet!"});
     }
