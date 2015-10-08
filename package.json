@@ -43,7 +43,8 @@
     "phonegap-facebook-plugin",
     "cordova-plugin-screen-orientation",
     "cordova-plugin-whitelist",
-    "cordova-plugin-facebook4"
+    "cordova-plugin-facebook4",
+    "org.apache.cordova.network-information"
   ],
   "cordovaPlatforms": [
     "ios",

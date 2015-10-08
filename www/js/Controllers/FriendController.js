@@ -113,6 +113,4 @@ $scope.isFriendWith = function(userId){
 	return user.isFriendWith(userId);
 }
 
-
-
 })

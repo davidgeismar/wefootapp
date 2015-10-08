@@ -1,5 +1,6 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory, $confirmation){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory, $confirmation,$ionicLoading){
+
 
   var formatAddress = function(place, callback){
 
@@ -57,14 +58,18 @@ angular.module('field',[])
 
   $scope.launchReq = function(){
     $scope.err = "";
-    console.log($scope.field.googleAddress);
+
     if(!$scope.field.name || !$scope.field.googleAddress){
       $scope.err = "Veuillez insérer un nom et une adresse";
     }
     else {
       formatAddress($scope.field.googleAddress, function(){
         delete $scope.field.googleAddress;
-        console.log($scope.field);
+        $ionicLoading.show({
+          content: 'Loading Data',
+          animation: 'fade-out',
+          showBackdrop: true
+        });
         $http.post(serverAddress+'/field/create',$scope.field).success(function(data, status) {
 
           if($scope.imageUri){
@@ -78,18 +83,17 @@ angular.module('field',[])
             };
             $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
             .then(function(result) {
-              $confirmation("Votre terrain a bien été inséré, recherchez le dans la liste !");  
+              $confirmation("Votre terrain a bien été inséré, recherchez le dans la liste !");
+              $ionicLoading.hide();
               $ionicHistory.goBack();
             }, function(err) {
-        // Error
-        console.log("fail");
-      }, function (progress) {
-        console.log("progress");
-        // constant progress updates
-      });
+              console.log(err);
+            }, function (progress) {
+            });
           }
           else{
             $confirmation("Votre terrain a bien été inséré, recherchez le dans la liste !");  
+            $ionicLoading.hide();
             $ionicHistory.goBack();
           }
         });

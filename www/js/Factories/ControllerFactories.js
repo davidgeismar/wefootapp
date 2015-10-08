@@ -12,10 +12,8 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
 
 if(setUUID && window.device){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
-    $ionicPlatform.ready(function () {
-      push.register();
-      callback();
-    });
+    push.setToken(userId);
+    callback();
   });
 }
 
@@ -335,7 +333,7 @@ return profil;
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
     $http.get(serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
-      if(data.length==0 || data.rowCount==0) $ionicLoading.hide();
+      if(data.length==0 || data.rowCount==0){ $ionicLoading.hide(); callback2(); }
       else{
         async.each(data, function(foot,callback){
           $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
@@ -455,9 +453,9 @@ foot.searchFoot = function(params,callback2){
   var footList = [];
   var filtered = [];
   var reduceResults = function() {  //REMOVE FOOT WHERE USER IS PLAYING
-      filtered = _.filter(filtered,function(elem) {
-        return footList.indexOf(elem.id)==-1 ; 
-      });
+    filtered = _.filter(filtered,function(elem) {
+      return footList.indexOf(elem.id)==-1 ; 
+    });
   }
   var userId = $localStorage.getObject('user').id;
   var finish = false;
@@ -484,10 +482,10 @@ foot.searchFoot = function(params,callback2){
         });
       },function(){
         $searchLoader.hide();
-            if(finish){
-              reduceResults();
-              callback2(filtered);
-            }
+        if(finish){
+          reduceResults();
+          callback2(filtered);
+        }
         finish = true;
       });
   });
@@ -529,8 +527,8 @@ return foot;
   //FRIENDS ACTION
 
   user.addFriend = function(postData, target){
-  return $http.post(serverAddress+'/addFriend',postData);
-}
+    return $http.post(serverAddress+'/addFriend',postData);
+  }
 
   user.isFriendWith = function(userId){
     var friendsId = _.pluck($localStorage.getArray('friends'),'id');
@@ -546,39 +544,40 @@ return foot;
 
 .factory('push',['$http','$localStorage','$ionicPlatform',function($http,$localStorage,$ionicPlatform){
   var push = {};
-  $ionicPlatform.ready(function () {
+  $ionicPlatform.ready(function(){
     if(window.device){
-    push.cordovaPush = PushNotification.init(
-    { 
-      "android": {"senderID": "124322564355"},
-      "ios": {"alert": "true", "badge": "true", "sound": "true"} 
-    });
+      var cordovaPush = PushNotification.init(  //PROBLEM WITH IT (MAY BE A PLUGIN INSTALLATION TROUBLE)
+      { 
+        "android": {"senderID": "124322564355"},
+        "ios": {"alert": "true", "badge": "true", "sound": "true"} 
+      });
 
-    push.register = function(){
 
-      push.cordovaPush.on('registration', function(data) {
-        console.log(data);
+      cordovaPush.on('registration', function(data) {
         var user = $localStorage.getObject('user');
-        user.pushToken = data.registrationId;
-        $localStorage.setObject('user',user);
+        $localStorage.set('pushToken',data.registrationId);
+      });
 
-        $http.post(serverAddress+'/push/create',{user:user.id , push_id: data.registrationId, is_ios: ionic.Platform.isIOS()}).success(function(){
-          callback();
-        }).error(function(err){
-          errors.push("Error push");
+      cordovaPush.on('notification', function(notification){
+        var pushLocation = '/notification';
+      // if (pushLocation) {
+        $localStorage.set('goafterpush',pushLocation);
+          // }
         });
-      });
     }
-    push.unregister = function(){
-      push.cordovaPush.unregister(function(success){
-      }, 
-      function(error){
-        console.log(error);
-      });
-    }
-  }
-  })
-  return push;
+  });
+    // push.unregister = function(){
+    //   cordovaPush.unregister(function(success){
+    //   }, 
+    //   function(error){
+    //     console.log(error);
+    //   });
+    // }
 
-}])
+    push.setToken = function(userId){
+      $http.post(serverAddress+'/push/create',{user: userId, push_id: $localStorage.get('pushToken'), is_ios: ionic.Platform.isIOS()}).success(function(){});
+    };
+    return push;
+
+  }])
 

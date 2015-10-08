@@ -226,7 +226,7 @@ $scope.reset = function(){
         $scope.err = 'Erreur une carte à surement déjà été enregistrée pour ce foot';
       else
         $validated.show({texte: "Votre réservation à bien été enregistrée", icon: "ion-checkmark-round"},function(){
-          $location.path('/foot/'+$localStorage.reservationClient.foot);  //TODO POPUP CONFIRM RESA
+          $location.path('/foot/'+$localStorage.reservationClient.foot);
         }); 
     });
   }

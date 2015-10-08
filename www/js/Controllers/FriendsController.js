@@ -26,7 +26,6 @@ angular.module('friends',[])
 
 $scope.refresh = function(){
   $http.get(serverAddress+'/getAllFriends/'+$localStorage.getObject('user').id+'/'+0).success(function(data){
-    console.log(data);
     var nb = $rootScope.friends.length;
     var friends = data[0];
     if(data[0].length==0){

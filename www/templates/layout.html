@@ -48,11 +48,11 @@
 </div>
 <div class="info_menu">
   <p ng-click="toEdit[0] = true" ng-hide="toEdit[0]">{{user.favorite_club}}<i class="ion-edit"></i></p>
-  <span ng-hide="!toEdit[0]"><input placeholder="Club" ng-model="club"/> <i ng-click="editClub(club)" class="ion-ios-checkmark"></i></span>
+  <form ng-submit="editClub(club)" ng-hide="!toEdit[0]"><input placeholder="Club" ng-model="club"/> <i ng-click="editClub(club)" class="ion-ios-checkmark"></i></form>
 </div>
 <div class="info_menu info_last">
  <p ng-click="toEdit[1] = true" ng-hide="toEdit[1]">{{user.poste}}<i class="ion-edit"></i></p>
- <span ng-hide="!toEdit[1]"><input placeholder="Poste" ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></span>      
+ <form ng-submit="editPoste(poste)" ng-hide="!toEdit[1]"><input placeholder="Poste" ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></form>      
 </div>
 <div class="note_menu">
   <div class="icon_menu icon-tech">

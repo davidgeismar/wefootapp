@@ -15,5 +15,9 @@
 <ion-option-button class="button-assertive" ng-click="deleteChat(chatDisplay.id)">Effacer</ion-option-button>
 </ion-item>
 </ion-list>
+<div ng-if="chatsDisplay.length==0" class="no-instance-yet">
+	<p>Ici vous trouverez la liste de vos chats:</p>
+	<p>Dès qu'un foot est créé, un chat est généré et vous permet de vous organiser avec tous les autres joueurs !</p>
+</div>
 </ion-content>
 </ion-view>

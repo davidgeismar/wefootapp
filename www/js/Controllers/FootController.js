@@ -133,7 +133,7 @@ if($location.path().indexOf('user/foots')>-1){
 })
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats, $validated,$timeout) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -268,7 +268,11 @@ if($location.path().indexOf('user/foots')>-1){
     $http.post(serverAddress+'/foot/askToPlay',{userId: id, foot: $scope.foot.id}).success(function(){
       $handleNotif.notify({user:$scope.foot.created_by, related_user: $localStorage.getObject('user').id, typ:'footDemand', related_stuff: $localStorage.getObject('user').id},function(){},true);
       $scope.isPending = true;
-      $location.path('/footfinder');
+      $validated.show({texte: "Votre demande à bien été envoyée.", icon: "ion-checkmark-round"},function(){
+      }); //ERROR USING CALLBACK
+      $timeout(function(){
+        $location.path('/footfinder');
+      },1100);
     });
   };
 

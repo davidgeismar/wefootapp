@@ -7,8 +7,10 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
+
+
 
 
 var modalLink = "";
@@ -80,31 +82,28 @@ var device = window.device;
 
 
 var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork) {
 
-app.config(['$ionicAppProvider', function($ionicAppProvider) {
-  // Identify app
-  $ionicAppProvider.identify({
-    // The App ID (from apps.ionic.io) for the server
-    app_id: 'b7af9bfc',
-    //GOOGLE APP
-    gcm_id: 'wefoot-985',
-    // The public API key all services will use for this app
-    api_key: '2003098b5fe09a127f008b601758317e99136f05329ca5c6',
-    // Set the app to use development pushes
-    dev_push: false
-  });
-}])
+  var goAfterPush = function(){
+    var goafterpush = $localStorage.get('goafterpush');
+    if (goafterpush) {
+     $localStorage.clear('goafterpush');
+         // $state.go('state',{id:goafterpush});
+         $location.path(goafterpush);
+       }
+     }
+
+     goAfterPush();
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user, push) {
-  $rootScope.toShow = false;
+     $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
   $rootScope.chats = [];
-
+  $rootScope.hideError = error_reporter.hide();
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
@@ -180,7 +179,6 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    console.log($localStorage.get('lastTimeUpdated'));
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
     $localStorage.set('lastTimeUpdated', moment().format());
@@ -205,28 +203,22 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       setTimeout(function() {
         navigator.splashscreen.hide();
       }, 3000);
-    }
-    // $ionicPlatform.on('offline',function(){
-    //   console.log('offline');
-    //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
-    // });
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-  if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
-  }
-  if(window.StatusBar) {
-    StatusBar.styleDefault();
-  }
-  if(window.device){
-    push.cordovaPush.on('notification', function(notification){
-      var pushLocation = '/notification';
-      // if (pushLocation) {
-            $localStorage.set('goafterpush',pushLocation);
-          // }
+
+      if($cordovaNetwork.isOffline())
+        error_reporter.show({texte:"Veuillez vous connecter à internet."});
+
+      $rootScope.$on('$cordovaNetwork:offline',function(){
+        error_reporter.show({texte:"Pas de connexion internet!"});
       });
-  }
-});
+    }
+
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
   //Used to display the distance / or not
   $rootScope.getCoord = false;
 
@@ -245,15 +237,9 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
       user.getCoord();
-
-      var goafterpush = $localStorage.get('goafterpush');
-      if (goafterpush) {
-       $localStorage.clear('goafterpush');
-         // $state.go('state',{id:goafterpush});
-         $location.path(goafterpush);
-       }
-     }
-   });
+      goAfterPush();
+    }
+  });
 
   $rootScope.goBack = function (value){
     $rootScope.nbGoBack = -1;
@@ -479,15 +465,12 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     }
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope, error_reporter, $cordovaNetwork) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
         if ($localStorage.get('token')) {
           config.headers.Authorization = $localStorage.get('token');
-        }
-        else{
-          console.log("fail");
         }
         return config;
       },
@@ -496,7 +479,17 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
           $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        $rootScope.err = "Erreur connexion";
+        if(response.status !== 0){
+          if($rootScope.err)
+            error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){
+              delete $rootScope.err;
+            });
+          else
+            error_reporter.show({timeout: 3000});
+        }
+        if(response.status === 0){
+          error_reporter.show({texte: "Erreur vérifiez votre connexion internet."});
+        }
         return $q.reject(response);
       },
       'response': function(response){
@@ -507,8 +500,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
-  $ionicConfigProvider.views.forwardCache(true);
-  $ionicConfigProvider.tabs.position("bottom"); 
+$ionicConfigProvider.views.forwardCache(true);
+$ionicConfigProvider.tabs.position("bottom"); 
 });
 
 

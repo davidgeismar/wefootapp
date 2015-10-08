@@ -56,27 +56,24 @@ if($scope.user && $scope.user.poste==null){
       if($scope.user && $scope.user.id){
         $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
         .then(function(result) {
-          $scope.user.picture="";  //RESET CACHE FOR THE SCOPE (NECESSARY)
-        // Success!
-        setTimeout(function(){
-          user = $localStorage.getObject('user')
+          var user = $localStorage.getObject('user')
           user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
           $localStorage.setObject('user',user);
           $scope.user.picture = result.response+'#'+ new Date().getTime();
           $ionicLoading.hide();
-        },3000);
-      }, function(err) {
-        // Error
-      }, function (progress) {
-        $ionicLoading.show({
-          content: 'Loading Data',
-          animation: 'fade-out',
-          showBackdrop: true
+
+        }, function(err) {
+          $ionicLoading.hide();
+        }, function (progress) {
+          $ionicLoading.show({
+            content: 'Loading Data',
+            animation: 'fade-out',
+            showBackdrop: true
+          });
         });
-      });
       }
     }, function(error) {
-      console.log('Error getting pic');
+      $ionicLoading.hide();
     });
 
 }
@@ -89,8 +86,10 @@ $scope.logout = function (){
  $rootScope.toShow = true;
  $rootScope.notifs = [];
  if($localStorage.getObject('user').pushToken){
+  var pushToken = $localStorage.getObject('user').pushToken;
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
     $localStorage.clearAll();
+    $localStorage.set("pushToken",pushToken);
     $location.path('/');
   });
 }
@@ -162,30 +161,39 @@ $scope.bugReport = function (){
     $searchLoader.hide();
   }; 
 
+
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-
+  }
     //TO UNCOMMENT NEEDS DEBUG
-    if (!window.cordova) {
-      //this is for browser only
-      facebookConnectPlugin.browserInit(1133277800032088);
-    }
-    facebookConnectPlugin.getLoginStatus(function(success){
-      fbConnect.getFacebookFriends().then(function(data){
-        $scope.facebookFriends = data.data;
-        //IDs of my facebookFriends list
+
+  //   if (!window.cordova) {
+  //     //this is for browser only
+  //     facebookConnectPlugin.browserInit(1133277800032088);
+  //   }
+  //   facebookConnectPlugin.getLoginStatus(function(success){
+  //     fbConnect.getFacebookFriends().then(function(data){
+  //       $scope.facebookFriends = data.data;
+  //       //IDs of my facebookFriends list
+  //       $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+  //       console.log($scope.facebookFriendsId);
+  //       $searchLoader.hide();
+  //     });
+  //   });
+
 
         // $scope.facebookFriendsId = _.map(_.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id'), function(fbId){ return parseInt(fbId)});
 
-        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
-        console.log($scope.facebookFriendsId);
-        $searchLoader.hide();
-      });
-    });
-}
+// <<<<<<< HEAD
+//         $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+//         console.log($scope.facebookFriendsId);
+//         $searchLoader.hide();
+//       });
+//     });
+// }
 
 
 $scope.switchSearchWf = function(){
@@ -195,9 +203,12 @@ $scope.switchSearchWf = function(){
   $('.content_fb_search').addClass('hidden');
   $searchLoader.hide();
 }
+
+
+$rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
+$scope.results = $localStorage.getArray("facebookFriends");
 $scope.searchQuery = function(word){
   $searchLoader.show();
-  $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
   if(word.length>1){
    $http.get(serverAddress+'/search/'+word).success(function(data){
     $searchLoader.hide();
@@ -216,12 +227,11 @@ $scope.lockFriend;
 //facebookFriend = true, target = facebook_id
 //facebookFriend = false, target = user.id
 $scope.addFriend = function(target, facebookFriend){
-    var postData = {};
+  var postData = {};
   if(facebookFriend){
     postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
     $scope.lockFriend = target;
-    $scope.facebookFriendsId.push(target.toString());
-    console.log($scope.facebookFriendsId);
+    $scope.facebookFriendsId.push(target);
   }
   else{
     postData = {user1: $localStorage.getObject('user').id, user2: target};
