@@ -134,7 +134,6 @@ $scope.bugReport = function (){
    // bug.phone = device.model;
    // bug.phone_version = device.version;
    bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
-   console.log(bug);
    $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
    });
 
@@ -246,7 +245,6 @@ $scope.addFriend = function(target, facebookFriend){
     friends.push(data);
     $localStorage.setObject('friends',friends);
     $rootScope.friends.push(data);
-    console.log($rootScope.friends);
     $scope.word ="";
     $scope.lockFriend ="";
   });

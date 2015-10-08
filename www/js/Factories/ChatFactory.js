@@ -25,7 +25,6 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 		var chats = $localStorage.getArray('chats');
 		var index = _.pluck(chats, 'id').indexOf(message.chat);
 		if(index>-1){
-			console.log(message);
 			chats[index].messages.push(message);
 			// console.log(chats[index]);
 			$localStorage.setObject('chats', chats);
@@ -146,7 +145,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
 			return $http.post(serverAddress+'/chat/getNewChats',{id:user.id,ltu:ltu}).success(function(chats){
-				console.log(chats);
 				angular.forEach(chats, function(chat){
 					obj.addChat(chat);
 				});	
@@ -167,7 +165,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var ltu = $localStorage.get('lastTimeUpdated');
 			var chatsId = _.pluck($localStorage.getArray('chats'),'id');
 			return $http.post(serverAddress+'/chat/getUnseenMessages',{id:user.id,ltu:ltu, chats:chatsId}).success(function(messages){
-				console.log(messages);
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
 				});	
