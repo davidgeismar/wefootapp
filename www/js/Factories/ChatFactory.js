@@ -1,4 +1,4 @@
-app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($http,$localStorage, $rootScope, mySock){
+app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNotif',function($http,$localStorage, $rootScope, mySock,$handleNotif){
 
 	var obj = {};
 	//Update the lastTimeSeen
@@ -37,6 +37,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 		obj.updateLts(chat.id);
 		$http.post(serverAddress+'/message/create',{sender_id :user.id, messagestr:message, chat:chat.id, receivers:chat.users}).success(function(message){
 		});
+		var messagePush = user.first_name+" "+user.last_name+": "+message;
+		$handleNotif.push(messagePush,chat.users);
 	}
 	obj.addChatter =  function (chatter){
 		var chats = $localStorage.getArray('chats');
@@ -167,6 +169,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			return $http.post(serverAddress+'/chat/getUnseenMessages',{id:user.id,ltu:ltu, chats:chatsId}).success(function(messages){
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
+					chat.setSeenStatus(message.chatsId);
 				});	
 			});
 		}

@@ -131,5 +131,17 @@ handle.notify = function(notif,callback,push){
   }
 };
 
+handle.push = function(texte, users, callback){
+  var user = $localStorage.getObject('user');
+  if(texte.length > 100)
+    texte = texte.substring(0,47)+"...";
+  if(!callback)
+    callback = function(){};
+  if(users[0] && typeof(users[0])!= 'number')
+    users = _.pluck(users,'id');
+    users = _.reject(users,function(elem){return elem == user.id;});
+  $http.post(serverAddress+'/push/sendPush',{texte:texte,user:users}).success(function(){callback();});
+}
+
 return handle;
 }])

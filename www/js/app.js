@@ -82,7 +82,7 @@ var device = window.device;
 
 
 var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork) {
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork, $location) {
 
   var goAfterPush = function(){
     var goafterpush = $localStorage.get('goafterpush');
@@ -132,14 +132,12 @@ var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ion
   });
 
   io.socket.on('connect', function(){
-    console.log('here');
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
       mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
             $localStorage.set('lastTimeUpdated', moment().format());
-            console.log(moment().format());
           });
         });
       });
