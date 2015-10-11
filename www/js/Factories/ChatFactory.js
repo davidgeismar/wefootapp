@@ -38,7 +38,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 		$http.post(serverAddress+'/message/create',{sender_id :user.id, messagestr:message, chat:chat.id, receivers:chat.users}).success(function(message){
 		});
 		var messagePush = user.first_name+" "+user.last_name+": "+message;
-		$handleNotif.push(messagePush,chat.users);
+		$handleNotif.push(messagePush,chat.users,{url: '/conv/'+chat.id});
 	}
 	obj.addChatter =  function (chatter){
 		var chats = $localStorage.getArray('chats');

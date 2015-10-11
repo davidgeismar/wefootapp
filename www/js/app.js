@@ -81,22 +81,22 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch'])
 .run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork, $location) {
 
-  var goAfterPush = function(){
-    var goafterpush = $localStorage.get('goafterpush');
-    if (goafterpush) {
-     $localStorage.clear('goafterpush');
-         // $state.go('state',{id:goafterpush});
-         $location.path(goafterpush);
-       }
-     }
+  // var goAfterPush = function(){
+  //   var goafterpush = $localStorage.get('goafterpush',0);
+  //   console.log(goafterpush);
+  //   if (goafterpush != 0) {
+  //     $localStorage.set('goafterpush',0);
+  //     console.log('herePb');
+  //        // $state.go('state',{id:goafterpush});
+  //     $location.path(goafterpush);
+  //   }
+  // }
 
-     goAfterPush();
 
-
-     $rootScope.toShow = false;
+  $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
   $localStorage.footTodo = [];
@@ -216,6 +216,7 @@ var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ion
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    // goAfterPush();
   });
   //Used to display the distance / or not
   $rootScope.getCoord = false;
@@ -235,7 +236,7 @@ var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ion
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
       user.getCoord();
-      goAfterPush();
+      // goAfterPush();
     }
   });
 
