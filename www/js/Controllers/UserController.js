@@ -148,9 +148,11 @@ $scope.bugReport = function (){
   }).then(function(modal) {
     $scope.modal = modal;
   });
-
+  var fb_friends = [];
   $scope.openModal = function() {
     $scope.word ="";
+    fb_friends = $localStorage.getArray("facebookFriends");
+    $scope.results = fb_friends;
     $scope.modal.show();
     $searchLoader.hide();
   };
@@ -205,7 +207,6 @@ $scope.switchSearchWf = function(){
 
 
 $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
-$scope.results = $localStorage.getArray("facebookFriends");
 $scope.searchQuery = function(word){
   $searchLoader.show();
   if(word.length>1){
@@ -215,7 +216,7 @@ $scope.searchQuery = function(word){
   });
  }
  else{
-  $scope.results = [];
+  $scope.results = fb_friends;
   $searchLoader.hide();
 }
 }
