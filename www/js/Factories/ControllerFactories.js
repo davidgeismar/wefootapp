@@ -559,7 +559,6 @@ return foot;
       });
 
       cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
-        console.log(notification);
         var pushLocation = '/user/notif';
       // if (pushLocation) {
         if(notification.additionalData && notification.additionalData.url)
