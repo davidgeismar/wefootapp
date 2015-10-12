@@ -6,7 +6,7 @@ angular.module('foot',[]).controller('FootController', function ($confirmation,$
 
 $scope.deleteField = function(fieldId){
   $confirmation('Etes vous sur de vouloir supprimer ce terrain ?',function(){
-    $http.post(serverAddress+'/field/deletePrivateField',{id: fieldId}).success(function(){
+    $http.post(serverAddress+'/field/deletePrivateField',{id: fieldId, related_to:$localStorage.getObject('user').id}).success(function(){
       $scope.fields = _.filter($scope.fields, function(field){ return field.id !=fieldId });
     });
   });
