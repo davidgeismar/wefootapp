@@ -49,7 +49,8 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		$scope.actusByDay = $localStorage.getObject('actus');
 		$scope.dates = $localStorage.getObject('dates');
 		if($scope.actusByDay.length == 0){  // set default actu
-			$scope.actusByDay.push([{"id":0,"typ":"WF","texte":"Bienvenu sur Wefoot, ceci est votre timeline. Retrouvez ici les actualités concerant vos amis, les foots organisés...","picture":"img/logo.jpg"}]);
+			$scope.actusByDay.push([{"id":-1,"typ":"WF","texte":"Bienvenu sur Wefoot, ceci est votre timeline.","picture":"img/logo.jpg"}]);
+			$scope.actusByDay[0].unshift({"id":0,"typ":"WF","texte":"Commencez par ajouter vos potes dans l'onglet mes amis. ","picture":"img/nav_amis_bleu.jpg"});
 			var createdAt  = $localStorage.getObject('user').createdAt;
 			$scope.dates.push(moment(createdAt).locale('fr').format('L'));
 		}

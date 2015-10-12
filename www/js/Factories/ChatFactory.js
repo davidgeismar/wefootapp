@@ -1,4 +1,4 @@
-app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($http,$localStorage, $rootScope, mySock){
+app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNotif',function($http,$localStorage, $rootScope, mySock,$handleNotif){
 
 	var obj = {};
 	//Update the lastTimeSeen
@@ -25,7 +25,6 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 		var chats = $localStorage.getArray('chats');
 		var index = _.pluck(chats, 'id').indexOf(message.chat);
 		if(index>-1){
-			console.log(message);
 			chats[index].messages.push(message);
 			// console.log(chats[index]);
 			$localStorage.setObject('chats', chats);
@@ -38,6 +37,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock',function($ht
 		obj.updateLts(chat.id);
 		$http.post(serverAddress+'/message/create',{sender_id :user.id, messagestr:message, chat:chat.id, receivers:chat.users}).success(function(message){
 		});
+		var messagePush = user.first_name+" "+user.last_name+": "+message;
+		$handleNotif.push(messagePush,chat.users,{url: '/conv/'+chat.id});
 	}
 	obj.addChatter =  function (chatter){
 		var chats = $localStorage.getArray('chats');
@@ -146,7 +147,6 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var user = $localStorage.getObject('user');
 			var ltu = $localStorage.get('lastTimeUpdated');
 			return $http.post(serverAddress+'/chat/getNewChats',{id:user.id,ltu:ltu}).success(function(chats){
-				console.log(chats);
 				angular.forEach(chats, function(chat){
 					obj.addChat(chat);
 				});	
@@ -167,9 +167,9 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var ltu = $localStorage.get('lastTimeUpdated');
 			var chatsId = _.pluck($localStorage.getArray('chats'),'id');
 			return $http.post(serverAddress+'/chat/getUnseenMessages',{id:user.id,ltu:ltu, chats:chatsId}).success(function(messages){
-				console.log(messages);
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
+					chat.setSeenStatus(message.chatsId);
 				});	
 			});
 		}

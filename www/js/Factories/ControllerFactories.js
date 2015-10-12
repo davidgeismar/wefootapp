@@ -542,7 +542,7 @@ return foot;
   return user;
 }])
 
-.factory('push',['$http','$localStorage','$ionicPlatform',function($http,$localStorage,$ionicPlatform){
+.factory('push',['$http','$localStorage','$ionicPlatform','$location',function($http,$localStorage,$ionicPlatform,$location){
   var push = {};
   $ionicPlatform.ready(function(){
     if(window.device){
@@ -558,10 +558,14 @@ return foot;
         $localStorage.set('pushToken',data.registrationId);
       });
 
-      cordovaPush.on('notification', function(notification){
-        var pushLocation = '/notification';
+      cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
+        var pushLocation = '/user/notif';
       // if (pushLocation) {
-        $localStorage.set('goafterpush',pushLocation);
+        if(notification.additionalData && notification.additionalData.url)
+          pushLocation = notification.additionalData.url;
+        if(!notification.foreground)
+          // $localStorage.set('goafterpush',pushLocation); // APP NOT OPEN 
+          $location.path(pushLocation);
           // }
         });
     }

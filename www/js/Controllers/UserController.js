@@ -134,7 +134,6 @@ $scope.bugReport = function (){
    // bug.phone = device.model;
    // bug.phone_version = device.version;
    bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
-   console.log(bug);
    $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
    });
 
@@ -149,9 +148,11 @@ $scope.bugReport = function (){
   }).then(function(modal) {
     $scope.modal = modal;
   });
-
+  var fb_friends = [];
   $scope.openModal = function() {
     $scope.word ="";
+    fb_friends = $localStorage.getArray("facebookFriends");
+    $scope.results = fb_friends;
     $scope.modal.show();
     $searchLoader.hide();
   };
@@ -206,7 +207,6 @@ $scope.switchSearchWf = function(){
 
 
 $rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
-$scope.results = $localStorage.getArray("facebookFriends");
 $scope.searchQuery = function(word){
   $searchLoader.show();
   if(word.length>1){
@@ -216,7 +216,7 @@ $scope.searchQuery = function(word){
   });
  }
  else{
-  $scope.results = [];
+  $scope.results = fb_friends;
   $searchLoader.hide();
 }
 }
@@ -246,7 +246,6 @@ $scope.addFriend = function(target, facebookFriend){
     friends.push(data);
     $localStorage.setObject('friends',friends);
     $rootScope.friends.push(data);
-    console.log($rootScope.friends);
     $scope.word ="";
     $scope.lockFriend ="";
   });
