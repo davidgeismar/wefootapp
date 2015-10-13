@@ -1,4 +1,4 @@
-angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, chat, chats){
+angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, $ionicHistory, $confirmation,chat, chats){
 
   $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
   $scope.user = $localStorage.getObject('user');
@@ -12,19 +12,23 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
     $ionicScrollDelegate.scrollBottom();
   });
   
+  var refreshConv = function(){
+    if(_.last($location.url().split('/'))==$scope.chat.id){
+      chat.updateLts($scope.chat.id);
+    }
+    $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
+    if(!$scope.$$phase) {
+      $scope.$digest();
+    }
+    $ionicScrollDelegate.scrollBottom();
+
+  }
 
 //REFRESH THE CONVERSATION
 $rootScope.$on('newMessage', function(event){
-
-  if(_.last($location.url().split('/'))==$scope.chat.id){
-    chat.updateLts($scope.chat.id);
-  }
-  $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
-  if(!$scope.$$phase) {
-    $scope.$digest();
-  }
-  $ionicScrollDelegate.scrollBottom();
+  refreshConv();
 });
+
 
 $scope.go = function(target){
   $location.path(target);
@@ -43,6 +47,12 @@ $scope.showMessageButton = function(messageContent){
 	if(messageContent==0 || !messageContent) return "hide-icon";
 }
 
+$scope.removeChat = function(chatId){
+  $confirmation("Etes vous sûr de vouloir vous retirer de ce chat ?",function(){
+    chat.deactivateChatter(chatId);
+    $ionicHistory.goBack();
+  });;
+}
 
 $scope.init = function(){
 

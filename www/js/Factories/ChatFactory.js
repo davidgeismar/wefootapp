@@ -100,8 +100,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 			return false;	
 	}
 
-	obj.postNewChatter = function(footId, userId){
-		$http.post(serverAddress+'/chatter/addToChat',{user :userId, related:footId });
+	obj.postNewChatter = function(footId, usersId){
+		$http.post(serverAddress+'/chatter/addToChat',{user :usersId, related:footId });
 	}
 	return obj;
 

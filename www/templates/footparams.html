@@ -7,61 +7,66 @@
 <div class="list text-center fond bottom-marged">
   <div class="row text-center">
     <div class="col">
-      <div ng-click="showDatePicker()" class="item nativedatepicker">
+<!--       <div input-obj="datepickerObject" class="item nativedatepicker">
         <i class="ion-calendar ion_cal"></i>
         <p class="time_date"> {{date}} </p>
         <i class="ion-chevron-down arrow_cal"></i>
-      </div>
-    </div>
-    <div class="col">
-      <div ng-click="showHourPicker()" class="item">
-        <i class="ion-ios-clock-outline ion_cal"></i>
-        <p class="time_date">{{hour}}</p>
-        <i class="ion-chevron-down arrow_cal"></i>
-      </div>
+      </div> -->
+      <ionic-datepicker input-obj="datepickerObject" class="item nativedatepicker">
+      <i class="ion-calendar ion_cal"></i>
+      <p class="time_date"> {{datepickerObject.inputDate | date:date}}</p>
+      <i class="ion-chevron-down arrow_cal"></i>
+    </ionic-datepicker>
+  </div>
+  <div class="col">
+    <div ng-click="showHourPicker()" class="item">
+      <i class="ion-ios-clock-outline ion_cal"></i>
+      <p class="time_date">{{hour}}</p>
+      <i class="ion-chevron-down arrow_cal"></i>
     </div>
   </div>
-  <div class="item item-icon-left align_creer_foot">
-    <div class="row">
-      <div class="col col-25">
-        <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
-      </div>
-      <div class="col col-50 venue1">
-       <p>Nombre de joueurs</p>
-     </div>
-     <div class="col col-25 venue1 nb_player_params">
-       <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
-       <label class="item item-input item-select" style="border-style:none;bottom:4px;width:65px">
+</div>
+<div class="item item-icon-left align_creer_foot">
+  <div class="row">
+    <div class="col col-25">
+      <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
+    </div>
+    <div class="col col-50 venue1">
+     <p>Nombre de joueurs<br><span style="font-size:10px">Equipes & organisateur inclus</span></p>
+   </div>
+   <div class="col col-25 venue1 nb_player_params">
+     <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
+     <label class="item item-input item-select" style="border-style:none;bottom:4px;width:65px">
        <select ng-model="foot.nb_player" style="position:relative; padding:0; ">
-           <option>6</option>
-           <option>7</option>
-           <option>8</option>          
-           <option>9</option>
-           <option selected>10</option>
-           <option>11</option>
-           <option>12</option>
-           <option>13</option>
-           <option>14</option>
-           <option>15</option>
-           <option>16</option>
-           <option>17</option>
-           <option>18</option>
-           <option>19</option>
-           <option>20</option>
-           <option>21</option>
-           <option>22</option>
-           <option>23</option>
-           <option>24</option>
-           <option>25</option>
-           <option>26</option>
-           <option>27</option>
-           <option>28</option>
-         </select>
-       </label>
-     </div>
+         <option>6</option>
+         <option>7</option>
+         <option>8</option>          
+         <option>9</option>
+         <option selected>10</option>
+         <option>11</option>
+         <option>12</option>
+         <option>13</option>
+         <option>14</option>
+         <option>15</option>
+         <option>16</option>
+         <option>17</option>
+         <option>18</option>
+         <option>19</option>
+         <option>20</option>
+         <option>21</option>
+         <option>22</option>
+         <option>23</option>
+         <option>24</option>
+         <option>25</option>
+         <option>26</option>
+         <option>27</option>
+         <option>28</option>
+       </select>
+     </label>
    </div>
  </div>
- <div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
+</div>
+<div ng-click="openModal1()" class="item item-icon-left align_creer_foot">
   <div class="row">
     <div class="col col-25 invit_params">
       <img class= "icon_size_dispo" ng-src="img/icon_invitation_parametres.svg" style="margin-left: -10px;"/>
@@ -102,7 +107,7 @@
 </div>
 <div class="private_foot" ng-if="foot.priv">
   <p class="type-foot">Votre Foot est privé.</p>
-  <p class="type-foot-subtitle">Seuls vos amis invités pourront le rejoindre.</p>
+  <p class="type-foot-subtitle">Seuls vos invités pourront le rejoindre.</p>
 </div>
 <div class="public_foot" ng-if="!foot.priv">
   <p class="type-foot">Votre Foot est public.</p>
@@ -134,14 +139,14 @@
     <input ng-model="searchFriends" type="text" placeholder="Rechercher des amis">
   </label>
   <div id="container_foot_friends" class="container_list_friends">
-      <div id="toggleAll_friends" class="one_friends item item-checkbox item_foot_friend">
-        <label class="checkbox checkbox_foot_friends">
-          <input ng-click="toggleAll()" type="checkbox">
-        </label>
-        <div class="name_friends name_foot_friends">
-            <p> Inviter tous les amis </p>
-        </div>
+    <div id="toggleAll_friends" class="one_friends item item-checkbox item_foot_friend">
+      <label class="checkbox checkbox_foot_friends">
+        <input ng-click="toggleAll()" type="checkbox">
+      </label>
+      <div class="name_friends name_foot_friends">
+        <p> Inviter tous les amis </p>
       </div>
+    </div>
     <div ng-repeat="friend in friends | orderBy:'-statut' | filter:searchFriends" class="one_friends item item-checkbox item_foot_friend">
       <label class="checkbox checkbox_foot_friends">
        <input class="target_toggle_friends" ng-click="addToFoot(friend.id)" type="checkbox">

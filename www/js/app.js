@@ -7,7 +7,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
 
 
@@ -81,7 +81,7 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ngCordova','ion-google-place','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch'])
+var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion-google-place','ionic.service.core','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch'])
 .run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork, $location) {
 
   // var goAfterPush = function(){

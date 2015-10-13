@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "moment": "~2.10.3",
-    "pouchdb": "~3.6.0"
+    "pouchdb": "~3.6.0",
+    "ionic-datepicker": "~0.9.0"
   }
 }

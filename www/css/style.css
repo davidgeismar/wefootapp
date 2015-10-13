@@ -1593,6 +1593,7 @@ ion-view[view-title="Conv"] ion-content{
   		padding-right: 10px;
   		border-bottom: 3px solid #28385c;
   		padding-bottom: 0px;
+  		height: 115px;
   	}
   	.one-field p{
   		white-space: nowrap;
@@ -2618,8 +2619,8 @@ ion-view[view-title="Conv"] ion-content{
 	-moz-animation-timing-function: ease-in-out;
 }
 .button-clear{
-	width: 45px;
-	text-align: left;
+	width: 100px;
+    text-align: center;
 }
 
 .default-friend{
@@ -3186,4 +3187,12 @@ ion-view[view-title="Conv"] ion-content{
 	padding: 0px 10px;
 	position: relative;
 	top: 5px;
+}
+.remove_chat{
+	font-size: 30px;
+    color: white;
+    margin-left: 80vw;
+    margin-top: 2px;
+    width: 40px;
+    height: 40px;
 }

@@ -1,6 +1,6 @@
 angular.module('connections',[])
 
-.controller('HomeCtrl', function($scope,$http,$localStorage,$ionicUser,$ionicPush, $location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q, fbConnect, $cordovaNetwork,error_reporter){
+.controller('HomeCtrl', function($scope,$http,$localStorage,$ionicUser,$location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q, fbConnect, $cordovaNetwork,error_reporter){
 
   $rootScope.toShow = false;
  //Prevent for loading to early

@@ -44,7 +44,8 @@
     "cordova-plugin-screen-orientation",
     "cordova-plugin-whitelist",
     "cordova-plugin-facebook4",
-    "org.apache.cordova.network-information"
+    "org.apache.cordova.network-information",
+    "cordova-plugin-network-information"
   ],
   "cordovaPlatforms": [
     "ios",

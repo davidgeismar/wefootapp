@@ -1,8 +1,10 @@
-angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location, chat){
+angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootScope, $localStorage, $ionicModal, $location, $ionicScrollDelegate, chat){
 	$scope.user = $localStorage.getObject('user');
 	//Tableau contenant les chats
 	$rootScope.chats = $localStorage.getArray('chats');
 	$scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
+
+	$ionicScrollDelegate.scrollTop();
 
 	$rootScope.updateMessage = function(){
 		$scope.$digest();

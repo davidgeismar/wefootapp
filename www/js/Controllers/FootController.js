@@ -5,9 +5,10 @@ angular.module('foot',[]).controller('FootController', function ($confirmation,$
 } 
 
 $scope.deleteField = function(fieldId){
+  console.log($scope.results);
   $confirmation('Etes vous sur de vouloir supprimer ce terrain ?',function(){
     $http.post(serverAddress+'/field/deletePrivateField',{id: fieldId, related_to:$localStorage.getObject('user').id}).success(function(){
-      $scope.fields = _.filter($scope.fields, function(field){ return field.id !=fieldId });
+      $scope.results = _.filter($scope.results, function(field){ return field.id !=fieldId });
     });
   });
 }
@@ -35,46 +36,76 @@ $scope.addToFoot = function(id){
     $scope.foot.toInvite.push(id);
 }
 
-$scope.showDatePicker = function(){
-  $foot.pickDate($scope.foot.date, function(dates){
-    $scope.foot.date = dates.date;
-    $scope.date = dates.dateString;
-  });
-}
-
-$scope.showHourPicker = function(){
-  $foot.pickHour($scope.foot.date, function(dates){
-    $scope.foot.date = dates.date;
-    $scope.hour = dates.dateString;
-  });
-}
-
-if($location.path().indexOf('footparams')>0){
-  $scope.foot = $foot.setDefaultOptions($scope.foot);
-  $scope.hour = getHour($scope.foot.date);
-  $scope.date = getJour($scope.foot.date);
-
-  $ionicModal.fromTemplateUrl('modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.modal1 = modal;
-  });
-
-  $scope.openModal1 = function() {
-    $scope.modal1.show();
-  };
-  $scope.closeModal1 = function() {
-    $scope.modal1.hide();
-  };
-} 
+// $scope.showDatePicker = function(){
+//   $foot.pickDate($scope.foot.date, function(dates){
+//     $scope.foot.date = dates.date;
+//     $scope.date = dates.dateString;
+//   });
+// }
 
 
-$scope.searchQuery = function(word){
-  $foot.searchFields(word,function(data){
-    $scope.results = data;
-  });
-}
+$scope.currentDate = new Date();
+$scope.currentDateFormat = moment($scope.currentDate).locale('fr').format("DD MMM yy");
+
+$scope.datepickerObject = {
+      titleLabel: 'Sélectionner une date',  //Optional
+      todayLabel: "Aujourd'hui",  //Optional
+      closeLabel: 'Fermer',  //Optional
+      setLabel: 'Ok',  //Optional
+      setButtonType : 'button-assertive',  //Optional
+      todayButtonType : 'button-assertive',  //Optional
+      closeButtonType : 'button-assertive',  //Optional
+      inputDate: $scope.currentDate,    //Optional
+      mondayFirst: true,    //Optional
+      // disabledDates: disabledDates, //Optional
+      weekDaysList: ["Lun", "Mar","Mer","Jeu","Ven","Sam","Dim"], //Optional
+      monthList: ["Jan","Fev","Mar","Avr","Mai","Juin","Jui","Aou","Sep","Oct", "Nov", "Dec"], //Optional
+      templateType: 'modal', //Optional
+      showTodayButton: 'true', //Optional
+      modalHeaderColor: 'bar-positive', //Optional
+      modalFooterColor: 'bar-positive', //Optional
+      from: new Date(),   //Optional
+      to: new Date(2018, 8, 25),    //Optional
+      callback: function (val) {    //Mandatory
+        console.log(val);
+          $scope.foot.date = val;
+          $scope.date = moment(val).locale('fr').format("DD MMM yy");
+        }
+      };
+
+    $scope.showHourPicker = function(){
+      $foot.pickHour($scope.foot.date, function(dates){
+        $scope.foot.date = dates.date;
+        $scope.hour = dates.dateString;
+      });
+    }
+
+    if($location.path().indexOf('footparams')>0){
+      $scope.foot = $foot.setDefaultOptions($scope.foot);
+      $scope.hour = getHour($scope.foot.date);
+      $scope.date = getJour($scope.foot.date);
+
+      $ionicModal.fromTemplateUrl('modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal1 = modal;
+      });
+
+      $scope.openModal1 = function() {
+        $scope.modal1.show();
+      };
+      $scope.closeModal1 = function() {
+        $scope.modal1.hide();
+      };
+    } 
+
+
+    $scope.searchQuery = function(word){
+      $foot.searchFields(word,function(data){
+        $scope.results = data;
+      });
+    }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
 if($location.path().indexOf('footfield')>-1)
   $foot.searchFields('',function(data){ $scope.results = data; });
@@ -133,7 +164,7 @@ if($location.path().indexOf('user/foots')>-1){
 })
 
 
-.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats, $validated,$timeout) {
+.controller('SingleFootController', function ($scope,$http,$localStorage,$location,$stateParams,$ionicLoading,$ionicModal,$confirmation,$cordovaDatePicker,$handleNotif,$rootScope,$foot, chats, $validated,$timeout, chat) {
   $ionicLoading.show({
     content: 'Loading Data',
     animation: 'fade-out',
@@ -235,6 +266,7 @@ if($location.path().indexOf('user/foots')>-1){
   $scope.closeModal2 = function(){
     if($scope.foot.toInvite.length>0){
       $http.post(serverAddress+'/foot/sendInvits',$scope.foot).success(function(){
+        chat.postNewChatter($scope.foot.id, $scope.foot.toInvite);
         async.each($scope.foot.toInvite,function(invited,callback){
           $handleNotif.notify({user:invited, related_user: $localStorage.getObject('user').id, typ:'footInvit',related_stuff: $scope.foot.id},function(){
             callback();
@@ -379,6 +411,7 @@ var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 
 new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)];
 
 $scope.getData = function(){
+  // if($localStorage.getObject('user').lat)
   $foot.searchFoot($rootScope.paramsFinder,function(results){
     $scope.results = results;
   })

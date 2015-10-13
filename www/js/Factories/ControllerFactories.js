@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user','push',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user,push){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user','push',function($http,$localStorage,$rootScope,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user,push){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -284,6 +284,18 @@ return profil;
   foot.pickHour = function(date,callback){
     $cordovaDatePicker.show(foot.getOptionsDatepicker()[1]).then(function(dateChosen){
       var jour = new Date(dateChosen);
+      if(jour.getMinutes()>45){
+        jour.setHours(jour.getHours()+1)
+        jour.setMinutes(0);
+      }
+      if(jour.getMinutes()>15){
+        jour.setHours(jour.getHours())
+        jour.setMinutes(30);
+      }
+      else{
+        jour.setHours(jour.getHours())
+        jour.setMinutes(0);
+      }
       date.setHours(jour.getHours());
       date.setMinutes(jour.getMinutes());
       dateString = getHour(date);
@@ -438,7 +450,7 @@ foot.playFoot = function(player,foot,players){
     var plucked = _.pluck($localStorage.footInvitation,'id');
     index = plucked.indexOf(foot.id);
     if(index>-1) $localStorage.footInvitation.splice(index,1);
-    foot.dateString = date;
+    foot.dateString = getJourShort(new Date(foot.date))+', '+getHour(new Date(foot.date));
     var indexOrga = _.pluck(players,'id');
     indexOrga = indexOrga.indexOf(foot.created_by);
     foot.orgaPic = players[indexOrga].picture;
@@ -463,7 +475,7 @@ foot.searchFoot = function(params,callback2){
     footList = _.pluck(foots,'id');
     if(finish){
       reduceResults();
-      callback2(results);
+      callback2(filtered);
     }
     finish = true;
   });

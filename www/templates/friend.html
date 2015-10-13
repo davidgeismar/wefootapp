@@ -3,7 +3,7 @@
 <div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
 <h1 class="title" style="text-align: center;">{{friend.first_name}} {{friend.last_name}}</h1>
 <img ng-if="isFriendWith(friend.id)" class="logo_wf" src="img/logo_WF.svg">
-<i ng-if="(!isFriendWith(friend.id) && !lockFriend>0) || friend.id==moi" class ="add_friend" ng-click="addFriend(friend.id)"></i>
+<i ng-if="!isFriendWith(friend.id) && !lockFriend>0 && friend.id!=moi" class ="add_friend" ng-click="addFriend(friend.id)"></i>
 </ion-header-bar>
 
 <ion-content class="has-header padding last">

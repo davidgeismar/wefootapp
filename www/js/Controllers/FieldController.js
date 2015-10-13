@@ -3,7 +3,6 @@ angular.module('field',[])
 
 
   var formatAddress = function(place, callback){
-
     for (var i=0; i<place.address_components.length; i++)
     {
       if (place.address_components[i].types[0] == "street_number") {
@@ -27,7 +26,6 @@ angular.module('field',[])
     $scope.field.longi = place.longi;
     // $scope.field.lat = place.
     callback();
-
   }
 
   $scope.field = {};
