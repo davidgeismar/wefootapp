@@ -304,7 +304,7 @@ return profil;
   }
 
   foot.setDefaultOptions = function(values){
-    values.date = new Date(new Date().getTime() + 96 * 60 * 60 * 1000); //DEFAULT TOMMOROW
+    values.date = new Date();
     values.date.setHours(22,00,00);
     values.nb_player = 10;
     values.friend_can_invite = true;

@@ -5,7 +5,6 @@ angular.module('foot',[]).controller('FootController', function ($confirmation,$
 } 
 
 $scope.deleteField = function(fieldId){
-  console.log($scope.results);
   $confirmation('Etes vous sur de vouloir supprimer ce terrain ?',function(){
     $http.post(serverAddress+'/field/deletePrivateField',{id: fieldId, related_to:$localStorage.getObject('user').id}).success(function(){
       $scope.results = _.filter($scope.results, function(field){ return field.id !=fieldId });
@@ -46,7 +45,10 @@ $scope.addToFoot = function(id){
 
 $scope.currentDate = new Date();
 $scope.currentDateFormat = moment($scope.currentDate).locale('fr').format("DD MMM yy");
-
+var from = new Date();
+var to = new Date();
+from.setDate(from.getDate()-1);
+to.setMonth(to.getMonth()+3)
 $scope.datepickerObject = {
       titleLabel: 'Sélectionner une date',  //Optional
       todayLabel: "Aujourd'hui",  //Optional
@@ -64,12 +66,11 @@ $scope.datepickerObject = {
       showTodayButton: 'true', //Optional
       modalHeaderColor: 'bar-positive', //Optional
       modalFooterColor: 'bar-positive', //Optional
-      from: new Date(),   //Optional
-      to: new Date(2018, 8, 25),    //Optional
+      from: from,   //Optional
+      to: to,   //Optional
       callback: function (val) {    //Mandatory
-        console.log(val);
           $scope.foot.date = val;
-          $scope.date = moment(val).locale('fr').format("DD MMM yy");
+          $scope.date = getJour(val);
         }
       };
 
