@@ -479,7 +479,7 @@ foot.searchFoot = function(params,callback2){
     }
     finish = true;
   });
-
+  console.log(params);
   $http.post(serverAddress+'/foot/query',params).success(function(data){
     async.each(data,function(foot,callback){
       var finish = false;

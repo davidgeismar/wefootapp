@@ -1,7 +1,7 @@
 <ion-view view-title="foot">
 <ion-header-bar class="actu_header">
-<a ng-if="!isInvited && !foot.priv && !isPending" class="button button-clear header_left_foot" ng-href="#/footfinder"><span class="white ion-chevron-left"></span></a>
-<a ng-if="isInvited || foot.priv || isPending" class="button button-clear header_left_foot" ng-href="#/user/foots"><span class="white ion-chevron-left"></span></a>
+<a ng-if="!isInvited && !foot.priv && !isPending" class="button button-clear button-goback" ng-href="#/footfinder"><span class="white ion-chevron-left"></span></a>
+<a ng-if="isInvited || foot.priv || isPending" class="button button-clear button-goback" ng-href="#/user/foots"><span class="white ion-chevron-left"></span></a>
 <img class="logo_wf_foot" ng-src="img/logo_WF.svg">
 <i ng-if="isInvited || isPlaying" class="ion-chatbubbles ion-header-foot" ng-click="launchChat(foot.id)"></i>
 </ion-header-bar>

@@ -546,17 +546,12 @@ ion-view[view-title="footparams"] .item-icon-left{
 .slider-button{
 	height: 80px;
 	padding: 0;
+	background: linear-gradient(to right,#006ddf,#121826);
 }
 .slider-button p{
 	color: #fff;
 	padding-top: 13px;
 	font-size: 16px;
-}
-.left-side-slider{
-	background: linear-gradient(to right,#006ddf,#0052A8);
-}
-.right-side-slider{
-	background: linear-gradient(to left,#28385c,#121826);
 }
 .right-side-slider p{
 	text-align: right;
@@ -3195,4 +3190,8 @@ ion-view[view-title="Conv"] ion-content{
     margin-top: 2px;
     width: 40px;
     height: 40px;
+}
+.button-goback{
+	width: 45px;
+	text-align: left;
 }

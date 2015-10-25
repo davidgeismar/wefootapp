@@ -401,10 +401,9 @@ $scope.closeModal3 = function(launch){
   $scope.go = function(id){
     $location.path('/foot/'+id);
   } 
-
+  var user = $localStorage.getObject('user');
   if(!$rootScope.paramsFinder)
-    $rootScope.paramsFinder = {dateValue: 0, field: '', date: new Date()};
-
+    $rootScope.paramsFinder = {dateValue: 0, field: '', date: new Date(), lat:user.lat, lng:user.lng};
 
 // console.log($rootScope.paramsFinder);
 
@@ -412,9 +411,9 @@ var dates = [new Date(new Date().getTime()), new Date(new Date().getTime() + 24 
 new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000),new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 8 * 24 * 60 * 60 * 1000), new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)];
 
 $scope.getData = function(){
-  // if($localStorage.getObject('user').lat)
   $foot.searchFoot($rootScope.paramsFinder,function(results){
     $scope.results = results;
+    console.log(results);
   })
 }
 

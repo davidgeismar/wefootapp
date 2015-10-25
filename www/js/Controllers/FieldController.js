@@ -24,7 +24,6 @@ angular.module('field',[])
     }
     $scope.field.lat = place.lat;
     $scope.field.longi = place.longi;
-    // $scope.field.lat = place.
     callback();
   }
 
