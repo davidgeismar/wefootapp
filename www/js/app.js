@@ -246,6 +246,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
       $ionicHistory.goBack(value);
     $ionicHistory.goBack();
   };
+
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
   //CENTER ALL TITLES

@@ -1662,10 +1662,9 @@ ion-view[view-title="Conv"] ion-content{
   	}
 
   	.one-notif{
-  		margin: 0px 20px;
-  		padding: 0px;
+  		padding: 0px 20px;
   		border-bottom: 2px solid #c4c4c4;
-  		padding-right: 20px;
+  		margin-top: 0 !important;
   	}
   	.text-notif{
   		display: inline-block;
@@ -3194,4 +3193,7 @@ ion-view[view-title="Conv"] ion-content{
 .button-goback{
 	width: 45px;
 	text-align: left;
+}
+.read-bg-notif{
+	background-color: #fff;
 }

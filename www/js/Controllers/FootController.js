@@ -176,6 +176,10 @@ if($location.path().indexOf('user/foots')>-1){
   $scope.players = [];
   $scope.ready = false; //Show after loading
   $scope.isPlaying;
+  if($rootScope.next){
+    $scope.next_url = "notif";
+    delete $rootScope.next;
+  }
   // Here we are going to call 2 queries in the same time, the first should be faster, but to make sur we create 2 variables
 
   $foot.loadInfo($stateParams.id,function(result){
