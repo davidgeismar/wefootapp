@@ -500,13 +500,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
-<<<<<<< HEAD
-  $ionicConfigProvider.views.forwardCache(true);
-  $ionicConfigProvider.tabs.position("bottom");
-=======
+
 $ionicConfigProvider.views.forwardCache(true);
-$ionicConfigProvider.tabs.position("bottom"); 
->>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff
+$ionicConfigProvider.tabs.position("bottom");
 });
 
 
