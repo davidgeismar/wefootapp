@@ -163,7 +163,7 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
         }
       }
     });
-  //Nouveau chat 
+  //Nouveau chat
   io.socket.on('newChat',function(chat){
     console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
@@ -484,7 +484,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     };
   })
   $ionicConfigProvider.views.forwardCache(true);
-  $ionicConfigProvider.tabs.position("bottom"); 
+  $ionicConfigProvider.tabs.position("bottom");
 });
 
 

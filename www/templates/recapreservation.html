@@ -1,69 +1,90 @@
 <ion-view view-title="recapreservation">
 
-  <ion-content class="padding">
+<ion-content class="padding">
 
-    <div class="homepage_title">
-      <h1> Votre réservation </h1>
-    </div>
-     <HR align=center color='#28385B' size=8 width="90%">
+<div class="homepage_title">
+  <h1> Votre réservation </h1>
+</div>
+<HR align=center color='#28385B' size=8 width="90%">
 
-      <div class="homepage_titleL">
-      <span  style="color: #C4C4C4"><strong >CENTRE :</strong></span>
-      <span  style="color: #28385B">{{foot.field.name}}</span>
-      </div>
+  <div class="homepage_titleL">
+    <span  style="color: #C4C4C4"><strong >CENTRE :</strong></span>
+    <span  style="color: #28385B">{{foot.field.name}}</span>
+  </div>
 
 
-      <div class="homepage_titleL">
-      <span style="color: #C4C4C4"><strong>DATE :</strong></span>
-      <span style="color: #28385B">
+  <div class="homepage_titleL">
+    <span style="color: #C4C4C4"><strong>DATE :</strong></span>
+    <span style="color: #28385B">
       {{date}}
-      </span>
-      </div>
+    </span>
+  </div>
 
 
-      <div class="homepage_titleL">
-      <span style="color: #C4C4C4"><strong>HEURE :</strong></span>
-      <span style="color: #28385B">
+  <div class="homepage_titleL">
+    <span style="color: #C4C4C4"><strong>HEURE :</strong></span>
+    <span style="color: #28385B">
       {{hour}}
-      </span>
-      </div>
+    </span>
+  </div>
 
 
 
-      <div class="homepage_titleL">
-      <span style="color: #C4C4C4"><strong>NOMBRE DE JOUEURS :</strong></span>
-      <span style="color: #28385B">{{foot.nb_player}}</span>
-      </div>
+  <div class="homepage_titleL">
+    <span style="color: #C4C4C4"><strong>NOMBRE DE JOUEURS :</strong></span>
+    <span style="color: #28385B">{{foot.nb_player}}</span>
+  </div>
 
 
-      <div class="homepage_titleL">
-      <span style="color: #C4C4C4"><strong>ORGANISATEUR :</strong></span>
-      <span style="color: #28385B">{{foot.orgaName}}</span>
-      </div>
+  <div class="homepage_titleL">
+    <span style="color: #C4C4C4"><strong>ORGANISATEUR :</strong></span>
+    <span style="color: #28385B">{{foot.orgaName}}</span>
+  </div>
 
   <HR align=center color='#28385B' size=1 width="80%">
 
-      <div class="homepage_titleL">
+    <div class="homepage_titleL">
       <span style="color: #C4C4C4">CHOIX DE TERRAIN</span>
-      </div>
+    </div>
     <ion-toggle toggle-class="toggle-calm" class="toggle-background" 
-     ng-checked="indoor.checked" 
+    ng-checked="indoor.checked" 
     ng-click="toggleCheck()" >
-      <div class="toggle-content" >
+    <div class="toggle-content" >
       <span style="color: #28385B"><strong>{{ indoor.text }}</strong></span>
-      </div>
-    </ion-toggle>
+    </div>
+  </ion-toggle>
+
+  <div class="homepage_titleL">
+    <span style="color: #C4C4C4">DUREE</span>
+  </div>
+
+  <ion-radio ng-model="resa.duree" ng-click="changedRadioValue(item)" ng-value="60" ng-model="true"  class="nbhours-resa"></ion-radio>
+
+
+  <ion-radio ng-model="resa.duree" ng-click="changedRadioValue(item)" ng-value="90" ng-model="true"  class="nbhours-resa"></ion-radio>
+
+
+  <ion-radio ng-model="resa.duree" ng-click="changedRadioValue(item)" ng-value="120" ng-model="true"  class="nbhours-resa"></ion-radio>
+
+
+  <ion-toggle toggle-class="toggle-calm" class="toggle-background" 
+  ng-checked="student.checked" 
+  ng-click="toggleCheckStudent()" >
+  <div class="toggle-content" >
+    <span style="color: #28385B"><strong>{{ indoor.text }}</strong></span>
+  </div>
+</ion-toggle>
 
 <div ng-if=" found <= 0 " >
-   <button  ng-click="getTerrainsFree()"  class=" button homepage_button icon-right ion-chevron-right">
-      Vérifier la disponibilité
-   </button>
+ <button  ng-click="getTerrainsFree()"  ng-value="120" class=" button homepage_button icon-right ion-chevron-right">
+  Vérifier la disponibilité
+</button>
 </div>
 
 <div ng-if=" found > 0 " >
   <h4 class="price-recapResa"> Prix : {{prix}}€</h4>
-   <a href="#/resa/pay" class=" button success_button icon-right ">
-      Confirmer
+  <a href="#/resa/pay" class=" button success_button icon-right ">
+    Confirmer
   </a>
 </div>
 

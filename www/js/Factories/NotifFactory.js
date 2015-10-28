@@ -35,15 +35,19 @@ app.factory('$handleNotif',['$http','$localStorage',function($http,$localStorage
 
 
     $http.get(serverAddress+'/user/get/'+notif.related_user).success(function(user){
+      if(notif.typ=="endGame"){
+        if(user.id == $localStorage.getObject('user').id)
+            notif.userName = "Votre foot est terminé, ";
+          else
+            notif.userName = "Le foot de "+user.first_name+" est terminé, ";
+        }
+        else{
+          if(user.id == $localStorage.getObject('user').id)
+           notif.userName = "Vous";
+         else
+          notif.userName = user.first_name;
+      }
 
-      if(user.id == $localStorage.getObject('user').id)
-       notif.userName = "Vous";
-     else{
-      if(notif.typ!="endGame")
-        notif.userName = user.first_name;
-      else
-        notif.userName = "Le foot de "+user.first_name+" est terminé, ";
-    }
     notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
     if(notif.related_stuff)

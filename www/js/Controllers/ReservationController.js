@@ -21,6 +21,8 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
       $scope.indoor.checked = $localStorage.reservationClient.indoor;
       $scope.indoor.text = $localStorage.reservationClient.indoor ? "INDOOR" : "OUTDOOR";
     }
+
+    $scope.student=false;
     $localStorage.reservationClient.date = new Date($localStorage.reservationClient.date);
     $scope.date = getJour($localStorage.reservationClient.date);
     $scope.hour = getHour($localStorage.reservationClient.date);
@@ -47,6 +49,18 @@ angular.module('foot').controller('ReservationController', function ($scope, $lo
           $location.path('/resa/dispo');
       });
     }
+
+     $scope.toggleCheckStudent = function(){
+        if ($scope.student.checked == 1){
+          $scope.student.checked = 0;
+          $localStorage.reservationClient.student = 0;
+          $scope.student.text =  "NON";
+        }else{
+          $scope.student.checked = 1;
+          $localStorage.reservationClient.student = 1;
+          $scope.student.text =  "OUI";
+        }
+    }    
 
      $scope.toggleCheck = function(){
         if ($scope.indoor.checked == 1){

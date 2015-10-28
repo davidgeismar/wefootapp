@@ -22,6 +22,9 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
+.last70{ /* END OF CONTENT */
+	padding-bottom: 70px !important;
+}
 .last-margin{
 	margin-bottom: 200px !important;
 }
@@ -2987,4 +2990,10 @@ ion-scroll[direction=y] {
 	font-size: 20px;
 	color: #28385c;
 	display: block;
+}
+.nbhours-resa{
+	display:inline-block;
+	width:30%;
+	white-space: nowrap;
+	overflow: visible;
 }
