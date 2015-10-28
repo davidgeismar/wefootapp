@@ -1,92 +1,4 @@
 <ion-side-menus on-drag-left="moveMenu($event)" enable-menu-with-back-views="false">
-
-<<<<<<< HEAD
-  <ion-side-menu-content drag-content="false">
-    <div class="bar bar-header actu_header">
-      <button class="button button-icon icon ion-navicon actu_button no_hide" menu-toggle="left"></button>
-      <img class="actu_logo" ng-src="img/logo_alter.svg"/>
-      <div ng-if="friendsOpen" ng-click="openModal()" class="iconHeader icon_friend"></div>
-      <div ng-if="!friendsOpen" class="iconHeader"></div>
-    </div>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-
-
-    <div class="tab_container">
-      <ion-tabs class="tab_general tabs-icon-bottom">
-        <ion-tab title="Accueil" icon-on="accueilB" icon-off="accueil" href="#/user/profil">
-        </ion-tab>
-        <ion-tab title="Mes Foots"  icon-on="footsB" icon-off="foots"  href="#/user/foots">
-        </ion-tab>
-        <ion-tab title="Mes Amis" icon-on="amisB" icon-off="amis"  href="#/user/friends">
-        </ion-tab>
-        <ion-tab title="Chats" badge="getNbChatsNotif()" badge-style="badge-assertive" icon-on="chatsB" icon-off="chats"  href="#/user/chat">
-        </ion-tab>
-          <ion-tab title="Notifications" badge="nbNotif" badge-style="badge-assertive" icon-on="notifB" icon-off="notif" href="#/user/notif">
-        </ion-tab>
-      </ion-tabs>
-    </div>
-  </ion-side-menu-content>
-
-
-  <!-- TOOGLE MENU CONTENT -->
-  <ion-side-menu side="left">
-  	<ion-content class="content_menu">
-  		<div class="img_menu_bg" style="background: url({{user.picture}}) no-repeat center; background-size: cover;">
-  		</div>
-  		<img class="img_menu" ng-src="{{user.picture}}" ng-click="editProfilPic()"/>
-      <i class="ion-edit info_menu" style="font-size:18px; color:white; border:0px; position: absolute; top: 120px; right: 50px;" ng-click="editProfilPic()"></i>
-  		<div class="info_menu">
-  			<p>{{user.first_name}} {{user.last_name}}</p>
-  		</div>
-  		<div class="info_menu">
-    		<p ng-click="toEdit[0] = true" ng-hide="toEdit[0]">{{user.favorite_club}}<i class="ion-edit"></i></p>
-        <span ng-hide="!toEdit[0]"><input ng-model="club"/> <i ng-click="editClub(club)" class="ion-ios-checkmark"></i></span>
-  		</div>
-  		<div class="info_menu info_last">
-  			<p ng-click="toEdit[1] = true" ng-hide="toEdit[1]">{{user.poste}}<i class="ion-edit"></i></p>
-        <span ng-hide="!toEdit[1]"><input ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></span>
-  		</div>
-      <div class="note_menu">
-        <div class="icon_menu icon-tech">
-        </div>
-        <p>Technique</p>
-        <i ng-class="starStatus[0][4]"></i><i ng-class="starStatus[0][3]"></i><i ng-class="starStatus[0][2]"></i><i ng-class="starStatus[0][1]"></i><i ng-class="starStatus[0][0]"></i>
-      </div>
-      <div class="note_menu">
-  		  <div class="icon_menu icon-shoes">
-  		  </div>
-        <p>Frappe</p>
-        <i ng-class="starStatus[1][4]"></i><i ng-class="starStatus[1][3]"></i><i ng-class="starStatus[1][2]"></i><i ng-class="starStatus[1][1]"></i><i ng-class="starStatus[1][0]"></i>
-      </div>
-      <div class="note_menu">
-        <div class="icon_menu icon-power">
-        </div>
-        <p>Physique</p>
-        <i ng-class="starStatus[2][4]"></i><i ng-class="starStatus[2][3]"></i><i ng-class="starStatus[2][2]"></i><i ng-class="starStatus[2][1]"></i><i ng-class="starStatus[2][0]"></i>
-      </div>
-      <div class="note_menu">
-        <div class="icon_menu icon-fp">
-        </div>
-        <p>Fair-Play</p>
-        <i ng-class="starStatus[3][4]"></i><i ng-class="starStatus[3][3]"></i><i ng-class="starStatus[3][2]"></i><i ng-class="starStatus[3][1]"></i><i ng-class="starStatus[3][0]"></i>
-      </div>
-      <div class="note_menu">
-        <div class="icon_menu icon-assidu">
-        </div>
-        <p>Assiduité</p>
-        <i ng-class="starStatus[4][4]"></i><i ng-class="starStatus[4][3]"></i><i ng-class="starStatus[4][2]"></i><i ng-class="starStatus[4][1]"></i><i ng-class="starStatus[4][0]"></i>
-      </div>
-      <div class="nb_notes_menu">
-      <p>(noté par {{displayNotes()}})</p>
-      </div>
-      <div ng-click="logout()" class="logout_menu">
-        <div class="icon_menu icon-logout"></div>
-        <p> Déconnexion </p>
-      </div>
-  	</ion-content>
-  </ion-side-menu>
-</ion-side-menus>
-=======
 <ion-side-menu-content drag-content="false">
 
 <div class="bar bar-header actu_header">
@@ -139,7 +51,7 @@
 </div>
 <div class="info_menu info_last">
  <p ng-click="toEdit[1] = true" ng-hide="toEdit[1]">{{user.poste}}<i class="ion-edit"></i></p>
- <form ng-submit="editPoste(poste)" ng-hide="!toEdit[1]"><input placeholder="Poste" ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></form>      
+ <form ng-submit="editPoste(poste)" ng-hide="!toEdit[1]"><input placeholder="Poste" ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></form>
 </div>
 <div class="note_menu">
   <div class="icon_menu icon-tech">
@@ -186,4 +98,3 @@
 </ion-side-menu>
 
 </ion-side-menus>
->>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff
