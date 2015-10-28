@@ -2,7 +2,7 @@
 <ion-content class="has-header">
 <searchLoader></searchLoader>
 <div class="container-notif last"> 
-    <div ng-click="go(notif.url)" ng-repeat="notif in notifs | orderBy:'-createdAt' track by $index" class="one-notif row">
+    <div ng-click="go(notif)" ng-repeat="notif in notifs | orderBy:'-createdAt' track by $index" class="one-notif row" ng-class="{'read-bg-notif': notif.read_statut == 1}">
         <div class="img_chat img_search col-20">
             <img ng-src="{{notif.picture}}">
         </div>

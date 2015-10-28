@@ -11,7 +11,7 @@
 
  angular.module('foot').controller('ReservationController', function ($scope, $localStorage, $location, $http, $ionicLoading) {
   var user = $localStorage.getObject('user');
-    //RECAP RESA To Clean 
+    //RECAP RESA To Clean
     if(!$localStorage.reservationClient.indoor){
       $scope.indoor = { text: "INDOOR", checked: 1 };
       $localStorage.reservationClient.indoor = $scope.indoor.checked;
@@ -22,6 +22,7 @@
       $scope.indoor.text = $localStorage.reservationClient.indoor ? "INDOOR" : "OUTDOOR";
       $scope.prix = $localStorage.reservationClient.prix;
     }
+
 
     $localStorage.reservationClient.date = new Date($localStorage.reservationClient.date);
     $scope.date = getJour($localStorage.reservationClient.date);
@@ -77,7 +78,7 @@ $scope.reset = function(){
         $localStorage.reservationClient.student_discount = $scope.student.discount;
         $scope.student.text =  "OUI";
       }
-    }    
+    }
 
     $scope.toggleCheckIndoor = function(){
       if ($scope.indoor.checked == 1){
@@ -106,7 +107,7 @@ $scope.reset = function(){
       indoor: $localStorage.reservationClient.indoor,
       api_ref: $localStorage.reservationClient.api_ref
     }
-    $http.post(serverAddress+'/reservation/getTerrainsFree',  
+    $http.post(serverAddress+'/reservation/getTerrainsFree',
       options).success(function(freeField){
         if(freeField){
           var newHour = {};
@@ -127,17 +128,17 @@ $scope.reset = function(){
       async.each(tab, function(vari,callback){
         getTerrainsFreeHours($localStorage.reservationClient,function(){callback(); }, vari);
       });
-    } 
+    }
 
     getOtherHours();
 
 
-    $scope.setNewHour = function(resa){ 
+    $scope.setNewHour = function(resa){
       $localStorage.reservationClient.prix = resa.prix;
       $localStorage.reservationClient.date = resa.date;
       $localStorage.found = 1;
       $location.path('/resa/recap');
-    } 
+    }
 
 
 
@@ -152,7 +153,7 @@ $scope.reset = function(){
       })
     }
 
-  })  
+  })
 .controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location,$validated) {
   var user = $localStorage.getObject('user');
   if(!user.birthday || !user.telephone){
@@ -197,7 +198,7 @@ $scope.reset = function(){
 
   $ionicModal.fromTemplateUrl('templates/modalCard.html', {
     scope: $scope,
-    animation: 'slide-in-up' 
+    animation: 'slide-in-up'
   }).then(function(modal){
     $scope.modal2 = modal;
   });
@@ -227,7 +228,7 @@ $scope.reset = function(){
       else
         $validated.show({texte: "Votre réservation à bien été enregistrée", icon: "ion-checkmark-round"},function(){
           $location.path('/foot/'+$localStorage.reservationClient.foot);
-        }); 
+        });
     });
   }
 })

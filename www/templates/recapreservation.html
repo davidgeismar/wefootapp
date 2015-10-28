@@ -1,6 +1,8 @@
 <ion-view view-title="recapreservation">
 
+
 <ion-content class="padding last">
+
 
 <div class="homepage_title">
   <h1> Votre réservation </h1>
@@ -29,7 +31,6 @@
   </div>
 
 
-
   <div class="homepage_titleL">
     <span style="color: #C4C4C4"><strong>NOMBRE DE JOUEURS :</strong></span>
     <span style="color: #28385B">{{foot.nb_player}}</span>
@@ -48,14 +49,14 @@
   <div class="resa-subtitle">
     <span style="color: #C4C4C4">Type de terrain</span>
   </div>
-    <ion-toggle toggle-class="toggle-calm" class="toggle-background" 
-    ng-checked="indoor.checked" 
+    <ion-toggle toggle-class="toggle-calm" class="toggle-background"
+    ng-checked="indoor.checked"
     ng-click="toggleCheckIndoor()" >
+
     <div class="toggle-content" >
       <span style="color: #28385B"><strong>{{ indoor.text }}</strong></span>
     </div>
   </ion-toggle>
-
   <div class="resa-subtitle">
     <span style="color: #C4C4C4">Durée</span>
   </div>
@@ -84,8 +85,8 @@
   <div class="resa-subtitle">
     <span style="color: #C4C4C4">Etudiant ?</span>
   </div>
-  <ion-toggle ng-if="student.discount>0"toggle-class="toggle-calm" class="toggle-background" 
-  ng-checked="student.checked" 
+  <ion-toggle ng-if="student.discount>0"toggle-class="toggle-calm" class="toggle-background"
+  ng-checked="student.checked"
   ng-click="toggleCheckStudent()" >
   <div class="toggle-content" >
     <span style="color: #28385B"><strong>{{ student.text }}</strong></span>
@@ -101,6 +102,7 @@
 
 <div ng-if=" found > 0 " >
   <h4 class="price-recapResa"> Prix : {{prix}}€</h4>
+
   <a href="#/resa/pay" class=" button success_button icon-right">
     Confirmer
   </a>

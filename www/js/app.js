@@ -170,7 +170,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
         }
       }
     });
-  //Nouveau chat 
+  //Nouveau chat
   io.socket.on('newChat',function(chat){
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
@@ -246,6 +246,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
       $ionicHistory.goBack(value);
     $ionicHistory.goBack();
   };
+
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
   //CENTER ALL TITLES
@@ -499,8 +500,9 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
+
 $ionicConfigProvider.views.forwardCache(true);
-$ionicConfigProvider.tabs.position("bottom"); 
+$ionicConfigProvider.tabs.position("bottom");
 });
 
 
