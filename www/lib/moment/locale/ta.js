@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : tamil (ta)
-//! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
+//! author : Arjunkumar Krishnamoorthy : http://github.com/tk120404
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

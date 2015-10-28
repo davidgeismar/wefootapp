@@ -1,5 +1,5 @@
 <ion-header-bar  class="actu_header">
-<div class="button button-clear" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
+<div class="button button-clear button-goback" ng-click="goBack()"><span class="white ion-chevron-left"></span></div>
 <h1 class="title" style="text-align: center;">Ou</h1>
 <img class="logo_wf" src="img/logo_WF.svg">
 </ion-header-bar>
@@ -20,13 +20,13 @@
   </a>
 </div>
 <div class="content-footfield">
-<div searchloader></div>
-  <div ng-click="chooseField(field)" class="one-field" collection-repeat="field in results">
+  <div searchloader></div>
+  <div class="one-field" collection-repeat="field in results">
     <div class="row">
-      <div class="col col-25">
+      <div ng-click="chooseField(field)" class="col col-25">
         <div><img class="field_img" ng-src="{{field.picture}}"/></div>
       </div>
-      <div class="col col-60">
+      <div ng-click="chooseField(field)" class="col col-65">
        <p class="name-field">{{field.name}} </p>
        <p class="desc-field" ng-if="getCoord">à {{field.distance}} km</p>
        <p class="desc-field">{{field.address}}</p>
@@ -36,11 +36,12 @@
 <!--             <div ng-class="{grey: field.statut==0}" class="star_field">
               <i class="ion-android-star"></i>
             </div> -->
-            <div class="chevron-right">
-              <i class="ion-chevron-right"></i>        
+            <div ng-click="chooseField(field)" class="chevron-right">
+              <i class="ion-chevron-right"></i>
             </div>
+            <i ng-if="field.origin=='private'" class="ion-ios-minus-outline delete_field" ng-click="deleteField(field.id)"></i>
             
-            <i class="partner-field ion-thumbsup" ng-class="{'hide-icon':field.partner==false}"></i>
+            <i class="partner-field" class="show-icon" ng-class="{'show-icon':field.partner==true}"></i>
           </div>
         </div>
       </div>

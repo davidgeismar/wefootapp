@@ -1,4 +1,4 @@
-app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats',function($http,$localStorage,$rootScope,$ionicPush,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats){
+app.factory('$connection',['$http','$localStorage','$rootScope','$ionicUser','$ionicLoading','$ionicPlatform','$cordovaPush','chats', 'mySock','user','push',function($http,$localStorage,$rootScope,$ionicUser,$ionicLoading,$ionicPlatform,$cordovaPush,chats,mySock,user,push){
   //Execute all functions asynchronously.
 
   var connect = function(userId, generalCallback,setUUID){
@@ -10,48 +10,18 @@ app.factory('$connection',['$http','$localStorage','$rootScope','$ionicPush','$i
     var errors = [];
 
 
-if(setUUID && window.device && window.device.model.indexOf('x86')==-1){  // No device on testing second argument removes emulators
+if(setUUID && window.device){  // No device on testing second argument removes emulators
   allFunction.push(function(callback){
-    $ionicPlatform.ready(function () {
-      var registerOptions;
-
-      if(ionic.Platform.isIOS()){
-        registerOptions = {
-          badge: true,
-          sound: true,
-          alert: true
-        };
-      }
-      else if (ionic.Platform.isAndroid()){
-        registerOptions =    {
-          "senderID": "wefoot-978"
-        };
-      }
-
-      $cordovaPush.register(registerOptions).then(function (result) {
-        guy.pushToken = result;
-        $localStorage.setObject('user',guy);
-        $http.post(serverAddress+'/push/create',{user: userId, push_id: result, is_ios: ionic.Platform.isIOS()}).success(function(){
-          callback();
-        }).error(function(err){
-          errors.push("Error push");
-        });
-      },function(err){
-        console.log(err);
-      });
-    }, function(err) {
-      errors.push("Error push");
-    });
+    push.setToken(userId);
+    callback();
   });
 }
 
-
 allFunction.push(function(callback){
-  io.socket.post(serverAddress+'/connexion/setConnexion',{id: userId},function(){
-    callback();
-  }); 
+  mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
+    callback();  
+  });
 });
-
 
 
 allFunction.push(function(callback){
@@ -86,11 +56,13 @@ if(setUUID){
 
 allFunction.push(function(callback){
   $http.get(serverAddress+'/getAllChats/'+userId).success(function(data){
-    $localStorage.set('lastTimeUpdated', moment());
+    $localStorage.set('lastTimeUpdated', moment().format());
     $localStorage.setObject('chats',data);
-    chats.initNotif();
-    chats.initDisplayer();
-    callback();
+    chats.initNotif(function(){
+      chats.initDisplayer();
+      callback();
+    });
+    
   }).error(function(err){
     errors.push("Error chats");
   });
@@ -103,6 +75,12 @@ allFunction.push(function(callback){
   }).error(function(){
     errors.push("Error notif");
   });       
+});
+
+
+allFunction.push(function(callback){
+  user.getCoord();
+  callback();
 });
 
 
@@ -122,7 +100,6 @@ async.each(allFunction, function(oneFunc,callback){
 return connect;
 
 }])
-
 
 
 .factory('$paiement',['$http','$ionicLoading','$searchLoader','$confirmation',function($http,$ionicLoading,$searchLoader,$confirmation){
@@ -161,7 +138,7 @@ return connect;
         animation: 'fade-out',
         showBackdrop: false
       });
-      $http.post(serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot}).success(function(){
+      $http.post(serverAddress+'/pay/preauthorize',{mangoId: mangoId, cardId: cardId, price: resa.prix, footId: foot, field: resa.field}).success(function(){
         $http.post(serverAddress+'/reservation/create',resa).success(function(){
           callback();
           $ionicLoading.hide();
@@ -191,7 +168,7 @@ return connect;
       return actusByDay[0][0].id;
     }
   }
-  
+
   profil.getAllActu = function(callback3){
     var dates = $localStorage.getObject('dates');
     var oldActu = $localStorage.getObject('actus');
@@ -207,7 +184,7 @@ return connect;
         showBackdrop: false
       });
     }
-    var friends_id = _.pluck($localStorage.getObject('friends'),'id');
+    var friends_id = _.pluck($localStorage.getArray('friends'),'id');
     $http.post(serverAddress+'/actu/getActu/',{user:$localStorage.getObject('user'), friends: friends_id, skip:lastId}).success(function(data){
       var actusByDay = _.values(data);
       if(actusByDay.length==0) $ionicLoading.hide();
@@ -256,6 +233,8 @@ return profil;
 }])
 
 
+
+
 .factory('$foot',['$http','$ionicLoading','$handleNotif','$localStorage','$cordovaDatePicker','$searchLoader','$cordovaGeolocation',function($http,$ionicLoading,$handleNotif,$localStorage,$cordovaDatePicker, $searchLoader, $cordovaGeolocation){
 
   var foot = {};
@@ -286,7 +265,8 @@ return profil;
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
-      cancelButtonColor: '#000000'
+      cancelButtonColor: '#000000',
+      is24Hour:true
     }];
   }
 
@@ -304,6 +284,18 @@ return profil;
   foot.pickHour = function(date,callback){
     $cordovaDatePicker.show(foot.getOptionsDatepicker()[1]).then(function(dateChosen){
       var jour = new Date(dateChosen);
+      if(jour.getMinutes()>45){
+        jour.setHours(jour.getHours()+1)
+        jour.setMinutes(0);
+      }
+      if(jour.getMinutes()>15){
+        jour.setHours(jour.getHours())
+        jour.setMinutes(30);
+      }
+      else{
+        jour.setHours(jour.getHours())
+        jour.setMinutes(0);
+      }
       date.setHours(jour.getHours());
       date.setMinutes(jour.getMinutes());
       dateString = getHour(date);
@@ -312,8 +304,8 @@ return profil;
   }
 
   foot.setDefaultOptions = function(values){
-    values.date = new Date(new Date().getTime() + 24 * 60 * 60 * 1000); //DEFAULT TOMMOROW
-    values.date.setHours(20,30,00);
+    values.date = new Date();
+    values.date.setHours(22,00,00);
     values.nb_player = 10;
     values.friend_can_invite = true;
     values.priv = true;
@@ -324,11 +316,11 @@ return profil;
 
   foot.searchFields = function(word,callback){
     var user = $localStorage.getObject('user');
-      $searchLoader.show();
-      $http.get(serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
-        $searchLoader.hide();
-        callback(data);
-      });
+    $searchLoader.show();
+    $http.get(serverAddress+'/field/searchFields/?id='+user.id+'&lat='+user.lat+'&long='+user.lng+'&word='+word).success(function(data){
+      $searchLoader.hide();
+      callback(data);
+    });
   }
 
   foot.create = function(params,callback2){
@@ -346,33 +338,35 @@ return profil;
         },true);
       },function(){});
       callback2(foot);
-    });
+    }).error(function(){console.log(params);});
   }
 
   foot.loadFoot = function(callback2){
     $localStorage.footInvitation = [];
     $localStorage.footTodo = [];
     $http.get(serverAddress+'/getFootByUser/'+$localStorage.getObject('user').id).success(function(data){ //Send status with it as an attribute
-      if(data.length==0) $ionicLoading.hide();
-      async.each(data, function(foot,callback){
-        $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
-          foot.organisator = elem.orga;
-          foot.orgaName = elem.orgaName;
-          foot.field = elem.field;
-          foot.orgaPic = elem.picture;
-          foot.dateString = getJour(new Date(foot.date))+', '+getHour(new Date(foot.date));
-          callback();
-        }).error(function(err){
-          console.log(err);
-          callback();
+      if(data.length==0 || data.rowCount==0){ $ionicLoading.hide(); callback2(); }
+      else{
+        async.each(data, function(foot,callback){
+          $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(elem){
+            foot.organisator = elem.orga;
+            foot.orgaName = elem.orgaName;
+            foot.field = elem.field;
+            foot.orgaPic = elem.picture;
+            foot.dateString = getJourShort(new Date(foot.date))+', '+getHour(new Date(foot.date));
+            callback();
+          }).error(function(err){
+            console.log(err);
+            callback();
+          });
+          if(foot.statut==1)
+            $localStorage.footInvitation.push(foot);
+          else if(foot.statut>1)
+            $localStorage.footTodo.push(foot);
+        },function(){
+          callback2();
         });
-        if(foot.statut==1)
-          $localStorage.footInvitation.push(foot);
-        else if(foot.statut>1)
-          $localStorage.footTodo.push(foot);
-      },function(){
-        callback2();
-      });
+      }
     });
   }
 
@@ -456,7 +450,7 @@ foot.playFoot = function(player,foot,players){
     var plucked = _.pluck($localStorage.footInvitation,'id');
     index = plucked.indexOf(foot.id);
     if(index>-1) $localStorage.footInvitation.splice(index,1);
-    foot.dateString = date;
+    foot.dateString = getJourShort(new Date(foot.date))+', '+getHour(new Date(foot.date));
     var indexOrga = _.pluck(players,'id');
     indexOrga = indexOrga.indexOf(foot.created_by);
     foot.orgaPic = players[indexOrga].picture;
@@ -468,8 +462,25 @@ foot.playFoot = function(player,foot,players){
 
 foot.searchFoot = function(params,callback2){
   $searchLoader.show();
+  var footList = [];
+  var filtered = [];
+  var reduceResults = function() {  //REMOVE FOOT WHERE USER IS PLAYING
+    filtered = _.filter(filtered,function(elem) {
+      return footList.indexOf(elem.id)==-1 ; 
+    });
+  }
+  var userId = $localStorage.getObject('user').id;
+  var finish = false;
+  $http.get(serverAddress+'/getFootByUser/'+userId).success(function(foots){
+    footList = _.pluck(foots,'id');
+    if(finish){
+      reduceResults();
+      callback2(filtered);
+    }
+    finish = true;
+  });
+  console.log(params);
   $http.post(serverAddress+'/foot/query',params).success(function(data){
-    results =[];
     async.each(data,function(foot,callback){
       var finish = false;
         $http.get(serverAddress+'/foot/getInfo/'+foot.id).success(function(info){  //Get foot info
@@ -477,15 +488,112 @@ foot.searchFoot = function(params,callback2){
           foot.orgaName = info.orgaName;
           foot.field = info.field;
           foot.orgaPic = info.picture;
-          results.push(foot);
+          foot.dateString = getHour(foot.date);
+          filtered.push(foot);
           callback();
         });
       },function(){
         $searchLoader.hide();
-        callback2(results);
+        if(finish){
+          reduceResults();
+          callback2(filtered);
+        }
+        finish = true;
       });
   });
 }
 return foot;
 }])
+
+.factory('mySock',['$localStorage',function($localStorage){
+  var mySock = {};
+
+  mySock.req = function(url, params, callback, methode){
+    if(!methode){
+      methode = 'post';
+    }
+    io.socket.request({method:methode,url:url,headers:{Authorization :$localStorage.get('token')},params:params}, callback);
+  };
+
+
+  return mySock;
+}])
+
+.factory('user',['$http','$ionicLoading','$handleNotif','$localStorage','$rootScope','$cordovaGeolocation','$ionicPlatform',function($http,$ionicLoading,$handleNotif,$localStorage,$rootScope,$cordovaGeolocation,$ionicPlatform){
+  var user = {};
+
+  user.getCoord = function(){
+    $ionicPlatform.ready(function () {
+      var posOptions = {timeout: 10000, enableHighAccuracy: true};
+      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        var user = $localStorage.getObject('user');
+        user.lat  = position.coords.latitude;
+        user.lng = position.coords.longitude;
+        $http.post(serverAddress+'/user/update',{id: user.id, last_lat : user.lat, last_long: user.lng});
+        $localStorage.setObject('user', user);
+        $rootScope.getCoord = true;
+      });
+    });
+  }
+
+  //FRIENDS ACTION
+
+  user.addFriend = function(postData, target){
+    return $http.post(serverAddress+'/addFriend',postData);
+  }
+
+  user.isFriendWith = function(userId){
+    var friendsId = _.pluck($localStorage.getArray('friends'),'id');
+    if (friendsId.indexOf(userId)>-1)
+      return true;
+    else
+      return false;
+  }
+
+
+  return user;
+}])
+
+.factory('push',['$http','$localStorage','$ionicPlatform','$location',function($http,$localStorage,$ionicPlatform,$location){
+  var push = {};
+  $ionicPlatform.ready(function(){
+    if(window.device){
+      var cordovaPush = PushNotification.init(  //PROBLEM WITH IT (MAY BE A PLUGIN INSTALLATION TROUBLE)
+      { 
+        "android": {"senderID": "124322564355"},
+        "ios": {"alert": "true", "badge": "true", "sound": "true"} 
+      });
+
+
+      cordovaPush.on('registration', function(data) {
+        var user = $localStorage.getObject('user');
+        $localStorage.set('pushToken',data.registrationId);
+      });
+
+      cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
+        var pushLocation = '/user/notif';
+      // if (pushLocation) {
+        if(notification.additionalData && notification.additionalData.url)
+          pushLocation = notification.additionalData.url;
+        if(!notification.foreground)
+          // $localStorage.set('goafterpush',pushLocation); // APP NOT OPEN 
+          $location.path(pushLocation);
+          // }
+        });
+    }
+  });
+    // push.unregister = function(){
+    //   cordovaPush.unregister(function(success){
+    //   }, 
+    //   function(error){
+    //     console.log(error);
+    //   });
+    // }
+
+    push.setToken = function(userId){
+      $http.post(serverAddress+'/push/create',{user: userId, push_id: $localStorage.get('pushToken'), is_ios: ionic.Platform.isIOS()}).success(function(){});
+    };
+    return push;
+
+  }])
 

@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : german (de)
-//! author : lluchs : https://github.com/lluchs
-//! author: Menelion Elensúle: https://github.com/Oire
+//! author : lluchs : http://github.com/lluchs
+//! author: Menelion Elensúle: http://github.com/Oire
 
 import moment from '../moment';
 

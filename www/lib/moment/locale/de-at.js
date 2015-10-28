@@ -1,8 +1,8 @@
 //! moment.js locale configuration
 //! locale : austrian german (de-at)
-//! author : lluchs : https://github.com/lluchs
-//! author: Menelion Elensúle: https://github.com/Oire
-//! author : Martin Groller : https://github.com/MadMG
+//! author : lluchs : http://github.com/lluchs
+//! author: Menelion Elensúle: http://github.com/Oire
+//! author : Martin Groller : http://github.com/MadMG
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

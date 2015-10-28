@@ -1,8 +1,15 @@
 //GLOBAL FUNCTIONS
+// var serverAddress = "http://62.210.115.66:9000";
+//"http://wefoot.herokuapp.com:80";
+//"http://localhost:1337";
 
-// var serverAddress = "62.210.115.66:9000";
-var serverAddress = "http://62.210.115.66:9000";
+window.onerror = function (errorMsg, url, lineNumber) {
+  alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
+}//DEBUGING START
+
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
+
 
 
 
@@ -16,9 +23,6 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
   else
    elem.className = elem.className + " " + icon;
 }
-};
-var newTime = function (oldTime){
-  return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
 };
 
 var getStuffById = function(id,stuffArray){
@@ -40,6 +44,15 @@ var getJour = function(date){
   date = new Date(date);
   var semaine = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
   var mois = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  var m = mois[date.getMonth()];
+  var j = semaine[date.getDay()];
+  return(j+' '+date.getDate()+' '+m);
+};
+
+var getJourShort = function(date){
+  date = new Date(date);
+  var semaine = ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'];
+  var mois = ['Jan','Fev','Mars','Avr','Mai','Juin','Juil','Aout','Sept','Oct','Nov','Dec'];
   var m = mois[date.getMonth()];
   var j = semaine[date.getDay()];
   return(j+' '+date.getDate()+' '+m);
@@ -68,24 +81,21 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ngCordova','ionic.service.core','ionic.service.push','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider'])
+var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion-google-place','ionic.service.core','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch'])
+.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork, $location) {
 
-app.config(['$ionicAppProvider', function($ionicAppProvider) {
-  // Identify app
-  $ionicAppProvider.identify({
-    // The App ID (from apps.ionic.io) for the server
-    app_id: 'b7af9bfc',
-    //GOOGLE APP
-    gcm_id: 'wefoot-985',
-    // The public API key all services will use for this app
-    api_key: '2003098b5fe09a127f008b601758317e99136f05329ca5c6',
-    // Set the app to use development pushes
-    dev_push: false
-  });
-}])
+  // var goAfterPush = function(){
+  //   var goafterpush = $localStorage.get('goafterpush',0);
+  //   console.log(goafterpush);
+  //   if (goafterpush != 0) {
+  //     $localStorage.set('goafterpush',0);
+  //     console.log('herePb');
+  //        // $state.go('state',{id:goafterpush});
+  //     $location.path(goafterpush);
+  //   }
+  // }
 
 
-.run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats) {
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -93,16 +103,13 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
   $localStorage.footPlayers = []; //EACH LINE FOR EACH PLAYERS
   $rootScope.nbNotif = 0;
   $rootScope.chats = [];
-
+  $rootScope.hideError = error_reporter.hide();
   $rootScope.$on('loading:hide', function() {
     $ionicLoading.hide()
   })
 
-  $rootScope.$on('$cordovaPush:notificationReceived',function (event,notif){
-    if(notification.alert) {
-      navigator.notification.alert(notification.alert);
-    }
-  });
+  if(window.device)
+    screen.lockOrientation('portrait');
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
@@ -126,11 +133,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
 
   io.socket.on('connect', function(){
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('lastTimeUpdated')){
-      io.socket.post(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
+      mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id});
       chats.getNewChats().then(function(){
         chats.getNewChatters().then(function(){
           chats.getNewMessages().then(function(){
-            console.log('last chats loaded');
+            $localStorage.set('lastTimeUpdated', moment().format());
           });
         });
       });
@@ -165,21 +172,19 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     });
   //Nouveau chat
   io.socket.on('newChat',function(chat){
-    console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    console.log(message);
-    $localStorage.set('lastTimeUpdated', moment().format());
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
+    $localStorage.set('lastTimeUpdated', moment().format());
   });
   //Nouvel user dans un chat existant
   io.socket.on('newChatter', function(chatter){
-    $localStorage.set('lastTimeUpdated', moment().format());
     chat.addChatter(chatter);
+    $localStorage.set('lastTimeUpdated', moment().format());
   })
 
 
@@ -187,50 +192,51 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
     return chats.getNbNotif();
   };
 
-  var getCoord = function(){
-    $ionicPlatform.ready(function () {
-      var posOptions = {timeout: 10000, enableHighAccuracy: false};
-      $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-        var user = $localStorage.getObject('user');
-        user.lat  = position.coords.latitude;
-        user.lng = position.coords.longitude;
-        $localStorage.setObject('user', user);
-        $rootScope.getCoord = true;
-      });
-    });
-  }
+
+
   $ionicPlatform.ready(function() {
-
     $rootScope.$broadcast('appReady');
+    if(window.device){
+      navigator.splashscreen.show();
+      setTimeout(function() {
+        navigator.splashscreen.hide();
+      }, 3000);
 
-    // $ionicPlatform.on('offline',function(){
-    //   console.log('offline');
-    //   alert("Vous n'êtes pas connecté à internet, veuillez vous reconnecter pour pouvoir continuer");
-    // });
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-  if(window.cordova && window.cordova.plugins.Keyboard) {
-    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-  }
-  if(window.StatusBar) {
-    StatusBar.styleDefault();
-  }
-  getCoord();
-});
+      if($cordovaNetwork.isOffline())
+        error_reporter.show({texte:"Veuillez vous connecter à internet."});
 
+      $rootScope.$on('$cordovaNetwork:offline',function(){
+        error_reporter.show({texte:"Pas de connexion internet!"});
+      });
+    }
+
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+    // goAfterPush();
+  });
+  //Used to display the distance / or not
   $rootScope.getCoord = false;
 
 
 
   $ionicPlatform.on('resume',function(){
+    if(window.device)
+      screen.lockOrientation('portrait');
     if($localStorage.getObject('user') && $localStorage.getObject('user').id){
       $http.post(serverAddress+'/user/getLastNotif',$localStorage.getObject('user')).success(function(nb){
         $rootScope.nbNotif = nb.length;
-        $rootScope.$digest();
+        if(!$rootScope.$$phase) {
+          $rootScope.$digest();
+        }
       });
       $http.post(serverAddress+'/user/update',{id: $localStorage.getObject('user').id, pending_notif: 0});
       $rootScope.getCoord = false;
-      getCoord();
+      user.getCoord();
+      // goAfterPush();
     }
   });
 
@@ -240,9 +246,11 @@ app.config(['$ionicAppProvider', function($ionicAppProvider) {
       $ionicHistory.goBack(value);
     $ionicHistory.goBack();
   };
+
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
-
+  //CENTER ALL TITLES
+  $ionicConfigProvider.navBar.alignTitle('center');
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -361,7 +369,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user.friends', {
-    cache: true,
+    cache: false,
     url: '/friends',
     views: {
       'menuContent' :{
@@ -457,7 +465,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     }
   })
 
-  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope) {
+  $httpProvider.interceptors.push(function($q, $location, $localStorage,$rootScope, error_reporter, $cordovaNetwork) {
     return {
       'request': function (config) {
         config.headers = config.headers || {};
@@ -468,11 +476,20 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       },
       'responseError': function(response) {
         if(response.status === 403) {
-          $location.path('/login');
+          $location.path('/home');
         }
         $rootScope.$broadcast('loading:hide');
-        console.log(response.status);
-        $rootScope.err = "Erreur connexion";
+        if(response.status !== 0){
+          if($rootScope.err)
+            error_reporter.show({texte:$rootScope.err, timeout: 3000}, function(){
+              delete $rootScope.err;
+            });
+          else
+            error_reporter.show({timeout: 3000});
+        }
+        if(response.status === 0){
+          error_reporter.show({texte: "Erreur vérifiez votre connexion internet."});
+        }
         return $q.reject(response);
       },
       'response': function(response){
@@ -483,8 +500,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
+<<<<<<< HEAD
   $ionicConfigProvider.views.forwardCache(true);
   $ionicConfigProvider.tabs.position("bottom");
+=======
+$ionicConfigProvider.views.forwardCache(true);
+$ionicConfigProvider.tabs.position("bottom"); 
+>>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff
 });
 
 

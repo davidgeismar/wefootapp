@@ -20,7 +20,7 @@
     "package.js",
     "package.json"
   ],
-  "homepage": "https://github.com/moment/moment",
+  "homepage": "http://github.com/moment/moment",
   "_release": "2.10.3",
   "_resolution": {
     "type": "version",

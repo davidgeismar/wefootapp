@@ -40,7 +40,6 @@ obj.getFacebookProfileInfo = function () {
     var info = $q.defer();
     facebookConnectPlugin.api('/me', "",
       function (response) {
-        alert("Result: " + JSON.stringify(response));
         info.resolve(response);
       },
       function (response) {
@@ -63,28 +62,54 @@ obj.connect = function(){
 
     facebookConnectPlugin.getLoginStatus(function(success){
       // alert(success.status);
-
-      //TO DO : SI STATUS = CONNECTED MAIS QU'ON TROUVE PAS LE TOKEN IL FAUT VIRER LE MEC DE LA BD
-      // if(success.status === 'connected'){
-      //   // the user is logged in and has authenticated your app, and response.authResponse supplies
-      //   // the user's ID, a valid access token, a signed request, and the time the access token
-      //   // and signed request each expire
-      //   $location.path('/user/profil');
-
-      // } else {
-        //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
-        //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
-
-        $ionicLoading.show({
+      $ionicLoading.show({
           content: 'Loading Data',
           animation: 'fade-out',
           showBackdrop: false,
           hideOnStateChange: false
         });
+      $rootScope.toShow = false;
+      //TO DO : SI STATUS = CONNECTED MAIS QU'ON TROUVE PAS LE TOKEN IL FAUT VIRER LE MEC DE LA BD
+      if(success.status === 'connected'){
+        // the user is logged in and has authenticated your app, and response.authResponse supplies
+        // the user's ID, a valid access token, a signed request, and the time the access token
+        // and signed request each expire
+
+        //TO CLEAN
+          var fb_uid = success.authResponse.userID,
+          fb_access_token = success.authResponse.accessToken;
+          obj.getFacebookProfileInfo().then(function(data) {
+              var user = data;
+
+              user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
+              user.access_token = fb_access_token;
+
+              //save the user data
+              //for the purpose of this example I will store it on ionic local storage but you should save it on a database
+
+              $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+                $localStorage.set('token',response.token);
+                $localStorage.setObject('user',response);
+                $connection(response.id,function(){
+                  // $ionicLoading.hide();
+                  obj.getFacebookFriendsInfos();
+                  $location.path('/user/profil');
+
+
+                },true);
+              }).error(function(err){
+                console.log(err);
+              });
+            });
+
+      } else {
+        //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
+        //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
+
         
-        $rootScope.toShow = false;
         //ask the permissions you need
-        //you can learn more about FB permissions here: https://developers.facebook.com/docs/facebook-login/permissions/v2.2
+        //you can learn more about FB permissions here: http://developers.facebook.com/docs/facebook-login/permissions/v2.2
+          //   facebookConnectPlugin.getLoginStatus(function(success){
         facebookConnectPlugin.login(['email',
           'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
 
@@ -107,6 +132,7 @@ obj.connect = function(){
                 $localStorage.setObject('user',response);
                 $connection(response.id,function(){
                   // $ionicLoading.hide();
+                  obj.getFacebookFriendsInfos();
                   $location.path('/user/profil');
 
 
@@ -116,18 +142,16 @@ obj.connect = function(){
               });
             });
           });
-// }
+        }
 });
 
 
 }
 
-	obj.getFacebookFriends = function () {
+	obj.getFacebookFriends = function (callback) {
     var friends = $q.defer();
-    facebookConnectPlugin.api('/me/friends?fields=picture,name', ["basic_info", "user_friends"],
+    facebookConnectPlugin.api('/me/friends?fields=picture,name', "",
       function (result) {
-        console.log('friends');
-        console.log(result);
         friends.resolve(result);
       }, 
       function (error) { 
@@ -135,6 +159,15 @@ obj.connect = function(){
         friends.reject(error);
       });
     return friends.promise;
+  }
+
+  obj.getFacebookFriendsInfos = function(){
+    obj.getFacebookFriends().then(function(friends){
+      var friendsId = _.pluck(friends.data,'id');
+      $http.post(serverAddress+"/user/getViaFbId",{users:friendsId}).success(function(data){
+        $localStorage.setObject("facebookFriends", data);
+      });
+    });
   }
 
 	  return obj;

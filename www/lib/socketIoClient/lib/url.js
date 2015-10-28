@@ -43,7 +43,7 @@ function url(uri, loc){
       if ('undefined' != typeof loc) {
         uri = loc.protocol + '//' + uri;
       } else {
-        uri = 'https://' + uri;
+        uri = 'http://' + uri;
       }
     }
 

@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : norwegian bokmål (nb)
-//! authors : Espen Hovlandsdal : https://github.com/rexxars
-//!           Sigurd Gartmann : https://github.com/sigurdga
+//! authors : Espen Hovlandsdal : http://github.com/rexxars
+//!           Sigurd Gartmann : http://github.com/sigurdga
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

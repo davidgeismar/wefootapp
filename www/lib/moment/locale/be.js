@@ -1,8 +1,8 @@
 //! moment.js locale configuration
 //! locale : belarusian (be)
-//! author : Dmitry Demidov : https://github.com/demidov91
+//! author : Dmitry Demidov : http://github.com/demidov91
 //! author: Praleska: http://praleska.pro/
-//! Author : Menelion Elensúle : https://github.com/Oire
+//! Author : Menelion Elensúle : http://github.com/Oire
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

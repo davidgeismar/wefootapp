@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : russian (ru)
-//! author : Viktorminator : https://github.com/Viktorminator
-//! Author : Menelion Elensúle : https://github.com/Oire
+//! author : Viktorminator : http://github.com/Viktorminator
+//! Author : Menelion Elensúle : http://github.com/Oire
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : Bahasa Malaysia (ms-MY)
-//! author : Weldan Jamili : https://github.com/weldan
+//! author : Weldan Jamili : http://github.com/weldan
 
 import moment from '../moment';
 

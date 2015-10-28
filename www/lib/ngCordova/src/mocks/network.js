@@ -18,7 +18,7 @@ ngCordovaMocks.factory('$cordovaNetwork', function () {
 		 *
 		 * @description
 		 * They type of connection. Values should match those found at
-		 * https://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md 
+		 * http://github.com/apache/cordova-plugin-network-information/blob/master/doc/index.md 
 		 * This property should only be used in automated tests.
 		**/	
 		connectionType: connectionType,

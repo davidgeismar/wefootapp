@@ -1,7 +1,7 @@
 //! moment.js locale configuration
 //! locale : latvian (lv)
-//! author : Kristaps Karlsons : https://github.com/skakri
-//! author : Jānis Elmeris : https://github.com/JanisE
+//! author : Kristaps Karlsons : http://github.com/skakri
+//! author : Jānis Elmeris : http://github.com/JanisE
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

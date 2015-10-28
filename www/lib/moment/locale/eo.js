@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : esperanto (eo)
-//! author : Colin Dean : https://github.com/colindean
+//! author : Colin Dean : http://github.com/colindean
 //! komento: Mi estas malcerta se mi korekte traktis akuzativojn en tiu traduko.
 //!          Se ne, bonvolu korekti kaj avizi min por ke mi povas lerni!
 

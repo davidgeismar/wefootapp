@@ -170,7 +170,7 @@ window.ionic.version = '1.0.0-beta.14';
      * @ngdoc method
      * @name ionic.DomUtil#requestAnimationFrame
      * @alias ionic.requestAnimationFrame
-     * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
+     * @description Calls [requestAnimationFrame](http://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
      * @param {function} callback The function to call when the next frame
      * happens.
      */
@@ -2437,7 +2437,7 @@ window.ionic.version = '1.0.0-beta.14';
   })();
 
   // classList polyfill for them older Androids
-  // https://gist.github.com/devongovett/1381839
+  // http://gist.github.com/devongovett/1381839
   if (!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== 'undefined') {
     Object.defineProperty(HTMLElement.prototype, 'classList', {
       get: function() {
@@ -2496,8 +2496,8 @@ window.ionic.version = '1.0.0-beta.14';
  *
  * Out of the box, Ionic automatically removes the 300ms delay in order to make Ionic apps
  * feel more "native" like. Resultingly, other solutions such as
- * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
- * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
+ * [fastclick](http://github.com/ftlabs/fastclick) and Angular's
+ * [ngTouch](http://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
  * Some browsers already remove the delay with certain settings, such as the CSS property
  * `touch-events: none` or with specific meta tag viewport values. However, each of these
@@ -2535,7 +2535,7 @@ window.ionic.version = '1.0.0-beta.14';
  * - Works with labels surrounding inputs
  * - Does not fire off a click if the user moves the pointer too far
  * - Adds and removes an 'activated' css class
- * - Multiple [unit tests](https://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
+ * - Multiple [unit tests](http://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
  *
  */
 /*
@@ -3429,7 +3429,7 @@ ionic.DomUtil.ready(function() {
  * which can cause layout issues such as pushing headers up and out of view.
  *
  * The keyboard fixes work best in conjunction with the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard),
+ * [Ionic Keyboard Plugin](http://github.com/driftyco/ionic-plugins-keyboard),
  * although it will perform reasonably well without.  However, if you are using
  * Cordova there is no reason not to use the plugin.
  *
@@ -3446,7 +3446,7 @@ ionic.DomUtil.ready(function() {
  *
  * ### Plugin Usage
  * Information on using the plugin can be found at
- * [https://github.com/driftyco/ionic-plugins-keyboard](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [http://github.com/driftyco/ionic-plugins-keyboard](http://github.com/driftyco/ionic-plugins-keyboard).
  *
  * ----------
  *
@@ -3824,7 +3824,7 @@ function viewportUpdate() {
 
     if (version > 7) {
       // iPad >= 7.1
-      // https://issues.apache.org/jira/browse/CB-4323
+      // http://issues.apache.org/jira/browse/CB-4323
       delete viewportProperties.width;
 
     } else {
@@ -3926,7 +3926,7 @@ ionic.Platform.ready(function() {
  *
  * Copyright 2011, Zynga Inc.
  * Licensed under the MIT License.
- * https://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
+ * http://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
  *
  * Based on the work of: Unify Project (unify-project.org)
  * http://unify-project.org
@@ -4160,7 +4160,7 @@ var zyngaCore = { effect: {} };
  *
  * Copyright 2011, Zynga Inc.
  * Licensed under the MIT License.
- * https://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
+ * http://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
  *
  * Based on the work of: Unify Project (unify-project.org)
  * http://unify-project.org

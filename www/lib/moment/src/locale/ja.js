@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : japanese (ja)
-//! author : LI Long : https://github.com/baryon
+//! author : LI Long : http://github.com/baryon
 
 import moment from '../moment';
 

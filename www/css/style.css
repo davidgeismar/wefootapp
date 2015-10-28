@@ -22,11 +22,23 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
+<<<<<<< HEAD
+=======
+.last50{ /* END OF CONTENT */
+	padding-bottom: 50px !important;
+}
+>>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff
 .last70{ /* END OF CONTENT */
 	padding-bottom: 70px !important;
 }
 .last-margin{
 	margin-bottom: 200px !important;
+}
+.last-margin-footfinder{
+	margin-bottom: 350px !important;
+}
+.last-element{
+	margin-bottom:50px !important;
 }
 .transparent{
 	background-color: transparent !important;
@@ -81,7 +93,7 @@ ion-scroll[direction=y] {
 .list-inset{
 	background-color: transparent;
 }
-.align {
+.align { /* DEPRECATED */
 	margin-left:-40px;
 }
 .hidden{
@@ -153,6 +165,10 @@ ion-scroll[direction=y] {
 	display: block;
 	color: #006ddf;
 }
+.time_date{
+	position: relative;
+    top: 5px;
+}
 .icon_bonhomme {
 	height:27px;
 	margin-top: 13px;
@@ -175,12 +191,24 @@ ion-scroll[direction=y] {
 	margin-top: 10px;
 	border-right: solid 1px blue;
 }
+
+ion-view[view-title="footparams"] .item-icon-left{
+	padding-left: 10px;
+}
+
+.modal-backdrop .level_foot{
+	padding-left: 30px;
+}
+
 #invite_friends_toggle{
 	border: none;
 	margin-top: 5px;
 	height:50px;
 	background-color: transparent;
-	margin-left:-35px;
+	margin-left:20px;
+}
+.nb_player_params{
+	margin-left: 15px;
 }
 
 #icon_calendar {
@@ -291,6 +319,13 @@ ion-scroll[direction=y] {
 	width: 11px;
 	border-width: 2px;
 }
+#toggleAll_friends{
+	border-bottom: 2px solid #DBDAE3;
+/*	margin-bottom: 20px*/
+}
+#toggleAll_friends p{
+	padding-top: 23px;
+}
 .fond {
 	background-color: rgb(241, 242, 244);
 }
@@ -307,6 +342,7 @@ ion-scroll[direction=y] {
 	color: #fff;
 	font-weight: bold;
 	border-radius: 5px;
+	margin-bottom: 40px;
 }
 .type-foot{
 	color: #006dff;
@@ -465,13 +501,16 @@ ion-scroll[direction=y] {
 }
 .homepage_connect{
 	background-color: #006ddf;
+	margin-bottom: 10px;
 }
 .homepage_fb{
 	background-color: #3b5998;
 }
 .homepage_register{
 	margin-top: 50px;
-	border: 1px solid #006ddf;
+	border: 2px solid #006ddf;
+	background-color: #fff;
+	color: #006ddf;
 }
 .actu_header{
 	background-color: #28385c;
@@ -486,6 +525,10 @@ ion-scroll[direction=y] {
 	color: #fff;
 	font-size: 26px;
 	font-weight: 300
+}
+.actu_wf{
+	color: #28385c;
+	font-weight: bold;
 }
 .img_container{
 	margin-top:50px;
@@ -506,17 +549,12 @@ ion-scroll[direction=y] {
 .slider-button{
 	height: 80px;
 	padding: 0;
+	background: linear-gradient(to right,#006ddf,#121826);
 }
 .slider-button p{
 	color: #fff;
 	padding-top: 13px;
 	font-size: 16px;
-}
-.left-side-slider{
-	background: linear-gradient(to right,#006ddf,#0052A8);
-}
-.right-side-slider{
-	background: linear-gradient(to left,#28385c,#121826);
 }
 .right-side-slider p{
 	text-align: right;
@@ -534,8 +572,8 @@ ion-scroll[direction=y] {
 	color: #ffffff;
 	font-weight: bold;
 }
-.hide-icon{
-	visibility: hidden;
+.show-icon{
+	visibility: visible;
 }
 .right-side-slider i{
 	font-size: 35px;
@@ -562,8 +600,9 @@ ion-scroll[direction=y] {
 }
 .container_actu{
 	padding-top: 20px;
-	height: auto;
+	height: auto !important;
 	position: absolute;
+	width:100%;
 }
 .left-side-slider i{
 	opacity: 1;
@@ -911,7 +950,7 @@ ion-scroll[direction=y] {
 }
 .logout_menu{
 	position: relative;
-	bottom:10px;
+	bottom:30px;
 }
 .icon-logout{
 	background-image: url('../img/shut-down2.svg');
@@ -928,6 +967,11 @@ ion-scroll[direction=y] {
 }
 .no_hide{
 	display: inline-block !important;
+}
+ion-view[view-title="Conv"] ion-content{
+	background-image: url("../img/fond_chat.jpg");
+	background-size: cover;
+    background-position: center;
 }
 .text_chat{
 	font-size: 36px;
@@ -1178,11 +1222,12 @@ ion-scroll[direction=y] {
 	border-radius:0px;
 	margin-bottom:0px;
 }
-.one_friends .item{
-
+.target_toggle_friends[disabled]:before{
+	background-color: #DBDAE3;
 }
 .name_friends{
 	display: inline-block;
+	width:60%;
 }
 .list .item{
 	border-radius:0px;
@@ -1262,7 +1307,8 @@ ion-scroll[direction=y] {
 	padding-top: 15px;
 	text-align: center;
 	display: inline-block;
-	width: 49%;
+	/*width: 49%;*/
+	width: 100%;
 	height: 100px;
 }
 .switch_wf1{
@@ -1306,6 +1352,9 @@ ion-scroll[direction=y] {
 	width: 40px;
 	height: 40px;
 }
+.img_search_left{
+	float: left;
+}
 .one_search{
 	margin: 0px 20px;
 	border-bottom: 1px solid #DBDAE3;
@@ -1313,13 +1362,18 @@ ion-scroll[direction=y] {
 }
 .name_search{
 	display: inline-block;
+	width: 70%;
+	float: left;
+	height: 100%;
 }
 .name_search p{
 	position: relative;
-	bottom: 12px;
+	top: 20px;
 	margin-left: 5px;
 	font-size: 17px;
 	color: #28385c;
+	white-space:nowrap;
+	text-overflow:ellipsis;
 }
 .icon_friend_search{
 	background-repeat: no-repeat;
@@ -1495,7 +1549,7 @@ ion-scroll[direction=y] {
   	.select-place input{
   		border: none;
   		color: #369bff;
-  		width: 90%;
+  		width: 85%;
   		background-color: inherit;
   	}
   	.select-place i{
@@ -1537,7 +1591,12 @@ ion-scroll[direction=y] {
   		padding-right: 10px;
   		border-bottom: 3px solid #28385c;
   		padding-bottom: 0px;
-
+  		height: 115px;
+  	}
+  	.one-field p{
+  		white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
   	}
   	.content-footfield{
   		text-align: left;
@@ -1606,10 +1665,9 @@ ion-scroll[direction=y] {
   	}
 
   	.one-notif{
-  		margin: 0px 20px;
-  		padding: 0px;
+  		padding: 0px 20px;
   		border-bottom: 2px solid #c4c4c4;
-  		padding-right: 20px;
+  		margin-top: 0 !important;
   	}
   	.text-notif{
   		display: inline-block;
@@ -1716,6 +1774,11 @@ ion-scroll[direction=y] {
   		margin-bottom: 0;
   		margin-left: 20px;
   	}
+  	  	.name-player-foot i{
+  		float: right;
+  		color: grey;
+  		font-size: 20px;
+  	}
   	.row.player-foot{
   		border-top: 2px solid #c4c4c4;
   		padding-top: 7px;
@@ -1798,7 +1861,6 @@ ion-scroll[direction=y] {
   		border-radius: 50%;
   	}
   	.urban-foot{
-  		margin-bottom: 20px;
   		margin-left: 10%;
   	}
 
@@ -1832,20 +1894,31 @@ ion-scroll[direction=y] {
   		font-size: 15px;
   		background-color: transparent;
   		display: inline-block;
-  		border-radius: 5px;
   		width: 64%;
   		margin-left: 18%;
   		text-align: center;
   		color: red;
-  		border: 1px solid red;
   		font-family: 'Ubuntu';
-  		margin-top: 25px;
+  		margin-top: 20px;
   		height: 40px;
+  	}
+  	  .retirer-foot{
+  		font-size: 15px;
+  		background-color: transparent;
+  		display: inline-block;
+  		width: 64%;
+  		margin-left: 18%;
+  		text-align: center;
+  		color: red;
+  		font-family: 'Ubuntu';
+  		margin-top: 20px;
+  		height: 40px;
+  		border: 1px solid red;
   	}
   	.annuler-foot i{
   		position: relative;
   		right: 10px;
-  		top:2px;
+  		top: 1px;
   		font-size: 20px;
   	}
 
@@ -1880,25 +1953,40 @@ ion-scroll[direction=y] {
   		padding: 0px;
   	}
   	.range-footfinder i{
-  		font-size: 20px;
+  		font-size: 25px;
   		padding-top: 5px;
   	}
   	.range-footfinder .ion-arrow-left-a{
   		margin-right: 20%;
   	}
   	.range-footfinder p{
-  		margin-right: 20%;
+  		width: 100%;
   		text-align: center;
+  		white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+  	}
+  	.switcher-finder-container{
+  		width: 50px;
+    	text-align: center;
+    	height: 28px;
   	}
   	.date-footfinder{
   		font-weight: bold;
   		width: 150px;
   		padding-top: 12px;
   	}
-  	.background_footfinder{
-  		background-image: url('../img/photo-bg-footfinder.png');
+  	ion-scroll[direction=y].background_footfinder{
+  		background-image: url('../img/photo-bg-footfinder.jpg');
+  		background-position: center bottom;
   		background-size: cover;
-  		min-height: 100%;
+  		height: 77vh;
+
+  	}
+  	.background_footfinder p{
+  		white-space: nowrap;
+  		overflow: hidden;
+  		text-overflow: ellipsis;
   	}
   	@media screen and (min-width: 414px) { /*IPHONE 6 + */
   		.logo-profil-container{
@@ -1914,7 +2002,7 @@ ion-scroll[direction=y] {
   	@media screen and (max-width: 400px) { /* ANDROID */
   		.logout_menu{
   			position: relative;
-  			bottom:20px;
+  			bottom:40px;
   		}
   		.boutton-foot{
   			height: 70px;
@@ -2067,7 +2155,7 @@ ion-scroll[direction=y] {
   			width: 28%;
   		}
   		.border_bottom_foot{
-  			height: 160px !important;
+  			height: 150px !important;
   			padding: 0px;
   		}
   		.fleche_bleu_fonce_foots {
@@ -2083,15 +2171,13 @@ ion-scroll[direction=y] {
   		.info_foots .bleufonce, .info_foots .field-foot, .nbredejoueur_foots .nbreplace{
   			font-size: 12px;
   		}
-  		.field-foot{
-  			font-size: 12px;
-  		}
   		.col-25 .bonhomme_foots{
   			width: 20px;
   			margin-left: 0px;
   		}
   		.day_timeline p{
   			font-size: 12px;
+  			margin-bottom: 0px;
   		}
   		.nbredejoueur_foot{
   			margin-top: -20px;
@@ -2212,6 +2298,7 @@ ion-scroll[direction=y] {
  		-ms-transform: rotate(20deg); /* IE 9 */
  		-webkit-transform: rotate(20deg); /* Chrome, Safari, Opera */
  		transform: rotate(20deg);
+ 		height: 20px;
  	}
 
  	.nbreplace {
@@ -2228,9 +2315,14 @@ ion-scroll[direction=y] {
  		color: #28385c !important;
  	}
 
+ 	p.field-foot{
+  		white-space: nowrap;
+  		overflow: hidden;
+  	}
+
  	.border_bottom_foot {
  		border-bottom: 4px solid #28385c ;
- 		height: 200px;
+ 		height: 180px;
  	}
  	.actu_header .header_left_foot{
  		width: 28px;
@@ -2314,7 +2406,7 @@ ion-scroll[direction=y] {
  		float: right;
  	}
  	.left_player_profil{
- 		margin-top: 63px;
+ 		margin-top: 44px;
  		margin-left: -25px;
  	}
  	.img_friends_profil {
@@ -2325,24 +2417,29 @@ ion-scroll[direction=y] {
 
  	}
  	.level_foot_profil {
- 		margin-top: 35px;
+ 		margin-top: 20px;
  		float: right;
  		margin-right: -5px;
  	}
 
  	.bonhomme_profil {
- 		margin-left:75px;
+ 		margin-left:10px;
+ 		margin-top: 0px;
  	}
  	.date_timeline {
- 		margin-left: 25px;
+ 		margin-left: 10px;
  		border-top: solid 1px #006ddf;
  		margin-top: -40px;
  		margin-bottom: -40px;
+ 	}
+ 	.date_timeline p{
+ 	 	margin-top:-10px;
  	}
 
  	.day_timeline {
  		margin-top : 40px !important;
  		margin-bottom: 80px;
+ 		padding:0;
  	}
 
  	.cadenas_timeline {
@@ -2451,11 +2548,12 @@ ion-scroll[direction=y] {
 	line-height: 25px;
 	height: 70px;
 	font-weight: bold;
+	border-radius:4px;
 }
 .button-container-friend{
 	margin-top: -50px;
 	margin-bottom: 20px;
-	width: 205px;
+	width: 230px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2518,8 +2616,8 @@ ion-scroll[direction=y] {
 	-moz-animation-timing-function: ease-in-out;
 }
 .button-clear{
-	width: 45px;
-	text-align: left;
+	width: 100px;
+    text-align: center;
 }
 
 .default-friend{
@@ -2534,8 +2632,8 @@ ion-scroll[direction=y] {
 }
 .button-container-friend{
 	margin-top: -50px;
-	margin-bottom: 20px;
-	width: 205px;
+	margin-bottom: 50px;
+	width: 230px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2572,7 +2670,16 @@ ion-scroll[direction=y] {
 	padding-top: 15px;
 	margin-bottom: 15px;
 }
-
+#invite_friends_toggle_edit{
+	border: none;
+    margin-top: 5px;
+    height: 50px;
+    background-color: transparent;
+    margin-left: 20px;
+}
+#invite_friends_toggle_edit label{
+	right: inherit;
+}
 .invite-facebook{
 	background-color:inherit;
 	border:none;
@@ -2634,6 +2741,25 @@ ion-scroll[direction=y] {
 	margin-top: 30px;
 	margin-bottom: 30px;
 	color:#273A59;
+}
+
+.resa-subtitle{
+	text-align: center;
+	font-size: 14px;
+	margin-top: 15px;
+	color:#273A59;
+}
+.item-radio input:checked ~ .item-content{
+	background-color:#F2F3F9;
+}
+.duree-button{
+	line-height: 15px;
+	border-color:#28385C;
+	background-color:#F2F3F9;
+}
+
+.item-radio .item-content{
+	background-color:#F2F3F9;
 }
 
 .footL-tab{
@@ -2824,7 +2950,7 @@ ion-scroll[direction=y] {
 	left: 20%;
 	height: 40%;
 	bottom: 30%;
-	background-color: rgba(0, 0, 0, 0.7);
+	background-color: rgba(40, 56, 92, 0.7);
 	border-radius: 5%;
 }
 .validated-content{
@@ -2842,7 +2968,23 @@ ion-scroll[direction=y] {
 	font-size: 50px;
 	margin-top: 20%;
 }
-
+.error_popup_container{
+	display: none;
+	position: fixed;
+	width: 100%;
+	white-space: nowrap;
+	font-family: 'Ubuntu';
+	background-color: rgba(255,0,51,0.7);
+	padding: 10px;
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+}
+.error_popup_container i{
+	display: inline-block;
+	float: right;
+	font-size: 18px;
+}
 .sk-spinner-circle.sk-spinner {
   margin: 0 auto;
   width: 50px;
@@ -2990,6 +3132,7 @@ ion-scroll[direction=y] {
 	font-size: 20px;
 	color: #28385c;
 	display: block;
+	visibility: hidden;
 }
 .nbhours-resa{
 	display:inline-block;
@@ -2997,3 +3140,72 @@ ion-scroll[direction=y] {
 	white-space: nowrap;
 	overflow: visible;
 }
+
+.item-radio .radio-icon{
+	top:-15px;
+}
+.bug_logo{
+	font-size: 21px;
+    color: #006dff;
+    margin-left: 30px;
+}
+.add_friend{
+	background-repeat: no-repeat;
+    background-position: 50%;
+    height: 33px;
+    margin-top: 0px;
+    background-size: contain;
+    width: 40px;
+    display: inline-block;
+    background-image: url('../img/icon_bonhomme_carnet.svg');
+    float: right;
+    right: 6px;
+    position: absolute;
+    z-index: 100;
+    padding: 0px;
+}
+.nowrap_foot{
+	 margin-bottom: 2px;
+}
+.delete_field{
+	margin-top: 30px;
+    display: inline-block;
+    font-size:30px;
+    color:#28385c;
+	margin-bottom: 2px;
+}
+.no-instance-yet{
+	padding: 30px;
+	margin-top: 20%;
+	text-align: center;
+}
+.no-instance-yet img{
+	height: 25px;
+	padding: 0px 10px;
+	position: relative;
+	top: 5px;
+}
+.remove_chat{
+	font-size: 30px;
+    color: white;
+    margin-left: 80vw;
+    margin-top: 2px;
+    width: 40px;
+    height: 40px;
+}
+<<<<<<< HEAD
+.nbhours-resa{
+	display:inline-block;
+	width:30%;
+	white-space: nowrap;
+	overflow: visible;
+}
+=======
+.button-goback{
+	width: 45px;
+	text-align: left;
+}
+.read-bg-notif{
+	background-color: #fff;
+}
+>>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff

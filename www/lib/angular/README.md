@@ -1,7 +1,7 @@
 # packaged angular
 
 This repo is for distribution on `npm` and `bower`. The source for this module is in the
-[main AngularJS repo](https://github.com/angular/angular.js).
+[main AngularJS repo](http://github.com/angular/angular.js).
 Please file issues and pull requests against that repo.
 
 ## Install
@@ -21,8 +21,8 @@ Then add a `<script>` to your `index.html`:
 ```
 
 Note that this package is not in CommonJS format, so doing `require('angular')` will return `undefined`.
-If you're using [Browserify](https://github.com/substack/node-browserify), you can use
-[exposify](https://github.com/thlorenz/exposify) to have `require('angular')` return the `angular`
+If you're using [Browserify](http://github.com/substack/node-browserify), you can use
+[exposify](http://github.com/thlorenz/exposify) to have `require('angular')` return the `angular`
 global.
 
 ### bower

@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : slovenian (sl)
-//! author : Robert Sedovšek : https://github.com/sedovsek
+//! author : Robert Sedovšek : http://github.com/sedovsek
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

@@ -1,4 +1,4 @@
-[![Join the chat at https://gitter.im/moment/moment](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/moment/moment?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at http://gitter.im/moment/moment](http://badges.gitter.im/Join%20Chat.svg)](http://gitter.im/moment/moment?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [![NPM version][npm-version-image]][npm-url] [![NPM downloads][npm-downloads-image]][npm-url] [![MIT License][license-image]][license-url] [![Build Status][travis-image]][travis-url]
 
@@ -21,7 +21,7 @@ with `src/*`. We might place that in a commit hook in the future.
 
 ## Upgrading to 2.0.0
 
-There are a number of small backwards incompatible changes with version 2.0.0. [See the full descriptions here](https://gist.github.com/timrwood/e72f2eef320ed9e37c51#backwards-incompatible-changes)
+There are a number of small backwards incompatible changes with version 2.0.0. [See the full descriptions here](http://gist.github.com/timrwood/e72f2eef320ed9e37c51#backwards-incompatible-changes)
 
  * Changed language ordinal method to return the number + ordinal instead of just the ordinal.
 
@@ -35,21 +35,21 @@ There are a number of small backwards incompatible changes with version 2.0.0. [
 
  * Duplicate `Date` passed to `moment()` instead of referencing it.
 
-## [Changelog](https://github.com/moment/moment/blob/develop/CHANGELOG.md)
+## [Changelog](http://github.com/moment/moment/blob/develop/CHANGELOG.md)
 
-## [Contributing](https://github.com/moment/moment/blob/develop/CONTRIBUTING.md)
+## [Contributing](http://github.com/moment/moment/blob/develop/CONTRIBUTING.md)
 
 We're looking for co-maintainers! If you want to become a master of time please
-write to [ichernev](https://github.com/ichernev).
+write to [ichernev](http://github.com/ichernev).
 
 ## License
 
-Moment.js is freely distributable under the terms of the [MIT license](https://github.com/moment/moment/blob/develop/LICENSE).
+Moment.js is freely distributable under the terms of the [MIT license](http://github.com/moment/moment/blob/develop/LICENSE).
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
 
-[npm-url]: https://npmjs.org/package/moment
+[npm-url]: http://npmjs.org/package/moment
 [npm-version-image]: http://img.shields.io/npm/v/moment.svg?style=flat
 [npm-downloads-image]: http://img.shields.io/npm/dm/moment.svg?style=flat
 

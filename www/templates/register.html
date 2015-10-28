@@ -10,20 +10,17 @@
   <label class="item item-input">
     <input type="text" name="email" ng-model="user.email" placeholder="Adresse e-mail">
   </label>
-  <label class="item item-input">
+  <label class="item item-input" style="display:inline-block; width:49%; margin-right:0;">
     <input type="password" name="password" ng-model="user.password" placeholder="Mot de passe">
   </label>
-  <label class="item item-input">
-    <input type="password" name="password_confirmation" ng-model="user.password_confirmation" placeholder="Retapez le mot de passe">
+  <label class="item item-input" style="display:inline-block; float:right; width:49%; margin-left:0;">
+    <input type="password" name="password_confirmation" ng-model="user.password_confirmation" placeholder="Retaper mot de passe">
   </label>
-  <label class="item item-input">
+  <label class="item item-input" style="display:inline-block; width:49%; margin-right:0;">
     <input type="text" name="last_name" ng-model="user.last_name" placeholder="Nom">
   </label>
-  <label class="item item-input">
+  <label class="item item-input" style="display:inline-block; float:right; width:49%; margin-left:0;">
     <input type="text" name="first_name" ng-model="user.first_name" placeholder="Prénom">
-  </label>
-  <label class="item item-input">
-    <input type="text" name="city" ng-model="user.city" placeholder="Ville">
   </label>
   <p class="err_container"> {{err}} </p>
   <div ng-click="launchReq()" class="register_inscr">

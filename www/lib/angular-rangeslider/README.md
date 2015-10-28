@@ -16,7 +16,7 @@ Looking for collaborators
 
 This directive was written for a project completed way back in 2013. I've not needed to use it since and have no plans (or time) to continue development / maintenance.
 
-If anyone would like to become a collaborator please let me know: [@danielcrisp82](https://twitter.com/danielcrisp82)
+If anyone would like to become a collaborator please let me know: [@danielcrisp82](http://twitter.com/danielcrisp82)
 
 Installation
 ------------
@@ -230,7 +230,7 @@ Credits
 
 This was originally forked from [Léon Gersen's](http://refreshless.com/) brilliant noUiSlider:
 
-https://github.com/leongersen/noUiSlider
+http://github.com/leongersen/noUiSlider
 
 Licence
 -------

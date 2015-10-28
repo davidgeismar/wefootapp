@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : hindi (hi)
-//! author : Mayank Singhal : https://github.com/mayanksinghal
+//! author : Mayank Singhal : http://github.com/mayanksinghal
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

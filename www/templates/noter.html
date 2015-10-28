@@ -1,6 +1,6 @@
 <ion-view view-title="friend profile">
 <ion-header-bar  class="actu_header">
-<div ng-click="goBack()" class="button button-clear"><span class="white ion-chevron-left"></span></div>
+<div ng-click="goBack()" class="button button-clear button-goback"><span class="white ion-chevron-left"></span></div>
 <h1 class="title" style="text-align:center;">{{friend.first_name}} {{friend.last_name}}</h1>
 <img class="logo_wf" ng-src="img/logo_WF.svg">
 </ion-header-bar>
@@ -16,33 +16,33 @@
 	<div class="icon_menu icon-techB">
 	</div>
 	<p>Technique</p>
-	<i class="ion-edit" ng-click="enableNote(0)" ng-class="activation(0)"></i><i ng-class="starStatus[0][4]" ng-click="setNote(5,0)"></i><i ng-class="starStatus[0][3]" ng-click="setNote(4,0)"></i><i ng-class="starStatus[0][2]" ng-click="setNote(3,0)"></i><i ng-class="starStatus[0][1]" ng-click="setNote(2,0)"></i><i ng-class="starStatus[0][0]" ng-click="setNote(1,0)"></i>
+	<i class="ion-edit"></i><i ng-class="starStatus[0][4]" ng-click="setNote(5,0)"></i><i ng-class="starStatus[0][3]" ng-click="setNote(4,0)"></i><i ng-class="starStatus[0][2]" ng-click="setNote(3,0)"></i><i ng-class="starStatus[0][1]" ng-click="setNote(2,0)"></i><i ng-class="starStatus[0][0]" ng-click="setNote(1,0)"></i>
 </div>
 <div class="note_friend">
 	<div class="icon_menu icon-shoesB">
 	</div>
 	<p>Frappe</p>
-	<i class="ion-edit" ng-click="enableNote(1)" ng-class="activation(1)"></i><i ng-class="starStatus[1][4]" ng-click="setNote(5,1)"></i><i ng-class="starStatus[1][3]" ng-click="setNote(4,1)"></i><i ng-class="starStatus[1][2]" ng-click="setNote(3,1)"></i><i ng-class="starStatus[1][1]" ng-click="setNote(2,1)"></i><i ng-class="starStatus[1][0]" ng-click="setNote(1,1)"></i>
+	<i class="ion-edit"></i><i ng-class="starStatus[1][4]" ng-click="setNote(5,1)"></i><i ng-class="starStatus[1][3]" ng-click="setNote(4,1)"></i><i ng-class="starStatus[1][2]" ng-click="setNote(3,1)"></i><i ng-class="starStatus[1][1]" ng-click="setNote(2,1)"></i><i ng-class="starStatus[1][0]" ng-click="setNote(1,1)"></i>
 </div>
 <div class="note_friend">
 	<div class="icon_menu icon-powerB">
 	</div>
 	<p>Physique</p>
-	<i class="ion-edit" ng-click="enableNote(2)" ng-class="activation(2)"></i><i ng-class="starStatus[2][4]" ng-click="setNote(5,2)"></i><i ng-class="starStatus[2][3]" ng-click="setNote(4,2)"></i><i ng-class="starStatus[2][2]" ng-click="setNote(3,2)"></i><i ng-class="starStatus[2][1]" ng-click="setNote(2,2)"></i><i ng-class="starStatus[2][0]" ng-click="setNote(1,2)"></i>
+	<i class="ion-edit"></i><i ng-class="starStatus[2][4]" ng-click="setNote(5,2)"></i><i ng-class="starStatus[2][3]" ng-click="setNote(4,2)"></i><i ng-class="starStatus[2][2]" ng-click="setNote(3,2)"></i><i ng-class="starStatus[2][1]" ng-click="setNote(2,2)"></i><i ng-class="starStatus[2][0]" ng-click="setNote(1,2)"></i>
 </div>
 <div class="note_friend">
 	<div class="icon_menu icon-fpB">
 	</div>
 	<p>Fair-Play</p>
-	<i class="ion-edit" ng-click="enableNote(3)" ng-class="activation(3)"></i><i ng-class="starStatus[3][4]" ng-click="setNote(5,3)"></i><i ng-class="starStatus[3][3]" ng-click="setNote(4,3)"></i><i ng-class="starStatus[3][2]" ng-click="setNote(3,3)"></i><i ng-class="starStatus[3][1]" ng-click="setNote(2,3)"></i><i ng-class="starStatus[3][0]" ng-click="setNote(1,3)"></i>
+	<i class="ion-edit"></i><i ng-class="starStatus[3][4]" ng-click="setNote(5,3)"></i><i ng-class="starStatus[3][3]" ng-click="setNote(4,3)"></i><i ng-class="starStatus[3][2]" ng-click="setNote(3,3)"></i><i ng-class="starStatus[3][1]" ng-click="setNote(2,3)"></i><i ng-class="starStatus[3][0]" ng-click="setNote(1,3)"></i>
 </div>
 <div class="note_friend">
 	<div class="icon_menu icon-assiduB">
 	</div>
 	<p>Assiduité</p>
-	<i class="ion-edit" ng-click="enableNote(4)" ng-class="activation(4)"></i><i ng-class="starStatus[4][4]" ng-click="setNote(5,4)"></i><i ng-class="starStatus[4][3]" ng-click="setNote(4,4)"></i><i ng-class="starStatus[4][2]" ng-click="setNote(3,4)"></i><i ng-class="starStatus[4][1]" ng-click="setNote(2,4)"></i><i ng-class="starStatus[4][0]" ng-click="setNote(1,4)"></i>
+	<i class="ion-edit"></i><i ng-class="starStatus[4][4]" ng-click="setNote(5,4)"></i><i ng-class="starStatus[4][3]" ng-click="setNote(4,4)"></i><i ng-class="starStatus[4][2]" ng-click="setNote(3,4)"></i><i ng-class="starStatus[4][1]" ng-click="setNote(2,4)"></i><i ng-class="starStatus[4][0]" ng-click="setNote(1,4)"></i>
 </div>
 
-<button class="button button_noter_valider" ng-click="postNote()">Valider</button>
+<button class="button button_noter_valider last-element" ng-click="postNote()">Valider</button>
 </ion-content>
 </ion-view>

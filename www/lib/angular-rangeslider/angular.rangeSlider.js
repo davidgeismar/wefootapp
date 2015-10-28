@@ -8,7 +8,7 @@
  *  The rangeSlider has been styled to match the default styling
  *  of form elements styled using Twitter's Bootstrap
  *
- *  Originally forked from https://github.com/leongersen/noUiSlider
+ *  Originally forked from http://github.com/leongersen/noUiSlider
  *
 
     This code is released under the MIT Licence - http://opensource.org/licenses/MIT

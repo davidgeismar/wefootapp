@@ -5,14 +5,14 @@
 	</ion-header-bar>
     <ion-content class="has-footer">
     <div class="switcher_search">
-    	<div ng-click="switchSearchWf()" class="switch switch_wf opened_search">
+    	<div class="switch switch_wf"> <!-- ng-click="switchSearchWf()" -->
     		<div class="switch_wf1"></div>
     		<p class="switch_title"> WeFoot </p>
     	</div>
-    	 <div ng-click="switchSearchFb()" class="switch switch_fb">
+<!--     	 <div ng-click="switchSearchFb()" class="switch switch_fb">
     		<i class="ion-social-facebook"></i>
     		<p class="switch_title"> Facebook </p>
-    	</div>
+    	</div> -->
     </div>
     <!-- WEFOOT SECTION -->
 	<div class="content_wf_search container_list_friends">
@@ -22,7 +22,7 @@
   		</label>
       <div searchloader></div>
 		<div ng-if="user.id != guy.id" ng-repeat="guy in results" class="one_search">
-			<div class="img_chat img_search">
+			<div class="img_chat img_search img_search_left">
 				<img ng-src="{{guy.picture}}">
 			</div>
 			<div ng-class="{'disabled': isFriend(guy.id)}" class="name_search">
@@ -35,7 +35,7 @@
     <!-- FACEBOOK SECTION -->
 	<div class="content_fb_search hidden">
       <div ng-repeat="guy in facebookFriends" class="one_search">
-      <div class="img_chat img_search">
+      <div class="img_chat img_search img_search_left">
         <img ng-src="{{guy.picture.data.url}}">
       </div>
       <div ng-class="{'disabled': isFriend({{guy.id}}, true)}" class="name_search">
@@ -44,18 +44,14 @@
       <div ng-click="isFriend({{guy.id}}, true) || addFriend({{guy.id}}, true)" ng-class="{'ion-checkmark-round': isFriend({{guy.id}}, true), 'icon_friend_search': !isFriend({{guy.id}},true)}" ng-disabled ="isFriend({{guy.id}}, true)" class="icon_search">
       </div>
     </div>
+    <!-- <div> NON DISPONIBLE POUR CETTE VERSION </div> -->
 	</div>
     </ion-content>
-    
 
 
-    <ion-footer-bar align-title="left" class="bar-assertive">
-  <h1 class="title">Invitez vos amis via</h1>
-  <div class="buttons invite-container-facebook" ng-click="sendFbMessage()">
-    <button class="ion-social-facebook invite-facebook"></button>
-  </div>
-    <div class="buttons invite-container-sms" ng-click="sendSmsMessage()">
-    <button class="ion-chatbubble invite-sms"></button>
-  </div>
+<ion-footer-bar align-title="left" style="background: url(img/invitebg.jpg)" class="bar-assertive">
+<h1 style="margin-top: 3px; font-size:20px; color:white; text-shadow: 2px 2px black; font-weight:700">Invitez vos amis via</h1>
+<img ng-src="img/fblogo.png" style="width:34px; margin-left:30px; border-radius: 5px;" ng-click="sendFbMessage()">
+<img ng-src="img/imesslogo.png" style="width:34px; margin-left:30px;" ng-click="sendSmsMessage()">
 </ion-footer-bar>
 </ion-modal-view>

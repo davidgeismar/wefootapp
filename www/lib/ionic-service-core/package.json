@@ -4,7 +4,7 @@
   "description": "Ionic Core Component",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/driftyco/ionic-service-core.git"
+    "url": "git+http://github.com/driftyco/ionic-service-core.git"
   },
   "keywords": [
     "Ionic",
@@ -17,7 +17,7 @@
   ],
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/driftyco/ionic-service-core/issues"
+    "url": "http://github.com/driftyco/ionic-service-core/issues"
   },
-  "homepage": "https://github.com/driftyco/ionic-service-core#readme"
+  "homepage": "http://github.com/driftyco/ionic-service-core#readme"
 }

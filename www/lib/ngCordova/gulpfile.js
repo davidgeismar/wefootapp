@@ -57,7 +57,7 @@ function makeChangelog(version) {
   var file = __dirname + '/CHANGELOG.md';
   var deferred = q.defer();
   changelog({
-    repository: 'https://github.com/driftyco/ng-cordova',
+    repository: 'http://github.com/driftyco/ng-cordova',
     version: version,
     file: file
   }, function (err, log) {

@@ -1,6 +1,6 @@
-angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, chat, chats){
+angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, $ionicHistory, $confirmation,chat, chats){
 
-  $scope.chat = _.find($localStorage.getObject('chats'), function(chat){return chat.id==$stateParams.id});
+  $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
   $scope.user = $localStorage.getObject('user');
   $scope.messageContent;
 
@@ -12,41 +12,47 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
     $ionicScrollDelegate.scrollBottom();
   });
   
+  var refreshConv = function(){
+    if(_.last($location.url().split('/'))==$scope.chat.id){
+      chat.updateLts($scope.chat.id);
+    }
+    $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
+    if(!$scope.$$phase) {
+      $scope.$digest();
+    }
+    $ionicScrollDelegate.scrollBottom();
+
+  }
 
 //REFRESH THE CONVERSATION
 $rootScope.$on('newMessage', function(event){
-  if(_.last($location.url().split('/'))==$scope.chat.id){
-    chat.updateLts($scope.chat.id);
-  }
-  $scope.chat = _.find($localStorage.getObject('chats'), function(chat){return chat.id==$stateParams.id});
-  if(!$scope.$$phase) {
-  $scope.$digest();
-}
-  $ionicScrollDelegate.scrollBottom();
+  refreshConv();
 });
 
-  // $rootScope.updateMessage = function(){
-  //   $rootScope.chats[getIndex($scope.chat.id, $rootScope.chats)].lastTime = new Date();
-  //   $localStorage.setObject('chats',$rootScope.chats);
-  //   io.socket.post(serverAddress+'/chatter/updateLts',{user: $scope.user.id, chat: $scope.chat.id});
-  //   $scope.$digest();
-  //   $ionicScrollDelegate.scrollBottom();
-  // }
 
+$scope.go = function(target){
+  $location.path(target);
+}
 
-  $scope.sendMessage = function(){
-   if($scope.messageContent.length>0){
-    chat.sendMessage($scope.messageContent, $scope.chat);
-    $scope.messageContent=null;
-    document.getElementById("footerChat").style.height=44+"px";
-    document.getElementById("messageArea").style.height=44+"px";
-  }
+$scope.sendMessage = function(){
+ if($scope.messageContent.length>0){
+  chat.sendMessage($scope.messageContent, $scope.chat);
+  $scope.messageContent=null;
+  document.getElementById("footerChat").style.height=44+"px";
+  document.getElementById("messageArea").style.height=44+"px";
+}
 }
 
 $scope.showMessageButton = function(messageContent){
 	if(messageContent==0 || !messageContent) return "hide-icon";
 }
 
+$scope.removeChat = function(chatId){
+  $confirmation("Etes vous sûr de vouloir vous retirer de ce chat ?",function(){
+    chat.deactivateChatter(chatId);
+    $ionicHistory.goBack();
+  });;
+}
 
 $scope.init = function(){
 

@@ -1,11 +1,10 @@
 angular.module('user',[])
 
-.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, fbConnect){
+.controller('UserCtrl',function($scope, $q, $rootScope, $stateParams,$localStorage,$location,$ionicModal,$http,$cordovaImagePicker,$cordovaFileTransfer,$ionicLoading,$handleNotif, $cordovaSms,$searchLoader, $ionicPopup, fbConnect, mySock, user){
 
 
   $scope.user = $localStorage.getObject('user');
-  $rootScope.friends = $localStorage.getObject('friends');
-
+  $rootScope.friends = $localStorage.getArray('friends');
 //Handle edit inputs on left menu
 $scope.toEdit = [false,false];
 if($scope.user && $scope.user.favorite_club==null){
@@ -38,6 +37,7 @@ if($scope.user && $scope.user.poste==null){
   }
 
   $scope.editProfilPic = function(){
+
     var optionsImg = {
       maximumImagesCount: 1,
       width: 200,
@@ -45,50 +45,101 @@ if($scope.user && $scope.user.poste==null){
     };
 
     $cordovaImagePicker.getPictures(optionsImg).then(function (results) {
-
       var optionsFt = {
         params : {
           userId: $localStorage.getObject('user').id
+        },
+        headers : {
+          Authorization:$localStorage.get('token')
         }
       };
-      $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
-      .then(function(result) {  
-        // Success!
-        console.log('hello');
-        setTimeout(function(){
-          user = $localStorage.getObject('user')
+      if($scope.user && $scope.user.id){
+        $cordovaFileTransfer.upload(serverAddress+'/user/uploadProfilPic', results[0], optionsFt)
+        .then(function(result) {
+          var user = $localStorage.getObject('user')
           user.picture = result.response+'#'+ new Date().getTime();  //Reset cache
-          $localStorage.setObject('user',user); 
-          $scope.user.picture = $localStorage.getObject('user').picture;
+          $localStorage.setObject('user',user);
+          $scope.user.picture = result.response+'#'+ new Date().getTime();
           $ionicLoading.hide();
-        },3000);
-      }, function(err) {
-        // Error
-      }, function (progress) {
-        $ionicLoading.show({
-          content: 'Loading Data',
-          animation: 'fade-out',
-          showBackdrop: true
-        });
-      });
 
+        }, function(err) {
+          $ionicLoading.hide();
+        }, function (progress) {
+          $ionicLoading.show({
+            content: 'Loading Data',
+            animation: 'fade-out',
+            showBackdrop: true
+          });
+        });
+      }
     }, function(error) {
-      console.log('Error getting pic');
+      $ionicLoading.hide();
     });
 
-  }
+}
 
 
   //END EDITIONS
 //END Handle Menu
 $scope.logout = function (){
-  io.socket.post(serverAddress+'/connexion/delete');
-  $rootScope.toShow = true;
-  if($localStorage.getObject('user').pushToken)
-    $http.post(serverAddress+'push/delete',{push_id : $localStorage.getObject('user').pushToken});
+ mySock.req(serverAddress+'/connexion/delete');
+ $rootScope.toShow = true;
+ $rootScope.notifs = [];
+ if($localStorage.getObject('user').pushToken){
+  var pushToken = $localStorage.getObject('user').pushToken;
+  $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
+    $localStorage.clearAll();
+    $localStorage.set("pushToken",pushToken);
+    $location.path('/');
+  });
+}
+else{
   $localStorage.clearAll();
   $location.path('/');
+}
+
 };
+
+
+var getBug = function(callback){
+  $scope.bug = {};
+  $ionicPopup.show({
+    template: '<select     style="width: 100%;font-size: 16px;"ng-model="bug.option"><option value="" selected="true" disabled="disabled">Choisissez le type de bug</option><option value="1">Design</option><option value="2">Fonctionnalité</option></select><textarea placeholder="Expliquer brievement le bug" rows="5" ng-model="bug.texte"     style="height: 100px; margin-top: 10px;"></textarea><p class="err_container"> {{err}} </p>',
+    title: 'Soumettre un bug',
+    subTitle: 'Nous vous remercions par avance de cette soumission. Notre équipe corrigera ce bug dès que possible.',
+    scope: $scope,
+    buttons: [
+    { text: 'Annuler' },
+    {
+      text: '<b>Envoyer</b>',
+      type: 'button-positive',
+      onTap: function(e) {
+        if (!$scope.bug.option && !$scope.bug.texte) {
+          $scope.err = "Veuillez remplir les deux champs";
+          e.preventDefault();
+        } else {
+          callback("[DATE : "+new Date()+"] [TYPE : "+$scope.bug.option+"] [TEXTE : "+$scope.bug.texte+"] ");
+        }
+      }
+    }
+    ]
+  });
+};
+
+
+$scope.bugReport = function (){
+ getBug(function(data){
+   var bug = data;
+   // bug.user = $localStorage.getObject('user').id;
+   // bug.phone = device.model;
+   // bug.phone_version = device.version;
+   bug+= "[USER : "+$localStorage.getObject('user').id+"] [PHONE : "+device.model+"] [VERSION : "+device.version+"]";
+   $http.post(serverAddress+'/bugreport/addCard',{bug:bug}).success(function(){
+   });
+
+ });
+ 
+}
   //MODAL HANDLER
 
   $ionicModal.fromTemplateUrl('templates/search.html', {
@@ -97,9 +148,11 @@ $scope.logout = function (){
   }).then(function(modal) {
     $scope.modal = modal;
   });
-
+  var fb_friends = [];
   $scope.openModal = function() {
     $scope.word ="";
+    fb_friends = $localStorage.getArray("facebookFriends");
+    $scope.results = fb_friends;
     $scope.modal.show();
     $searchLoader.hide();
   };
@@ -109,47 +162,63 @@ $scope.logout = function (){
     $searchLoader.hide();
   }; 
 
+
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
     $('.switch_fb').addClass('opened_search');
     $('.hidden').removeClass('hidden');
     $('.content_wf_search').addClass('hidden');
-    if (!window.cordova) {
-      //this is for browser only
-      facebookConnectPlugin.browserInit(1133277800032088);
-    }
-    facebookConnectPlugin.getLoginStatus(function(success){
-      fbConnect.getFacebookFriends().then(function(data){
-        $scope.facebookFriends = data.data;
-        //IDs of my facebookFriends list
-        $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getObject('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
-        console.log($scope.facebookFriendsId);
-        $searchLoader.hide();
-      });
-    });
   }
+    //TO UNCOMMENT NEEDS DEBUG
+
+  //   if (!window.cordova) {
+  //     //this is for browser only
+  //     facebookConnectPlugin.browserInit(1133277800032088);
+  //   }
+  //   facebookConnectPlugin.getLoginStatus(function(success){
+  //     fbConnect.getFacebookFriends().then(function(data){
+  //       $scope.facebookFriends = data.data;
+  //       //IDs of my facebookFriends list
+  //       $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+  //       console.log($scope.facebookFriendsId);
+  //       $searchLoader.hide();
+  //     });
+  //   });
 
 
-  $scope.switchSearchWf = function(){
-    $('.opened_search').removeClass('opened_search');
-    $('.switch_wf').addClass('opened_search');
-    $('.hidden').removeClass('hidden');
-    $('.content_fb_search').addClass('hidden');
+        // $scope.facebookFriendsId = _.map(_.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id'), function(fbId){ return parseInt(fbId)});
+
+// <<<<<<< HEAD
+//         $scope.facebookFriendsId = _.pluck(_.filter($localStorage.getArray('friends'), function(friend){if(friend.facebook_id) return true}), 'facebook_id');
+//         console.log($scope.facebookFriendsId);
+//         $searchLoader.hide();
+//       });
+//     });
+// }
+
+
+$scope.switchSearchWf = function(){
+  $('.opened_search').removeClass('opened_search');
+  $('.switch_wf').addClass('opened_search');
+  $('.hidden').removeClass('hidden');
+  $('.content_fb_search').addClass('hidden');
+  $searchLoader.hide();
+}
+
+
+$rootScope.friendsId = _.pluck($localStorage.getArray('friends'),'id');
+$scope.searchQuery = function(word){
+  $searchLoader.show();
+  if(word.length>1){
+   $http.get(serverAddress+'/search/'+word).success(function(data){
     $searchLoader.hide();
-  }
-  $scope.searchQuery = function(word){
-    $searchLoader.show();
-    $rootScope.friendsId = _.pluck($localStorage.getObject('friends'),'id');
-    if(word.length>1){
-     $http.get(serverAddress+'/search/'+word).success(function(data){
-      $searchLoader.hide();
-      $scope.results = data;
-    });
-   }
-   else{
-    $scope.results = [];
-    $searchLoader.hide();
-  }
+    $scope.results = data;
+  });
+ }
+ else{
+  $scope.results = fb_friends;
+  $searchLoader.hide();
+}
 }
 
 //Lock addFriend
@@ -163,25 +232,24 @@ $scope.addFriend = function(target, facebookFriend){
     postData = {user1: $localStorage.getObject('user').id, facebook_id: target};
     $scope.lockFriend = target;
     $scope.facebookFriendsId.push(target);
-    console.log($scope.facebookFriendsId);
   }
   else{
     postData = {user1: $localStorage.getObject('user').id, user2: target};
     $scope.lockFriend = target;
   }
-
-  $http.post(serverAddress+'/addFriend',postData).success(function(data){
+  user.addFriend(postData, target, facebookFriend).success(function(data){
     $localStorage.newFriend = true; //Load actu of new friend on refresh
     var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
     $handleNotif.notify(notif);
     data.statut = 0;
-    var friends = $localStorage.getObject('friends');
+    var friends = $localStorage.getArray('friends');
     friends.push(data);
     $localStorage.setObject('friends',friends);
     $rootScope.friends.push(data);
     $scope.word ="";
     $scope.lockFriend ="";
   });
+
 }
 
 

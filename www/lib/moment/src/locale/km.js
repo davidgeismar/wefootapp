@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : khmer (km)
-//! author : Kruy Vanna : https://github.com/kruyvanna
+//! author : Kruy Vanna : http://github.com/kruyvanna
 
 import moment from '../moment';
 

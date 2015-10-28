@@ -177,7 +177,7 @@ window.ionic.version = '1.0.0';
      * @ngdoc method
      * @name ionic.DomUtil#requestAnimationFrame
      * @alias ionic.requestAnimationFrame
-     * @description Calls [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
+     * @description Calls [requestAnimationFrame](http://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame), or a polyfill if not available.
      * @param {function} callback The function to call when the next frame
      * happens.
      */
@@ -2493,7 +2493,7 @@ window.ionic.version = '1.0.0';
   })();
 
   // classList polyfill for them older Androids
-  // https://gist.github.com/devongovett/1381839
+  // http://gist.github.com/devongovett/1381839
   if (!("classList" in document.documentElement) && Object.defineProperty && typeof HTMLElement !== 'undefined') {
     Object.defineProperty(HTMLElement.prototype, 'classList', {
       get: function() {
@@ -2552,8 +2552,8 @@ window.ionic.version = '1.0.0';
  *
  * Out of the box, Ionic automatically removes the 300ms delay in order to make Ionic apps
  * feel more "native" like. Resultingly, other solutions such as
- * [fastclick](https://github.com/ftlabs/fastclick) and Angular's
- * [ngTouch](https://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
+ * [fastclick](http://github.com/ftlabs/fastclick) and Angular's
+ * [ngTouch](http://docs.angularjs.org/api/ngTouch) should not be included, to avoid conflicts.
  *
  * Some browsers already remove the delay with certain settings, such as the CSS property
  * `touch-events: none` or with specific meta tag viewport values. However, each of these
@@ -2591,7 +2591,7 @@ window.ionic.version = '1.0.0';
  * - Works with labels surrounding inputs
  * - Does not fire off a click if the user moves the pointer too far
  * - Adds and removes an 'activated' css class
- * - Multiple [unit tests](https://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
+ * - Multiple [unit tests](http://github.com/driftyco/ionic/blob/master/test/unit/utils/tap.unit.js) for each scenario
  *
  */
 /*
@@ -3472,7 +3472,7 @@ ionic.DomUtil.ready(function() {
  * which can cause layout issues such as pushing headers up and out of view.
  *
  * The keyboard fixes work best in conjunction with the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard),
+ * [Ionic Keyboard Plugin](http://github.com/driftyco/ionic-plugins-keyboard),
  * although it will perform reasonably well without.  However, if you are using
  * Cordova there is no reason not to use the plugin.
  *
@@ -3489,7 +3489,7 @@ ionic.DomUtil.ready(function() {
  *
  * ### Plugin Usage
  * Information on using the plugin can be found at
- * [https://github.com/driftyco/ionic-plugins-keyboard](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [http://github.com/driftyco/ionic-plugins-keyboard](http://github.com/driftyco/ionic-plugins-keyboard).
  *
  * ----------
  *
@@ -4281,7 +4281,7 @@ function viewportUpdate() {
 
     if (version > 7) {
       // iPad >= 7.1
-      // https://issues.apache.org/jira/browse/CB-4323
+      // http://issues.apache.org/jira/browse/CB-4323
       delete viewportProperties.width;
 
     } else {
@@ -4383,7 +4383,7 @@ ionic.Platform.ready(function() {
  *
  * Copyright 2011, Zynga Inc.
  * Licensed under the MIT License.
- * https://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
+ * http://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
  *
  * Based on the work of: Unify Project (unify-project.org)
  * http://unify-project.org
@@ -4617,7 +4617,7 @@ var zyngaCore = { effect: {} };
  *
  * Copyright 2011, Zynga Inc.
  * Licensed under the MIT License.
- * https://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
+ * http://raw.github.com/zynga/scroller/master/MIT-LICENSE.txt
  *
  * Based on the work of: Unify Project (unify-project.org)
  * http://unify-project.org
@@ -7065,7 +7065,7 @@ ionic.scroll = {
 
       function animateScroll(Y, X) {
         // scroll animation loop w/ easing
-        // credit https://gist.github.com/dezinezync/5487119
+        // credit http://gist.github.com/dezinezync/5487119
         var start = Date.now(),
           duration = 1000, //milliseconds
           fromY = self.el.scrollTop,
@@ -13728,7 +13728,7 @@ function Browser(window, document, $log, $sniffer) {
 
       // Don't change anything if previous and current URLs and states match. This also prevents
       // IE<10 from getting into redirect loop when in LocationHashbangInHtml5Url mode.
-      // See https://github.com/angular/angular.js/commit/ffb2701
+      // See http://github.com/angular/angular.js/commit/ffb2701
       if (lastBrowserUrl === url && (!$sniffer.history || sameState)) {
         return self;
       }
@@ -13761,7 +13761,7 @@ function Browser(window, document, $log, $sniffer) {
     } else {
       // - reloadLocation is needed as browsers don't allow to read out
       //   the new location.href if a reload happened.
-      // - the replacement is a workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=407172
+      // - the replacement is a workaround for http://bugzilla.mozilla.org/show_bug.cgi?id=407172
       return reloadLocation || location.href.replace(/%27/g,"'");
     }
   };
@@ -17097,7 +17097,7 @@ function $ControllerProvider() {
      * `$controller` service is responsible for instantiating controllers.
      *
      * It's just a simple call to {@link auto.$injector $injector}, but extracted into
-     * a service, so that one can override this service with [BC version](https://gist.github.com/1649788).
+     * a service, so that one can override this service with [BC version](http://gist.github.com/1649788).
      */
     return function(expression, locals, later, ident) {
       // PRIVATE API:
@@ -17501,7 +17501,7 @@ function $HttpProvider() {
      *
      * @description
      * The `$http` service is a core Angular service that facilitates communication with the remote
-     * HTTP servers via the browser's [XMLHttpRequest](https://developer.mozilla.org/en/xmlhttprequest)
+     * HTTP servers via the browser's [XMLHttpRequest](http://developer.mozilla.org/en/xmlhttprequest)
      * object or via [JSONP](http://en.wikipedia.org/wiki/JSONP).
      *
      * For unit testing applications that use `$http` service, see
@@ -17854,7 +17854,7 @@ function $HttpProvider() {
      * that only JavaScript running on your domain could have sent the request. The token must be
      * unique for each user and must be verifiable by the server (to prevent the JavaScript from
      * making up its own tokens). We recommend that the token is a digest of your site's
-     * authentication cookie with a [salt](https://en.wikipedia.org/wiki/Salt_(cryptography&#41;)
+     * authentication cookie with a [salt](http://en.wikipedia.org/wiki/Salt_(cryptography&#41;)
      * for added security.
      *
      * The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
@@ -17895,10 +17895,10 @@ function $HttpProvider() {
      *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
      *      that should abort the request when resolved.
      *    - **withCredentials** - `{boolean}` - whether to set the `withCredentials` flag on the
-     *      XHR object. See [requests with credentials](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
+     *      XHR object. See [requests with credentials](http://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
      *      for more information.
      *    - **responseType** - `{string}` - see
-     *      [requestType](https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType).
+     *      [requestType](http://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType).
      *
      * @returns {HttpPromise} Returns a {@link ng.$q promise} object with the
      *   standard `then` method and two http specific methods: `success` and `error`. The `then`
@@ -17932,11 +17932,11 @@ function $HttpProvider() {
     <button id="samplegetbtn" ng-click="updateModel('GET', 'http-hello.html')">Sample GET</button>
     <button id="samplejsonpbtn"
       ng-click="updateModel('JSONP',
-                    'https://angularjs.org/greet.php?callback=JSON_CALLBACK&name=Super%20Hero')">
+                    'http://angularjs.org/greet.php?callback=JSON_CALLBACK&name=Super%20Hero')">
       Sample JSONP
     </button>
     <button id="invalidjsonpbtn"
-      ng-click="updateModel('JSONP', 'https://angularjs.org/doesntexist&callback=JSON_CALLBACK')">
+      ng-click="updateModel('JSONP', 'http://angularjs.org/doesntexist&callback=JSON_CALLBACK')">
         Invalid JSONP
       </button>
     <pre>http status code: {{status}}</pre>
@@ -17989,7 +17989,7 @@ function $HttpProvider() {
     expect(data.getText()).toMatch(/Hello, \$http!/);
   });
 
-// Commented out due to flakes. See https://github.com/angular/angular.js/issues/9185
+// Commented out due to flakes. See http://github.com/angular/angular.js/issues/9185
 // it('should make a JSONP request to angularjs.org', function() {
 //   sampleJsonpBtn.click();
 //   fetchBtn.click();
@@ -18495,7 +18495,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
 
       var requestError = function() {
         // The response is always empty
-        // See https://xhr.spec.whatwg.org/#request-error-steps and https://fetch.spec.whatwg.org/#concept-network-error
+        // See http://xhr.spec.whatwg.org/#request-error-steps and http://fetch.spec.whatwg.org/#concept-network-error
         completeRequest(callback, -1, null, null, '');
       };
 
@@ -18511,7 +18511,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
           xhr.responseType = responseType;
         } catch (e) {
           // WebKit added support for the json responseType value on 09/03/2013
-          // https://bugs.webkit.org/show_bug.cgi?id=73648. Versions of Safari prior to 7 are
+          // http://bugs.webkit.org/show_bug.cgi?id=73648. Versions of Safari prior to 7 are
           // known to throw when setting the value "json" as the response type. Other older
           // browsers implementing the responseType
           //
@@ -19849,7 +19849,7 @@ function locationGetterSetter(property, preprocess) {
  *
  * @description
  * The $location service parses the URL in the browser address bar (based on the
- * [window.location](https://developer.mozilla.org/en/window.location)) and makes the URL
+ * [window.location](http://developer.mozilla.org/en/window.location)) and makes the URL
  * available to your application. Changes to the URL in the address bar are reflected into
  * $location service and changes to $location are reflected into the browser address bar.
  *
@@ -20339,7 +20339,7 @@ var $parseMinErr = minErr('$parse');
 // Similarly we prevent invocations of function known to be dangerous, as well as assignments to
 // native objects.
 //
-// See https://docs.angularjs.org/guide/security
+// See http://docs.angularjs.org/guide/security
 
 
 function ensureSafeMemberName(name, fullExpression) {
@@ -21583,7 +21583,7 @@ function $ParseProvider() {
  * when they are done processing.
  *
  * This is an implementation of promises/deferred objects inspired by
- * [Kris Kowal's Q](https://github.com/kriskowal/q).
+ * [Kris Kowal's Q](http://github.com/kriskowal/q).
  *
  * $q can be used in two fashions --- one which is more similar to Kris Kowal's Q or jQuery's Deferred
  * implementations, and the other which resembles ES6 promises to some degree.
@@ -21592,7 +21592,7 @@ function $ParseProvider() {
  *
  * The streamlined ES6 style promise is essentially just using $q as a constructor which takes a `resolver`
  * function as the first argument. This is similar to the native Promise implementation from ES6 Harmony,
- * see [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+ * see [MDN](http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
  *
  * While the constructor-style use is supported, not all of the supporting methods from ES6 Harmony promises are
  * available yet.
@@ -21667,11 +21667,11 @@ function $ParseProvider() {
  *
  * At first it might not be obvious why this extra complexity is worth the trouble. The payoff
  * comes in the way of guarantees that promise and deferred APIs make, see
- * https://github.com/kriskowal/uncommonjs/blob/master/promises/specification.md.
+ * http://github.com/kriskowal/uncommonjs/blob/master/promises/specification.md.
  *
  * Additionally the promise api allows for composition that is very hard to do with the
  * traditional callback ([CPS](http://en.wikipedia.org/wiki/Continuation-passing_style)) approach.
- * For more on this please see the [Q documentation](https://github.com/kriskowal/q) especially the
+ * For more on this please see the [Q documentation](http://github.com/kriskowal/q) especially the
  * section on serial or parallel joining of promises.
  *
  * # The Deferred API
@@ -21722,7 +21722,7 @@ function $ParseProvider() {
  * - `finally(callback, notifyCallback)` – allows you to observe either the fulfillment or rejection of a promise,
  *   but to do so without modifying the final value. This is useful to release resources or do some
  *   clean-up that needs to be done whether the promise was rejected or resolved. See the [full
- *   specification](https://github.com/kriskowal/q/wiki/API-Reference#promisefinallycallback) for
+ *   specification](http://github.com/kriskowal/q/wiki/API-Reference#promisefinallycallback) for
  *   more information.
  *
  * # Chaining promises
@@ -22427,7 +22427,7 @@ function $RootScopeProvider() {
        * - The `listener` is called only when the value from the current `watchExpression` and the
        *   previous call to `watchExpression` are not equal (with the exception of the initial run,
        *   see below). Inequality is determined according to reference inequality,
-       *   [strict comparison](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators)
+       *   [strict comparison](http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators)
        *    via the `!==` Javascript operator, unless `objectEquality == true`
        *   (see next point)
        * - When `objectEquality == true`, inequality of the `watchExpression` is determined
@@ -23060,9 +23060,9 @@ function $RootScopeProvider() {
         // and inline caches.
         //
         // see:
-        // - https://code.google.com/p/v8/issues/detail?id=2073#c26
-        // - https://github.com/angular/angular.js/issues/6794#issuecomment-38648909
-        // - https://github.com/angular/angular.js/issues/1313#issuecomment-10378451
+        // - http://code.google.com/p/v8/issues/detail?id=2073#c26
+        // - http://github.com/angular/angular.js/issues/6794#issuecomment-38648909
+        // - http://github.com/angular/angular.js/issues/1313#issuecomment-10378451
 
         this.$parent = this.$$nextSibling = this.$$prevSibling = this.$$childHead =
             this.$$childTail = this.$root = this.$$watchers = null;
@@ -24047,7 +24047,7 @@ function $SceDelegateProvider() {
  *
  * *Please note*:
  * The browser's
- * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
+ * [Same Origin Policy](http://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
  * policy apply in addition to this and may further restrict whether the template is successfully
  * loaded.  This means that without the right CORS policy, loading templates from a different domain
@@ -24121,7 +24121,7 @@ function $SceDelegateProvider() {
  *      (even when the RegExp did not have the `^` and `$` codes.)  In addition, any flags
  *      present on the RegExp (such as multiline, global, ignoreCase) are ignored.
  *    - If you are generating your JavaScript from some other templating engine (not
- *      recommended, e.g. in issue [#4006](https://github.com/angular/angular.js/issues/4006)),
+ *      recommended, e.g. in issue [#4006](http://github.com/angular/angular.js/issues/4006)),
  *      remember to escape your regular expression (and be aware that you might need more than
  *      one level of escaping depending on your templating engine and the way you interpolated
  *      the value.)  Do make use of your platform's escaping mechanism as it might be good
@@ -24672,7 +24672,7 @@ function $SnifferProvider() {
       // Android has history.pushState, but it does not update location correctly
       // so let's not use the history API at all.
       // http://code.google.com/p/android/issues/detail?id=17471
-      // https://github.com/angular/angular.js/issues/904
+      // http://github.com/angular/angular.js/issues/904
 
       // older webkit browser (533.9) on Boxee box has exactly the same problem as Android has
       // so let's not use the history API also
@@ -25006,7 +25006,7 @@ var originUrl = urlResolve(window.location.href);
  *   http://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement
  *   http://www.aptana.com/reference/html/api/HTMLAnchorElement.html
  *   http://url.spec.whatwg.org/#urlutils
- *   https://github.com/angular/angular.js/pull/2902
+ *   http://github.com/angular/angular.js/pull/2902
  *   http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
  *
  * @kind function
@@ -25528,7 +25528,7 @@ function deepCompare(actual, expected, comparator, matchAgainstAnyProp, dontMatc
        it('should update', function() {
          if (browser.params.browser == 'safari') {
            // Safari does not understand the minus key. See
-           // https://github.com/angular/protractor/issues/481
+           // http://github.com/angular/protractor/issues/481
            return;
          }
          element(by.model('amount')).clear();
@@ -25655,7 +25655,7 @@ function formatNumber(number, pattern, groupSep, decimalSep, fractionSize) {
 
     // safely round numbers in JS without hitting imprecisions of floating-point arithmetics
     // inspired by:
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+    // http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round
     number = +(Math.round(+(number.toString() + 'e' + fractionSize)).toString() + 'e' + -fractionSize);
 
     var fraction = ('' + number).split(DECIMAL_SEP);
@@ -27346,7 +27346,7 @@ var ngFormDirective = formDirectiveFactory(true);
   $ngModelMinErr: false,
 */
 
-// Regex code is obtained from SO: https://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime#answer-3143231
+// Regex code is obtained from SO: http://stackoverflow.com/questions/3143070/javascript-regex-iso-datetime#answer-3143231
 var ISO_DATE_REGEXP = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/;
 var URL_REGEXP = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/;
 var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -27511,7 +27511,7 @@ var inputType = {
 
         // currently protractor/webdriver does not support
         // sending keys to all known HTML5 input controls
-        // for various browsers (see https://github.com/angular/protractor/issues/562).
+        // for various browsers (see http://github.com/angular/protractor/issues/562).
         function setInput(val) {
           // set the value of the element and force validation.
           var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -27604,7 +27604,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (http://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -27698,7 +27698,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (http://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -27791,7 +27791,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (http://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -27884,7 +27884,7 @@ var inputType = {
 
       // currently protractor/webdriver does not support
       // sending keys to all known HTML5 input controls
-      // for various browsers (https://github.com/angular/protractor/issues/562).
+      // for various browsers (http://github.com/angular/protractor/issues/562).
       function setInput(val) {
         // set the value of the element and force validation.
         var scr = "var ipt = document.getElementById('exampleInput'); " +
@@ -28315,7 +28315,7 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 
   // In composition mode, users are still inputing intermediate text buffer,
   // hold the listener until composition is done.
-  // More about composition events: https://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent
+  // More about composition events: http://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent
   if (!$sniffer.android) {
     var composing = false;
 
@@ -28557,7 +28557,7 @@ function badInputChecker(scope, element, attr, ctrl) {
   if (nativeValidation) {
     ctrl.$parsers.push(function(value) {
       var validity = element.prop(VALIDITY_STATE_PROPERTY) || {};
-      // Detect bug in FF35 for input[email] (https://bugzilla.mozilla.org/show_bug.cgi?id=1064430):
+      // Detect bug in FF35 for input[email] (http://bugzilla.mozilla.org/show_bug.cgi?id=1064430):
       // - also sets validity.badInput (should only be validity.typeMismatch).
       // - see http://www.whatwg.org/specs/web-apps/current-work/multipage/forms.html#e-mail-state-(type=email)
       // - can ignore this case as we can still read out the erroneous email...
@@ -29903,7 +29903,7 @@ var ngControllerDirective = [function() {
  *
  * @element html
  * @description
- * Enables [CSP (Content Security Policy)](https://developer.mozilla.org/en/Security/CSP) support.
+ * Enables [CSP (Content Security Policy)](http://developer.mozilla.org/en/Security/CSP) support.
  *
  * This is necessary when developing things like Google Chrome Extensions or Universal Windows Apps.
  *
@@ -30474,7 +30474,7 @@ forEach(
  * @description
  * Specify custom behavior on blur event.
  *
- * A [blur event](https://developer.mozilla.org/en-US/docs/Web/Events/blur) fires when
+ * A [blur event](http://developer.mozilla.org/en-US/docs/Web/Events/blur) fires when
  * an element has lost focus.
  *
  * Note: As the `blur` event is executed synchronously also during DOM manipulations
@@ -30573,7 +30573,7 @@ forEach(
  * Note that when an element is removed using `ngIf` its scope is destroyed and a new scope
  * is created when the element is restored.  The scope created within `ngIf` inherits from
  * its parent scope using
- * [prototypal inheritance](https://github.com/angular/angular.js/wiki/Understanding-Scopes#javascript-prototypal-inheritance).
+ * [prototypal inheritance](http://github.com/angular/angular.js/wiki/Understanding-Scopes#javascript-prototypal-inheritance).
  * An important implication of this is if `ngModel` is used within `ngIf` to bind to
  * a javascript primitive defined in the parent scope. In this case any modifications made to the
  * variable within the child scope will override (hide) the value in the parent scope.
@@ -30694,7 +30694,7 @@ var ngIfDirective = ['$animate', function($animate) {
  * ng.$sce Strict Contextual Escaping}.
  *
  * In addition, the browser's
- * [Same Origin Policy](https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
+ * [Same Origin Policy](http://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest)
  * and [Cross-Origin Resource Sharing (CORS)](http://www.w3.org/TR/cors/)
  * policy may further restrict whether the template is successfully loaded.
  * For example, `ngInclude` won't work for cross-domain requests on all browsers and for `file://`
@@ -30800,7 +30800,7 @@ var ngIfDirective = ['$animate', function($animate) {
       it('should load template2.html', function() {
         if (browser.params.browser == 'firefox') {
           // Firefox can't handle using selects
-          // See https://github.com/angular/protractor/issues/480
+          // See http://github.com/angular/protractor/issues/480
           return;
         }
         templateSelect.click();
@@ -30955,7 +30955,7 @@ var ngIncludeFillContentDirective = ['$compile',
       require: 'ngInclude',
       link: function(scope, $element, $attr, ctrl) {
         if (/SVG/.test($element[0].toString())) {
-          // WebKit: https://bugs.webkit.org/show_bug.cgi?id=135698 --- SVG elements do not
+          // WebKit: http://bugs.webkit.org/show_bug.cgi?id=135698 --- SVG elements do not
           // support innerHTML, so detect this here and try to generate the contents
           // specially.
           $element.empty();
@@ -32027,7 +32027,7 @@ var NgModelController = ['$scope', '$exceptionHandler', '$attrs', '$element', '$
  *
  * For best practices on using `ngModel`, see:
  *
- *  - [Understanding Scopes](https://github.com/angular/angular.js/wiki/Understanding-Scopes)
+ *  - [Understanding Scopes](http://github.com/angular/angular.js/wiki/Understanding-Scopes)
  *
  * For basic examples, how to use `ngModel`, see:
  *
@@ -33390,7 +33390,7 @@ var ngShowDirective = ['$animate', function($animate) {
         // we're adding a temporary, animation-specific class for ng-hide since this way
         // we can control when the element is actually displayed on screen without having
         // to have a global/greedy CSS selector that breaks when other animations are run.
-        // Read: https://github.com/angular/angular.js/issues/9103#issuecomment-58335845
+        // Read: http://github.com/angular/angular.js/issues/9103#issuecomment-58335845
         $animate[value ? 'removeClass' : 'addClass'](element, NG_HIDE_CLASS, {
           tempClasses: NG_HIDE_IN_PROGRESS_CLASS
         });
@@ -34164,7 +34164,7 @@ var selectDirective = ['$compile', '$parse', function($compile,   $parse) {
           $element.val(value);
           if (unknownOption.parent()) unknownOption.remove();
         }
-        // Workaround for https://code.google.com/p/chromium/issues/detail?id=381459
+        // Workaround for http://code.google.com/p/chromium/issues/detail?id=381459
         // Adding an <option selected="selected"> element to a <select required="required"> should
         // automatically select the new element
         if (element && element[0].hasAttribute('selected')) {
@@ -37181,7 +37181,7 @@ var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a
         "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
 
 // SVG Elements
-// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
+// http://wiki.whatwg.org/wiki/Sanitization_rules#svg_Elements
 var svgElements = makeMap("animate,animateColor,animateMotion,animateTransform,circle,defs," +
         "desc,ellipse,font-face,font-face-name,font-face-src,g,glyph,hkern,image,linearGradient," +
         "line,marker,metadata,missing-glyph,mpath,path,polygon,polyline,radialGradient,rect,set," +
@@ -37207,7 +37207,7 @@ var htmlAttrs = makeMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspac
     'valign,value,vspace,width');
 
 // SVG attributes (without "id" and "name" attributes)
-// https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
+// http://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
 var svgAttrs = makeMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
     'attributeName,attributeType,baseProfile,bbox,begin,by,calcMode,cap-height,class,color,' +
     'color-rendering,content,cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,' +
@@ -44335,7 +44335,7 @@ function($rootScope, $ionicBody, $compile, $timeout, $ionicPlatform, $ionicTempl
      *    Default: 'slide-in-up'
      *  - `{boolean=}` `focusFirstInput` Whether to autofocus the first input of
      *    the modal when shown. Will only show the keyboard on iOS, to force the keyboard to show
-     *    on Android, please use the [Ionic keyboard plugin](https://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
+     *    on Android, please use the [Ionic keyboard plugin](http://github.com/driftyco/ionic-plugin-keyboard#keyboardshow).
      *    Default: false.
      *  - `{boolean=}` `backdropClickToClose` Whether to close the modal on clicking the backdrop.
      *    Default: true.
@@ -44782,8 +44782,8 @@ IonicModule
          * @description
          * Add Cordova event listeners, such as `pause`, `resume`, `volumedownbutton`, `batterylow`,
          * `offline`, etc. More information about available event types can be found in
-         * [Cordova's event documentation](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
-         * @param {string} type Cordova [event type](https://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * [Cordova's event documentation](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
+         * @param {string} type Cordova [event type](http://cordova.apache.org/docs/en/edge/cordova_events_events.md.html#Events).
          * @param {function} callback Called when the Cordova event is fired.
          * @returns {function} Returns a deregistration function to remove the event listener.
          */
@@ -45542,8 +45542,8 @@ function($ionicTemplateLoader, $ionicBackdrop, $q, $timeout, $rootScope, $ionicB
  * It is meant to be used where we need to absolute-position DOM elements in
  * relation to other, existing elements (this is the case for tooltips, popovers, etc.).
  *
- * Adapted from [AngularUI Bootstrap](https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
- * ([license](https://github.com/angular-ui/bootstrap/blob/master/LICENSE))
+ * Adapted from [AngularUI Bootstrap](http://github.com/angular-ui/bootstrap/blob/master/src/position/position.js),
+ * ([license](http://github.com/angular-ui/bootstrap/blob/master/LICENSE))
  */
 IonicModule
 .factory('$ionicPosition', ['$document', '$window', function($document, $window) {
@@ -48685,7 +48685,7 @@ IonicModule
 
     function scrollTo(Y, duration, callback) {
       // scroll animation loop w/ easing
-      // credit https://gist.github.com/dezinezync/5487119
+      // credit http://gist.github.com/dezinezync/5487119
       var start = Date.now(),
           from = lastOverscroll;
 
@@ -50285,7 +50285,7 @@ IonicModule
  *
  * - The iOS webview has a performance bottleneck when switching out `<img src>` attributes.
  *   To increase performance of images on iOS, cache your images in advance and,
- *   if possible, lower the number of unique images. We're working on [a solution](https://github.com/driftyco/ionic/issues/3194).
+ *   if possible, lower the number of unique images. We're working on [a solution](http://github.com/driftyco/ionic/issues/3194).
  *
  * @usage
  * #### Basic Item List ([codepen](http://codepen.io/ionic/pen/0c2c35a34a8b18ad4d793fef0b081693))
@@ -51274,7 +51274,7 @@ function RepeatManagerFactory($rootScope, $window, $$rAF) {
  * after the content has been added.
  *
  * Be aware that this directive gets its own child scope. If you do not understand why this
- * is important, you can read [https://docs.angularjs.org/guide/scope](https://docs.angularjs.org/guide/scope).
+ * is important, you can read [http://docs.angularjs.org/guide/scope](http://docs.angularjs.org/guide/scope).
  *
  * @param {string=} delegate-handle The handle used to identify this scrollView
  * with {@link ionic.service:$ionicScrollDelegate}.
@@ -52421,7 +52421,7 @@ IonicModule
  *
  * ### Notes
  * - This directive requires the
- * [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugins-keyboard).
+ * [Ionic Keyboard Plugin](http://github.com/driftyco/ionic-plugins-keyboard).
  * - On Android not in fullscreen mode, i.e. you have
  *   `<preference name="Fullscreen" value="false" />` or no preference in your `config.xml` file,
  *   this directive is unnecessary since it is the default behavior.
@@ -53255,7 +53255,7 @@ IonicModule
  *
  * The ionNavView directive is used to render templates in your application. Each template
  * is part of a state. States are usually mapped to a url, and are defined programatically
- * using angular-ui-router (see [their docs](https://github.com/angular-ui/ui-router/wiki),
+ * using angular-ui-router (see [their docs](http://github.com/angular-ui/ui-router/wiki),
  * and remember to replace ui-view with ion-nav-view in examples).
  *
  * @usage
@@ -53360,7 +53360,7 @@ IonicModule
  *
  * ## AngularUI Router
  *
- * Please visit [AngularUI Router's docs](https://github.com/angular-ui/ui-router/wiki) for
+ * Please visit [AngularUI Router's docs](http://github.com/angular-ui/ui-router/wiki) for
  * more info. Below is a great video by the AngularUI Router team that may help to explain
  * how it all works:
  *
@@ -53731,7 +53731,7 @@ IonicModule
  *
  * ```html
  * <ion-scroll zooming="true" direction="xy" style="width: 500px; height: 500px">
- *   <div style="width: 5000px; height: 5000px; background: url('https://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
+ *   <div style="width: 5000px; height: 5000px; background: url('http://upload.wikimedia.org/wikipedia/commons/a/ad/Europe_geological_map-en.jpg') repeat"></div>
  *  </ion-scroll>
  * ```
  *

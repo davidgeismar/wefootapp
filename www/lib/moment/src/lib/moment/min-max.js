@@ -3,7 +3,7 @@ import isArray from '../utils/is-array';
 import { createLocal } from '../create/local';
 
 export var prototypeMin = deprecate(
-     'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
+     'moment().min is deprecated, use moment.min instead. http://github.com/moment/moment/issues/1548',
      function () {
          var other = createLocal.apply(null, arguments);
          return other < this ? this : other;
@@ -11,7 +11,7 @@ export var prototypeMin = deprecate(
  );
 
 export var prototypeMax = deprecate(
-    'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
+    'moment().max is deprecated, use moment.max instead. http://github.com/moment/moment/issues/1548',
     function () {
         var other = createLocal.apply(null, arguments);
         return other > this ? this : other;

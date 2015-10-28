@@ -58,14 +58,12 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	$scope.init = function(){
 		$http.get(serverAddress+'/getVotedStatus/'+$scope.user.id+'/'+$scope.foot.id).success(function(result){
 				//result (vrai == déjà voté, faux == pas encore voté)
-				console.log(result);
 				if(!result){
 					$scope.alreadyVoted = false;
 					$ionicLoading.hide();
 			//On récupère les joueurs d'un match
 			$http.get(serverAddress+'/getVoters/'+$scope.foot.id).success(function(results){
 				$scope.users = results;
-				console.log(results);
 			}).error(function(){
 				console.log('err');
 			});
@@ -83,7 +81,6 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 			$ionicLoading.hide();
 			$scope.showAlert();
 			//AJOUTER UNE ALERTE
-			console.log("déjà voté pour cette partie")	
 		}
 	});
 	}
@@ -101,7 +98,6 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 		});
 		alertPopup.then(function(res) {
 			$location.path('/user/notif');
-			console.log('goBack');
 		});
 	}
 
@@ -115,7 +111,6 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 		});
 		alertPopup.then(function(res) {
 			$location.path('/user/notif');
-			console.log('goBack');
 		});
 	}
 })

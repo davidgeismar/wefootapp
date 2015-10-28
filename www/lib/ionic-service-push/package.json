@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/driftyco/ionic-service-push-client.git"
+    "url": "git+http://github.com/driftyco/ionic-service-push-client.git"
   },
   "keywords": [
     "Ionic",
@@ -16,7 +16,7 @@
   "author": "Ionic",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/driftyco/ionic-service-push-client/issues"
+    "url": "http://github.com/driftyco/ionic-service-push-client/issues"
   },
-  "homepage": "https://github.com/driftyco/ionic-service-push-client#readme"
+  "homepage": "http://github.com/driftyco/ionic-service-push-client#readme"
 }

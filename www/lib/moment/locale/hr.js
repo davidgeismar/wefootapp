@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : hrvatski (hr)
-//! author : Bojan Marković : https://github.com/bmarkovic
+//! author : Bojan Marković : http://github.com/bmarkovic
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

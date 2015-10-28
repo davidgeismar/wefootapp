@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : Luxembourgish (lb)
-//! author : mweimerskirch : https://github.com/mweimerskirch, David Raison : https://github.com/kwisatz
+//! author : mweimerskirch : http://github.com/mweimerskirch, David Raison : http://github.com/kwisatz
 
 import moment from '../moment';
 

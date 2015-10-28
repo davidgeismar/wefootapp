@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : tibetan (bo)
-//! author : Thupten N. Chakrishar : https://github.com/vajradog
+//! author : Thupten N. Chakrishar : http://github.com/vajradog
 
 import moment from '../moment';
 

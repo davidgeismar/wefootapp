@@ -1,6 +1,6 @@
 //! moment.js locale configuration
 //! locale : Sinhalese (si)
-//! author : Sampath Sitinamaluwa : https://github.com/sampathsris
+//! author : Sampath Sitinamaluwa : http://github.com/sampathsris
 
 (function (global, factory) {
    typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('../moment')) :

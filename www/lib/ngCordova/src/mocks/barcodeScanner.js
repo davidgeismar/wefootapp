@@ -33,7 +33,7 @@ ngCordovaMocks.factory('$cordovaBarcodeScanner', ['$q', function($q) {
 		 * @description
 		 * Used to simulate the result.text property of a
 		 * successful scan. For more information, see the text at 
-		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * http://github.com/wildabeast/BarcodeScanner/#using-the-plugin
 		 * This property should only be used in automated tests.
 		**/		
 		scannedText: scannedText,
@@ -46,7 +46,7 @@ ngCordovaMocks.factory('$cordovaBarcodeScanner', ['$q', function($q) {
 		 * @description
 		 * Used to simulate the result.format property of a
 		 * successful scan. For more information, see the text at 
-		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * http://github.com/wildabeast/BarcodeScanner/#using-the-plugin
 		 * This property should only be used in automated tests.
 		**/
 		scannedFormat: scannedFormat,
@@ -59,7 +59,7 @@ ngCordovaMocks.factory('$cordovaBarcodeScanner', ['$q', function($q) {
 		 * @description
 		 * Used to simulate the result.cancelled property of a
 		 * successful scan. For more information, see the text at 
-		 * https://github.com/wildabeast/BarcodeScanner/#using-the-plugin
+		 * http://github.com/wildabeast/BarcodeScanner/#using-the-plugin
 		 * This property should only be used in automated tests.
 		**/
 		wasCancelled: wasCancelled,

@@ -77,7 +77,7 @@ ngCordovaMocks.factory('$cordovaDeviceOrientation', ['$interval', '$q', function
 			if (self.throwsError) {
 				defer.reject('There was an error getting the compass heading.');
 			} else {
-				var delay = 100;		// The default based on https://github.com/apache/cordova-plugin-device-orientation/blob/master/doc/index.md
+				var delay = 100;		// The default based on http://github.com/apache/cordova-plugin-device-orientation/blob/master/doc/index.md
 				if (options && options.frequency) {
 					delay = options.frequency;
 				}
