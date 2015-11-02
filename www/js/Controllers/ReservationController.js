@@ -154,7 +154,7 @@ $scope.reset = function(){
     }
 
   })
-.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location,$validated) {
+.controller('PaiementController', function ($localStorage,$scope,$ionicModal,$rootScope, $http, $paiement,$ionicLoading,$location,$validated,$timeout) {
   var user = $localStorage.getObject('user');
   if(!user.birthday || !user.telephone){
 
@@ -172,6 +172,7 @@ $scope.reset = function(){
       if($scope.infos.telephone.length>9 && $scope.infos.birthday){
         $http.post(serverAddress+'/user/update',$scope.infos).success(function(newUser){
           user = newUser;
+          console.log(user);
           $paiement.getAllCards(newUser,function(card,newUser){
             $scope.cards = [];
             $localStorage.setObject('user',newUser);
@@ -227,8 +228,8 @@ $scope.reset = function(){
         $scope.err = 'Erreur une carte à surement déjà été enregistrée pour ce foot';
       else
         $validated.show({texte: "Votre réservation à bien été enregistrée", icon: "ion-checkmark-round"},function(){
-          $location.path('/foot/'+$localStorage.reservationClient.foot);
         });
+        $timeout(function(){$location.path('/foot/'+$localStorage.reservationClient.foot)},1000);
     });
   }
 })
