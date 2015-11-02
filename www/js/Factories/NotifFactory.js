@@ -37,16 +37,16 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
     $http.get(serverAddress+'/user/get/'+notif.related_user).success(function(user){
       if(notif.typ=="endGame"){
         if(user.id == $localStorage.getObject('user').id)
-            notif.userName = "Votre foot est terminé, ";
-          else
-            notif.userName = "Le foot de "+user.first_name+" est terminé, ";
-        }
-        else{
-          if(user.id == $localStorage.getObject('user').id)
-           notif.userName = "Vous";
-         else
-          notif.userName = user.first_name;
+          notif.userName = "Votre foot est terminé, ";
+        else
+          notif.userName = "Le foot de "+user.first_name+" est terminé, ";
       }
+      else{
+        if(user.id == $localStorage.getObject('user').id)
+         notif.userName = "Vous";
+       else
+        notif.userName = user.first_name;
+    }
 
     notif.picture = user.picture;
     notif.texte = parseNotif(notif.typ)[0];
@@ -111,7 +111,7 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
           callback();
         }
       });
-    }
+}
 };
 
 handle.notify = function(notif,callback,push){
@@ -139,8 +139,20 @@ handle.push = function(texte, users, data, callback){
     callback = function(){};
   if(users[0] && typeof(users[0])!= 'number')
     users = _.pluck(users,'id');
-    users = _.reject(users,function(elem){return elem == user.id;});
+  users = _.reject(users,function(elem){return elem == user.id;});
   $http.post(serverAddress+'/push/sendPush',{texte:texte,user:users, data:data}).success(function(){callback();});
+}
+
+handle.pushChat = function(texte, users, data, chatId ,callback){
+  var user = $localStorage.getObject('user');
+  if(texte.length > 100)
+    texte = texte.substring(0,47)+"...";
+  if(!callback)
+    callback = function(){};
+  if(users[0] && typeof(users[0])!= 'number')
+    users = _.pluck(users,'id');
+  users = _.reject(users,function(elem){return elem == user.id;});
+  $http.post(serverAddress+'/push/sendChatPush',{texte:texte,user:users, data:data, chat:chatId}).success(function(){callback();});
 }
 
 return handle;

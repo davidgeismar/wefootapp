@@ -60,7 +60,7 @@ $scope.datepickerObject = {
       inputDate: $scope.currentDate,    //Optional
       mondayFirst: true,    //Optional
       // disabledDates: disabledDates, //Optional
-      weekDaysList: ["Lun", "Mar","Mer","Jeu","Ven","Sam","Dim"], //Optional
+      weekDaysList: ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"], //Optional
       monthList: ["Jan","Fev","Mar","Avr","Mai","Juin","Jui","Aou","Sep","Oct", "Nov", "Dec"], //Optional
       templateType: 'modal', //Optional
       showTodayButton: 'true', //Optional
@@ -69,10 +69,10 @@ $scope.datepickerObject = {
       from: from,   //Optional
       to: to,   //Optional
       callback: function (val) {    //Mandatory
-          $scope.foot.date = val;
-          $scope.date = getJour(val);
-        }
-      };
+        $scope.foot.date = val;
+        $scope.date = getJour(val);
+      }
+    };
 
     $scope.showHourPicker = function(){
       $foot.pickHour($scope.foot.date, function(dates){
@@ -246,14 +246,18 @@ if($location.path().indexOf('user/foots')>-1){
   }
 
   $scope.openPublic = function(){
-    $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
-      $scope.foot.priv = false;
+    $confirmation('Etes vous sur de vouloir ouvrir ce foot au public ?',function(){
+      $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: false}).success(function(){
+        $scope.foot.priv = false;
+      });
     });
   }
 
   $scope.closePublic = function(){
-    $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
-      $scope.foot.priv = true;
+    $confirmation('Etes vous sur de vouloir fermer ce foot au public ?',function(){
+      $http.post(serverAddress+'/foot/update',{id: $scope.foot.id, priv: true}).success(function(){
+        $scope.foot.priv = true;
+      });
     });
   }
 
@@ -417,7 +421,6 @@ new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000),new Date(new Date().get
 $scope.getData = function(){
   $foot.searchFoot($rootScope.paramsFinder,function(results){
     $scope.results = results;
-    console.log(results);
   })
 }
 

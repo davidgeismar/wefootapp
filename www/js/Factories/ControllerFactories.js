@@ -261,12 +261,13 @@ return profil;
     {
       date: new Date(),
       minuteInterval: 30,
-      mode: 'time', // or 'time'
+      mode: 'time',
       doneButtonLabel: 'OK',
       doneButtonColor: '#000000',
       cancelButtonLabel: 'CANCEL',
       cancelButtonColor: '#000000',
-      is24Hour:true
+      is24Hour:true,
+      locale:"fr_fr"
     }];
   }
 
@@ -282,7 +283,24 @@ return profil;
   }
 
   foot.pickHour = function(date,callback){
-    $cordovaDatePicker.show(foot.getOptionsDatepicker()[1]).then(function(dateChosen){
+    var options =
+    {
+      minuteInterval: 30,
+      mode: 'time',
+      doneButtonLabel: 'OK',
+      doneButtonColor: '#000000',
+      cancelButtonLabel: 'CANCEL',
+      cancelButtonColor: '#000000',
+      is24Hour:true,
+      locale:"fr_fr"
+    };
+
+    if(date)
+      options.date = date;
+    else
+      options.date = new Date();
+
+    $cordovaDatePicker.show(options).then(function(dateChosen){
       var jour = new Date(dateChosen);
       if(jour.getMinutes()>45){
         jour.setHours(jour.getHours()+1)
@@ -479,7 +497,7 @@ foot.searchFoot = function(params,callback2){
     }
     finish = true;
   });
-  console.log(params);
+ 
   $http.post(serverAddress+'/foot/query',params).success(function(data){
     async.each(data,function(foot,callback){
       var finish = false;
@@ -572,12 +590,13 @@ return foot;
 
       cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
         var pushLocation = '/user/notif';
+        // $localStorage.set('isFromNotif', true);
       // if (pushLocation) {
         if(notification.additionalData && notification.additionalData.url)
           pushLocation = notification.additionalData.url;
         if(!notification.foreground)
           // $localStorage.set('goafterpush',pushLocation); // APP NOT OPEN 
-          $location.path(pushLocation);
+        $location.path(pushLocation);
           // }
         });
     }

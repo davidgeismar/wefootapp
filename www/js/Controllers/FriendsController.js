@@ -1,27 +1,46 @@
 angular.module('friends',[])
 .controller('FriendsCtrl',function($scope, $localStorage, $rootScope,  $http, $location){
 
-  $scope.user = $localStorage.getObject('user');
-  $rootScope.friends = $localStorage.getArray('friends');
-  $scope.results = $rootScope.friends;
+ var clean =  function(s) {
 
-  $scope.addFavorite = function(target){
+  var r=s.toLowerCase();
+  r = r.replace(new RegExp(/\s/g),"");
+  r = r.replace(new RegExp(/[àáâãäå]/g),"a");
+  r = r.replace(new RegExp(/æ/g),"ae");
+  r = r.replace(new RegExp(/ç/g),"c");
+  r = r.replace(new RegExp(/[èéêë]/g),"e");
+  r = r.replace(new RegExp(/[ìíîï]/g),"i");
+  r = r.replace(new RegExp(/ñ/g),"n");                
+  r = r.replace(new RegExp(/[òóôõö]/g),"o");
+  r = r.replace(new RegExp(/œ/g),"oe");
+  r = r.replace(new RegExp(/[ùúûü]/g),"u");
+  r = r.replace(new RegExp(/[ýÿ]/g),"y");
+  r = r.replace(new RegExp(/\W/g),"");
+  return r;
 
-    var targetPosition = _.pluck($rootScope.friends, 'id').indexOf(target);
-    if(targetPosition>-1){
-      if($rootScope.friends[targetPosition].statut==0){
-       $rootScope.friends[targetPosition].statut = 1;
-       $http.post(serverAddress+'/addFavorite',{id1: $localStorage.getObject('user').id, id2: target}).error(function(){
-        $rootScope.friends[targetPosition].statut = 0;
-      });
-     }
-     else if($rootScope.friends[targetPosition].statut==1){
+}
+
+$scope.user = $localStorage.getObject('user');
+$rootScope.friends = $localStorage.getArray('friends');
+$scope.results = $rootScope.friends;
+
+$scope.addFavorite = function(target){
+
+  var targetPosition = _.pluck($rootScope.friends, 'id').indexOf(target);
+  if(targetPosition>-1){
+    if($rootScope.friends[targetPosition].statut==0){
+     $rootScope.friends[targetPosition].statut = 1;
+     $http.post(serverAddress+'/addFavorite',{id1: $localStorage.getObject('user').id, id2: target}).error(function(){
       $rootScope.friends[targetPosition].statut = 0;
-      $http.post(serverAddress+'/removeFavorite',{id1: $localStorage.getObject('user').id, id2: target}).error(function(){
-        $rootScope.friends[targetPosition].statut = 1;
-      });
-    }
+    });
+   }
+   else if($rootScope.friends[targetPosition].statut==1){
+    $rootScope.friends[targetPosition].statut = 0;
+    $http.post(serverAddress+'/removeFavorite',{id1: $localStorage.getObject('user').id, id2: target}).error(function(){
+      $rootScope.friends[targetPosition].statut = 1;
+    });
   }
+}
 }
 
 $scope.refresh = function(){
@@ -65,13 +84,14 @@ $scope.deleteFriend = function(friendId){
 }
 
 $scope.filterFriend = function(word) {
-  var results = [];
-  _.each($rootScope.friends, function(friend,index){
-    if(friend.full_name.indexOf(word)>-1)
-      results.push(friend)
-    if(index == $rootScope.friends.length-1)
-      $scope.results = results;
-  });
+    var word = clean(word);
+    var results = [];
+    _.each($rootScope.friends, function(friend,index){
+      if(friend.full_name.indexOf(word)>-1)
+        results.push(friend)
+      if(index == $rootScope.friends.length-1)
+        $scope.results = results;
+    });
 }
 
 })

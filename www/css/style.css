@@ -22,12 +22,9 @@ a{
 .last{ /* END OF CONTENT */
 	padding-bottom: 150px !important;
 }
-<<<<<<< HEAD
-=======
 .last50{ /* END OF CONTENT */
 	padding-bottom: 50px !important;
 }
->>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff
 .last70{ /* END OF CONTENT */
 	padding-bottom: 70px !important;
 }
@@ -3186,21 +3183,21 @@ ion-view[view-title="Conv"] ion-content{
 	top: 5px;
 }
 .remove_chat{
+	position: absolute;
+	right: 10px;
 	font-size: 30px;
+	text-align:center;
     color: white;
-    margin-left: 80vw;
     margin-top: 2px;
     width: 40px;
     height: 40px;
 }
-<<<<<<< HEAD
 .nbhours-resa{
 	display:inline-block;
 	width:30%;
 	white-space: nowrap;
 	overflow: visible;
 }
-=======
 .button-goback{
 	width: 45px;
 	text-align: left;
@@ -3208,4 +3205,3 @@ ion-view[view-title="Conv"] ion-content{
 .read-bg-notif{
 	background-color: #fff;
 }
->>>>>>> a785adb51f6af9a91cf4cbe08532fe0219539aff

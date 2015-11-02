@@ -1,13 +1,14 @@
 angular.module('connections',[])
 
 .controller('HomeCtrl', function($scope,$http,$localStorage,$ionicUser,$location,$rootScope, $ionicLoading,$connection,$ionicPlatform,$ionicHistory,$state, $q, fbConnect, $cordovaNetwork,error_reporter){
-
   $rootScope.toShow = false;
  //Prevent for loading to early
 
  $ionicPlatform.ready(function(){
   if(window.device && $cordovaNetwork.isOffline()){ //HANDLE OFFLINE CONNEXION (SET SOCKET ETC PB)
     error_reporter.show({texte: "Connectez vous d'abord à internet!"});
+    $location.path('/user/profil');
+    $rootScope.toShow = true;
   }
   else{
     if($localStorage.getObject('user') && $localStorage.getObject('user').id && $localStorage.get('token')){ //If user has already sat connection from this device he will be logged automatically
@@ -18,16 +19,18 @@ angular.module('connections',[])
         hideOnStateChange: false
       });
       $connection($localStorage.getObject('user').id,function(){
-        $location.path('/user/profil');
-      },false);
+       // if(!$localStorage.get('isFromNotif'))
+       $location.path('/user/profil');
+      // $localStorage.set('isFromNotif', false);
+    },false);
     }
     else{
       $rootScope.toShow = true;
     }
-}
+  }
 });
 
-$scope.facebookConnect = function() {
+ $scope.facebookConnect = function() {
   if(window.device && $cordovaNetwork.isOffline()){
     error_reporter.show({texte: "Connectez vous d'abord à internet!"});
   }
@@ -100,10 +103,10 @@ $scope.facebookConnect = function() {
        user.getCoord();
        mySock.req(serverAddress+'/connexion/setSocket',{id: data[0].id}); //Link socket_id with the user.id
        $location.path('/user/profil');
-      }).error(function(err){
-        $ionicLoading.hide();
-        $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
-      });
-    }
-  }
+     }).error(function(err){
+      $ionicLoading.hide();
+      $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
+    });
+   }
+ }
 })

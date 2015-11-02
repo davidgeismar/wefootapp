@@ -95,7 +95,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   //   }
   // }
 
-
+  $localStorage.set('isFromNotif',false);
   $rootScope.toShow = false;
   $rootScope.notifs = $localStorage.getArray('notifs'); //Prevent for bug if notif received before the notif page is opened
   $localStorage.footInvitation = [];
@@ -503,6 +503,32 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
 
 $ionicConfigProvider.views.forwardCache(true);
 $ionicConfigProvider.tabs.position("bottom");
+});
+
+app.directive('input', function($timeout){
+     return {
+         restrict: 'E',
+         scope: {
+             'returnClose': '=',
+             'onReturn': '&'
+        },
+        link: function(scope, element, attr){
+            element.bind('keydown', function(e){
+                if(e.which == 13){
+                    if(scope.returnClose){
+                        console.log('return-close true: closing keyboard');
+                        element[0].blur();
+                    }
+                    if(scope.onReturn){
+                        console.log('on-return set: executing');
+                        $timeout(function(){
+                            scope.onReturn();
+                        });                        
+                    }
+                } 
+            });   
+        }
+    }
 });
 
 

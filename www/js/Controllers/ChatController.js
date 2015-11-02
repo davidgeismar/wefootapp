@@ -15,10 +15,6 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		$location.path('/conv/'+chatId);
 	}
 
-	// $scope.sortChat = function(chat) {
-	// return chat.lastTime;
-	// };
-
 	$scope.formatTime = function (oldTime){
 		if(oldTime)
 			return moment(oldTime).locale("fr").format('Do MMM, HH:mm');
@@ -32,14 +28,6 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 			$scope.$digest();
 		}
 	});
-
-// $rootScope.openModal = function() {
-// 	$rootScope.modal2.show();
-// }
-
-// $rootScope.closeModal = function() {
-// 	$rootScope.modal2.hide();
-// }
 
 $scope.deleteChat = function(chatId){
 	chat.deactivateChatter(chatId);

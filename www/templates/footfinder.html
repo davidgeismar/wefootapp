@@ -16,7 +16,7 @@
         <div class="container_results_footfinder">
         <searchLoader></searchLoader> 
         <ion-scroll direction="y" class= "carte_foots background_footfinder last">
-      	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results | filter: filterFoots" ng-class="{'last-margin': $index==results.length-1}">
+      	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results | filter: filterFoots | orderBy:'distance'" ng-class="{'last-margin': $index==results.length-1}">
             <div class="row">
               <div class="col col-25">
                 <div class="img_chat"><img ng-src="{{foot.orgaPic}}" alt=""></div>
@@ -25,6 +25,7 @@
                   <div class="bleuciel"> <strong>{{foot.orgaName}}</strong></div>
                    <p class="bleufonce"><strong>{{foot.dateString}}</strong></p>
                    <p style="text-transform: uppercase;" class="ng-binding">{{foot.field.name}}</p>
+                   <p>à {{foot.distance}} km</p>
                 </div>
                 <div class="col col-25 fleche_bleu_fonce_foots"><img src="img/fleche_bleufonce.svg" alt=""></div>
             </div>

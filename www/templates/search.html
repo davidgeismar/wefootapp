@@ -49,9 +49,17 @@
     </ion-content>
 
 
-<ion-footer-bar align-title="left" style="background: url(img/invitebg.jpg)" class="bar-assertive">
-<h1 style="margin-top: 3px; font-size:20px; color:white; text-shadow: 2px 2px black; font-weight:700">Invitez vos amis via</h1>
-<img ng-src="img/fblogo.png" style="width:34px; margin-left:30px; border-radius: 5px;" ng-click="sendFbMessage()">
-<img ng-src="img/imesslogo.png" style="width:34px; margin-left:30px;" ng-click="sendSmsMessage()">
+<ion-footer-bar align-title="left" style="background-color:white;"class="bar-assertive">
+<div class="row">
+<div class="col col-55" style="text-align: center;">
+<h1 style="font-size:16px; color:black;font-family:ubuntu; font-weight:700">Invitez vos amis via</h1>
+</div>
+<div class="col col-20">
+<img ng-src="img/fblogo.png" style="width:34px; border-radius: 5px; margin-top:-8px;" ng-click="sendFbMessage()">
+</div>
+<div class="col col-20">
+<img ng-src="img/imesslogo.png" style="width:34px;margin-top:-8px;" ng-click="sendSmsMessage()">
+</div>
+</div>
 </ion-footer-bar>
 </ion-modal-view>
