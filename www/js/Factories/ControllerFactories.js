@@ -107,7 +107,7 @@ return connect;
 
   paiement.getAllCards = function(user,callback){
     $searchLoader.show();
-    $http.post(serverAddress+'/pay/getCards',{user: user}).success(function(result){
+    $http.post(serverAddress+'/pay/getCards',{user: user.id}).success(function(result){
       $searchLoader.hide();
       callback(result[0],result[1]);
     });
@@ -120,7 +120,7 @@ return connect;
       showBackdrop: false,
       hideOnStateChange: false
     });
-    $http.post(serverAddress+'/pay/registerCard',{user: user, info: card}).success(function(newCard){
+    $http.post(serverAddress+'/pay/registerCard',{user: user, info: card, userId: user.id}).success(function(newCard){
       newCard.Alias = card.number;
       newCard.Id = newCard.CardId;
       callback(newCard);
