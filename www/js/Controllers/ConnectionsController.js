@@ -19,9 +19,8 @@ angular.module('connections',[])
         hideOnStateChange: false
       });
       $connection($localStorage.getObject('user').id,function(){
-       // if(!$localStorage.get('isFromNotif'))
+       if(!$rootScope.nextUrl)
        $location.path('/user/profil');
-      // $localStorage.set('isFromNotif', false);
     },false);
     }
     else{

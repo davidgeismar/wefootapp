@@ -56,7 +56,7 @@ $scope.showMessageButton = function(messageContent){
 
 $scope.removeChat = function(chatId){
   $confirmation("Etes vous sûr de vouloir vous retirer de ce chat ?",function(){
-    chat.deactivateChatter(chatId);
+    chat.deactivateChatter(chatId,'id');
     $ionicHistory.goBack();
   });;
 }

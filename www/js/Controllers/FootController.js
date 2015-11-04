@@ -221,6 +221,7 @@ if($location.path().indexOf('user/foots')>-1){
   var removePlayerAction = function(userId){
     $foot.removePlayer(userId,$scope.foot.id, $scope.isPlaying, function(){
       $location.path('/user/foots');
+      chat.deactivateChatter($scope.foot.id,'related');
     });
   }
 

@@ -768,7 +768,7 @@ ion-view[view-title="footparams"] .item-icon-left{
 	margin-left: 70px;
 }
 .content_menu{
-	background-color: #28385c;
+	background-color: #28385c !important; 
 }
 
 .info_menu{

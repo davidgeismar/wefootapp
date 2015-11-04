@@ -31,7 +31,7 @@
   <button ng-click="acceptInvitation(true)" class="button  button-positive button-confirm-friend">Accepter ce joueur</button>
   <button style="margin-left:25px" ng-click="acceptInvitation(false)" class="button button-assertive button-confirm-friend">Refuser ce joueur</button>
 </div>
-<div class="container-friend">
+<div ng-if="!isInvitationConfirmation" class="container-friend">
   <div class="trophe-friend">
     <div ng-if="friend.nbChevres>0"class="chevre-friend">
       <img ng-src="img/chevre_rouge.png" badge="4" badge-style="badge-assertive"><span class="badge badge-assertive">{{friend.nbChevres}}</span>

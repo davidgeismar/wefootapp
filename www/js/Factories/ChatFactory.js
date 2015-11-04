@@ -42,17 +42,21 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 	}
 	obj.addChatter =  function (chatter){
 		var chats = $localStorage.getArray('chats');
+		console.log(_.pluck(chats, 'id'));
 		var index = _.pluck(chats, 'id').indexOf(chatter.chat);
+		console.log(index);
 		if(index>-1){
 			chats[index].users.push(chatter.user);
 			$localStorage.setObject('chats', chats);
 		}
 	}
-	obj.deactivateChatter =  function (chatId){
+	//IsChatorFoot contains 'id' or 'related'
+	obj.deactivateChatter =  function (chatOrFootId, isChatorFoot){
 		var user = $localStorage.getObject('user');
 		var chats = $localStorage.getArray('chats');
 		var chatsDisplay = $localStorage.getArray('chatsDisplay');
-		var indexC = _.pluck(chats, 'id').indexOf(chatId);
+		var indexC = _.pluck(chats, isChatorFoot).indexOf(chatOrFootId);
+		var chatId = chats[indexC].id;
 		var indexCD = _.pluck(chatsDisplay, 'id').indexOf(chatId);
 		if(indexC>-1){
 			chats.splice(indexC, 1);
@@ -102,7 +106,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 
 	obj.postNewChatter = function(footId, usersId){
 		var chat = _.find($localStorage.getArray('chats'), function(chat){return chat.related == footId});
-		$http.post(serverAddress+'/chatter/addToChat',{users :usersId, related:footId, chatters:chat.users });
+		users = _.pluck(chat.users,'id');
+		$http.post(serverAddress+'/chatter/addToChat',{users :usersId, related:footId, chatters:users });
 	}
 	return obj;
 

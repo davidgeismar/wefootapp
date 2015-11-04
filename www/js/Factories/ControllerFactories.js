@@ -497,7 +497,7 @@ foot.searchFoot = function(params,callback2){
     }
     finish = true;
   });
- 
+  
   $http.post(serverAddress+'/foot/query',params).success(function(data){
     async.each(data,function(foot,callback){
       var finish = false;
@@ -590,15 +590,14 @@ return foot;
 
       cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
         var pushLocation = '/user/notif';
-        // $localStorage.set('isFromNotif', true);
-      // if (pushLocation) {
+        
         if(notification.additionalData && notification.additionalData.url)
           pushLocation = notification.additionalData.url;
+        if(pushLocation.indexOf("conv")>-1)
+          $rootScope.nextUrl = '/user/chat';
         if(!notification.foreground)
-          // $localStorage.set('goafterpush',pushLocation); // APP NOT OPEN 
-        $location.path(pushLocation);
-          // }
-        });
+          $location.path(pushLocation);
+      });
     }
   });
     // push.unregister = function(){

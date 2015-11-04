@@ -7,7 +7,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -241,10 +241,16 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   });
 
   $rootScope.goBack = function (value){
-    $rootScope.nbGoBack = -1;
-    if(value)
-      $ionicHistory.goBack(value);
-    $ionicHistory.goBack();
+    if($rootScope.nextUrl){
+      $location.path($rootScope.nextUrl);
+      delete $rootScope.nextUrl;
+    }
+    else{
+      $rootScope.nbGoBack = -1;
+      if(value)
+        $ionicHistory.goBack(value);
+      $ionicHistory.goBack();
+    }
   };
 
 })
@@ -506,29 +512,29 @@ $ionicConfigProvider.tabs.position("bottom");
 });
 
 app.directive('input', function($timeout){
-     return {
-         restrict: 'E',
-         scope: {
-             'returnClose': '=',
-             'onReturn': '&'
-        },
-        link: function(scope, element, attr){
-            element.bind('keydown', function(e){
-                if(e.which == 13){
-                    if(scope.returnClose){
-                        console.log('return-close true: closing keyboard');
-                        element[0].blur();
-                    }
-                    if(scope.onReturn){
-                        console.log('on-return set: executing');
-                        $timeout(function(){
-                            scope.onReturn();
-                        });                        
-                    }
-                } 
-            });   
+ return {
+   restrict: 'E',
+   scope: {
+     'returnClose': '=',
+     'onReturn': '&'
+   },
+   link: function(scope, element, attr){
+    element.bind('keydown', function(e){
+      if(e.which == 13){
+        if(scope.returnClose){
+          console.log('return-close true: closing keyboard');
+          element[0].blur();
         }
-    }
+        if(scope.onReturn){
+          console.log('on-return set: executing');
+          $timeout(function(){
+            scope.onReturn();
+          });                        
+        }
+      } 
+    });   
+  }
+}
 });
 
 

@@ -18,6 +18,7 @@ angular.module('friend',[])
 
 		$scope.getNbTrophes = function(){
 			$http.get(serverAddress+'/trophe/getNbTrophes/'+$scope.friend.id).success(function(data){
+				console.log(data);
 				if(data.nbHommes){
 					$scope.friend.nbHommes = data.nbHommes;
 				}

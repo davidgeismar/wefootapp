@@ -50,7 +50,6 @@ angular.module('ion-google-place', [])
                     scope.selectLocation = function(location){
                         location.lat = location.geometry.location.lat();
                         location.longi = location.geometry.location.lng();
-                        console.log(location);
                         ngModel.$setViewValue(location);
                         ngModel.$render();
                         el.element.css('display', 'none');
