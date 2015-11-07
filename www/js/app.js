@@ -208,6 +208,8 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
       $rootScope.$on('$cordovaNetwork:offline',function(){
         error_reporter.show({texte:"Pas de connexion internet!"});
       });
+
+      screen.lockOrientation('portrait');
     }
 
     if(window.cordova && window.cordova.plugins.Keyboard) {
