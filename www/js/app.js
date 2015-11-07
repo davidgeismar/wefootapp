@@ -7,7 +7,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 console.log("Connected to "+serverAddress);
 
 
