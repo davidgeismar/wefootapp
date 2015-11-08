@@ -572,7 +572,7 @@ return foot;
   return user;
 }])
 
-.factory('push',['$http','$localStorage','$ionicPlatform','$location',function($http,$localStorage,$ionicPlatform,$location){
+.factory('push',['$http','$localStorage','$ionicPlatform','$location','$rootScope',function($http,$localStorage,$ionicPlatform,$location,$rootScope){
   var push = {};
   $ionicPlatform.ready(function(){
     if(window.device){
