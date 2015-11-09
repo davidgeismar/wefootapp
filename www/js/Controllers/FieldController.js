@@ -1,5 +1,5 @@
 angular.module('field',[])
-.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory, $confirmation,$ionicLoading){
+.controller('FieldCtrl', function($scope, $localStorage, $http, $cordovaFileTransfer, $cordovaImagePicker, $location, $ionicHistory, $confirmation,$ionicLoading,$validated){
 
 
   var formatAddress = function(place, callback){
@@ -80,21 +80,23 @@ angular.module('field',[])
             };
             $cordovaFileTransfer.upload(serverAddress+'/field/uploadPic', $scope.imageUri, optionsFt)
             .then(function(result) {
-              $confirmation("Votre terrain a bien été inséré, recherchez le dans la liste !");
-              $ionicLoading.hide();
-              $ionicHistory.goBack();
+              $validated.show({texte: "Votre terrain a bien été inséré, recherchez le dans la liste !", icon: "ion-checkmark-round"},function(){
+                $ionicLoading.hide();
+                $ionicHistory.goBack();
+              }); 
             }, function(err) {
               console.log(err);
             }, function (progress) {
             });
           }
           else{
-            $confirmation("Votre terrain a bien été inséré, recherchez le dans la liste !");  
-            $ionicLoading.hide();
-            $ionicHistory.goBack();
+            $validated.show({texte: "Votre terrain a bien été inséré, recherchez le dans la liste !", icon: "ion-checkmark-round"},function(){
+              $ionicLoading.hide();
+              $ionicHistory.goBack();
+            }); 
           }
         });
-      })
+})
 }
 
 }

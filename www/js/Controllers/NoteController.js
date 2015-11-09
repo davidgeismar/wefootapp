@@ -1,5 +1,5 @@
 angular.module('note',[])
-.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $ionicPopup){
+.controller('NoteCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $ionicPopup, $validated){
 
 	$scope.activate = [false, false, false, false, false];
 	$scope.notes = new Array(5);
@@ -42,13 +42,13 @@ angular.module('note',[])
 	}
 
 	$scope.setNote = function(note, target){
-			$scope.notes[target] = note;
-			for(var i=0; i<5; i++) {
-				if(i+1<=note)
-					$scope.starStatus[target][i] = "ion-android-star";
-				else
-					$scope.starStatus[target][i] = "ion-android-star-outline";
-			}
+		$scope.notes[target] = note;
+		for(var i=0; i<5; i++) {
+			if(i+1<=note)
+				$scope.starStatus[target][i] = "ion-android-star";
+			else
+				$scope.starStatus[target][i] = "ion-android-star-outline";
+		}
 	}
 
 	$scope.postNote = function(){
@@ -66,23 +66,11 @@ angular.module('note',[])
 				for(var i=0; i<5; i++) {
 					$scope.activate[i] = false;
 				}
-				$scope.showAlert();
+				$validated.show({texte: "Vos notes ont bien été enregistrées", icon: "ion-checkmark-round"},function(){
+				});		
 			});
 
 		}
-	}
-
-	$scope.showAlert = function() {
-		var alertPopup = $ionicPopup.alert({
-			title: 'Confirmation des notes',
-			template: 'Vos notes ont bien été enregistrées',
-			okText: '', 
-			okType: '',
-			cssClass: ''
-		});
-		alertPopup.then(function(res) {
-			$location.path('/friend/'+$scope.friend.id);
-		});
 	}
 
 

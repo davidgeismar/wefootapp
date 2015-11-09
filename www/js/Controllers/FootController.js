@@ -312,9 +312,9 @@ if($location.path().indexOf('user/foots')>-1){
       $scope.isPending = true;
       $validated.show({texte: "Votre demande à bien été envoyée.", icon: "ion-checkmark-round"},function(){
       }); //ERROR USING CALLBACK
-      $timeout(function(){
-        $location.path('/footfinder');
-      },1100);
+      // $timeout(function(){
+      //   $location.path('/footfinder');
+      // },1100);
     });
   };
 

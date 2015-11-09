@@ -54,7 +54,7 @@ app.factory('$validated',[function(){
         $('.validated-container').fadeOut(400,function(){
           $(this).remove();
         });
-        callback();},1000);
+        callback();},2000);
     }
   }
   return validated;
