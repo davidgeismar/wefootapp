@@ -11,7 +11,7 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
   ionic.DomUtil.ready(function(){
     $ionicScrollDelegate.scrollBottom();
   });
-  
+
   var refreshConv = function(){
     if(_.last($location.url().split('/'))==$scope.chat.id){
       chat.updateLts($scope.chat.id);
@@ -65,7 +65,7 @@ $scope.init = function(){
 
   if ($scope.chat.typ==2){
     $http.get(serverAddress+'/foot/getInfo/'+$scope.chat.related).success(function(elem){
-      $scope.detail = { 
+      $scope.detail = {
         organisator : elem.orga,
         orgaName : elem.orgaName,
         field : elem.field,

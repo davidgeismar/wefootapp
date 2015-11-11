@@ -10,6 +10,11 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	}
 	var initialPos = $localStorage.initialPos;
 
+  // var swiping = function(){
+  //   $( ".main_actu" ).on( "swipe", $("body").removeClass("menu-open") );
+  //   console.log('I am here');
+  // }
+
 	$scope.moveBall = function($event){
 		var targetPos = initialPos+$event.gesture.deltaX;
 		if(parseInt($('.logo-profil-container').css('left').substring(0,3))>0){
@@ -33,6 +38,9 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		$location.path(url);
 	};
 
+  // function leftSwipe() {
+  //   console.log("hello");
+  // };
 	//SET WIDTH CONTENT
 
 	var height = window.innerHeight - $('.main_actu').height() - $('.slider-button').height() - 90;
@@ -41,7 +49,7 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 	$('.container_actu').css('top',setPositon);
 
 //ACTUS SECTION
-	$scope.actusByDay = $localStorage.getObject('actus');	
+	$scope.actusByDay = $localStorage.getObject('actus');
 	$scope.dates = $localStorage.getObject('dates');
 
 

@@ -1,5 +1,5 @@
 angular.module('friend',[])
-.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams, $handleNotif, chat, user){
+.controller('FriendCtrl',function($scope, $localStorage, $rootScope,  $http, $location, $stateParams,$confirmation, $handleNotif, chat, user){
 	$scope.moi = $localStorage.getObject('user').id
 	$scope.notes = new Array(5);
 	$scope.starStatus = new Array(5);
@@ -33,7 +33,7 @@ angular.module('friend',[])
 				$scope.isInvitationConfirmation = true;
 				$scope.foot = foot[foot.length-1];
 			}
-			else $scope.isInvitationConfirmation = false;		 	
+			else $scope.isInvitationConfirmation = false;
 		});
 
 		$scope.friend = _.find($localStorage.getArray('friends'), function(friend){ return friend.id == $stateParams.id; });
@@ -42,7 +42,7 @@ angular.module('friend',[])
 			$scope.isFriend = true;
 			$scope.initNotes();
 			$scope.getNbTrophes();
-		} 
+		}
 		else{
 			$http.get(serverAddress+'/user/get/'+$stateParams.id).success(function(user){
 				$scope.friend = user;
@@ -90,27 +90,28 @@ angular.module('friend',[])
 	}
 
 	$scope.addFriend = function(target){
-		$scope.lockFriend = target;
-		postData = {user1: $localStorage.getObject('user').id, user2: target};
-		user.addFriend(postData,target).success(function(data){
-    	$localStorage.newFriend = true; //Load actu of new friend on refresh
-    	var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
-    	$handleNotif.notify(notif);
-    	data.statut = 0;
-    	var friends = $localStorage.getArray('friends');
-    	friends.push(data);
-    	$localStorage.setObject('friends',friends);
-    	$rootScope.friends.push(data);
-    	$scope.lockFriend = 0;
-    	$scope.isFriend = true;
-    }).error(function(err){
-    	$scope.lockFriend = 0;
+    $confirmation("Ajouter comme ami ?",function(){
+  		$scope.lockFriend = target;
+  		postData = {user1: $localStorage.getObject('user').id, user2: target};
+  		user.addFriend(postData,target).success(function(data){
+      	$localStorage.newFriend = true; //Load actu of new friend on refresh
+      	var notif = {user: target, related_user: $localStorage.getObject('user').id, typ:'newFriend', related_stuff:$localStorage.getObject('user').id};
+      	$handleNotif.notify(notif);
+      	data.statut = 0;
+      	var friends = $localStorage.getArray('friends');
+      	friends.push(data);
+      	$localStorage.setObject('friends',friends);
+      	$rootScope.friends.push(data);
+      	$scope.lockFriend = 0;
+      	$scope.isFriend = true;
+      }).error(function(err){
+      	$scope.lockFriend = 0;
+      });
     });
+  }
 
-}
-
-$scope.isFriendWith = function(userId){
-	return user.isFriendWith(userId);
-}
+  $scope.isFriendWith = function(userId){
+  	return user.isFriendWith(userId);
+  }
 
 })
