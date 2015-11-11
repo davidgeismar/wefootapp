@@ -38,6 +38,9 @@ angular.module('profil',[]).controller('ProfilCtrl', function($scope,$stateParam
 		$location.path(url);
 	};
 
+  // function leftSwipe() {
+  //   console.log("hello");
+  // };
 	//SET WIDTH CONTENT
 
 	var height = window.innerHeight - $('.main_actu').height() - $('.slider-button').height() - 90;
