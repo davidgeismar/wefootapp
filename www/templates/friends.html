@@ -4,9 +4,9 @@
     <input type="text" ng-model="searchFriends" ng-keyup="filterFriend(searchFriends)" placeholder="Rechercher un nom">
 </label>
 <ion-content class="has-header has-subheader">
-<ion-refresher on-refresh="refresh()">                 
+<ion-refresher on-refresh="refresh()">
 </ion-refresher>
-<div class="container_friends last">	
+<div class="container_friends last">
 	<div class="container_list_friends">
 
         <ion-list can-swipe="true">
@@ -21,7 +21,7 @@
         <div ng-click="addFavorite(friend.id)" ng-class="{grey: friend.statut==0}" class="star_friends">
             <i class="ion-android-star"></i>
         </div>
-        
+
         <ion-option-button class="button-assertive" ng-click="deleteFriend(friend.id)">Suppr.</ion-option-button>
     </ion-item>
 </ion-list>
@@ -52,7 +52,7 @@
         	<div class="star_friends grey">
         		<i class="ion-android-star"></i>
         	</div>
-        </div> 
+        </div>
     </div> -->
 </div>
 </div>
