@@ -2908,18 +2908,18 @@ ion-view[view-title="Conv"] ion-content{
 
 .pay-infos{
 	font-size: 16px;
-	text-align: center;
 	margin-bottom: 30px;
 }
 .pay-infos2{
 	position: absolute;
 	bottom: 0;
+	margin-bottom:20px;
 }
 .pay-add-card{
 	margin-top: 50px;
 }
 .card-expire{
-	width: 150px;
+	width: 50%;
 	display: inline-block;
 }
 .card-expire .input-label{
@@ -2927,7 +2927,7 @@ ion-view[view-title="Conv"] ion-content{
 	font-size: 12px;
 }
 .input-wrapper-card{
-	width: 310px;
+	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 }

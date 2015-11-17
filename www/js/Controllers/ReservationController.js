@@ -1,15 +1,5 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name angularApp2App.controller:AboutCtrl
- * @description
- * # AboutCtrl
- * Controller of the angularApp2App
- */
-
-
- angular.module('foot').controller('ReservationController', function ($scope, $localStorage, $location, $http, $ionicLoading) {
+angular.module('foot').controller('ReservationController', function ($scope, $localStorage, $location, $http, $ionicLoading, $ionicScrollDelegate) {
   var user = $localStorage.getObject('user');
     //RECAP RESA To Clean
     if(!$localStorage.reservationClient.indoor){
@@ -44,7 +34,19 @@
     if(discount!=0 ||discount!=null){
       $scope.student = { text: "NON", checked: 0, discount:discount };
     }
-
+    $scope.goBackResa = function (value){
+      console.log("here");
+      if($scope.edit){
+        $scope.found = 0;
+        $scope.edit = false
+      }
+      else{
+        $rootScope.nbGoBack = -1;
+        if(value)
+          $ionicHistory.goBack(value);
+        $ionicHistory.goBack();
+      }
+    };
 
 
     $scope.setDuree = function(duree){
@@ -58,16 +60,15 @@
           $scope.found = 1;
           $localStorage.reservationClient.terrain = field.id;
           $localStorage.reservationClient.prix = field.prix;
-          $scope.prix = field.prix
+          $scope.prix = field.prix;
+          $ionicScrollDelegate.scrollTop();
+          $scope.edit = true;
+
         }
         else
           $location.path('/resa/dispo');
       });
     }
-
-$scope.reset = function(){
-  $scope.found = 0;
-}
     $scope.toggleCheckStudent = function(){
       if ($scope.student.checked == 1){
         $scope.student.checked = 0;
@@ -193,7 +194,7 @@ $scope.reset = function(){
       $scope.cards = cards;
       if(!user.mangoId)
         $localStorage.setObject('user',newUser);
-        user = newUser;
+      user = newUser;
     });
   }
 
@@ -229,7 +230,7 @@ $scope.reset = function(){
       else
         $validated.show({texte: "Votre réservation à bien été enregistrée", icon: "ion-checkmark-round"},function(){
         });
-        $timeout(function(){$location.path('/foot/'+$localStorage.reservationClient.foot)},1000);
+      $timeout(function(){$location.path('/foot/'+$localStorage.reservationClient.foot)},1000);
     });
   }
 })
