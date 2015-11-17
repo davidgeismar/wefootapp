@@ -14,6 +14,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.user.poste = "Entrer votre poste";
 }
 
+
   //EDITIONS
 
   $scope.editClub = function(value){
@@ -138,7 +139,7 @@ $scope.bugReport = function (){
    });
 
  });
- 
+
 }
   //MODAL HANDLER
 
@@ -160,8 +161,12 @@ $scope.bugReport = function (){
   $scope.closeModal = function() {
     $scope.modal.hide();
     $searchLoader.hide();
-  }; 
+  };
 
+  $scope.goFriend = function(friend){
+    $scope.modal.hide();
+    $location.path('/friend/'+friend.id);
+  }
 
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
@@ -267,7 +272,7 @@ $scope.isFriend = function(userId, facebookFriend){
   else{
     return false;
   }
-  
+
 }
 
 $scope.friend = $localStorage.friend;
@@ -351,7 +356,7 @@ $scope.sendSmsMessage = function(){
 
         })
 
-.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
+.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };

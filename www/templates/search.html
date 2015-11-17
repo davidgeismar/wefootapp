@@ -25,7 +25,7 @@
 			<div class="img_chat img_search img_search_left">
 				<img ng-src="{{guy.picture}}">
 			</div>
-			<div ng-class="{'disabled': isFriend(guy.id)}" class="name_search">
+			<div ng-class="{'disabled': isFriend(guy.id)}" ng-click="goFriend(guy)" class="name_search">
 				<p> {{guy.first_name}} {{guy.last_name}}</p>
 			</div>
 			<div ng-click="isFriend({{guy.id}}) || addFriend({{guy.id}}, false)" ng-class="{'ion-checkmark-round': isFriend({{guy.id}}), 'icon_friend_search': !isFriend({{guy.id}})}" ng-disabled ="isFriend({{guy.id}})" class="icon_search">
