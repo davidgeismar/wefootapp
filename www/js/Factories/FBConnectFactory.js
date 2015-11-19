@@ -170,6 +170,10 @@ obj.connect = function(){
     });
   }
 
+  obj.logout = function(callback){
+    facebookConnectPlugin.logout(callback());
+  }
+
 	  return obj;
 
 }])

@@ -94,8 +94,18 @@ $scope.logout = function (){
     $location.path('/');
   });
 }
+
 else{
-  $localStorage.clearAll();
+
+  if($localStorage.getObject('user').facebook_id){
+    fbConnect.logout(function(){
+      $localStorage.clearAll();
+    });
+  }
+
+  else
+    $localStorage.clearAll();
+
   $location.path('/');
 }
 
