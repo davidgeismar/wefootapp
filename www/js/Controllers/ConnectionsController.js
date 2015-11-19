@@ -4,6 +4,15 @@ angular.module('connections',[])
   $rootScope.toShow = false;
  //Prevent for loading to early
 
+ facebookConnectPlugin.logout(
+  function(success){
+
+  },
+  function(faillure){
+
+  }
+  )
+
  $ionicPlatform.ready(function(){
   if(window.device && $cordovaNetwork.isOffline()){ //HANDLE OFFLINE CONNEXION (SET SOCKET ETC PB)
     error_reporter.show({texte: "Connectez vous d'abord à internet!"});
@@ -20,8 +29,8 @@ angular.module('connections',[])
       });
       $connection($localStorage.getObject('user').id,function(){
        if(!$rootScope.nextUrl)
-       $location.path('/user/profil');
-    },false);
+         $location.path('/user/profil');
+     },false);
     }
     else{
       $rootScope.toShow = true;

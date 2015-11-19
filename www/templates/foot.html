@@ -22,7 +22,7 @@
 <button ng-if="user.id != foot.organisator && foot.friend_can_invite && (isPlaying)" ng-click="openModal2()" class="button button-book-foot"> <i class="ion-android-mail"></i>Inviter vos amis</button>
 <button ng-if="!isPlaying && isInvited && !isComplete" ng-click="playFoot(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Participer</button>
 <button ng-if="!isPlaying && isInvited && !isComplete" ng-click="removePlayer(user.id,true)" class="button button-book-foot" style="background-color: #E2334C"> <i class="ion-close-circled"></i>Je ne peux pas</button>
-<p style="text-align:center" ng-if="isPending"><i class="ion-information-circled" style="font-size:16px"></i>Votre demande pour ce foot est en attente de validation</p>
+<!-- <p style="text-align:center" ng-if="isPending"><i class="ion-information-circled" style="font-size:16px"></i>Votre demande pour ce foot est en attente de validation</p> -->
 <button ng-if="!isInvited && !foot.priv && !isPending" ng-click="askToPlay(user.id)" class="button button-book-foot"> <i class="ion-ios-football"></i>Demander à jouer</button>
 <div ng-if="user.id == foot.organisator" class="bouttons3-foot">
 
@@ -52,7 +52,7 @@
 </div>
 <hr class="level-foot-separator separator-bottom" size=5px color=#28385B width=85%>
 <div class="listeparticipants-foot">
-	<div ng-repeat="player in players" ng-class="{'first-foot': $index == 0}" class="row player-foot">
+	<div ng-repeat="player in players | orderBy : '-createdAt' " ng-class="{'first-foot': $index == 0}" class="row player-foot">
 		<div class="img_friends img_foot col col-20">
             <img ng-src="{{player.picture}}">
         </div>

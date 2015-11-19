@@ -1,14 +1,19 @@
 <ion-view view-title="recapreservation">
 <ion-header-bar  class="actu_header">
 <h1 class="title">Paiement </h1>
-<a ng-show="valid < 0" href='#/dispo'><div class="button button-clear button-goback"><span class="white ion-chevron-left"></span></div></a>
+<a ng-show="valid < 0" href='#/dispo'><div class="button button-clear button-goback"><span class="white ion-chevron-left" style="width:50px"></span></div></a>
 <img class="logo_wf" src="img/logo_WF.svg">
 </ion-header-bar>
 
   <ion-content class="padding">
-
+  <h4 style="color: #29385C;
+    font-family: ubuntu;
+    font-size: 20px;"> PAS DE PAIEMENT EN LIGNE</h4>
   <p class="pay-infos">
-  Nous devons prendre votre emprunte bancaire pour garantir la réservation. Vous ne serez debité que si vous ne vous présentez pas sur le centre.</p>
+  <i class="ion-information-circled" style="font-size:16px"></i>  Votre carte de crédit sert à garantir votre réservation. Votre carte ne sera pas debitée, vous réglerez directement auprès de l'établissement le montant de votre réservation.<br>
+  <span style="color: #0A60D7;">Pas de frais de réservation !</span>
+  </p>
+  <p style="text-align:center;color: red; font-size:16px; margin-bottom: 20px; margin-top: 20px;"> Vous pouvez annuler votre réservation jusqu'à 24h avant le début de la partie.</p>
   <div class="list">
   <div searchloader></div>
     <div ng-click="pay(card.Id)" class="item item-icon-left" ng-repeat="card in cards">

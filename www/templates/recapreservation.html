@@ -41,25 +41,25 @@
     <span style="color: #C4C4C4"><strong>ORGANISATEUR :</strong></span>
     <span style="color: #28385B">{{foot.orgaName}}</span>
   </div>
-<div ng-if=" found <= 0 ">
-<div class="homepage_title">
-  <h1 style="font-size:30px;"> Options </h1>
-</div>
-<HR align=center color='#28385B' size=8 width="70%">
-  <div class="resa-subtitle">
-    <span style="color: #C4C4C4">Type de terrain</span>
-  </div>
-    <ion-toggle toggle-class="toggle-calm" class="toggle-background"
-    ng-checked="indoor.checked"
-    ng-click="toggleCheckIndoor()" >
-
-    <div class="toggle-content" >
-      <span style="color: #28385B"><strong>{{ indoor.text }}</strong></span>
+  <div ng-if=" found <= 0 ">
+    <div class="homepage_title">
+      <h1 style="font-size:30px;"> Options </h1>
     </div>
-  </ion-toggle>
-  <div class="resa-subtitle">
-    <span style="color: #C4C4C4">Durée</span>
-  </div>
+    <HR align=center color='#28385B' size=8 width="70%">
+      <div class="resa-subtitle">
+        <span style="color: #C4C4C4">Type de terrain</span>
+      </div>
+      <ion-toggle toggle-class="toggle-calm" class="toggle-background"
+      ng-checked="indoor.checked"
+      ng-click="toggleCheckIndoor()" >
+
+      <div class="toggle-content" >
+        <span style="color: #28385B"><strong>{{ indoor.text }}</strong></span>
+      </div>
+    </ion-toggle>
+    <div class="resa-subtitle">
+      <span style="color: #C4C4C4">Durée</span>
+    </div>
 
 
 <!--     <div class="button-bar padding">
@@ -72,46 +72,42 @@
           {{ item.text }}
         </ion-radio>
 
-        </div> -->
-           <div class="button-bar padding">
-  <ion-radio ng-model="resa" ng-click="setDuree(60)" ng-value="60" ng-model="true" class="duree-button button">1h</ion-radio>
+      </div> -->
+      <div class="button-bar padding">
+        <ion-radio ng-model="resa" ng-click="setDuree(60)" ng-value="60" ng-model="true" class="duree-button button">1h</ion-radio>
 
 
-  <ion-radio ng-model="resa" ng-click="setDuree(90)" ng-value="90" ng-model="true"  class="duree-button button">1h30</ion-radio>
+        <ion-radio ng-model="resa" ng-click="setDuree(90)" ng-value="90" ng-model="true"  class="duree-button button">1h30</ion-radio>
 
 
-  <ion-radio ng-model="resa" ng-click="setDuree(120)" ng-value="120" ng-model="true"  class="duree-button button">2h</ion-radio>
- </div>
-  <div class="resa-subtitle">
-    <span style="color: #C4C4C4">Etudiant ?</span>
+        <ion-radio ng-model="resa" ng-click="setDuree(120)" ng-value="120" ng-model="true"  class="duree-button button">2h</ion-radio>
+      </div>
+      <div class="resa-subtitle">
+        <span style="color: #C4C4C4">Etudiant ?</span>
+      </div>
+      <ion-toggle ng-if="student.discount>0"toggle-class="toggle-calm" class="toggle-background"
+      ng-checked="student.checked"
+      ng-click="toggleCheckStudent()" >
+      <div class="toggle-content" >
+        <span style="color: #28385B"><strong>{{ student.text }}</strong></span>
+      </div>
+    </ion-toggle>
   </div>
-  <ion-toggle ng-if="student.discount>0"toggle-class="toggle-calm" class="toggle-background"
-  ng-checked="student.checked"
-  ng-click="toggleCheckStudent()" >
-  <div class="toggle-content" >
-    <span style="color: #28385B"><strong>{{ student.text }}</strong></span>
-  </div>
-</ion-toggle>
-</div>
+    <h4  ng-if=" found > 0 " style="font-size: 26px;" class="price-recapResa"> Prix : {{prix}}€</h4>
 
-<div ng-if=" found <= 0 " >
- <button  ng-click="getTerrainsFree()" class="button homepage_button icon-right ion-chevron-right last-element">
-  Vérifier la disponibilité
-</button>
-</div>
-
-<div ng-if=" found > 0 " >
-  <h4 class="price-recapResa"> Prix : {{prix}}€</h4>
-
-  <a href="#/resa/pay" class=" button success_button icon-right">
-    Confirmer
-  </a>
-</div>
-
-<div ng-if=" found > 0 " >
-  <button ng-click="reset()" style="margin-top:20px" class=" button success_button icon-right last-element">
-    Editer les options
+  <p style="text-align:center;color: red; font-size:16px; margin-bottom: 20px; margin-top: 20px;"><i class="ion-information-circled" style="font-size:16px"></i> Vous pouvez annuler votre réservation jusqu'à 24h avant le début de la partie.</p>
+  <div ng-if=" found <= 0 " >
+   <button  ng-click="getTerrainsFree()" class="button homepage_button icon-right ion-chevron-right last-element">
+    Vérifier la disponibilité
   </button>
+</div>
+
+<div ng-if=" found > 0 " >
+  <a href="#/resa/pay">
+    <button class="button homepage_button icon-right last-element">
+      Confirmer
+    </button>
+  </a>
 </div>
 
 </ion-content>
