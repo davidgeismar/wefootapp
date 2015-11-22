@@ -1,22 +1,22 @@
  <div class="modal">
   <ion-header-bar  class="actu_header">
+    <div class="button button-clear" style="width:50px" ng-click="hideModal2()"><span class="icon ion-chevron-down"></span></div>
   <h1 class="title">Ajouter une carte</h1>
-  <div class="button button-clear" ng-click="hideModal2()"><span class="icon ion-chevron-down"></span></div>
 </ion-header-bar>
 <ion-content  class="padding_header">
 <div class="list content-card">
   <label class="item item-input item-stacked-label card-number">
     <span class="input-label">Numero de carte</span>
-    <input type="number" ng-model="card.number" placeholder="N°1234567891234567"/>
+    <input type="tel" ng-model="card.number" placeholder="N°1234567891234567"/>
   </label>
   <div class="input-wrapper-card">
     <label class="item item-input item-stacked-label card-expire">
       <span class="input-label">Date d'expiration</span>
-      <input type="text" ng-model="card.expirationDate" placeholder="MM/AA"/>
+      <input type="tel" ng-model="card.expirationDate" placeholder="MMAA"/>
     </label>
     <label class="item item-input item-stacked-label card-expire">
       <span class="input-label card-date">Cryptogramme visuel</span>
-      <input type="number" ng-model="card.cvx" placeholder="123">
+      <input type="tel" ng-model="card.cvx" placeholder="123">
     </label>
   </div>
 </div>

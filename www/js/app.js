@@ -1,5 +1,5 @@
 //GLOBAL FUNCTIONS
-// var serverAddress = "http://62.210.115.66:9000";
+// var serverAddress = "//"http://wefoot-test.herokuapp.com:80";;
 //"http://wefoot.herokuapp.com:80";
 //"http://localhost:1337";
 
@@ -7,9 +7,11 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
+
 var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
 // var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
 // var serverAddress = "http://localhost:1337"; // local
+
 console.log("Connected to "+serverAddress);
 
 
@@ -174,11 +176,13 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
     });
   //Nouveau chat
   io.socket.on('newChat',function(chat){
+    console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
+    console.log(message);
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
     $localStorage.set('lastTimeUpdated', moment().format());

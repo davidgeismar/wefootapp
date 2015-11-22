@@ -56,9 +56,10 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 		var chats = $localStorage.getArray('chats');
 		var chatsDisplay = $localStorage.getArray('chatsDisplay');
 		var indexC = _.pluck(chats, isChatorFoot).indexOf(chatOrFootId);
-		var chatId = chats[indexC].id;
-		var indexCD = _.pluck(chatsDisplay, 'id').indexOf(chatId);
+		console.log(indexC);
 		if(indexC>-1){
+			var chatId = chats[indexC].id;
+			var indexCD = _.pluck(chatsDisplay, 'id').indexOf(chatId);
 			chats.splice(indexC, 1);
 			chatsDisplay.splice(indexCD, 1);
 			$localStorage.setObject('chats',chats);
@@ -107,6 +108,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 	obj.postNewChatter = function(footId, usersId){
 		var chat = _.find($localStorage.getArray('chats'), function(chat){return chat.related == footId});
 		users = _.pluck(chat.users,'id');
+		console.log(users);
+		console.log(usersId);
 		$http.post(serverAddress+'/chatter/addToChat',{users :usersId, related:footId, chatters:users });
 	}
 	return obj;

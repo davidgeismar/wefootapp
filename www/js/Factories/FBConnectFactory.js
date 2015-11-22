@@ -29,16 +29,16 @@ obj.fbLoginSuccess = function(response) {
 };
 
   //This is the fail callback from the login method
-obj.fbLoginError = function(error){
+  obj.fbLoginError = function(error){
     fbLogged.reject(error);
-    alert(error);
+    alert(JSON.stringify(error));
     $ionicLoading.hide();
   };
 
   //this method is to get the user profile info from the facebook api
-obj.getFacebookProfileInfo = function () {
+  obj.getFacebookProfileInfo = function (token) {
     var info = $q.defer();
-    facebookConnectPlugin.api('/me', "",
+    facebookConnectPlugin.api('/me?access_token='+token+'&fields=id,name,first_name,last_name,email,birthday', "",
       function (response) {
         info.resolve(response);
       },
@@ -57,119 +57,69 @@ obj.connect = function(){
       facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
     }
 
-    //check if we have user's data stored
-    //var user = UserService.getUser();
+    facebookConnectPlugin.login(['email',
+      'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
 
-    facebookConnectPlugin.getLoginStatus(function(success){
-      // alert(success.status);
-      $ionicLoading.show({
-          content: 'Loading Data',
-          animation: 'fade-out',
-          showBackdrop: false,
-          hideOnStateChange: false
-        });
-      $rootScope.toShow = false;
-      //TO DO : SI STATUS = CONNECTED MAIS QU'ON TROUVE PAS LE TOKEN IL FAUT VIRER LE MEC DE LA BD
-      if(success.status === 'connected'){
-        // the user is logged in and has authenticated your app, and response.authResponse supplies
-        // the user's ID, a valid access token, a signed request, and the time the access token
-        // and signed request each expire
+    fbLogged.promise.then(function(authData) {
+      facebookConnectPlugin.getLoginStatus(function(success){
+        if (success.status === 'not_authorized'){
+          $location.path('/login');
+        }
+        else{
+          var fb_uid = authData.id;
+          var fb_access_token = authData.access_token;
 
-        //TO CLEAN
-          var fb_uid = success.authResponse.userID,
-          fb_access_token = success.authResponse.accessToken;
-          obj.getFacebookProfileInfo().then(function(data) {
-              var user = data;
+          obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
+            var user = data;
+            user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
+            user.access_token = fb_access_token;
 
-              user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
-              user.access_token = fb_access_token;
-
-              //save the user data
-              //for the purpose of this example I will store it on ionic local storage but you should save it on a database
-
-              $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
-                $localStorage.set('token',response.token);
-                $localStorage.setObject('user',response);
-                $connection(response.id,function(){
-                  // $ionicLoading.hide();
-                  obj.getFacebookFriendsInfos();
-                  $location.path('/user/profil');
-
-
-                },true);
-              }).error(function(err){
-                console.log(err);
-              });
-            });
-
-      } else {
-        //if (success.status === 'not_authorized') the user is logged in to Facebook, but has not authenticated your app
-        //else The person is not logged into Facebook, so we're not sure if they are logged into this app or not.
-
-        
-        //ask the permissions you need
-        //you can learn more about FB permissions here: http://developers.facebook.com/docs/facebook-login/permissions/v2.2
-          //   facebookConnectPlugin.getLoginStatus(function(success){
-        facebookConnectPlugin.login(['email',
-          'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
-
-        fbLogged.promise.then(function(authData) {
-          var fb_uid = authData.id,
-          fb_access_token = authData.access_token;
-
-            //get user info from FB
-            obj.getFacebookProfileInfo().then(function(data) {
-              var user = data;
-
-              user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
-              user.access_token = fb_access_token;
-
-              //save the user data
-              //for the purpose of this example I will store it on ionic local storage but you should save it on a database
-
-              $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
-                $localStorage.set('token',response.token);
-                $localStorage.setObject('user',response);
-                $connection(response.id,function(){
-                  // $ionicLoading.hide();
-                  obj.getFacebookFriendsInfos();
-                  $location.path('/user/profil');
-
-
-                },true);
-              }).error(function(err){
-                console.log(err);
-              });
+            $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+              $localStorage.set('token',response.token);
+              $localStorage.setObject('user',response);
+              $connection(response.id,function(){
+                obj.getFacebookFriendsInfos(fb_access_token);
+                $location.path('/user/profil');
+              },true);
+            }).error(function(err){
+              console.log(err);
             });
           });
         }
+      });
 });
-
-
 }
 
-	obj.getFacebookFriends = function (callback) {
-    var friends = $q.defer();
-    facebookConnectPlugin.api('/me/friends?fields=picture,name', "",
-      function (result) {
-        friends.resolve(result);
-      }, 
-      function (error) { 
-        alert("Failed: " + error);
-        friends.reject(error);
-      });
-    return friends.promise;
-  }
-
-  obj.getFacebookFriendsInfos = function(){
-    obj.getFacebookFriends().then(function(friends){
-      var friendsId = _.pluck(friends.data,'id');
-      $http.post(serverAddress+"/user/getViaFbId",{users:friendsId}).success(function(data){
-        $localStorage.setObject("facebookFriends", data);
-      });
+obj.getFacebookFriends = function (token, callback) {
+  var friends = $q.defer();
+  facebookConnectPlugin.api('/me/friends?access_token='+token+'&fields=picture,name', "",
+    function (result) {
+      friends.resolve(result);
+    }, 
+    function (error) { 
+      console.log(error);
+      friends.reject(error);
     });
-  }
+  return friends.promise;
+}
 
-	  return obj;
+obj.getFacebookFriendsInfos = function(token){
+  obj.getFacebookFriends(token).then(function(friends){
+    var friendsId = _.pluck(friends.data,'id');
+    $http.post(serverAddress+"/user/getViaFbId",{users:friendsId}).success(function(data){
+      $localStorage.setObject("facebookFriends", data);
+    });
+  });
+}
+
+obj.logout = function(){
+  facebookConnectPlugin.logout(
+    function(success){
+    },
+    function(faillure){
+    }
+    )
+}
+return obj;
 
 }])

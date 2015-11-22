@@ -68,9 +68,15 @@ $scope.datepickerObject = {
       modalFooterColor: 'bar-positive', //Optional
       from: from,   //Optional
       to: to,   //Optional
-      callback: function (val) {    //Mandatory
-        $scope.foot.date = val;
-        $scope.date = getJour(val);
+      callback: function (val) {
+        if(val){
+          var oldDate = angular.copy($scope.foot.date);
+          $scope.foot.date = val;
+          $scope.foot.date.setHours(oldDate.getHours(),oldDate.getMinutes());
+          $scope.date = getJour(val);
+          console.log($scope.foot.date);
+          console.log($scope.dateHour);
+        }
       }
     };
 
@@ -312,9 +318,9 @@ if($location.path().indexOf('user/foots')>-1){
       $scope.isPending = true;
       $validated.show({texte: "Votre demande à bien été envoyée.", icon: "ion-checkmark-round"},function(){
       }); //ERROR USING CALLBACK
-      // $timeout(function(){
-      //   $location.path('/footfinder');
-      // },1100);
+      $timeout(function(){
+        $location.path('/footfinder');
+      },1100);
     });
   };
 

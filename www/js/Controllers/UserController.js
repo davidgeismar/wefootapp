@@ -14,6 +14,7 @@ if($scope.user && $scope.user.poste==null){
   $scope.user.poste = "Entrer votre poste";
 }
 
+
   //EDITIONS
 
   $scope.editClub = function(value){
@@ -85,6 +86,9 @@ $scope.logout = function (){
  mySock.req(serverAddress+'/connexion/delete');
  $rootScope.toShow = true;
  $rootScope.notifs = [];
+ if($localStorage.getObject('user').facebook_id){
+  fbConnect.logout();
+ }
  if($localStorage.getObject('user').pushToken){
   var pushToken = $localStorage.getObject('user').pushToken;
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
@@ -93,8 +97,18 @@ $scope.logout = function (){
     $location.path('/');
   });
 }
+
 else{
-  $localStorage.clearAll();
+
+  if($localStorage.getObject('user').facebook_id){
+    fbConnect.logout(function(){
+      $localStorage.clearAll();
+    });
+  }
+
+  else
+    $localStorage.clearAll();
+
   $location.path('/');
 }
 
@@ -138,7 +152,7 @@ $scope.bugReport = function (){
    });
 
  });
- 
+
 }
   //MODAL HANDLER
 
@@ -160,8 +174,12 @@ $scope.bugReport = function (){
   $scope.closeModal = function() {
     $scope.modal.hide();
     $searchLoader.hide();
-  }; 
+  };
 
+  $scope.goFriend = function(friend){
+    $scope.modal.hide();
+    $location.path('/friend/'+friend.id);
+  }
 
   $scope.switchSearchFb = function(){
     $('.opened_search').removeClass('opened_search');
@@ -267,7 +285,7 @@ $scope.isFriend = function(userId, facebookFriend){
   else{
     return false;
   }
-  
+
 }
 
 $scope.friend = $localStorage.friend;
@@ -351,7 +369,7 @@ $scope.sendSmsMessage = function(){
 
         })
 
-.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) { 
+.controller('MenuController', function($scope, $ionicSideMenuDelegate,$localStorage) {
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };

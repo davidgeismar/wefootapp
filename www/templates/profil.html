@@ -1,6 +1,6 @@
 <ion-view view-title="Profil">
   <ion-content scroll="false">
-    <div class="main_actu">
+    <div class="main_actu" on-swipe-left="leftSwipe()">
     </div>
     <div class="slider-button row">
     	<div ng-click="go('/footfinder')" on-drag-left="" class="col col-50 left-side-slider">
@@ -16,7 +16,7 @@
 
     <!-- ACTUS SECTIONS -->
   <ion-scroll direction="y" class="container_actu last">
-  <ion-refresher on-refresh="refresh()">                 
+  <ion-refresher on-refresh="refresh()">
   </ion-refresher>
   <div class="last">
    <div ng-repeat="actus in actusByDay" class="row day_timeline">
