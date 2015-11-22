@@ -4,14 +4,14 @@ angular.module('connections',[])
   $rootScope.toShow = false;
  //Prevent for loading to early
 
- facebookConnectPlugin.logout(
-  function(success){
+ // facebookConnectPlugin.logout(
+ //  function(success){
 
-  },
-  function(faillure){
+ //  },
+ //  function(faillure){
 
-  }
-  )
+ //  }
+ //  )
 
  $ionicPlatform.ready(function(){
   if(window.device && $cordovaNetwork.isOffline()){ //HANDLE OFFLINE CONNEXION (SET SOCKET ETC PB)
