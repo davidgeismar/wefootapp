@@ -248,7 +248,7 @@ if($location.path().indexOf('user/foots')>-1){
 
   $scope.playFoot = function(player){
     $scope.isPlaying = true;
-    $scope.foot.date = $scope.date;
+    $scope.foot.dateString = $scope.date;
     $foot.playFoot(player,$scope.foot,$scope.players);
   }
 
