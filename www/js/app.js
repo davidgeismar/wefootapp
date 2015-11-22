@@ -7,7 +7,9 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
+// var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
+// var serverAddress = "http://localhost:1337"; // local
 console.log("Connected to "+serverAddress);
 
 
@@ -531,10 +533,10 @@ app.directive('input', function($timeout){
           console.log('on-return set: executing');
           $timeout(function(){
             scope.onReturn();
-          });                        
+          });
         }
-      } 
-    });   
+      }
+    });
   }
 }
 });
