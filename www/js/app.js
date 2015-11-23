@@ -7,7 +7,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://wefoot-test.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 console.log("Connected to "+serverAddress);
 
 
@@ -172,7 +172,6 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
     });
   //Nouveau chat
   io.socket.on('newChat',function(chat){
-    console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
   });

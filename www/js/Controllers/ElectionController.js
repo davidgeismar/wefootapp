@@ -34,9 +34,12 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	}
 
 	$scope.select = function(hommeOuChevre,userId){
-		if(hommeOuChevre=='homme')
+		if(hommeOuChevre=='homme'){
+			if($scope.chevre!=userId)
 			$scope.homme = userId;
+		}
 		else
+			if($scope.homme!=userId)
 			$scope.chevre = userId;
 	}
 
