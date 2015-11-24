@@ -70,12 +70,8 @@ $scope.datepickerObject = {
       to: to,   //Optional
       callback: function (val) {
         if(val){
-          var oldDate = angular.copy($scope.foot.date);
-          $scope.foot.date = val;
-          $scope.foot.date.setHours(oldDate.getHours(),oldDate.getMinutes());
+          $scope.foot.date.setMonth(val.getMonth(),val.getDate());
           $scope.date = getJour(val);
-          console.log($scope.foot.date);
-          console.log($scope.dateHour);
         }
       }
     };
