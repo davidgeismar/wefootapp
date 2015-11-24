@@ -86,9 +86,11 @@ $scope.logout = function (){
  mySock.req(serverAddress+'/connexion/delete');
  $rootScope.toShow = true;
  $rootScope.notifs = [];
+
  if($localStorage.getObject('user').facebook_id){
   fbConnect.logout();
  }
+ 
  if($localStorage.getObject('user').pushToken){
   var pushToken = $localStorage.getObject('user').pushToken;
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
@@ -99,16 +101,7 @@ $scope.logout = function (){
 }
 
 else{
-
-  if($localStorage.getObject('user').facebook_id){
-    fbConnect.logout(function(){
-      $localStorage.clearAll();
-    });
-  }
-
-  else
-    $localStorage.clearAll();
-
+  $localStorage.clearAll();
   $location.path('/');
 }
 

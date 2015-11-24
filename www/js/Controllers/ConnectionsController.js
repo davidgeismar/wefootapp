@@ -45,6 +45,7 @@ angular.module('connections',[])
   else{
     $ionicHistory.clearCache();
     $ionicHistory.clearHistory();
+    $ionicLoading.show();
     fbConnect.connect();
   }
 };
