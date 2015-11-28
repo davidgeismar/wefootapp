@@ -32,6 +32,7 @@ angular.module('friend',[])
 			if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 				$scope.foot = foot[foot.length-1];
+				$scope.foot.dateString = getJour($scope.foot.date) + ' ' + getHour($scope.foot.date);
 			}
 			else $scope.isInvitationConfirmation = false;
 		});

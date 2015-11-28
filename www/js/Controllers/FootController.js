@@ -186,6 +186,7 @@ if($location.path().indexOf('user/foots')>-1){
 
   $foot.loadInfo($stateParams.id,function(result){
     $scope.foot = result.foot;
+    console.log($scope.foot);
     $scope.invited = result.invited;
     $scope.isInvited = result.isInvited;
     $scope.isPending = result.isPending;
