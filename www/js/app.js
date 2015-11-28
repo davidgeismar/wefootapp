@@ -1,13 +1,16 @@
 //GLOBAL FUNCTIONS
-// var serverAddress = "//"http://wefoot-test.herokuapp.com:80";;
-//"http://wefoot.herokuapp.com:80";
-//"http://localhost:1337";
 
 window.onerror = function (errorMsg, url, lineNumber) {
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 
-var serverAddress = "http://localhost:1337";
+
+var serverAddress = "http://wefoot.herokuapp.com:80";
+
+// var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
+// var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
+// var serverAddress = "http://localhost:1337"; // local
+
 console.log("Connected to "+serverAddress);
 
 
@@ -320,7 +323,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   })
 
   $stateProvider.state('user.chat', {
-    cache: true,
+    cache: false,
     url: '/chat',
     views: {
       'menuContent' :{
@@ -532,10 +535,10 @@ app.directive('input', function($timeout){
           console.log('on-return set: executing');
           $timeout(function(){
             scope.onReturn();
-          });                        
+          });
         }
-      } 
-    });   
+      }
+    });
   }
 }
 });

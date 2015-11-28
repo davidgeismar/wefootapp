@@ -29,13 +29,13 @@ $rootScope.$on('newMessage', function(event){
   refreshConv();
 });
 
-  $scope.goBack = function (value){
-    $ionicScrollDelegate.scrollTop();
-    $rootScope.nbGoBack = -1;
-    if(value)
-      $ionicHistory.goBack(value);
-    $ionicHistory.goBack();
-  };
+  // $scope.goBack = function (value){
+  //   $ionicScrollDelegate.scrollTop();
+  //   $rootScope.nbGoBack = -1;
+  //   if(value)
+  //     $ionicHistory.goBack(value);
+  //   $ionicHistory.goBack();
+  // };
 
 $scope.go = function(target){
   $location.path(target);

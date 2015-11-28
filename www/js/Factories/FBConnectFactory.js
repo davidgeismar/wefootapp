@@ -38,7 +38,7 @@ obj.fbLoginSuccess = function(response) {
   //this method is to get the user profile info from the facebook api
   obj.getFacebookProfileInfo = function (token) {
     var info = $q.defer();
-    facebookConnectPlugin.api('/me?access_token='+token+'&fields=id,name,first_name,last_name,email,birthday', "",
+    facebookConnectPlugin.api('/me?access_token='+token+'&fields=id,name,first_name,last_name,email,birthday', ['email','public_profile','user_friends'],
       function (response) {
         info.resolve(response);
       },
@@ -57,8 +57,7 @@ obj.connect = function(){
       facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
     }
 
-    facebookConnectPlugin.login(['email',
-      'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
+    facebookConnectPlugin.login(['public_profile','email','user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
 
     fbLogged.promise.then(function(authData) {
       facebookConnectPlugin.getLoginStatus(function(success){
@@ -71,9 +70,10 @@ obj.connect = function(){
 
           obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
             var user = data;
+            if(!data.email)
+              user.email = fb_uid+"@facebook.com";
             user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
             user.access_token = fb_access_token;
-
             $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
               $localStorage.set('token',response.token);
               $localStorage.setObject('user',response);
@@ -92,12 +92,11 @@ obj.connect = function(){
 
 obj.getFacebookFriends = function (token, callback) {
   var friends = $q.defer();
-  facebookConnectPlugin.api('/me/friends?access_token='+token+'&fields=picture,name', "",
+  facebookConnectPlugin.api('/me/friends?access_token='+token+'&fields=id,picture,name', ['email','public_profile','user_friends'],
     function (result) {
       friends.resolve(result);
     }, 
     function (error) { 
-      console.log(error);
       friends.reject(error);
     });
   return friends.promise;

@@ -5,7 +5,7 @@
 <i ng-click="removeChat(chat.id)" class="ion-ios-minus-outline remove_chat"></i>
 </ion-header-bar>
 <div class="content_conv has-header">
-    <div class="conv_ban">
+    <div ng-if="detail" class="conv_ban">
         <h2 ng-click="go('foot/{{chat.related}}')" class="conv_ban_title">
             Foot de {{detail.orgaName}}
         </h2>
@@ -13,6 +13,11 @@
             {{detail.date}} - {{detail.field.name}}
         </p>
 
+    </div>
+    <div ng-if="!detail" class="conv_ban" style="height:54px">
+        <h2 class="conv_ban_title">
+            Foot annulé
+        </h2>
     </div>
 </div>
 <ion-content class="padding padding_top has-header has-subheader has-footer padding_bottom">
@@ -38,7 +43,7 @@
 </div>
 </ion-content>
 <ion-footer-bar class="input_message_wrapper" id="footerChat">
- <textarea id="messageArea" ng-model="messageContent" type="text" placeholder="Saisissez votre message ici" ng-keyup="autoExpand()"></textarea>
+<textarea id="messageArea" ng-model="messageContent" type="text" placeholder="Saisissez votre message ici" ng-keyup="autoExpand()"></textarea>
 <button class="button_send_message button" style="font-weight:700;" ng-click="sendMessage()" ng-class="showMessageButton(messageContent)"><i class="ion-paper-airplane"></i></button>
 
 </ion-footer-bar>

@@ -4,7 +4,10 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$rootScope.chats = $localStorage.getArray('chats');
 	$scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
 
-	$ionicScrollDelegate.scrollTop();
+
+	ionic.DomUtil.ready(function(){
+		$ionicScrollDelegate.scrollTop();
+	});
 
 	$rootScope.updateMessage = function(){
 		$scope.$digest();
@@ -29,8 +32,8 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 		}
 	});
 
-$scope.deleteChat = function(chatId){
-	chat.deactivateChatter(chatId,'id');
-}
+	$scope.deleteChat = function(chatId){
+		chat.deactivateChatter(chatId,'id');
+	}
 
 })

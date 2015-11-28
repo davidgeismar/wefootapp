@@ -4,14 +4,14 @@ angular.module('connections',[])
   $rootScope.toShow = false;
  //Prevent for loading to early
 
- facebookConnectPlugin.logout(
-  function(success){
+ // facebookConnectPlugin.logout(
+ //  function(success){
 
-  },
-  function(faillure){
+ //  },
+ //  function(faillure){
 
-  }
-  )
+ //  }
+ //  )
 
  $ionicPlatform.ready(function(){
   if(window.device && $cordovaNetwork.isOffline()){ //HANDLE OFFLINE CONNEXION (SET SOCKET ETC PB)
@@ -113,7 +113,7 @@ angular.module('connections',[])
        $location.path('/user/profil');
      }).error(function(err){
       $ionicLoading.hide();
-      $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis.";
+      $scope.err = "Erreur veuillez vérifier que tous les champs sont remplis et que l'adresse mail n'est pas déjà utilisée.";
     });
    }
  }

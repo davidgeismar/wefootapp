@@ -342,14 +342,14 @@ $scope.displayNotes = function(){
 $scope.sendFbMessage = function() {
   facebookConnectPlugin.showDialog({
     method: 'send',
-    message:'Téléchargez wefoot bande de bitches',
-    link:'http://wefoot.co'
+    message:"Organise tes parties de football avec WeFoot. Si tu es sur Android, télécharge l'application via http://www.wefoot.co/app.apk. Sinon envoie ton mail en remplissant le formulaire bêta test à www.wefoot.co"
+    // link:'http://wefoot.co'
   },
   function (response) {
     $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
   },
   function (response) {
-    console.log('error');
+    console.log(response);
   });
 };
 
@@ -360,7 +360,7 @@ $scope.sendSmsMessage = function(){
                 intent: 'INTENT'  // send SMS with the native android SMS messaging
               }
             };
-            $cordovaSms.send('', 'Téléchargez wefoot bande de bitches', options).then(function() {
+            $cordovaSms.send('', "Organise tes parties de football avec WeFoot. Si tu es sur Android, télécharge l'application via http://www.wefoot.co/app.apk. Sinon envoie ton mail en remplissant le formulaire bêta test à www.wefoot.co", options).then(function() {
               $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
             }, function(error) {
               console.log('error');

@@ -32,6 +32,7 @@ angular.module('friend',[])
 			if(foot.length>0){
 				$scope.isInvitationConfirmation = true;
 				$scope.foot = foot[foot.length-1];
+				console.log($scope.foot);
 			}
 			else $scope.isInvitationConfirmation = false;
 		});
