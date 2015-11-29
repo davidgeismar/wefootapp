@@ -51,24 +51,65 @@ obj.fbLoginSuccess = function(response) {
 
 
 //This method is executed when the user press the "Login with facebook" button
+// obj.connect = function(){
+//   if (!window.cordova) {
+//       //this is for browser only
+//       facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
+//     }
+
+//     facebookConnectPlugin.login(['email',
+//       'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
+
+//     fbLogged.promise.then(function(authData) {
+//       facebookConnectPlugin.getLoginStatus(function(success){
+//         if (success.status === 'not_authorized'){
+//           $location.path('/login');
+//         }
+//         else{
+//           var fb_uid = authData.id;
+//           var fb_access_token = authData.access_token;
+//           console.log('hi');
+//           obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
+//             console.log('hello1');
+//             var user = data;
+//             user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
+//             user.access_token = fb_access_token;
+
+//             $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+//               console.log('hello2');
+//               $localStorage.set('token',response.token);
+//               $localStorage.setObject('user',response);
+//               $connection(response.id,function(){
+//                 console.log('hello3');
+//                 obj.getFacebookFriendsInfos(fb_access_token);
+//                 $location.path('/user/profil');
+//               },true);
+//             }).error(function(err){
+//               console.log(err);
+//             });
+//           });
+//         }
+//       });
+// });
+// }
+
 obj.connect = function(){
   if (!window.cordova) {
       //this is for browser only
       facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
     }
 
-    facebookConnectPlugin.login(['email',
-      'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
 
-    fbLogged.promise.then(function(authData) {
-      facebookConnectPlugin.getLoginStatus(function(success){
-        if (success.status === 'not_authorized'){
-          $location.path('/login');
-        }
-        else{
+  facebookConnectPlugin.getLoginStatus(function(success){
+
+    if (success.status != 'connected'){
+      facebookConnectPlugin.login(['email',
+        'public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
+      console.log('ok here');
+
+      fbLogged.promise.then(function(authData) {
           var fb_uid = authData.id;
           var fb_access_token = authData.access_token;
-
           obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
             var user = data;
             user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
@@ -85,10 +126,62 @@ obj.connect = function(){
               console.log(err);
             });
           });
-        }
       });
+  }
+// TODO CLEAN ALL THAT SHIT !!
+  else{
+          console.log('ok here');
+          var authData = success.authResponse;
+          var fb_uid = authData.id;
+          var fb_access_token = authData.access_token || authData.accessToken;
+          obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
+            var user = data;
+
+            if(!fb_uid)
+              fb_uid = user.id;
+
+            user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
+            user.access_token = fb_access_token;
+
+            $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+              $localStorage.set('token',response.token);
+              $localStorage.setObject('user',response);
+              $connection(response.id,function(){
+                obj.getFacebookFriendsInfos(fb_access_token);
+                $location.path('/user/profil');
+              },true);
+            }).error(function(err){
+              console.log(err);
+            });
+          });
+      }
 });
 }
+
+// obj.connect_wf = function(authData, callback){
+//             var fb_uid = authData.id;
+//           var fb_access_token = authData.access_token;
+//           console.log('hi');
+//           obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
+//             console.log('hello1');
+//             var user = data;
+//             user.picture = "http://graph.facebook.com/"+fb_uid+"/picture?width=400&height=400";
+//             user.access_token = fb_access_token;
+
+//             $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
+//               console.log('hello2');
+//               $localStorage.set('token',response.token);
+//               $localStorage.setObject('user',response);
+//               $connection(response.id,function(){
+//                 console.log('hello3');
+//                 obj.getFacebookFriendsInfos(fb_access_token);
+//                 $location.path('/user/profil');
+//               },true);
+//             }).error(function(err){
+//               console.log(err);
+//             });
+//           });
+// }
 
 obj.getFacebookFriends = function (token, callback) {
   var friends = $q.defer();
