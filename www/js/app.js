@@ -496,7 +496,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
-
+$ionicConfigProvider.views.swipeBackEnabled(false);
 $ionicConfigProvider.views.forwardCache(true);
 $ionicConfigProvider.tabs.position("bottom");
 });
