@@ -347,7 +347,7 @@ return profil;
     $http.post(serverAddress+'/foot/create',params).success(function(foot){
       var chatters = [];
       angular.copy(params.toInvite, chatters);
-      chatters.push($localStorage.getObject('user').id);
+      chatters.push(user.id);
       $http.post(serverAddress+'/chat/create',{users :chatters, typ:2, related:foot.id, desc:"Foot de "+ user.first_name}).success(function(){
       });
       async.each(params.toInvite,function(invited,callback){
@@ -355,6 +355,12 @@ return profil;
           callback();
         },true);
       },function(){});
+      //Data to display
+      foot.dateString = getJourShort(new Date(foot.date))+', '+getHour(new Date(foot.date));
+      foot.orgaName = user.first_name + " " + user.last_name;
+      foot.orgaPic = user.picture;
+      foot.field = $localStorage.fieldChosen;
+      $localStorage.footTodo.push(foot);
       callback2(foot);
     }).error(function(){console.log(params);});
   }

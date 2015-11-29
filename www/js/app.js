@@ -11,7 +11,7 @@ var serverAddress = "http://wefoot.herokuapp.com:80";
 // var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
 // var serverAddress = "http://localhost:1337"; // local
 
-console.log("Connected to "+serverAddress);
+console.log("Connected to " + serverAddress);
 
 
 
@@ -156,22 +156,6 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
     if(data.typ == 'newFriend')
         $localStorage.newFriend = true;  //refresh on actu load his data
 
-      if(data.typ == 'footInvit'){
-        $http.get(serverAddress+'/foot/getInfo/'+data.id).success(function(info){
-          data.organisator = info.orga;
-          data.orgaName = info.orgaName;
-          data.field = info.field;
-          $localStorage.footInvitation.push(data);
-        });
-      }
-
-      if(data.typ == 'footAnnul'){
-        if($localStorage.footTodo){
-          var plucked = _.pluck($localStorage.footTodo,'id');
-          index = plucked.indexOf(data.related_stuff);
-          if(index>-1) $localStorage.footTodo.splice(index,1);
-        }
-      }
     });
   //Nouveau chat
   io.socket.on('newChat',function(chat){

@@ -9,6 +9,12 @@
 
         <span ng-class="{active: tab==2}" class="gris" >INVITATIONS <span ng-if="footInvitation.length>0" class="badge badge-assertive">{{footInvitation.length}}</span> <strong><br>EN ATTENTE</strong></span>
       </li>
+      <div class="empty-result" ng-if= "footTodo.length == 0 && tab == 1">
+          Vous n'avez pas de foot à venir pour le moment.
+      </div>
+      <div class="empty-result" ng-if= "footInvitation.length == 0 && tab == 2">
+          Vous n'avez pas de encore été invité à rejoindre un foot.
+     </div>
     <ion-scroll direction="y" class= "carte_foots background_foots last">
       <ion-refresher on-refresh="refresh()">
       </ion-refresher>

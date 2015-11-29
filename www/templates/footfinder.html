@@ -14,7 +14,10 @@
       		</div>
       	</div>
         <div class="container_results_footfinder">
-        <searchLoader></searchLoader> 
+        <searchLoader></searchLoader>
+        <div class="empty-result" ng-if= "results.length == 0">
+          Il n'y a aucun foot dans ce lieu à cette date.
+        </div>
         <ion-scroll direction="y" class= "carte_foots background_footfinder last">
       	<div ng-click="go(foot.id)" class="item item-divider-foot item-text-wrap border_bottom_foot" ng-repeat= "foot in results | filter: filterFoots | orderBy:'distance'" ng-class="{'last-margin': $index==results.length-1}">
             <div class="row">

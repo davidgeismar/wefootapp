@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<div class="item item-icon-left align_creer_foot">
+<div ng-click="dropdownTrigger()" class="item item-icon-left align_creer_foot">
   <div class="row">
     <div class="col col-25">
       <img class= "icon_bonhomme" ng-src="img/icon_bonhomme.svg"/>
@@ -37,7 +37,7 @@
    <div class="col col-25 venue1 nb_player_params">
      <!-- <input maxlength="2" ng-model="foot.nb_player" value="{{foot.nb_player}}" class="input_player"/> -->
      <label class="item item-input item-select" style="border-style:none;bottom:4px;width:65px">
-       <select ng-model="foot.nb_player" style="position:relative; padding:0; ">
+       <select id="select-number-players" ng-model="foot.nb_player" style="position:relative; padding:0; ">
          <option>6</option>
          <option>7</option>
          <option>8</option>
@@ -131,7 +131,7 @@
   <div class="modal">
     <ion-header-bar  class="actu_header">
     <h1 class="title">Inviter des amis</h1>
-    <div class="button button-clear" ng-click="modal1.hide()"><span class="icon ion-checkmark-round"></span></div>
+    <div class="button button-clear" style="width:50px" ng-click="modal1.hide()"><span class="icon ion-checkmark-round"></span></div>
   </ion-header-bar>
   <ion-content  class="padding_header">
   <label class="item-input">

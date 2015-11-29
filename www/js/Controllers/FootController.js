@@ -43,6 +43,13 @@ $scope.addToFoot = function(id){
 // }
 
 
+$scope.dropdownTrigger = function(){
+    var value = $(this).attr("rel"); //get the value
+    value++; //increment value for the nth-child selector to work
+    $('#select-number-players').find('option:nth-child(' + value + ')').prop('selected',true).trigger('change'); //trigger a change instead of click
+    return false;
+}
+
 $scope.currentDate = new Date();
 $scope.currentDateFormat = moment($scope.currentDate).locale('fr').format("DD MMM yy");
 var from = new Date();
@@ -70,12 +77,8 @@ $scope.datepickerObject = {
       to: to,   //Optional
       callback: function (val) {
         if(val){
-          var oldDate = angular.copy($scope.foot.date);
-          $scope.foot.date = val;
-          $scope.foot.date.setHours(oldDate.getHours(),oldDate.getMinutes());
+          $scope.foot.date.setMonth(val.getMonth(),val.getDate());
           $scope.date = getJour(val);
-          console.log($scope.foot.date);
-          console.log($scope.dateHour);
         }
       }
     };
@@ -190,6 +193,7 @@ if($location.path().indexOf('user/foots')>-1){
 
   $foot.loadInfo($stateParams.id,function(result){
     $scope.foot = result.foot;
+    console.log($scope.foot);
     $scope.invited = result.invited;
     $scope.isInvited = result.isInvited;
     $scope.isPending = result.isPending;

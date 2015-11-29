@@ -52,6 +52,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 	}
 	//IsChatorFoot contains 'id' or 'related'
 	obj.deactivateChatter =  function (chatOrFootId, isChatorFoot){
+		console.log(chatOrFootId);
+		console.log(isChatorFoot);
 		var user = $localStorage.getObject('user');
 		var chats = $localStorage.getArray('chats');
 		var chatsDisplay = $localStorage.getArray('chatsDisplay');

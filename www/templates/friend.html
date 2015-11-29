@@ -27,7 +27,10 @@
 	Défier ce joueur
 </button></a> -->
 <div ng-if="isInvitationConfirmation" class="button-container-friend">
-<p style="text-align:center"><i class="ion-information-circled" style="font-size:16px"></i> Ce joueur souhaite participer au foot que vous organisez le {{detail.date}} à {{detail.field.name}} </p>
+<!-- <<<<<<< HEAD
+<p style="text-align:center"><i class="ion-information-circled" style="font-size:16px"></i> Ce joueur souhaite participer au foot que vous organisez le {{foot.dateString}} à {{foot.field.name}} </p>
+======= -->
+<p style="text-align:center"><i class="ion-information-circled" style="font-size:16px"></i> Ce joueur souhaite participer à votre foot du {{foot.dateString}}</p>
   <button ng-click="acceptInvitation(true)" class="button  button-positive button-confirm-friend">Accepter ce joueur</button>
   <button style="margin-left:25px" ng-click="acceptInvitation(false)" class="button button-assertive button-confirm-friend">Refuser ce joueur</button>
 </div>
