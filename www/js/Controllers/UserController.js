@@ -87,13 +87,14 @@ $scope.logout = function (){
  $rootScope.toShow = true;
  $rootScope.notifs = [];
 
- if($localStorage.getObject('user').facebook_id){
+ if($localStorage.getObject('user').facebook_id && window.cordova){
+  console.log('here');
   fbConnect.logout();
  }
  
- if($localStorage.getObject('user').pushToken){
-  var pushToken = $localStorage.getObject('user').pushToken;
-  $http.post(serverAddress+'/push/delete',{push_id : $localStorage.getObject('user').pushToken}).success(function(){
+ if($localStorage.get('pushToken')){
+  var pushToken = $localStorage.get('pushToken');
+  $http.post(serverAddress+'/push/delete',{push_id : $localStorage.get('pushToken')}).success(function(){
     $localStorage.clearAll();
     $localStorage.set("pushToken",pushToken);
     $location.path('/');
