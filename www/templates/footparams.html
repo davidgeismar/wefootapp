@@ -93,13 +93,13 @@
 </div>
 <div class="row text-center">
   <div class="col col-50">
-    <div ng-click="foot.priv = true" ng-class="{active: foot.priv == true}" class="icon-private item item-icon-left item-icon-right">
+    <div ng-click="foot.priv = true; scrollBotom();" ng-class="{active: foot.priv == true}" class="icon-private item item-icon-left item-icon-right">
       <i class= "ion-locked"></i>
       <p class=""> Foot Privé</p>
     </div>
   </div>
   <div class="col col-50">
-    <div ng-click="foot.priv = false" ng-class="{active: foot.priv == false}" class="icon-private item item-icon-left item-icon-right">
+    <div ng-click="foot.priv = false; scrollBotom();" ng-class="{active: foot.priv == false}" class="icon-private item item-icon-left item-icon-right">
       <i class= "ion-ios-world-outline"></i>
       <p class=""> Foot Public</p>
     </div>

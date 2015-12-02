@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($confirmation,$scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot) {
+angular.module('foot',[]).controller('FootController', function ($confirmation,$scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot, $ionicScrollDelegate) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -43,12 +43,9 @@ $scope.addToFoot = function(id){
 // }
 
 
-$scope.dropdownTrigger = function(){
-    var value = $(this).attr("rel"); //get the value
-    value++; //increment value for the nth-child selector to work
-    $('#select-number-players').find('option:nth-child(' + value + ')').prop('selected',true).trigger('change'); //trigger a change instead of click
-    return false;
-}
+$scope.scrollBotom = function() {
+    $ionicScrollDelegate.scrollBottom(true);
+  }
 
 $scope.currentDate = new Date();
 $scope.currentDateFormat = moment($scope.currentDate).locale('fr').format("DD MMM yy");

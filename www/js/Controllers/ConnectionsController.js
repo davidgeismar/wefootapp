@@ -13,7 +13,8 @@ angular.module('connections',[])
  //  }
  //  )
 
- $ionicPlatform.ready(function(){
+
+$ionicPlatform.ready(function(){
   if(window.device && $cordovaNetwork.isOffline()){ //HANDLE OFFLINE CONNEXION (SET SOCKET ETC PB)
     error_reporter.show({texte: "Connectez vous d'abord à internet!"});
     $location.path('/user/profil');
@@ -38,7 +39,7 @@ angular.module('connections',[])
   }
 });
 
- $scope.facebookConnect = function() {
+$scope.facebookConnect = function() {
   if(window.device && $cordovaNetwork.isOffline()){
     error_reporter.show({texte: "Connectez vous d'abord à internet!"});
   }

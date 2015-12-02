@@ -334,11 +334,19 @@ $scope.displayNotes = function(){
 
 
 $scope.sendFbMessage = function() {
-  facebookConnectPlugin.showDialog({
+  facebookConnectPlugin.showDialog(
+  {
     method: 'send',
-    message:"Organise tes parties de football avec WeFoot. Si tu es sur Android, télécharge l'application via http://www.wefoot.co/app.apk. Sinon envoie ton mail en remplissant le formulaire bêta test à www.wefoot.co"
-    // link:'http://wefoot.co'
+    description:"Organise tes parties de football avec WeFoot. Si tu es sur Android, télécharge l'application via http://www.wefoot.co/app.apk. Sinon envoie ton mail en remplissant le formulaire bêta test à www.wefoot.co",
+    link:'http://wefoot.co'
   },
+//   {
+//     method: "apprequests",
+//     message: "Organise tes parties de football avec WeFoot. Si tu es sur Android, télécharge l'application via http://www.wefoot.co/app.apk. Sinon envoie ton mail en remplissant le formulaire bêta test à www.wefoot.co",
+//     title: "WeFoot, le football connecté",
+//     actionType: 'askfor',
+//     filters: 'app_non_users'
+// },
   function (response) {
     $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
   },

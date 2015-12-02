@@ -14,15 +14,21 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
 
   var refreshConv = function(){
     if(_.last($location.url().split('/'))==$scope.chat.id){
+      console.log($location.url());
       chat.updateLts($scope.chat.id);
+      $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
+      if(!$scope.$$phase) {
+        $scope.$digest();
+        $ionicScrollDelegate.scrollBottom();
+      }
+      else
+        $ionicScrollDelegate.scrollBottom();
+      
     }
-    $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
-    if(!$scope.$$phase) {
-      $scope.$digest();
-    }
-    $ionicScrollDelegate.scrollBottom();
-
   }
+
+  setTimeout(function(){ refreshConv(); }, 3000);
+
 
 //REFRESH THE CONVERSATION
 $rootScope.$on('newMessage', function(event){
@@ -37,17 +43,17 @@ $rootScope.$on('newMessage', function(event){
   //   $ionicHistory.goBack();
   // };
 
-$scope.go = function(target){
-  $location.path(target);
-}
+  $scope.go = function(target){
+    $location.path(target);
+  }
 
-$scope.sendMessage = function(){
- if($scope.messageContent.length>0){
-  chat.sendMessage($scope.messageContent, $scope.chat);
-  $scope.messageContent=null;
-  document.getElementById("footerChat").style.height=44+"px";
-  document.getElementById("messageArea").style.height=44+"px";
-}
+  $scope.sendMessage = function(){
+   if($scope.messageContent.length>0){
+    chat.sendMessage($scope.messageContent, $scope.chat);
+    $scope.messageContent=null;
+    document.getElementById("footerChat").style.height=44+"px";
+    document.getElementById("messageArea").style.height=44+"px";
+  }
 }
 
 $scope.showMessageButton = function(messageContent){

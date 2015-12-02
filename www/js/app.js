@@ -164,7 +164,6 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    console.log(message);
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
     $localStorage.set('lastTimeUpdated', moment().format());
@@ -233,7 +232,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   $rootScope.goBack = function (value){
     if($rootScope.nextUrl){
       $location.path($rootScope.nextUrl);
-      delete $rootScope.nextUrl;
+      $rootScope.nextUrl=null;
     }
     else{
       $rootScope.nbGoBack = -1;
@@ -246,7 +245,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
   //CENTER ALL TITLES
-  $ionicConfigProvider.navBar.alignTitle('center');
+  
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -496,6 +495,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
       }
     };
   })
+
+$ionicConfigProvider.navBar.alignTitle('center');
 $ionicConfigProvider.views.swipeBackEnabled(false);
 $ionicConfigProvider.views.forwardCache(true);
 $ionicConfigProvider.tabs.position("bottom");

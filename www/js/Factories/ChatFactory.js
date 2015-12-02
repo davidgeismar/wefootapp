@@ -18,7 +18,8 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 		var lastDate = new Date(message.createdAt);
 		var lastMessage = shrinkMessage(message.messagestr);
 		var chatPic = getStuffById(message.sender_id, chats[indexC].users).picture;
-		chatsDisplay[indexCD] = {id:message.chat, lastTime:lastDate, lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};				$localStorage.setObject('chatsDisplay', chatsDisplay);
+		chatsDisplay[indexCD] = {id:message.chat, lastTime:lastDate, lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};				
+		$localStorage.setObject('chatsDisplay', chatsDisplay);
 		$rootScope.$emit('updateChatDisplayer');
 	}
 	obj.addMessage =  function(message){

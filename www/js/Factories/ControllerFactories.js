@@ -578,11 +578,11 @@ return foot;
   return user;
 }])
 
-.factory('push',['$http','$localStorage','$ionicPlatform','$location','$rootScope',function($http,$localStorage,$ionicPlatform,$location,$rootScope){
+.factory('push',['$http','$localStorage','$ionicPlatform','$location','$rootScope','$ionicLoading',function($http,$localStorage,$ionicPlatform,$location,$rootScope, $ionicLoading){
   var push = {};
   $ionicPlatform.ready(function(){
     if(window.device){
-      var cordovaPush = PushNotification.init(  //PROBLEM WITH IT (MAY BE A PLUGIN INSTALLATION TROUBLE)
+      var cordovaPush = PushNotification.init(
       { 
         "android": {"senderID": "124322564355"},
         "ios": {"alert": "true", "badge": "true", "sound": "true"} 
@@ -596,13 +596,16 @@ return foot;
 
       cordovaPush.on('notification', function(notification){  // TRIGGERED ON CLICK ON NOTIF
         var pushLocation = '/user/notif';
-        
+
         if(notification.additionalData && notification.additionalData.url)
           pushLocation = notification.additionalData.url;
-        if(pushLocation.indexOf("conv")>-1)
-          $rootScope.nextUrl = '/user/chat';
-        if(!notification.foreground)
+        if(pushLocation.indexOf("conv")>-1){
+          $rootScope.nextUrl = '/user/profil';
+        }
+        if(!notification.additionalData.foreground){
           $location.path(pushLocation);
+          $ionicLoading.hide();
+        }
       });
     }
   });

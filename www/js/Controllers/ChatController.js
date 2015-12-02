@@ -26,14 +26,17 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	};
 
 	$rootScope.$on('updateChatDisplayer', function(event){
+		if($location.url()=="/user/chat"){
 		$scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
 		if(!$scope.$$phase) {
 			$scope.$digest();
 		}
-	});
-
-	$scope.deleteChat = function(chatId){
-		chat.deactivateChatter(chatId,'id');
+		$ionicScrollDelegate.scrollTop();
 	}
+});
+
+$scope.deleteChat = function(chatId){
+	chat.deactivateChatter(chatId,'id');
+}
 
 })
