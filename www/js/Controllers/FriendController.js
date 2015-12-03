@@ -76,7 +76,7 @@ angular.module('friend',[])
 
 	$scope.acceptInvitation = function (yes){
 		if(yes){
-			chat.postNewChatter($scope.foot.id,$scope.friend.id);
+			chat.postNewChatter($scope.foot.id, [$scope.friend.id]);
 			$http.post(serverAddress+'/foot/updatePlayer',{user:$scope.friend.id,foot:$scope.foot.id}).success(function(){
 				$location.path('/user/foots');
 				$handleNotif.notify({user:$scope.friend.id, related_user: $localStorage.getObject('user').id, typ:'demandAccepted',related_stuff:$scope.foot.id});
