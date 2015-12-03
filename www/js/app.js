@@ -1,6 +1,7 @@
 //GLOBAL FUNCTIONS
 
 window.onerror = function (errorMsg, url, lineNumber) {
+  if(!window.device)
   alert('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + lineNumber);
 }//DEBUGING START
 

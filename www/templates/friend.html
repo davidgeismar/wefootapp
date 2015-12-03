@@ -80,7 +80,7 @@
   <p ng-if="friend.nbGrades<=1">(noté par {{friend.nbGrades}} personne)</p>
 </div>
 
-<a ng-show="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last-element">
+<a ng-if="isFriend && !isInvitationConfirmation" href="#/noter/{{friend.id}}"><button class="button button_noter last-element">
 	Noter ce joueur
 </button></a>
 <!-- <a ng-hide="isFriend" href="#/noter/{{friend.id}}"><button class="button button_noter last">
