@@ -270,7 +270,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
 
 
   $stateProvider.state('user.foots', {
-    cache: true,
+    cache: false,
     url: '/foots',
     views: {
       'menuContent' :{

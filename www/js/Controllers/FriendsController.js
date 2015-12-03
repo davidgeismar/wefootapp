@@ -58,7 +58,8 @@ $scope.refresh = function(){
       friend.statut = data[1][index].stat; 
       friend.friendship = data[1][index].friendship;
       if(index == friends.length-1){
-        $rootScope.friends = friends;
+        if(!angular.equals(friends, $rootScope.friends))
+          $rootScope.friends = friends;
         $scope.results = $rootScope.friends;
         $localStorage.newFriend = true; //Load his data on refresh actu
         $localStorage.setObject('friends',friends);
@@ -67,6 +68,8 @@ $scope.refresh = function(){
     });
   });
 }
+
+$scope.refresh();
 
 $scope.goFriend = function(friend){
   $location.path('/friend/'+friend.id);

@@ -1,4 +1,4 @@
-angular.module('foot',[]).controller('FootController', function ($confirmation,$scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot, $ionicScrollDelegate) {
+angular.module('foot',[]).controller('FootController', function ($confirmation,$scope,$ionicModal,$http,$localStorage,$location,$ionicLoading,$state,$handleNotif,$cordovaGeolocation,$rootScope,$searchLoader, $foot, $ionicScrollDelegate, $cordovaNetwork) {
 
  $scope.go = function(id){
   $location.path('/foot/'+id);
@@ -146,17 +146,34 @@ $scope.toggleAll = function(){
 
 if($location.path().indexOf('user/foots')>-1){
 
-  $ionicLoading.show({
-    content: 'Loading Data',
-    animation: 'fade-out',
-    showBackdrop: true
+  // $ionicLoading.show({
+  //   content: 'Loading Data',
+  //   animation: 'fade-out',
+  //   showBackdrop: true
+  // });
+  var displayLoad = false;
+
+  if (!$localStorage.footTodo || $localStorage.footTodo.length == 0)
+    displayLoad = true;
+
+  angular.element(document).ready(function () {
+        $scope.searching = true;
+        if(window.device && $cordovaNetwork.isOnline() && displayLoad)
+          $searchLoader.show();
   });
-  
+
+  $scope.footInvitation = $localStorage.footInvitation;
+  $scope.footTodo = $localStorage.footTodo;
 
   $foot.loadFoot(function(){
-    $scope.footInvitation = $localStorage.footInvitation;
-    $scope.footTodo = $localStorage.footTodo;
-    $ionicLoading.hide();
+    if(!angular.equals($scope.footInvitation, $localStorage.footInvitation))
+      $scope.footInvitation = $localStorage.footInvitation;
+
+    if(!angular.equals($scope.footTodo, $localStorage.footTodo))
+      $scope.footTodo = $localStorage.footTodo;
+    // $ionicLoading.hide();
+    $scope.searching = false;
+    $searchLoader.hide();
   });
 
   $scope.refresh = function(){
@@ -190,7 +207,6 @@ if($location.path().indexOf('user/foots')>-1){
 
   $foot.loadInfo($stateParams.id,function(result){
     $scope.foot = result.foot;
-    console.log($scope.foot);
     $scope.invited = result.invited;
     $scope.isInvited = result.isInvited;
     $scope.isPending = result.isPending;

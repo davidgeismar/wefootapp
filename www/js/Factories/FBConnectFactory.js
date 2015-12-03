@@ -31,7 +31,7 @@ obj.fbLoginSuccess = function(response) {
   //This is the fail callback from the login method
   obj.fbLoginError = function(error){
     fbLogged.reject(error);
-    alert(JSON.stringify(error));
+    // alert(JSON.stringify(error));
     $ionicLoading.hide();
   };
 
