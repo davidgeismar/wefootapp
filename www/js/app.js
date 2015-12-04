@@ -160,20 +160,17 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
     });
   //Nouveau chat
   io.socket.on('newChat',function(chat){
-    console.log(chat);
     $localStorage.set('lastTimeUpdated', moment().format());
     chats.addChat(chat);
   });
   //Nouveau message dans un chat
   io.socket.on('newMessage',function(message){
-    console.log(message);
     chat.addMessage(message);
     chat.setSeenStatus(message.chat);
     $localStorage.set('lastTimeUpdated', moment().format());
   });
   //Nouvel user dans un chat existant
   io.socket.on('newChatter', function(chatter){
-    console.log(chatter);
     chat.addChatter(chatter);
     $localStorage.set('lastTimeUpdated', moment().format());
   })

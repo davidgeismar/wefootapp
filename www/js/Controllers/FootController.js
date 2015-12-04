@@ -214,9 +214,12 @@ if($location.path().indexOf('user/foots')>-1){
     $scope.players = result.players;
     $scope.isComplete = result.players.length == result.foot.nb_player;
     $scope.date = result.date;
+    console.log(moment().format());
+    $scope.is_finish = moment($scope.foot.date).format() < moment().format();
     $scope.ready = true;
     $ionicLoading.hide();
   });
+
 
   $scope.refresh = function(){
     $scope.players = [];
