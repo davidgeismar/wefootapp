@@ -49,6 +49,7 @@ $rootScope.$on('newMessage', function(event){
 
   $scope.sendMessage = function(){
    if($scope.messageContent.length>0){
+    console.log($scope.chat);
     chat.sendMessage($scope.messageContent, $scope.chat);
     $scope.messageContent=null;
     document.getElementById("footerChat").style.height=44+"px";

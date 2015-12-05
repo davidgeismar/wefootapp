@@ -53,6 +53,14 @@
  <p ng-click="toEdit[1] = true" ng-hide="toEdit[1]">{{user.poste}}<i class="ion-edit"></i></p>
  <form ng-submit="editPoste(poste)" ng-hide="!toEdit[1]"><input placeholder="Poste" ng-model="poste"/> <i ng-click="editPoste(poste)" class="ion-ios-checkmark"></i></form>
 </div>
+  <div style="margin-top: -40px; margin-left: 60px; margin-bottom: 70px;"class="trophe-friend">
+    <div ng-if="user.nbChevres>0"class="chevre-friend">
+      <img ng-src="img/chevre_rouge.png" badge="4" badge-style="badge-assertive"><span class="badge badge-assertive">{{user.nbChevres}}</span>
+    </div>
+    <div ng-if="user.nbHommes>0" class="homme-friend">
+      <img ng-src="img/trophe_or.png" badge="4" badge-style="badge-assertive"><span class="badge badge-assertive">{{user.nbHommes}}</span>
+    </div>
+  </div>
 <div class="note_menu">
   <div class="icon_menu icon-tech">
   </div>

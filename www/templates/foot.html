@@ -58,7 +58,7 @@
 </div>
 <hr class="level-foot-separator separator-bottom" size=5px color=#28385B width=85%>
 <div class="listeparticipants-foot">
-	<div ng-repeat="player in players | orderBy : '-createdAt' " ng-class="{'first-foot': $index == 0}" class="row player-foot">
+	<div ng-repeat="player in players | orderBy : 'createdAt' " ng-class="{'first-foot': $index == 0}" class="row player-foot">
 		<div class="img_friends img_foot col col-20">
             <img ng-src="{{player.picture}}">
         </div>
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 </div>
-<hr class="field-foot-separator" size=5px color=#28385B width=85%>
+<hr class="level-foot-separator" style="margin-bottom:20px" size=5px color=#28385B width=85%>
 <div class="urban-foot">
 	<div class="photourban-foot" style="background-image:url({{foot.field.picture}});">
 	</div>

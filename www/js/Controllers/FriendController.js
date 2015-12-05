@@ -112,7 +112,9 @@ angular.module('friend',[])
   }
 
   $scope.isFriendWith = function(userId){
-  	return user.isFriendWith(userId);
+  	user.isFriendWith(userId).success(function(isFriend){
+  		return isFriend;
+  	});
   }
 
 })

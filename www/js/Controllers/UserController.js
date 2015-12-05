@@ -90,9 +90,9 @@ $scope.logout = function (){
  if($localStorage.getObject('user').facebook_id && window.cordova){
   console.log('here');
   fbConnect.logout();
- }
- 
- if($localStorage.get('pushToken')){
+}
+
+if($localStorage.get('pushToken')){
   var pushToken = $localStorage.get('pushToken');
   $http.post(serverAddress+'/push/delete',{push_id : $localStorage.get('pushToken')}).success(function(){
     $localStorage.clearAll();
@@ -295,9 +295,20 @@ for(var i=0; i<5; i++) {
   }
 }
 
+$scope.getNbTrophes = function(){
+  $http.get(serverAddress+'/trophe/getNbTrophes/'+$scope.user.id).success(function(data){
+    console.log(data);
+    if(data.nbHommes){
+      $scope.user.nbHommes = data.nbHommes;
+    }
+    if(data.nbChevres){
+      $scope.user.nbChevres = data.nbChevres;
+    }
+  });
+}
+
 
 $scope.setNote = function(note, target){
-
   $scope.notes[target] = note;
   for(var i=0; i<5; i++) {
     if(i+1<=note)
@@ -322,7 +333,7 @@ $scope.initNotes = function(){
 }
 
 
-
+$scope.getNbTrophes();
 $scope.initNotes();
 
 $scope.displayNotes = function(){
@@ -347,12 +358,12 @@ $scope.sendFbMessage = function() {
 //     actionType: 'askfor',
 //     filters: 'app_non_users'
 // },
-  function (response) {
-    $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
-  },
-  function (response) {
-    console.log(response);
-  });
+function (response) {
+  $ionicLoading.show({ template: 'Message envoyé!', noBackdrop: true, duration: 2000 });
+},
+function (response) {
+  console.log(response);
+});
 };
 
 $scope.sendSmsMessage = function(){

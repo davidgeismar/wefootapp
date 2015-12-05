@@ -567,11 +567,7 @@ return foot;
   }
 
   user.isFriendWith = function(userId){
-    var friendsId = _.pluck($localStorage.getArray('friends'),'id');
-    if (friendsId.indexOf(userId)>-1)
-      return true;
-    else
-      return false;
+    return $http.post(serverAddress+'/user/isFriendWith',{user1: $localStorage.getObject('user').id, user2: userId});
   }
 
 
