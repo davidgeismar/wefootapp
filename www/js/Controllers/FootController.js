@@ -214,9 +214,17 @@ if($location.path().indexOf('user/foots')>-1){
     $scope.players = result.players;
     $scope.isComplete = result.players.length == result.foot.nb_player;
     $scope.date = result.date;
-    console.log(moment().format());
     $scope.is_finish = moment($scope.foot.date).format() < moment().format();
     $scope.ready = true;
+    //Set organisator in first position
+    
+    if(result.players.length > 0){
+      var index_orga = _.pluck($scope.players,'id').indexOf(result.foot.organisator);
+      var temp = $scope.players[index_orga];
+      $scope.players[index_orga] = result.players[0];
+      $scope.players[0] = temp;
+    }
+
     $ionicLoading.hide();
   });
 
