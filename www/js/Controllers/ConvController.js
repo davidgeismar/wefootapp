@@ -70,12 +70,12 @@ $rootScope.$on('newMessage', function(event){
     }
 
     sending_mess++;
-    message_sent++;
     pending_messages.push(message_count);
     setTimeout(function(){
-      if(pending_messages.indexOf(message_count) > -1)
+      if(pending_messages.indexOf(message_count) > -1){
         $('.error_chat').show();
         error_displayed = true;
+      }
     }, 10000);
     document.getElementById("footerChat").style.height=44+"px";
     document.getElementById("messageArea").style.height=44+"px";
@@ -86,7 +86,9 @@ $rootScope.$on('newMessage', function(event){
     if(message.sender_id == $localStorage.getObject('user').id){
       sending_mess--;
       message_received++;
-      pending_messages.splice(pending_messages.indexOf(message_received));
+      if(error_displayed)
+        $('.error_chat').hide();
+    //  pending_messages.splice(pending_messages.indexOf(message_received));
       if(sending_mess == 0)
         $scope.loadingBar.complete();
     }

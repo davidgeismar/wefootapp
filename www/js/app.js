@@ -6,7 +6,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
 }//DEBUGING START
 
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+var serverAddress = "http://localhost:1337";
 
 // var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
 // var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
