@@ -30,7 +30,7 @@ var switchIcon = function (icon,link) {       // Switch the icon in the header b
 };
 
 var getStuffById = function(id,stuffArray){
-	for(var i = 0; i<stuffArray.length;i++){
+	for(var i = 0; i<stuffArray.length; i++){
 		if (id == stuffArray[i].id)
 			return stuffArray[i];
 	}
@@ -85,7 +85,7 @@ var shrinkMessage = function(message){
 var device = window.device;
 
 
-var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion-google-place','ionic.service.core','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch'])
+var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion-google-place','ionic.service.core','connections','field','foot','friends','profil','user','chat','friend', 'note', 'conv','notif','resetPassword','election','ui-rangeSlider','ngIOS9UIWebViewPatch','ngProgress'])
 .run(function($ionicPlatform,$rootScope,$http,$localStorage,$handleNotif,$ionicLoading, $ionicHistory, $cordovaPush,$cordovaGeolocation, chat, chats, mySock, user,error_reporter, $cordovaNetwork, $location) {
 
   // var goAfterPush = function(){
@@ -180,6 +180,9 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
     return chats.getNbNotif();
   };
 
+  $ionicPlatform.registerBackButtonAction(function (event) {
+      ionic.Platform.exitApp();
+  }, 100);
 
 
   $ionicPlatform.ready(function() {
