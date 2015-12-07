@@ -15,13 +15,8 @@ angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $sco
 
   ionic.DomUtil.ready(function(){
     $ionicScrollDelegate.scrollBottom();
-    $('#ngProgress-container').remove();
 
-    if(!$localStorage.loadingBar)
-        $scope.loadingBar = ngProgressFactory.createInstance();
-    
-    else
-      $scope.loadingBar = $localStorage.loadingBar;
+    $scope.loadingBar = ngProgressFactory.createInstance();
 
     $scope.loadingBar.setColor('#006ddf');
     var pos = parseInt($('.content_conv').offset().top) + parseInt($('.content_conv').height());

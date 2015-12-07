@@ -117,16 +117,24 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
 
   $rootScope.$on('$stateChangeSuccess',function(e,toState,toParams,fromState){    //EVENT WHEN LOCATION CHANGE
     setTimeout(function(){   // PERMET DE CHARGER LA VUE AVANT
+      if(fromState.url.indexOf('conv')>-1)
+        $('#ngProgress-container').remove();
+
       if(toState.url.indexOf('profil')>-1)                  // Menu transparent pour profil
         $('.actu_header').addClass('transparent');
+
       if(toState.url.indexOf('notif')>-1)
         $rootScope.nbNotif = 0;
+
       if(fromState.url.indexOf('profil')>-1)
         $('.actu_header').removeClass('transparent');
+
       if(fromState.url.indexOf('friends')>-1)
         $rootScope.friendsOpen = false;
+
       if(toState.url.indexOf('friends')>-1)
         $rootScope.friendsOpen = true;
+
     },0);
   });
 
