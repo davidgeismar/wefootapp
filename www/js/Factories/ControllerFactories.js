@@ -595,10 +595,10 @@ return foot;
 
         if(notification.additionalData && notification.additionalData.url)
           pushLocation = notification.additionalData.url;
-        if(pushLocation.indexOf("conv")>-1){
-          $rootScope.nextUrl = '/user/profil';
-        }
         if(!notification.additionalData.foreground){
+          if(pushLocation.indexOf("conv")>-1){
+            $rootScope.nextUrl = '/user/profil';
+          }
           $location.path(pushLocation);
           $ionicLoading.hide();
         }
