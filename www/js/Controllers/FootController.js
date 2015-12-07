@@ -74,7 +74,7 @@ $scope.datepickerObject = {
       to: to,   //Optional
       callback: function (val) {
         if(val){
-          $scope.foot.date.setMonth(val.getMonth(),val.getDate());
+          $scope.foot.date.setFullYear(val.getFullYear(),val.getMonth(),val.getDate());
           $scope.date = getJour(val);
         }
       }

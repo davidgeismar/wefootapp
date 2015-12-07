@@ -4,7 +4,6 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$rootScope.chats = $localStorage.getArray('chats');
 	$scope.chatsDisplay = $localStorage.getArray('chatsDisplay');
 
-
 	ionic.DomUtil.ready(function(){
 		$ionicScrollDelegate.scrollTop();
 	});
@@ -12,7 +11,6 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 	$rootScope.updateMessage = function(){
 		$scope.$digest();
 	}
-
 
 	$scope.launchChat = function(chatId){
 		$location.path('/conv/'+chatId);
