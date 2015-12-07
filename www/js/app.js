@@ -131,6 +131,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   });
 
   io.socket.on('disconnect',function(){
+    console.log("DISCONNECTED");
     if($localStorage.getObject('user') && $localStorage.getObject('user').id)
       $http.post(serverAddress+'/connexion/delete',{id : $localStorage.getObject('user').id});
   });
