@@ -198,10 +198,10 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   $ionicPlatform.ready(function() {
     $rootScope.$broadcast('appReady');
     if(window.device){
-      // navigator.splashscreen.show();
-      // setTimeout(function() {
-      //   navigator.splashscreen.hide();
-      // }, 3000);
+      navigator.splashscreen.show();
+      setTimeout(function() {
+        navigator.splashscreen.hide();
+      }, 6000);
 
       if($cordovaNetwork.isOffline())
         error_reporter.show({texte:"Veuillez vous connecter à internet."});
@@ -255,18 +255,6 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
       $ionicHistory.goBack();
     }
   };
-
-  // ANDROID BACK BUTTON TO CUSTOMIZE 
-  $ionicPlatform.registerBackButtonAction(function (event) {  
-        if ( ($state.$current.name=="app.state1") ||
-             ($state.$current.name=="app.state2")
-            ){
-
-            } else {
-
-            }
-        }, 100);
-
 
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
