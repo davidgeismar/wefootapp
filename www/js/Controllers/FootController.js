@@ -415,7 +415,8 @@ $scope.closeModal3 = function(launch){
   $scope.showDatePicker = function(){
     $foot.pickDate($scope.foot.date, function(dates){
       $scope.foot.date = dates.date;
-      $scope.date = dates.dateString;
+      $scope.dateChanged = dates.dateString;
+      $scope.date = getJour($scope.foot.date) + ' ' + getHour($scope.foot.date)
     });
   }
 
@@ -423,6 +424,7 @@ $scope.closeModal3 = function(launch){
     $foot.pickHour($scope.foot.date, function(dates){
       $scope.foot.date = dates.date;
       $scope.hour = dates.dateString;
+      $scope.date = getJour($scope.foot.date) + ' ' + getHour($scope.foot.date)
     });
   }
 
