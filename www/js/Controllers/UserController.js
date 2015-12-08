@@ -48,7 +48,7 @@ if($scope.user && $scope.user.poste==null){
     $cordovaImagePicker.getPictures(optionsImg).then(function (results) {
       var optionsFt = {
         params : {
-          userId: $localStorage.getObject('user').id
+          userId: $scope.user.id
         },
         headers : {
           Authorization:$localStorage.get('token')
@@ -297,7 +297,6 @@ for(var i=0; i<5; i++) {
 
 $scope.getNbTrophes = function(){
   $http.get(serverAddress+'/trophe/getNbTrophes/'+$scope.user.id).success(function(data){
-    console.log(data);
     if(data.nbHommes){
       $scope.user.nbHommes = data.nbHommes;
     }
