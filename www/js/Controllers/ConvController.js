@@ -1,4 +1,4 @@
-angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, $ionicHistory, $confirmation,chat, chats, ngProgressFactory){
+angular.module('conv',[]).controller('ConvCtrl', function($http, $location, $scope, $rootScope, $localStorage, $ionicModal, $ionicScrollDelegate, $stateParams, $ionicHistory, $confirmation,chat, chats, ngProgressFactory, $cordovaNetwork){
 
   $scope.chat = _.find($localStorage.getArray('chats'), function(chat){return chat.id==$stateParams.id});
   $scope.user = $localStorage.getObject('user');
@@ -60,7 +60,6 @@ $rootScope.$on('newMessage', function(event){
 
   $scope.sendMessage = function(){
    if($scope.messageContent.length>0){
-    console.log($scope.chat);
     chat.sendMessage($scope.messageContent, $scope.chat);
     $scope.messageContent=null;
 
@@ -74,6 +73,16 @@ $rootScope.$on('newMessage', function(event){
     }
 
     sending_mess++;
+
+    //TODO add a callback on sendMessage to handle no reception
+
+    if($cordovaNetwork.isOffline()){
+      $scope.loadingBar.reset();
+      sending_mess--;
+      $('.error_chat').show();
+      error_displayed = true;
+    }
+
     pending_messages.push(message_count);
     setTimeout(function(){
       if(pending_messages.indexOf(message_count) > -1){
@@ -87,11 +96,11 @@ $rootScope.$on('newMessage', function(event){
   }
 
   io.socket.on('newMessage',function(message){
+    if(error_displayed)
+      $('.error_chat').hide();
     if(message.sender_id == $localStorage.getObject('user').id){
       sending_mess--;
       message_received++;
-      if(error_displayed)
-        $('.error_chat').hide();
      pending_messages.splice(pending_messages.indexOf(message_received));
       if(sending_mess == 0)
         $scope.loadingBar.complete();
