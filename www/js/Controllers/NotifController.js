@@ -13,10 +13,9 @@ angular.module('notif',[])
 		$localStorage.setObject('notifs',$rootScope.notifs);
 	}
 
-	angular.element(document).ready(function () {
-        if(window.device && $cordovaNetwork.isOnline())
-       	 	$searchLoader.show();
-    });
+angular.element(document).ready(function () {
+		if(window.device && $cordovaNetwork.isOnline())
+			$searchLoader.show();
 
 	if($rootScope.notifs.length == 0){ //New connexion
 		$http.get(serverAddress+'/getNotif/'+$localStorage.getObject('user').id).success(function(data){
@@ -27,10 +26,12 @@ angular.module('notif',[])
 				$handleNotif.handleNotif(notif,function(){
 					callback();
 				});
-				},function(){ 
-					$searchLoader.hide(); $rootScope.notifs = data;
-					$localStorage.setObject('notifs',$rootScope.notifs);
+			},function(){ 
+				$searchLoader.hide(); $rootScope.notifs = data;
+				$localStorage.setObject('notifs',$rootScope.notifs);
 			});
+		}).error(function(){
+			$searchLoader.hide();
 		});
 	}
 	else{  //Update
@@ -42,12 +43,15 @@ angular.module('notif',[])
 				$handleNotif.handleNotif(notif,function(){
 					callback();
 				});
-				},function(){ 
-					$searchLoader.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
-					$localStorage.setObject('notifs',$rootScope.notifs);
+			},function(){ 
+				$searchLoader.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
+				$localStorage.setObject('notifs',$rootScope.notifs);
 			});
+		}).error(function(){
+			$searchLoader.hide();
 		});
 	}
+});
 
 	$http.post(serverAddress+'/user/updateSeen',{id: $localStorage.getObject('user').id}).success(function(user){
 		var localUser = $localStorage.getObject('user');
