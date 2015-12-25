@@ -85,7 +85,7 @@ obj.connect = function(){
             if(!data.email)
               user.email = fb_uid+"@facebook.com";
             $http.post(serverAddress+'/facebookConnect',{email: user.email,first_name: user.first_name,last_name: user.last_name,facebook_id: fb_uid,fbtoken:fb_access_token}).success(function(response){
-              // console.log('hello2');
+              console.log(response);
               $localStorage.set('token',response.token);
               $localStorage.setObject('user',response);
               $connection(response.id,function(){

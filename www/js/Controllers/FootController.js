@@ -109,13 +109,20 @@ $scope.datepickerObject = {
 
 
     $scope.searchQuery = function(word){
+      $searchLoader.show();
       $foot.searchFields(word,function(data){
         $scope.results = data;
+        $searchLoader.hide();
       });
     }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
-if($location.path().indexOf('footfield')>-1)
-  $foot.searchFields('',function(data){ $scope.results = data; });
+if($location.path().indexOf('footfield')>-1){
+  angular.element(document).ready(function (){
+      $searchLoader.show();
+  });
+  $searchLoader.show();
+  $foot.searchFields('',function(data){ $scope.results = data; $searchLoader.hide(); });
+}
 
 
 $scope.chooseField = function(field){
