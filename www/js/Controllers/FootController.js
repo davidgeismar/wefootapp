@@ -118,6 +118,7 @@ $scope.datepickerObject = {
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
 if($location.path().indexOf('footfield')>-1){
   angular.element(document).ready(function (){
+    if(!$scope.results || $scope.results.length == 0)  
       $searchLoader.show();
   });
   $searchLoader.show();

@@ -6,7 +6,7 @@ window.onerror = function (errorMsg, url, lineNumber) {
 }//DEBUGING START
 
 
-var serverAddress = "http://localhost:1337";
+var serverAddress = "http://wefoot.herokuapp.com:80";
 
 // var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
 // var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
@@ -191,7 +191,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   };
 
   $ionicPlatform.registerBackButtonAction(function (event) {
-      ionic.Platform.exitApp();
+    event.preventDefault();
   }, 100);
 
 
