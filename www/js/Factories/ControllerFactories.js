@@ -433,7 +433,8 @@ return profil;
     });
 }
 
-foot.removePlayer = function(userId,footId,isPlaying,callback){
+foot.removePlayer = function(userId,footId,isPlaying,callback, orga){
+  //TO DO SWITCH ORDER OF PARAMS OF SET IT TO AN OBJECT
   $http.post(serverAddress+'/foot/removePlayer',{foot: footId, user: userId}).success(function(){
     if(!isPlaying){
       var plucked = _.pluck($localStorage.footInvitation,'id');
@@ -444,6 +445,8 @@ foot.removePlayer = function(userId,footId,isPlaying,callback){
       var plucked = _.pluck($localStorage.footTodo,'id');
       index = plucked.indexOf(footId);
       if(index>-1) $localStorage.footTodo.splice(index,1);
+      var notif = {user:orga, related_user: userId, typ:'footLeav', related_stuff:footId};
+      $handleNotif.notify(notif,function(){},true);
     }
     callback();
   });

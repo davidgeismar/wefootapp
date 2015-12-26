@@ -263,7 +263,7 @@ if($location.path().indexOf('user/foots')>-1){
     $foot.removePlayer(userId,$scope.foot.id, $scope.isPlaying, function(){
       $location.path('/user/foots');
       chat.deactivateChatter($scope.foot.id,'related');
-    });
+    }, $scope.foot.organisator);
   }
 
   $scope.removePlayer = function(userId){
