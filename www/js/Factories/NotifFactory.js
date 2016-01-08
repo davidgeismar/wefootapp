@@ -29,6 +29,8 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
         return ['a refusé votre demande pour rejoindre son foot.'];
         case '3hoursBefore':
         return ['avez prévu un foot dans 3 heures, n\'oubliez pas votre rendez-vous !'];
+        case 'footLeav':
+        return["s'est retiré de votre foot.",'/foot/'];
       }
     };
 

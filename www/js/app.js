@@ -191,7 +191,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
   };
 
   $ionicPlatform.registerBackButtonAction(function (event) {
-      ionic.Platform.exitApp();
+    event.preventDefault();
   }, 100);
 
 

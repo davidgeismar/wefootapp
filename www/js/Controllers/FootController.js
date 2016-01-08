@@ -109,13 +109,21 @@ $scope.datepickerObject = {
 
 
     $scope.searchQuery = function(word){
+      $searchLoader.show();
       $foot.searchFields(word,function(data){
         $scope.results = data;
+        $searchLoader.hide();
       });
     }
 //QUERY INIT WHEN NO SEARCH HAS BEEN STARTED
-if($location.path().indexOf('footfield')>-1)
-  $foot.searchFields('',function(data){ $scope.results = data; });
+if($location.path().indexOf('footfield')>-1){
+  angular.element(document).ready(function (){
+    if(!$scope.results || $scope.results.length == 0)  
+      $searchLoader.show();
+  });
+  $searchLoader.show();
+  $foot.searchFields('',function(data){ $scope.results = data; $searchLoader.hide(); });
+}
 
 
 $scope.chooseField = function(field){
@@ -256,7 +264,7 @@ if($location.path().indexOf('user/foots')>-1){
     $foot.removePlayer(userId,$scope.foot.id, $scope.isPlaying, function(){
       $location.path('/user/foots');
       chat.deactivateChatter($scope.foot.id,'related');
-    });
+    }, $scope.foot.organisator);
   }
 
   $scope.removePlayer = function(userId){
