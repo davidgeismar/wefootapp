@@ -67,6 +67,7 @@ angular.module('note',[])
 					$scope.activate[i] = false;
 				}
 				$validated.show({texte: "Vos notes ont bien été enregistrées", icon: "ion-checkmark-round"},function(){
+					$location.path('/friend/'+$scope.friend.id);
 				});		
 			});
 

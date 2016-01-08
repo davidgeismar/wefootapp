@@ -10,7 +10,7 @@
 	<div class="container_list_friends">
 
         <ion-list can-swipe="true">
-        <ion-item ng-repeat="friend in results | orderBy:'-statut'" class="one_friends">
+        <ion-item ng-repeat="friend in results | orderBy:['-statut','last_name','first_name']" class="one_friends">
         <div class="img_chat img_friends" ng-click="goFriend(friend)">
             <img ng-src="{{friend.picture}}">
 
