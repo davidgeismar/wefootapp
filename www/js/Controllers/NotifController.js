@@ -46,19 +46,17 @@ angular.element(document).ready(function () {
 			},function(){ 
 				$searchLoader.hide(); $rootScope.notifs = $rootScope.notifs.concat(data);
 				$localStorage.setObject('notifs',$rootScope.notifs);
+				$http.post(serverAddress+'/user/updateSeen',{id: $localStorage.getObject('user').id}).success(function(user){
+				var localUser = $localStorage.getObject('user');
+				localUser.last_seen = user.last_seen;
+				$localStorage.setObject('user',localUser);
+		});
 			});
 		}).error(function(){
 			$searchLoader.hide();
 		});
 	}
 });
-
-	$http.post(serverAddress+'/user/updateSeen',{id: $localStorage.getObject('user').id}).success(function(user){
-		var localUser = $localStorage.getObject('user');
-		localUser.last_seen = user.last_seen;
-		$localStorage.setObject('user',localUser);
-
-	});
 
 	// $scope.launchElection = function(foot){
 
