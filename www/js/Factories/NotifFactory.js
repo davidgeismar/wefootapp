@@ -126,9 +126,9 @@ handle.notify = function(notif,callback,push){
       content.user = notif.user;
       content.texte = $localStorage.getObject('user').first_name + " " + notif.texte;
       if(callback)
-        mySock.req(serverAddress+'/push/sendPush',content,callback());
+        $http.post(serverAddress+'/push/sendPush',content).success(function(){callback()});
       else
-        mySock.req(serverAddress+'/push/sendPush',content);
+        $http.post(serverAddress+'/push/sendPush',content);
     });
   }
 };

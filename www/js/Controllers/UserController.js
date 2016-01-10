@@ -88,7 +88,6 @@ $scope.logout = function (){
  $rootScope.notifs = [];
 
  if($localStorage.getObject('user').facebook_id && window.cordova){
-  console.log('here');
   fbConnect.logout();
 }
 

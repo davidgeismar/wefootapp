@@ -227,6 +227,7 @@ obj.logout = function(){
     function(success){
     },
     function(faillure){
+      console.log(faillure);
     }
     )
 }
