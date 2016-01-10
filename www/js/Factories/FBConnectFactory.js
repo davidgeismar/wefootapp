@@ -66,15 +66,8 @@ obj.connect = function(){
       //this is for browser only
       facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
     }
-
     facebookConnectPlugin.login(['email','public_profile', 'user_friends'], obj.fbLoginSuccess, obj.fbLoginError);
-
     fbLogged.promise.then(function(authData) {
-      facebookConnectPlugin.getLoginStatus(function(success){
-        if (success.status === 'not_authorized'){
-          $location.path('/login');
-        }
-        else{
           var fb_uid = authData.id;
           var fb_access_token = authData.access_token;
           obj.getFacebookProfileInfo(fb_access_token).then(function(data) {
@@ -96,8 +89,6 @@ obj.connect = function(){
               console.log(err);
             });
           });
-        }
-      });
 });
 }
 
