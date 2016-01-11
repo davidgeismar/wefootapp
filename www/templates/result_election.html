@@ -1,0 +1,43 @@
+<ion-view view-title="Election">
+  <ion-header-bar  class="actu_header">
+  <a href='#/user/notif'><div class="button button-clear button-goback"><span class="white ion-chevron-left"></span></div></a>
+  <img class="logo_wf" ng-src="img/logo_WF.svg">
+  </ion-header-bar>
+  <div class="content_conv has-header">
+    <div class="conv_ban">
+      <h2 class="conv_ban_title">
+        Foot de David Geismar
+      </h2>
+      <p class="conv_ban_text">
+        Le 12/03 au <span>Urban Soccer</span>
+      </p>
+    </div>
+  </div>
+
+    <ion-content class="has-header has-subheader">
+    <canvas id="canvas">
+      </canvas>
+      <div class="elections_final">
+        <div class="row results_marged">
+          <div class="col col-50">
+            <img class="results_img slideRight" ng-src="../img/default_pic.jpg">
+          </div>
+          <div class="col col-50">
+            <img ng-src="img/icon_chevre_rouge.svg" class="slideLeft results_goat">
+          </div>
+        </div>
+          <h4 class="text-center">David a été élu <strong>chèvre du match</strong></h4>
+        <hr class="level-foot-separator result_separator" size=5px color=#28385B width=85%>
+           <h4 class="text-center">Cyril a été élu <strong>l'homme du match</strong></h4>
+        <div class="row results_marged">
+          <div class="col col-50">
+            <img class="results_img slideRight" ng-src="../img/default_pic.jpg">
+          </div>
+          <div class="col col-50">
+            <img ng-src="img/icon_trophee_or.svg" class="slideLeft slide results_champ ">
+          </div>
+        </div>
+      </div>
+
+    </ion-content>
+</ion-view>

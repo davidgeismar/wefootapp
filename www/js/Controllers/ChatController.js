@@ -35,6 +35,7 @@ angular.module('chat',[]).controller('ChatCtrl', function($http, $scope, $rootSc
 
 $scope.deleteChat = function(chatId){
 	chat.deactivateChatter(chatId,'id');
+  console.log("chat-deleted");
 }
 
 })

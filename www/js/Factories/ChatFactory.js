@@ -2,6 +2,15 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 
 	var obj = {};
 	//Update the lastTimeSeen
+
+  // obj.getTimeAndPlace = function(chatId) {
+
+  //   $http.get(serverAddress+'/chatter/deactivateFromChat',{chat:chatId, user:user.id}).success(function(){
+  //       }).error(function(err){
+  //         console.log(err);
+  //       });
+  // }
+
 	obj.updateLts =  function(chatId){
 		var chats = $localStorage.getArray('chats');
 		var user = $localStorage.getObject('user');
@@ -18,7 +27,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 		var lastDate = new Date(message.createdAt);
 		var lastMessage = shrinkMessage(message.messagestr);
 		var chatPic = getStuffById(message.sender_id, chats[indexC].users).picture;
-		chatsDisplay[indexCD] = {id:message.chat, lastTime:lastDate, lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};				
+		chatsDisplay[indexCD] = {id:message.chat, lastTime:lastDate, lastMessage:lastMessage, titre:chats[indexC].desc, seen:chats[indexC].seen, chatPic:chatPic};
 		$localStorage.setObject('chatsDisplay', chatsDisplay);
 		$rootScope.$emit('updateChatDisplayer');
 	}
@@ -105,7 +114,7 @@ app.factory('chat',['$http','$localStorage', '$rootScope', 'mySock','$handleNoti
 			return true;
 		}
 		else
-			return false;	
+			return false;
 	}
 
 	// obj.progressBar = ngProgressFactory.createInstance();
@@ -163,7 +172,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			return $http.post(serverAddress+'/chat/getNewChats',{id:user.id,ltu:ltu}).success(function(chats){
 				angular.forEach(chats, function(chat){
 					obj.addChat(chat);
-				});	
+				});
 			});
 		}
 		obj.getNewChatters = function(){
@@ -173,7 +182,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			return $http.post(serverAddress+'/chat/getNewChatters',{id:user.id,ltu:ltu, chats:chatsId}).success(function(chatters){
 				angular.forEach(chatters, function(chatter){
 					chat.addChatter(chatter);
-				});	
+				});
 			});
 		}
 		obj.getNewMessages = function(){
@@ -184,7 +193,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				angular.forEach(messages, function(message){
 					chat.addMessage(message);
 					chat.setSeenStatus(message.chatsId);
-				});	
+				});
 			});
 		}
 		obj.initDisplayer = function(){
@@ -194,7 +203,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 				if(chat.messages.length>0){
 					var lastDate = new Date(chat.messages[chat.messages.length-1].createdAt);
 					var lastMessage = shrinkMessage(chat.messages[chat.messages.length-1].messagestr);
-					
+
 					var stuff = getStuffById(chat.messages[chat.messages.length-1].sender_id, chat.users);
 					if(stuff)
 						var chatPic = stuff.picture;
@@ -211,7 +220,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			else{
 				chatsDisplay.push({id:chat.id, lastTime:"", seen:chat.seen, lastMessage:"Lancer la discussion avec vos coéquipiers !", titre:chat.desc, chatPic:"img/logo.jpg"});
 			}
-		});	
+		});
 			$localStorage.setObject('chatsDisplay', chatsDisplay);
 		}
 		obj.initNotif = function(callback){
@@ -232,7 +241,7 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 					chats[index].seen = true;
 			});
 			$localStorage.setObject('chats', chats);
-			callback();	
+			callback();
 		}
 		obj.getNbNotif = function(){
 			var chats = $localStorage.getArray('chats');
@@ -242,10 +251,12 @@ app.factory('chats',['$http','$localStorage','$rootScope','chat',function($http,
 			var user = $localStorage.getObject('user');
 			return $http.get(serverAddress+'/chat/getChat/'+user.id+'/'+related).success(function(chat){
 				obj.addChat(chat);
-			});	
+			});
 		}
 
 
 		return obj;
 
 	}])
+
+

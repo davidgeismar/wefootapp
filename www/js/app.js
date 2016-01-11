@@ -6,11 +6,11 @@ window.onerror = function (errorMsg, url, lineNumber) {
 }//DEBUGING START
 
 
-var serverAddress = "http://wefoot.herokuapp.com:80";
+// var serverAddress = "http://wefoot.herokuapp.com:80";
 
 // var serverAddress = "http://wefoot-test.herokuapp.com:80" // staging
 // var serverAddress = "http://wefoot.herokuapp.com:80"; //prod
-// var serverAddress = "http://localhost:1337"; // local
+var serverAddress = "http://localhost:1337"; // local
 
 console.log("Connected to " + serverAddress);
 
@@ -259,7 +259,7 @@ var app = angular.module('starter', ['ionic','ionic-datepicker','ngCordova','ion
 })
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
   //CENTER ALL TITLES
-  
+
   $urlRouterProvider.otherwise('/');
   $stateProvider.state('home', {
     url: '/',
@@ -297,6 +297,13 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
     url: '/register',
     templateUrl: 'templates/register.html',
     controller: 'RegisterCtrl'
+  })
+
+
+  $stateProvider.state('result', {
+    url: '/result',
+    templateUrl: 'templates/result_election.html',
+    controller: 'ElectionCtrl'
   })
 
   $stateProvider.state('resetPassword', {
