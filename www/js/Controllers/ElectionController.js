@@ -1,4 +1,4 @@
-angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage, $location, $stateParams ,$ionicLoading){
+angular.module('election',[]).controller('ElectionCtrl', function($http, $scope, $ionicPopup, $localStorage, $location, $stateParams ,$ionicLoading, $foot){
 
 	$scope.homme;
 	$scope.chevre;
@@ -88,7 +88,32 @@ angular.module('election',[]).controller('ElectionCtrl', function($http, $scope,
 	});
 	}
 
+
+
 	$scope.init();
+
+  $scope.getElectionData = function(){
+    $foot.getInfo($stateParams.id).then(function(infos){$scope.orgaName = infos.data.orgaName; $scope.fieldName = infos.data.field.name; $scope.footDate = infos.data.field.date}, function(err){err});
+    $http.get(serverAddress+'/getHommeAndChevre/'+ $stateParams.id).then(function(infos){
+      console.log(infos.data);
+      _.each(infos.data, function(info, err){
+        console.log(info.trophe);
+        if (info.trophe.trophe == 0) {
+          $scope.chevre_name = info.name;
+          $scope.chevre_picture = info.picture;
+        }
+
+        if (info.trophe.trophe == 1) {
+          $scope.homme_name = info.name;
+          $scope.homme_picture = info.picture;
+          console.log($scope.homme_picture);
+        }
+      })
+    });
+  }
+
+  $scope.getElectionData();
+
 
 
 	$scope.showConfirmation = function() {

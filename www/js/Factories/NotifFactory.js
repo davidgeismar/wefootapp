@@ -7,10 +7,10 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
       switch(typ){
         case 'newFriend':
         return ['vous a ajouté à ses amis.','/friend/'];
-        case 'hommeDuMatch':
-        return ['avez été élu homme du match.'];
-        case 'chevreDuMatch':
-        return['avez été élu chèvre du match.'];
+        case 'resultFoot':
+        return ['Découvrez l\'homme et la chèvre du match.', '/result/'];
+        // case 'chevreDuMatch':
+        // return['avez été élu chèvre du match.'];
         case 'footInvit':
         return ['vous a invité à un foot.','/foot/'];
         case 'footConfirm':
@@ -22,7 +22,7 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
         case 'footEdit':
         return['a modifié son foot.','/foot/'];
         case 'endGame':
-        return['cliquer pour élir l\'homme et la chèvre du match.', '/election/'];
+        return['cliquer pour élire l\'homme et la chèvre du match.', '/election/'];
         case 'demandAccepted':
         return ['a accepté votre demande pour rejoindre son foot.','/foot/'];
         case 'demandRefused':
@@ -41,6 +41,7 @@ app.factory('$handleNotif',['$http','$localStorage','mySock',function($http,$loc
         else
           notif.userName = "Le foot de "+user.first_name+" est terminé, ";
       }
+      else if (notif.typ=="resultFoot"){}
       else{
         if(user.id == $localStorage.getObject('user').id)
          notif.userName = "Vous";

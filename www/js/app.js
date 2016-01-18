@@ -301,7 +301,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
 
 
   $stateProvider.state('result', {
-    url: '/result',
+    url: '/result/:id',
     templateUrl: 'templates/result_election.html',
     controller: 'ElectionCtrl'
   })

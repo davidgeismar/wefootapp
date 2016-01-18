@@ -19,7 +19,7 @@ if(setUUID && window.device){  // No device on testing second argument removes e
 
 allFunction.push(function(callback){
   mySock.req(serverAddress+'/connexion/setSocket',{id: $localStorage.getObject('user').id}, function(){
-    callback();  
+    callback();
   });
 });
 
@@ -39,7 +39,7 @@ if(setUUID){
         callback();
       }
           angular.forEach(friends,function(friend,index){   // Add attribute statut to friends to keep favorite
-            friend.statut = data[1][index].stat; 
+            friend.statut = data[1][index].stat;
             friend.friendship = data[1][index].friendship;
             if(index == friends.length-1){
              $localStorage.setObject('friends',friends);
@@ -62,7 +62,7 @@ allFunction.push(function(callback){
       chats.initDisplayer();
       callback();
     });
-    
+
   }).error(function(err){
     errors.push("Error chats");
   });
@@ -74,7 +74,7 @@ allFunction.push(function(callback){
     callback();
   }).error(function(){
     errors.push("Error notif");
-  });       
+  });
 });
 
 
@@ -149,7 +149,7 @@ return connect;
         callback(0);
       });
     });
-    
+
   }
   return paiement;
 
@@ -329,7 +329,7 @@ return profil;
     values.priv = true;
     values.level = 0;
     values.created_by = $localStorage.getObject('user').id;
-    return values; 
+    return values;
   }
 
   foot.searchFields = function(word,callback){
@@ -484,13 +484,17 @@ foot.playFoot = function(player,foot,players){
   });
 }
 
+foot.getInfo = function(footId){
+ return $http.get(serverAddress+'/foot/getInfo/'+footId);
+}
+
 foot.searchFoot = function(params,callback2){
   $searchLoader.show();
   var footList = [];
   var filtered = [];
   var reduceResults = function() {  //REMOVE FOOT WHERE USER IS PLAYING
     filtered = _.filter(filtered,function(elem) {
-      return footList.indexOf(elem.id)==-1 ; 
+      return footList.indexOf(elem.id)==-1 ;
     });
   }
   var userId = $localStorage.getObject('user').id;
@@ -503,7 +507,7 @@ foot.searchFoot = function(params,callback2){
     }
     finish = true;
   });
-  
+
   $http.post(serverAddress+'/foot/query',params).success(function(data){
     async.each(data,function(foot,callback){
       var finish = false;
@@ -579,9 +583,9 @@ return foot;
   $ionicPlatform.ready(function(){
     if(window.device){
       var cordovaPush = PushNotification.init(
-      { 
+      {
         "android": {"senderID": "124322564355"},
-        "ios": {"alert": "true", "badge": "true", "sound": "true"} 
+        "ios": {"alert": "true", "badge": "true", "sound": "true"}
       });
 
 
@@ -607,7 +611,7 @@ return foot;
   });
     // push.unregister = function(){
     //   cordovaPush.unregister(function(success){
-    //   }, 
+    //   },
     //   function(error){
     //     console.log(error);
     //   });
@@ -618,5 +622,10 @@ return foot;
     };
     return push;
 
-  }])
+}])
 
+// .factory('trophe',['$http','$ionicLoading','$handleNotif','$localStorage','$cordovaDatePicker','$searchLoader','$cordovaGeolocation',function($http,$ionicLoading,$handleNotif,$localStorage,$cordovaDatePicker, $searchLoader, $cordovaGeolocation){
+//   trophe.getInfo = function(footId){
+//     return $http.get(serverAddress+'/getHommeAndChevre/'+footId);
+//   }
+// }])
