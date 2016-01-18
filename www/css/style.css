@@ -3262,3 +3262,54 @@ ion-view[view-title="Conv"] ion-content{
 	color: #fff;
 	font-size: 12px;
 }
+
+.results_man_of_the_match {
+  height: 250px;
+}
+
+.results_goat_of_the_match {
+  height: 250px;
+}
+
+.results_img {
+  border-radius: 150px;
+  width: 150px;
+}
+
+.results_goat {
+    width: 120px;
+    margin-top: 20px;
+}
+
+.results_champ {
+  width: 120px;
+}
+
+.results_border {
+  border-top: 2px solid;
+}
+
+.results_marged {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 8%;
+}
+
+/*.elections_final h4 {
+  font-family: 'Ubuntu';
+}*/
+canvas {
+  display: block;
+  position:fixed;
+  z-index: 3;
+  background: transparent;
+}
+
+.result_separator {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.foot-player-color {
+  color: #006ddf;
+}
