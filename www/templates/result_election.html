@@ -27,7 +27,7 @@
           </div>
         </div>
           <h4 class="text-center" ng-if="chevre_name">{{chevre_name}} a été élu <strong>chèvre du match</strong></h4>
-        <hr class="level-foot-separator result_separator" size=5px color=#28385B width=85%>
+        <hr ng-if= "chevre_name && homme_name" class="level-foot-separator result_separator" size=5px color=#28385B width=85%>
            <h4 class="text-center" ng-if="homme_name">{{homme_name}} a été élu <strong>homme du match</strong></h4>
         <div class="row results_marged" ng-if="homme_picture" >
           <div class="col col-50">

@@ -303,7 +303,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicCon
   $stateProvider.state('result', {
     url: '/result/:id',
     templateUrl: 'templates/result_election.html',
-    controller: 'ElectionCtrl'
+    controller: 'ResultCtrl'
   })
 
   $stateProvider.state('resetPassword', {
